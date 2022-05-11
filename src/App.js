@@ -1,25 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import Spreadsheet from "react-spreadsheet";
+import {useState} from "react";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+  const [data, setData] = useState([
+    [{ value: "Vanilla" }, { value: "Chocolate" },{value:"abc",readOnly : true}],
+    [{ value: "Strawberry" }, { value: "Cookies" }],
+    [{ value: "Apple" }, { value: "Apple" }],
+    [{ value: "Mango" }, { value: "Mango" }],
+    [{ value: "Kiwi" }, { value: "Kiwi" }],
+    [{ value: "Pineapple" }, { value: "Pineapple" }],
+    [{ value: "Papaya" }, { value: "Papaya" }],
+  ]);
+  return <Spreadsheet columnLabels={['abc','xyz','ad']}    data={data} onChange={setData}  />;
+};
 
 export default App;
