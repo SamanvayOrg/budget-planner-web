@@ -11,11 +11,36 @@ jobs:
       - node/install-packages
       - run:
           command: npm run test
+
+  build:
+    executor:
+      name: node/default
+      tag: '16.15'
+    steps:
+      - checkout
+      - node/install-packages
+      - run:
+          command: npm run build
+
+      - run: cd build; zip -r ../budget-planner-web.zip *
+
+      - run: mkdir -p ~/artifacts
+
+      - run: echo $CIRCLE_BUILD_NUM > ~/artifacts/build_version
+
+      - run: cp ~/budget-planner-web/budget-planner-web.zip ~/artifacts/
+
+      - persist_to_workspace:
+          root: ~/artifacts
+          paths:
+            - build_version
+            - budget-planner-web.zip
+
+      - store_artifacts:
+          path: ~/artifacts
+
 workflows:
-  test_app:
+  build_and_test:
     jobs:
       - test
-  build:
-    jobs:
-      - node/run:
-          npm-run: build
+      - build
