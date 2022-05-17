@@ -1,17 +1,18 @@
-import Spreadsheet from "react-spreadsheet";
-import {useState} from "react";
+import React from 'react';
+import {BrowserRouter as Router, Routes, Route, BrowserRouter} from 'react-router-dom';
+import Home from "./views/Home";
+import Dashboard from "./views/Dashboard";
+
 
 const App = () => {
-  const [data, setData] = useState([
-    [{ value: "Vanilla" }, { value: "Chocolate" },{value:"abc",readOnly : true}],
-    [{ value: "Strawberry" }, { value: "Cookies" }],
-    [{ value: "Apple" }, { value: "Apple" }],
-    [{ value: "Mango" }, { value: "Mango" }],
-    [{ value: "Kiwi" }, { value: "Kiwi" }],
-    [{ value: "Pineapple" }, { value: "Pineapple" }],
-    [{ value: "Papaya" }, { value: "Papaya" }],
-  ]);
-  return <Spreadsheet columnLabels={['abc','xyz','ad']}    data={data} onChange={setData}  />;
+	return (
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home/>}/>
+				<Route path="/dashboard" elgit ement={<Dashboard/>}/>
+			</Routes>
+		</BrowserRouter>
+	)
 };
 
 export default App;
