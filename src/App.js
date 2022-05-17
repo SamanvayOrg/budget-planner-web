@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Routes, Route, BrowserRouter} from 'react-router-dom';
+import { Routes, Route, BrowserRouter} from 'react-router-dom';
 import Home from "./views/Home";
 import Dashboard from "./views/Dashboard";
 
@@ -9,7 +9,7 @@ const App = () => {
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<Home/>}/>
-				<Route path="/dashboard" elgit ement={<Dashboard/>}/>
+				<Route path="/dashboard" element={<Dashboard/>}/>
 			</Routes>
 		</BrowserRouter>
 	)

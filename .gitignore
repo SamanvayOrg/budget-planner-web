@@ -2,6 +2,7 @@
 node_modules
 .idea
 /src/auth_config.json
+.env
 # dependencies
 /node_modules
 /.pnp

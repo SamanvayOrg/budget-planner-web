@@ -7,9 +7,7 @@ import {getConfig} from "./config";
 
 const config = getConfig();
 
-let redirectCallback = (appState) => {
-	this.props.history.push(appState?.returnTo || window.location.pathname);
-};
+
 
 const providerConfig = {
 	domain: config.domain,
