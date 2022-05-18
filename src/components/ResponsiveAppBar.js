@@ -10,9 +10,8 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import LogoutButton from "./LogoutButton";
-import "../style.css";
-import HeaderText from "./HeaderText";
-import Logo from "./Logo";
+import "../styles/style.css";
+import {ReactComponent as MBSLogo} from '../assets/MBSLogo.svg';
 
 
 const settings = ['Profile', 'Account', 'Dashboard', <LogoutButton/>];
@@ -25,12 +24,12 @@ const ResponsiveAppBar = () => {
 	const handleCloseUserMenu = () => {
 		setAnchorElUser(null);
 	};
+
 	return (
-		<AppBar position="static">
+		<AppBar className="navBarColor">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<Logo/>
-					<HeaderText/>
+					<MBSLogo/>
 					<Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
 					</Box>
 					<Box sx={{flexGrow: 0}}>

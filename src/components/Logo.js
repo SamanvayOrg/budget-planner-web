@@ -1,5 +1,5 @@
 import mbs from "../assets/mbs.png";
-import "../style.css";
+import "../styles/style.css";
 
 
 const Logo = () => {
