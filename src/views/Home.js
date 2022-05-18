@@ -9,10 +9,6 @@ const Home = () => {
 	if (isAuthenticated) {
 		return <Navigate to='/dashboard'/>
 	}
-	console.log('encvv------>',process.env.REACT_APP_AUTH0_DOMAIN_ID);
-	console.log('encvv------>',process.env.REACT_APP_AUTH0_CLIENT_ID);
-	console.log('encvv------>',process.env.REACT_APP_AUTH0_AUDIENCE);
-
 	return (
 		<div>
 			<div style={{padding: "10%"}}>
