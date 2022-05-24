@@ -6,7 +6,6 @@ import "../styles/style.css";
 import {ReactComponent as MBSLogo} from '../assets/MBSLogo.svg';
 import Profile from "./Profile";
 import {useAuth0} from "@auth0/auth0-react";
-import HelpAndSupport from "./HelpAndSupport";
 import NavBarNavigationBeforeAuth from "./NavBarNavigationBeforeAuth";
 
 
