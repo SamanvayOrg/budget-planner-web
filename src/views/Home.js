@@ -1,6 +1,7 @@
-import LoginButton from "../components/LoginButton";
 import {useAuth0} from "@auth0/auth0-react";
 import {Navigate} from "react-router-dom";
+import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import LogInBox from "../components/LogInBox";
 
 
 const Home = () => {
@@ -11,9 +12,9 @@ const Home = () => {
 	}
 	return (
 		<div>
+			<ResponsiveAppBar/>
 			<div style={{padding: "10%"}}>
-				<center><h1>Welcome to Budget planner</h1>
-					<LoginButton/></center>
+				<LogInBox/>
 			</div>
 		</div>
 	);

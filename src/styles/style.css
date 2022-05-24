@@ -2,6 +2,88 @@
     height: 50px;
     width: 100px;
 }
-.navBarColor{
-        background: #FFFFFF1A !important;
+
+#navBar {
+    background: #FFFFFF1A;
+    height: 64px;
+}
+
+#settingOnNavBar {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+
+}
+
+#contact {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    width: 49px;
+    height: 24px;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 24px;
+    text-align: right;
+    letter-spacing: 0.4px;
+    color: #212121;
+}
+#helpSupport{
+    flex: .1;
+    display: flex;
+    justify-content: flex-end;
+    width: 49px;
+    height: 24px;
+    font-family: 'Lato';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 13px;
+    line-height: 24px;
+    text-align: right;
+    letter-spacing: 0.4px;
+    color: #212121;
+}
+#navBarRightNavigation{
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+#loginBox{
+    box-sizing: border-box;
+    position: absolute;
+    width: 1244px;
+    height: 548px;
+    left: 98px;
+    top: 106px;
+    background: #FFFFFF;
+    border: 1px solid #DEDEDE;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+}
+
+#arrowImg{
+    position: absolute;
+    width: 60%;
+    height: 90%;
+    border-radius: 0px 3px 3px 0px;
+}
+#box1{
+    width: 50%;
+    height: 100%;
+    text-align: right;
+}
+#box2{
+    width: 50%;
+
+    height: 100%;
+}
+#logButton{
+    background: #21212154;
+    color: #FFFFFF;
+}
+#helpText{
+    position: relative;
 }
