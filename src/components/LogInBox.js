@@ -11,7 +11,10 @@ const useStyles = makeStyles(theme => ({
 		display: "flex", flexDirection: "row",
 
 	}, img: {
-		flex: "auto", width: "50%", display: "flex", justifyContent: "flex-end"
+		flex: "auto",
+		width: "50%",
+		display: "flex",
+		justifyContent:  "flex-end"
 	}, box: {
 		width: "50%",
 		display: "flex",
@@ -23,21 +26,40 @@ const useStyles = makeStyles(theme => ({
 		borderRadius: "3px",
 		marginTop: "3%",
 		marginBottom: "3%",
-		flexDirection: "row",
+
 	}, signInName: {
 		position: "absolute",
 		fontFamily: 'Lato',
 		fontStyle: "normal",
 		fontWeight: "700",
 		fontSize: "22px",
-		lineHeight: "26px",
 		fontFeatureSettings: "liga",
 		color: "#212121",
 		paddingBottom: "10%"
 	}, supportText: {
+		position: "absolute",
+		fontFamily: 'Lato',
+		fontStyle: "normal",
+		fontWeight: "400",
+		fontSize: "13px",
+		lineHeight: "160%",
+		letterSpacing: "0.01em",
+		color: "#919191",
+		paddingTop: "10%"
 
-		position: "relative"
+	}, helpAndSupport: {
+		position: "absolute",
+		fontFamily: 'Lato',
+		fontStyle: "normal",
+		fontWeight: "700",
+		fontSize: "12px",
+		lineHeight: "24px",
+		letterSpacing: "0.4px",
+		color: "#166A8C",
+		textAlign: "left",
+		justifyContent: "flex-start",
 	}
+
 }));
 
 
@@ -52,6 +74,11 @@ const LogInBox = () => {
 					Sign in to your account
 				</div>
 				<LoginButton/>
+				<div className={classes.supportText}>
+					If you are unable to sign in, contact your administrator
+					<br/><span className={classes.helpAndSupport}>Help and support</span>
+				</div>
+
 			</div>
 			<ArrowImg/>
 
