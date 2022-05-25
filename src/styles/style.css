@@ -85,6 +85,18 @@
     background: #21212154;
     color: #FFFFFF;
 }
+#addNewBudgetButton{
+    background: #00A3BA;
+    color: #FFFFFF;
+    height: 48px;
+    min-width: 240px;
+    font-size: 12px;
+
+}
 #helpText{
     position: relative;
+}
+#abc{
+    display: flex;
+    justify-content: flex-start;
 }
