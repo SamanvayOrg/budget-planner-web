@@ -53,7 +53,7 @@ const LogInBox = () => {
 					Sign in to your account
 				</div>
 				<LoginButton/>
-				{/*<LoginPageHelpAndSupportText/>*/}
+				<LoginPageHelpAndSupportText/>
 
 
 			</div>
