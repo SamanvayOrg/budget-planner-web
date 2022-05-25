@@ -22,11 +22,10 @@ const Profile = (user, ...props) => {
 	console.log('uss-->', user.user.picture);
 
 
-	return (
-		<div id="settingOnNavBar">
+	return (<div id="settingOnNavBar">
 			<Tooltip title="Open settings">
 				<IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-					<Avatar  src={user.user.picture}/>
+					<Avatar src={user.user.picture}/>
 				</IconButton>
 			</Tooltip>
 			<Menu
@@ -34,24 +33,19 @@ const Profile = (user, ...props) => {
 				id="menu-appbar"
 				anchorEl={anchorElUser}
 				anchorOrigin={{
-					vertical: 'top',
-					horizontal: 'right',
+					vertical: 'top', horizontal: 'right',
 				}}
 				keepMounted
 				transformOrigin={{
-					vertical: 'top',
-					horizontal: 'right',
+					vertical: 'top', horizontal: 'right',
 				}}
 				open={Boolean(anchorElUser)}
 				onClose={handleCloseUserMenu}
 			>
-				{settings.map((setting) => (
-					<MenuItem key={setting} onClick={handleCloseUserMenu}>
+				{settings.map((setting) => (<MenuItem key={setting} onClick={handleCloseUserMenu}>
 						<Typography textAlign="center">{setting}</Typography>
-					</MenuItem>
-				))}
+					</MenuItem>))}
 			</Menu>
-		</div>
-	)
+		</div>)
 }
 export default Profile;

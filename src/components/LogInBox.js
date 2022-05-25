@@ -12,10 +12,7 @@ const useStyles = makeStyles(theme => ({
 		display: "flex", flexDirection: "row",
 
 	}, img: {
-		flex: "auto",
-		width: "50%",
-		display: "flex",
-		justifyContent: "flex-end"
+		flex: "auto", width: "50%", display: "flex", justifyContent: "flex-end"
 	}, box: {
 		width: "50%",
 		display: "flex",
@@ -54,8 +51,6 @@ const LogInBox = () => {
 				</div>
 				<LoginButton/>
 				<LoginPageHelpAndSupportText/>
-
-
 			</div>
 			<ArrowImg/>
 
