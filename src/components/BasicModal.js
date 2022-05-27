@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import {Modal} from "@mui/material";
 import ActionButton from "./ActionButton";
 import {makeStyles} from "@mui/styles";
+import Button from "@mui/material/Button";
 
 const useStyles = makeStyles(theme => ({
 	modal: {
@@ -26,16 +27,26 @@ const useStyles = makeStyles(theme => ({
 		fontSize: "14px",
 		color: "#919191"
 
+	},
+	cancelText: {
+		cursor: "pointer",
+		display: "flex",
+		justifyContent: "center",
+		fontFamily: 'Lato',
+		fontStyle: "normal",
+		fontWeight: "700",
+		fontSize: "12px",
+		color: "#212121"
 	}
 }));
 
-const BasicModal = ({buttonLabel, buttonId, style, modalText}) => {
+const BasicModal = ({buttonLabel, buttonId, style, modalText, dropDown, actionButton, cancelButton}) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 	return (<div>
-		<ActionButton label={buttonLabel} id={buttonId} onClick={handleOpen}>Open modal</ActionButton>
+		<ActionButton label={buttonLabel} id={buttonId} onClick={handleOpen}/>
 		<Modal
 			open={open}
 			onClose={handleClose}
@@ -50,6 +61,11 @@ const BasicModal = ({buttonLabel, buttonId, style, modalText}) => {
 				<text className={classes.modalSecondaryText}>
 					Sample text
 				</text>
+				{dropDown}
+				{actionButton}
+				{cancelButton}
+				<text className={classes.cancelText} onClick={handleClose}>Cancel</text>
+
 			</Box>
 		</Modal>
 	</div>);

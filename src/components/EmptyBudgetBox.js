@@ -1,6 +1,8 @@
 import {Box} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import BasicModal from "./BasicModal";
+import BasicSelect from "./BasicSelect";
+import ActionButton from "./ActionButton";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -19,7 +21,7 @@ const styleSheets = makeStyles(theme => ({
 		paddingBottom: "1%",
 		fontSize: "15px",
 		fontWeight: "400",
-		fontFamily:"Lato"
+		fontFamily: "Lato"
 
 
 	}, notAddedBudgetText: {
@@ -30,15 +32,17 @@ const styleSheets = makeStyles(theme => ({
 }))
 const style = {
 	position: 'absolute',
+	display: "flex",
+	flexDirection: "column",
 	top: '30%',
 	left: '50%',
 	transform: 'translate(-50%, -50%)',
-	width: 400,
+	width: "20%",
 	bgcolor: 'background.paper',
 	border: '0px  #000',
-	// boxShadow: 24,
 	boxShadow: "0px 0px 4px  #000000",
 	p: 4,
+	gap: "1vw"
 };
 
 const EmptyBudgetBox = () => {
@@ -56,6 +60,10 @@ const EmptyBudgetBox = () => {
 			buttonId={"addNewBudgetButton"}
 			modalText={"Create a new budget"}
 			style={style}
+			dropDown={<BasicSelect/>}
+			actionButton={<ActionButton label={"CREATE A NEW BUDGET"} id={"addNewBudgetButton"} />}
+			// cancelButton={}
+
 		/>
 	</Box>)
 }
