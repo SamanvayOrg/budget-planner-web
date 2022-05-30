@@ -3,6 +3,8 @@ import {makeStyles} from "@mui/styles";
 import Container from "@mui/material/Container";
 import UserName from "../components/UserName";
 import EmptyBudgetBox from "../components/EmptyBudgetBox";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "./Home";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -52,4 +54,7 @@ const Dashboard = () => {
 		</div>
 	)
 };
-export default Dashboard;
+// export default Dashboard;
+export default withAuthenticationRequired(Dashboard, {
+	onRedirecting: () => <Home />,
+});
