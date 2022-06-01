@@ -16,7 +16,7 @@
 
 }
 
-#contact {
+#navRightBarMenu {
     flex: 1;
     display: flex;
     justify-content: flex-end;
@@ -50,6 +50,8 @@
     flex: 1;
     display: flex;
     justify-content: flex-end;
+    color: #616161;
+
 }
 #loginBox{
     box-sizing: border-box;
@@ -82,7 +84,7 @@
     height: 100%;
 }
 #logButton{
-    background: #21212154;
+    background: #00A3BA;
     color: #FFFFFF;
 }
 #addNewBudgetButton{
@@ -92,6 +94,14 @@
     min-width: 240px;
     font-size: 12px;
 
+}
+#smallActionButton{
+    width: 126px;
+    height: 48px;
+    background: #00A3BA;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+    color: #FFFFFF;
 }
 #helpText{
     position: relative;

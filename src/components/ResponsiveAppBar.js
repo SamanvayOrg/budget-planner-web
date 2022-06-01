@@ -7,6 +7,7 @@ import {ReactComponent as MBSLogo} from '../assets/MBSLogo.svg';
 import Profile from "./Profile";
 import {useAuth0} from "@auth0/auth0-react";
 import NavBarNavigationBeforeAuth from "./NavBarNavigationBeforeAuth";
+import NavBarMenu from "./NavBarMenu";
 
 
 const ResponsiveAppBar = () => {
@@ -14,7 +15,7 @@ const ResponsiveAppBar = () => {
 
 	let endView = <NavBarNavigationBeforeAuth/>;
 	if (isAuthenticated) {
-		endView = <Profile user={user}/>
+		endView =  <Profile user={user}/>
 	}
 
 

@@ -4,7 +4,7 @@ import Typography from "@mui/material/Typography";
 const Contact = () => {
 
 return(
-	<Typography id="contact">
+	<Typography id="navRightBarMenu">
 		Contact
 	</Typography>
 )

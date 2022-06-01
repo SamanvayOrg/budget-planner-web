@@ -2,6 +2,7 @@
   "name": "budget-planner",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@auth0/auth0-react": "^1.10.1",
     "@emotion/react": "^11.9.0",

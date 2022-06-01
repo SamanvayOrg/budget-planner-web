@@ -13,7 +13,10 @@ const providerConfig = {
 	domain: config.domain,
 	clientId: config.clientId,
 	...(config.audience ? {audience: config.audience} : null),
-	redirectUri: window.location.origin
+	redirectUri: window.location.origin,
+	cacheLocation: 'localstorage',
+	audience: "https://api.budget-planner",
+	scope: "openid profile use:app"
 };
 
 ReactDOM.render(

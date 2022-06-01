@@ -5,11 +5,12 @@ import LogInBox from "../components/LogInBox";
 
 
 const Home = () => {
-
 	const {isAuthenticated} = useAuth0();
+
 	if (isAuthenticated) {
 		return <Navigate to='/dashboard'/>
 	}
+
 	return (
 		<div>
 			<ResponsiveAppBar/>
