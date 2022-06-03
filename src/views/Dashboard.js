@@ -3,14 +3,14 @@ import {makeStyles} from "@mui/styles";
 import Container from "@mui/material/Container";
 import UserName from "../components/UserName";
 import EmptyBudgetBox from "../components/EmptyBudgetBox";
-import { withAuthenticationRequired} from "@auth0/auth0-react";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "./Home";
 import React from 'react';
 import {useEffect,} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashboardReducer";
 
-const useStyles = makeStyles(theme => ({
+ const useStyles = makeStyles(theme => ({
 	mainContainer: {
 		display: "flex",
 		flexDirection: "column",
@@ -41,19 +41,17 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
 	const classes = useStyles();
-	const {budget, loading, error} = useSelector(budgetDashboardSelector);
+	const { loading} = useSelector(budgetDashboardSelector);
+
 
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(fetchCurrentBudget());
 	}, [dispatch])
-
-
-	return (
-		<div>
-			<ResponsiveAppBar/>
-			<Container maxWidth="xl">
+	const getContent = () => {
+		if (loading) {
+			return (
 				<div className={classes.mainContainer}>
 					<div className={classes.leftUserNameText}>
 						HELLO <UserName/>
@@ -63,6 +61,18 @@ const Dashboard = () => {
 					</div>
 					<EmptyBudgetBox/>
 				</div>
+			)
+		}else {
+			<h1>Loading</h1>
+		}
+	}
+
+
+	return (
+		<div>
+			<ResponsiveAppBar/>
+			<Container maxWidth="xl">
+				{getContent()}
 			</Container>
 		</div>
 	)

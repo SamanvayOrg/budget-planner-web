@@ -5,6 +5,7 @@ import LogInBox from "../components/LogInBox";
 import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {authSelector, setToken} from "../slices/authReducer";
+import CircularColor from "../components/Spinner";
 
 
 const Home = () => {
@@ -21,17 +22,24 @@ const Home = () => {
 
 	useEffect(() => {
 		dispatch(initAuth());
+		// eslint-disable-next-line
 	}, [dispatch, isAuthenticated]);
 
 
-	if (authDetailsAvailable) {
+	let renderInScreeen = <LogInBox/>;
+
+
+	if (!authDetailsAvailable && isAuthenticated) {
+		renderInScreeen = <CircularColor/>;
+	}else if (authDetailsAvailable && isAuthenticated) {
 		return <Navigate to='/dashboard'/>
 	}
+
 
 	return (<div>
 		<ResponsiveAppBar/>
 		<div style={{padding: "10%"}}>
-			<LogInBox/>
+			{renderInScreeen}
 		</div>
 	</div>);
 
