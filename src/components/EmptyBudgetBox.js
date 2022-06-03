@@ -49,12 +49,12 @@ const EmptyBudgetBox = () => {
 	const classes = styleSheets();
 
 	return (<Box className={classes.box}>
-		<text className={classes.notAddedBudgetText}>
+		<span className={classes.notAddedBudgetText}>
 			You currently have not added any budgets yet.
-		</text>
-		<text>
+		</span>
+		<span>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-		</text>
+		</span>
 		<BasicModal
 			buttonLabel={"Add a new budget"}
 			buttonId={"addNewBudgetButton"}

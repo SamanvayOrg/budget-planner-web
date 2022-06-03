@@ -55,16 +55,16 @@ const BasicModal = ({buttonLabel, buttonId, style, modalText, dropDown, actionBu
 			className={classes.modal}
 		>
 			<Box sx={style}>
-				<text className={classes.modalHeading}>
+				<span className={classes.modalHeading}>
 					{modalText}
-				</text>
-				<text className={classes.modalSecondaryText}>
+				</span>
+				<span className={classes.modalSecondaryText}>
 					Sample text
-				</text>
+				</span>
 				{dropDown}
 				{actionButton}
 				{cancelButton}
-				<text className={classes.cancelText} onClick={handleClose}>Cancel</text>
+				<span className={classes.cancelText} onClick={handleClose}>Cancel</span>
 
 			</Box>
 		</Modal>

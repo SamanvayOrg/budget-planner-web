@@ -3,7 +3,6 @@ import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
 import LogoutButton from "./LogoutButton";
 import * as React from 'react';
 import NavBarMenu from "./NavBarMenu";
@@ -44,7 +43,7 @@ const Profile = (user, ...props) => {
 			onClose={handleCloseUserMenu}
 		>
 			{settings.map((setting) => (<MenuItem key={setting} onClick={handleCloseUserMenu}>
-				<Typography textAlign="center">{setting}</Typography>
+				<span >{setting}</span>
 			</MenuItem>))}
 		</Menu>
 	</div>)
