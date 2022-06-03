@@ -1,40 +1,42 @@
-const actions = {
-	SET_TOKEN: 'setToken',
-	SET_USER_DETAILS: 'setUserDetails',
-	LOGOUT: 'logout',
-};
+import {createSlice} from "@reduxjs/toolkit";
 
-let initialState = {user: {}, token: '', authDetailsAvailable: false};
+export const initialState = {
+	user: {}, token: '', authDetailsAvailable: false,
+	isLoading: false
+}
 
-const authReducer = (state = initialState, action) => {
-	switch (action.type) {
-		case actions.SET_TOKEN: {
-			return {
-				...state,
-				token: action.payload,
-				authDetailsAvailable: true
-			};
-			console.log('setting authdetailsavailable to true');
-			break;
-		}
-		case actions.SET_USER_DETAILS: {
-			return {
-				...state,
-				user: action.payload
-			};
-			break;
-		}
-		case actions.LOGOUT: {
+
+const authSlice = createSlice({
+	name: 'auth',
+	initialState,
+	reducers: {
+		setToken: (state, {payload}) => {
+			state.token = payload
+			state.authDetailsAvailable = true
+		},
+		setUserDetails: (state, {payload}) => {
+			state.user = payload
+		},
+		logOut: (state) => {
 			return initialState;
 		}
-		default: {
-			return state;
-		}
+	},
+})
+
+
+export const {
+	setToken,
+	setUserDetails,
+	logOut
+} = authSlice.actions
+export const authSelector = state => state.auth;
+export const tokenSelector = state => state.auth.token;
+export default authSlice.reducer;
+
+export function setAuthToken(token) {
+	return async dispatch => {
+		dispatch(setToken(token))
+		dispatch(setUserDetails(token))
+		dispatch(logOut())
 	}
-};
-
-
-export {
-	actions,
-	authReducer,
-};
+}

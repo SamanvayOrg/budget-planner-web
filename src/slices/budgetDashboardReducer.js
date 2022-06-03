@@ -1,37 +1,48 @@
-const actions = {
-	SET_ACTIVE_BUDGET: 'budgetDashboardReducer/setActiveBudget',
-};
+import {createSlice} from "@reduxjs/toolkit";
+import {getCurrentBudget}  from  '../api/api';
+import {tokenSelector} from "./authReducer";
 
-let initialState = {activeBudget: {}};
+export const initialState = {
+	currentBudget: {},
+	loading: false,
+	error: false
+}
 
-const budgetDashboardReducer = (state = initialState, action) => {
+const budgetDashboardSlice = createSlice({
+	name: 'budgetDashboard',
+	initialState,
+	reducers: {
+		dashboardLoading: (state, {payload}) => {
+			state.loading = true
+			state.error = false
+		},
+		budgetLoadingFailure: (state, {payload}) => {
+			state.loading = false
+			state.error = true
+		},
+		setCurrentBudget: (state, {payload}) => {
+			state.loading = false
+			state.currentBudget = payload
+			state.error = false
+		},
+	},
+});
 
-	switch(action.type) {
-		case actions.SET_ACTIVE_BUDGET: {
-			return {
-				...state,
-				activeBudget: action.payload,
-			};
-			break;
-		}
-		case actions.SET_USER_DETAILS: {
-			return {
-				...state,
-				user: action.payload
-			};
-			break;
-		}
-		case actions.LOGOUT: {
-			return initialState;
-		}
-		default: {
-			return state;
-		}
+
+export const {
+	dashboardLoading,
+	setCurrentBudget
+} = budgetDashboardSlice.actions
+
+export const budgetDashboardSelector = state => state.budgetDashboard;
+export default budgetDashboardSlice.reducer;
+
+export function fetchCurrentBudget() {
+	return async (dispatch, getState) => {
+		const token = tokenSelector(getState())
+		console.log('selected token', token);
+		dispatch(dashboardLoading());
+		let budget = await getCurrentBudget(token);
+		dispatch(setCurrentBudget(budget));
 	}
-};
-
-
-export {
-	actions,
-	budgetDashboardReducer,
-};
+}

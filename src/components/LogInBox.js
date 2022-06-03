@@ -49,7 +49,7 @@ const LogInBox = () => {
 				<div className={classes.signInName}>
 					Sign in to your account
 				</div>
-				<LoginButton/>
+				<LoginButton />
 				<LoginPageHelpAndSupportText/>
 			</div>
 			<ArrowImg/>

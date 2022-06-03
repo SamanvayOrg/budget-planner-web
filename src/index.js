@@ -1,8 +1,10 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import * as ReactDOMClient from 'react-dom/client';
 import App from "./App";
 import {Auth0Provider} from "@auth0/auth0-react";
 import {getConfig} from "./config";
+import {Provider} from "react-redux";
+import store from "./store/store";
 
 
 const config = getConfig();
@@ -19,9 +21,13 @@ const providerConfig = {
 	scope: "openid profile use:app"
 };
 
-ReactDOM.render(
-	<Auth0Provider {...providerConfig}>
-		<App/>
-	</Auth0Provider>,
-	document.getElementById("root")
+const container = 	document.getElementById("root");
+const root = ReactDOMClient.createRoot(container);
+
+root.render(
+	<Provider store={store}>
+		<Auth0Provider {...providerConfig}>
+			<App/>
+		</Auth0Provider>
+	</Provider>
 );

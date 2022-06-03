@@ -33,9 +33,13 @@ const useStyles = makeStyles(theme => ({
 
 	}
 
-}))
+}));
 
-const AllBudgets = () => {
+
+
+const AllBudgets = ({setCurrentBudget}) => {
+	setCurrentBudget();
+
 	const classes = useStyles();
 	return (
 		<div>

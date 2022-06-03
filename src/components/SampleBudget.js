@@ -27,16 +27,8 @@ const SampleBudget = () => {
 		}
 		dataRes();
 	}, []);
-	console.log('data--->', data);
-	console.log('data.budgetLine--->', data.budgetLines)
 
 
-	// if (data.budgetLines) {
-	// 	data.budgetLines.forEach(showLines())
-	//
-	// 	function showLines(line) {
-	// 		console.log("line--->", line)
-	// 	}}
 
 
 
