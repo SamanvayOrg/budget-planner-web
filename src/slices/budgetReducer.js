@@ -43,6 +43,7 @@ export function fetchBudget(year) {
 		const token = tokenSelector(getState())
 		dispatch(budgetLoading());
 		let budget = await getBudget(token, year);
+		console.log("budget--->",budget);
 		dispatch(setBudget(budget));
 	}
 }

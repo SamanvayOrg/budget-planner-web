@@ -3,6 +3,7 @@ import Dashboard from "../views/Dashboard";
 import React from "react";
 import Home from "../views/Home";
 import BudgetDetail from "../views/BudgetDetail";
+import AllBudgets from "../views/AllBudgets";
 
 const Routing = () => {
 	return (
@@ -11,6 +12,7 @@ const Routing = () => {
 			<Route path="/" element={<Home/>}/>
 			<Route path="/dashboard" element={<Dashboard/>}/>
 			<Route path="/budget/:year" element={<BudgetDetail/>}/>
+			<Route path="/allBudgets" element={<AllBudgets/>}/>
 		</Routes>
 		</BrowserRouter>)
 };

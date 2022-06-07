@@ -10,6 +10,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashboardReducer";
 import ActionButton from "../components/ActionButton";
 import {useNavigate} from "react-router-dom";
+import CurrentBudgetBox from "../components/CurrentBudgetBox";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -69,9 +70,7 @@ const Dashboard = () => {
 					</div>
 
 					{loading? <EmptyBudgetBox/>: (
-						<ActionButton id={"goToBudget"} onClick={goToBudget}
-									  label={'Go to Current Budget'}
-						/>
+						<CurrentBudgetBox onClick={goToBudget}/>
 					)}
 
 				</div>
