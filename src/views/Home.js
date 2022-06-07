@@ -6,6 +6,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {authSelector, setToken} from "../slices/authReducer";
 import CircularColor from "../components/Spinner";
+import Spinner from "../components/Spinner";
 
 
 const Home = () => {
@@ -30,8 +31,8 @@ const Home = () => {
 
 
 	if (!authDetailsAvailable && isAuthenticated) {
-		renderInScreeen = <CircularColor/>;
-	}else if (authDetailsAvailable && isAuthenticated) {
+		renderInScreeen = <Spinner/>;
+	} else if (authDetailsAvailable && isAuthenticated) {
 		return <Navigate to='/dashboard'/>
 	}
 

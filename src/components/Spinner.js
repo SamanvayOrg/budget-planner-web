@@ -12,11 +12,12 @@ const useStyles = makeStyles(theme => ({
 		alignItems: "center",
 	},
 }));
-export default function CircularColor() {
+const Spinner = () => {
 	const classes = useStyles();
 	return (
-		<Box className={classes.mainContainer}  >
+		<Box className={classes.mainContainer}>
 			<CircularProgress style={{color: "#166A8C"}}/>
 		</Box>
 	);
 }
+export default Spinner;

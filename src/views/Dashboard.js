@@ -11,6 +11,8 @@ import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashb
 import ActionButton from "../components/ActionButton";
 import {useNavigate} from "react-router-dom";
 import CurrentBudgetBox from "../components/CurrentBudgetBox";
+import CircularColor from "../components/Spinner";
+import Spinner from "../components/Spinner";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -69,7 +71,7 @@ const Dashboard = () => {
 						<span className={classes.mmbsName}>Maharashtra Municipality budgeting system.</span>
 					</div>
 
-					{loading? <EmptyBudgetBox/>: (
+					{loading? <Spinner/>: (
 						<CurrentBudgetBox onClick={goToBudget} year={budgetYear}/>
 					)}
 
