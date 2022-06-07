@@ -63,7 +63,6 @@ const EmptyBudgetBox = () => {
 			dropDown={<BasicSelect/>}
 			actionButton={<ActionButton label={"CREATE A NEW BUDGET"} id={"addNewBudgetButton"} />}
 			// cancelButton={}
-
 		/>
 	</Box>)
 }

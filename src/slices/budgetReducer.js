@@ -1,18 +1,19 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getCurrentBudget}  from  '../api/api';
+import {getBudget, getCurrentBudget} from '../api/api';
 import {tokenSelector} from "./authReducer";
+import {toArray} from "../domain/budgetMapper";
 
 export const initialState = {
-	currentBudget: {},
+	budget: {},
 	loading: false,
 	error: false
 }
 
 const budgetDashboardSlice = createSlice({
-	name: 'budgetDashboard',
+	name: 'budget',
 	initialState,
 	reducers: {
-		dashboardLoading: (state, {payload}) => {
+		budgetLoading: (state, {payload}) => {
 			state.loading = true
 			state.error = false
 		},
@@ -20,28 +21,28 @@ const budgetDashboardSlice = createSlice({
 			state.loading = false
 			state.error = true
 		},
-		setCurrentBudget: (state, {payload}) => {
+		setBudget: (state, {payload}) => {
 			state.loading = false
-			state.currentBudget = payload
+			state.budget = payload
 			state.error = false
+			state.budgetView = toArray(payload)
 		},
 	},
 });
 
-
 export const {
-	dashboardLoading,
-	setCurrentBudget
+	budgetLoading,
+	setBudget
 } = budgetDashboardSlice.actions
 
-export const budgetDashboardSelector = state => state.budgetDashboard;
+export const budgetSelector = state => state.budget;
 export default budgetDashboardSlice.reducer;
 
-export function fetchCurrentBudget() {
+export function fetchBudget(year) {
 	return async (dispatch, getState) => {
 		const token = tokenSelector(getState())
-		dispatch(dashboardLoading());
-		let budget = await getCurrentBudget(token);
-		dispatch(setCurrentBudget(budget));
+		dispatch(budgetLoading());
+		let budget = await getBudget(token, year);
+		dispatch(setBudget(budget));
 	}
 }

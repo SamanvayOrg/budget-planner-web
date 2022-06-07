@@ -5,12 +5,13 @@ import UserName from "../components/UserName";
 import EmptyBudgetBox from "../components/EmptyBudgetBox";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "./Home";
-import React from 'react';
-import {useEffect,} from "react";
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashboardReducer";
+import ActionButton from "../components/ActionButton";
+import {useNavigate} from "react-router-dom";
 
- const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(theme => ({
 	mainContainer: {
 		display: "flex",
 		flexDirection: "column",
@@ -22,7 +23,6 @@ import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashb
 		fontStyle: "normal",
 		color: "#616161",
 		fontWeight: "700",
-
 	}, leftUserNameText: {
 		display: "flex",
 		flexDirection: "row",
@@ -42,13 +42,18 @@ import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashb
 const Dashboard = () => {
 	const classes = useStyles();
 
+	const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector)
 
+	let navigate = useNavigate();
+	const goToBudget = () =>{
+		const year = budgetYear.substring(0, 4)
+		navigate(`/budget/${year}`);
+	}
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(fetchCurrentBudget());
-	}, [dispatch])
-
+	}, [dispatch]);
 
 
 	return (
@@ -62,7 +67,13 @@ const Dashboard = () => {
 					<div><span className={classes.welcomeText}>Welcome to </span>
 						<span className={classes.mmbsName}>Maharashtra Municipality budgeting system.</span>
 					</div>
-					<EmptyBudgetBox/>
+
+					{loading? <EmptyBudgetBox/>: (
+						<ActionButton id={"goToBudget"} onClick={goToBudget}
+									  label={'Go to Current Budget'}
+						/>
+					)}
+
 				</div>
 			</Container>
 		</div>

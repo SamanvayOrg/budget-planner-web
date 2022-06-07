@@ -12,6 +12,18 @@ const getCurrentBudget = async (token) => {
 	return result.data;
 }
 
+
+const getBudget = async (token, year) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/budget?year=${year}`,
+		{
+			headers
+		});
+	return result.data;
+}
+
+
 export {
-	getCurrentBudget
+	getCurrentBudget,
+	getBudget
 };
