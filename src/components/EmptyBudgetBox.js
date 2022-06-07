@@ -45,7 +45,7 @@ const style = {
 	gap: "1vw"
 };
 
-const EmptyBudgetBox = () => {
+const EmptyBudgetBox = ({addNewBudget}) => {
 	const classes = styleSheets();
 
 	return (<Box className={classes.box}>
@@ -53,7 +53,7 @@ const EmptyBudgetBox = () => {
 			You currently have not added any budgets yet.
 		</span>
 		<span>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+			You can add a new budget by clicking on the Add New Budget button.
 		</span>
 		<BasicModal
 			buttonLabel={"Add a new budget"}
@@ -61,8 +61,7 @@ const EmptyBudgetBox = () => {
 			modalText={"Create a new budget"}
 			style={style}
 			dropDown={<BasicSelect/>}
-			actionButton={<ActionButton label={"CREATE A NEW BUDGET"} id={"addNewBudgetButton"} />}
-			// cancelButton={}
+			actionButton={<ActionButton label={"CREATE A NEW BUDGET"} id={"addNewBudgetButton"} onClick={addNewBudget} />}
 		/>
 	</Box>)
 }

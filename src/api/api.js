@@ -1,7 +1,4 @@
 import axios from "axios";
-import React from 'react';
-
-
 
 const getCurrentBudget = async (token) => {
 	const headers = {'Authorization': `Bearer ${token}`};
@@ -12,7 +9,6 @@ const getCurrentBudget = async (token) => {
 	return result.data;
 }
 
-
 const getBudget = async (token, year) => {
 	const headers = {'Authorization': `Bearer ${token}`};
 	const result = await axios.get(`/api/budget?year=${year}`,
@@ -22,8 +18,13 @@ const getBudget = async (token, year) => {
 	return result.data;
 }
 
+const createBudget = async (token, year) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	await axios.post(`/api/budget?year=${year}`, {headers});
+}
 
 export {
 	getCurrentBudget,
-	getBudget
+	getBudget,
+	createBudget,
 };

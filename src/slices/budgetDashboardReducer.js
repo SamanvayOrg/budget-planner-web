@@ -1,11 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getCurrentBudget}  from  '../api/api';
+import {createBudget, getCurrentBudget} from '../api/api';
 import {tokenSelector} from "./authReducer";
 
 export const initialState = {
 	currentBudget: {},
 	loading: false,
-	error: false
+	error: false,
+	newBudgetCreated: false,
+	newBudgetYear: null
 }
 
 const budgetDashboardSlice = createSlice({
@@ -25,13 +27,18 @@ const budgetDashboardSlice = createSlice({
 			state.currentBudget = payload
 			state.error = false
 		},
+		newBudgetCreated: ((state, {payload}) => {
+			state.newBudgetCreated = true;
+			state.newBudgetYear = payload;
+		})
 	},
 });
 
 
 export const {
 	dashboardLoading,
-	setCurrentBudget
+	setCurrentBudget,
+	newBudgetCreated
 } = budgetDashboardSlice.actions
 
 export const budgetDashboardSelector = state => state.budgetDashboard;
@@ -43,5 +50,14 @@ export function fetchCurrentBudget() {
 		dispatch(dashboardLoading());
 		let budget = await getCurrentBudget(token);
 		dispatch(setCurrentBudget(budget));
+	}
+}
+
+export function createNewBudget(year) {
+	return async (dispatch, getState) => {
+		const token = tokenSelector(getState())
+		dispatch(dashboardLoading());
+		await createBudget(token, year);
+		dispatch(newBudgetCreated(year));
 	}
 }

@@ -8,7 +8,6 @@ import Home from "./Home";
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashboardReducer";
-import ActionButton from "../components/ActionButton";
 import {useNavigate} from "react-router-dom";
 import CurrentBudgetBox from "../components/CurrentBudgetBox";
 import CircularColor from "../components/Spinner";
@@ -45,9 +44,10 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
 	const classes = useStyles();
 
-	const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector)
+	const {loading, currentBudget: {budgetYear}, newBudgetCreated, newBudgetYear} = useSelector(budgetDashboardSelector)
 
 	let navigate = useNavigate();
+
 	const goToBudget = () =>{
 		const year = budgetYear.substring(0, 4)
 		navigate(`/budget/${year}`);
@@ -57,6 +57,12 @@ const Dashboard = () => {
 	useEffect(() => {
 		dispatch(fetchCurrentBudget());
 	}, [dispatch]);
+
+	useEffect(() => {
+		if (newBudgetCreated) {
+			navigate(`budget/${newBudgetYear}`);
+		}
+	}, [navigate, newBudgetCreated, newBudgetYear]);
 
 
 	return (
