@@ -10,16 +10,13 @@ const useStyles = makeStyles(theme => ({
 		flexDirection: "row",
 		justifyContent: "center",
 		alignItems: "center",
-
-
-
 	},
 }));
 export default function CircularColor() {
 	const classes = useStyles();
 	return (
 		<Box className={classes.mainContainer}  >
-			<CircularProgress />
+			<CircularProgress style={{color: "#166A8C"}}/>
 		</Box>
 	);
 }

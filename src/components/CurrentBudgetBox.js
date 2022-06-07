@@ -40,13 +40,13 @@ const styleSheets = makeStyles(theme => ({
 	}
 
 }))
-const CurrentBudgetBox = ({onClick}) => {
+const CurrentBudgetBox = ({onClick,year}) => {
 	const classes = styleSheets();
 	return (
 		<Box className={classes.box}>
 			<div className={classes.innerBox}>
 				<div className={classes.text}>
-					<span>You currently have not added any budgets yet.</span>
+					<span>Budget for year {year}</span>
 				</div>
 
 			</div>

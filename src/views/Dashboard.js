@@ -70,7 +70,7 @@ const Dashboard = () => {
 					</div>
 
 					{loading? <EmptyBudgetBox/>: (
-						<CurrentBudgetBox onClick={goToBudget}/>
+						<CurrentBudgetBox onClick={goToBudget} year={budgetYear}/>
 					)}
 
 				</div>

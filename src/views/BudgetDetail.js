@@ -60,6 +60,7 @@ const BudgetDetail = () => {
         <div>
             <ResponsiveAppBar/>
             <Container maxWidth="xl">
+
                 <div className={classes.mainContainer}>
                     <Spreadsheet className={classes.cell} data={budgetView} columnLabels={headers(budget)}/>
                 </div>
