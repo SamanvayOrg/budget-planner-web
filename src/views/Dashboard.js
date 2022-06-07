@@ -41,7 +41,6 @@ import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashb
 
 const Dashboard = () => {
 	const classes = useStyles();
-	const { loading} = useSelector(budgetDashboardSelector);
 
 
 	const dispatch = useDispatch();
@@ -49,9 +48,13 @@ const Dashboard = () => {
 	useEffect(() => {
 		dispatch(fetchCurrentBudget());
 	}, [dispatch])
-	const getContent = () => {
-		if (loading) {
-			return (
+
+
+
+	return (
+		<div>
+			<ResponsiveAppBar/>
+			<Container maxWidth="xl">
 				<div className={classes.mainContainer}>
 					<div className={classes.leftUserNameText}>
 						HELLO <UserName/>
@@ -61,18 +64,6 @@ const Dashboard = () => {
 					</div>
 					<EmptyBudgetBox/>
 				</div>
-			)
-		}else {
-			<h1>Loading</h1>
-		}
-	}
-
-
-	return (
-		<div>
-			<ResponsiveAppBar/>
-			<Container maxWidth="xl">
-				{getContent()}
 			</Container>
 		</div>
 	)
