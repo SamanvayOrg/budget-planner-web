@@ -7,10 +7,9 @@ import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "./Home";
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {budgetDashboardSelector, fetchCurrentBudget} from "../slices/budgetDashboardReducer";
+import {budgetDashboardSelector, createNewBudget, fetchCurrentBudget} from "../slices/budgetDashboardReducer";
 import {useNavigate} from "react-router-dom";
 import CurrentBudgetBox from "../components/CurrentBudgetBox";
-import CircularColor from "../components/Spinner";
 import Spinner from "../components/Spinner";
 
 const useStyles = makeStyles(theme => ({
@@ -64,6 +63,15 @@ const Dashboard = () => {
 		}
 	}, [navigate, newBudgetCreated, newBudgetYear]);
 
+	const renderBox = () => {
+		if (loading) {
+			return <Spinner/>;
+		}
+		if (budgetYear) {
+			return <CurrentBudgetBox onClick={goToBudget} year={budgetYear}/>;
+		}
+		return <EmptyBudgetBox addNewBudget={(year) => dispatch(createNewBudget(year))}/>;
+	}
 
 	return (
 		<div>
@@ -76,11 +84,7 @@ const Dashboard = () => {
 					<div><span className={classes.welcomeText}>Welcome to </span>
 						<span className={classes.mmbsName}>Maharashtra Municipality budgeting system.</span>
 					</div>
-
-					{loading? <Spinner/>: (
-						<CurrentBudgetBox onClick={goToBudget} year={budgetYear}/>
-					)}
-
+					{renderBox()}
 				</div>
 			</Container>
 		</div>

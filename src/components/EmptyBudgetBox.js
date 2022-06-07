@@ -3,6 +3,7 @@ import {makeStyles} from "@mui/styles";
 import BasicModal from "./BasicModal";
 import BasicSelect from "./BasicSelect";
 import ActionButton from "./ActionButton";
+import {useState} from "react";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -48,6 +49,14 @@ const style = {
 const EmptyBudgetBox = ({addNewBudget}) => {
 	const classes = styleSheets();
 
+	const [selectedYear, setSelectedYear] = useState();
+
+	const addBudget = () => {
+		if (selectedYear) {
+			addNewBudget(selectedYear.substring(0, 3));
+		}
+	}
+
 	return (<Box className={classes.box}>
 		<span className={classes.notAddedBudgetText}>
 			You currently have not added any budgets yet.
@@ -60,8 +69,8 @@ const EmptyBudgetBox = ({addNewBudget}) => {
 			buttonId={"addNewBudgetButton"}
 			modalText={"Create a new budget"}
 			style={style}
-			dropDown={<BasicSelect/>}
-			actionButton={<ActionButton label={"CREATE A NEW BUDGET"} id={"addNewBudgetButton"} onClick={addNewBudget} />}
+			dropDown={<BasicSelect onChange={setSelectedYear}/>}
+			actionButton={<ActionButton label={"CREATE A NEW BUDGET"} id={"addNewBudgetButton"} onClick={addBudget} />}
 		/>
 	</Box>)
 }

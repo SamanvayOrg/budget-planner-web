@@ -9,9 +9,10 @@ const LogoutButton = () => {
 	const {logout} = useAuth0();
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(logOut())
-	}, [])
+	const onPressLogout = () => {
+		logout();
+		dispatch(logOut());
+	}
 
 	return (
 		<Typography

@@ -14,13 +14,14 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const BasicSelect = () => {
+const BasicSelect = ({onChange}) => {
 	const classes = useStyles();
 
 	const [budgetYear, setBudgetYear] = React.useState('');
 
 	const handleChange = (event) => {
 		setBudgetYear(event.target.value);
+		onChange(event.target.value);
 	};
 	let nextYear = moment().add(1, 'years').year();
 	let nextToNextYear = moment().add(2, 'years').year();

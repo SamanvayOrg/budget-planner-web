@@ -37,6 +37,7 @@ const budgetDashboardSlice = createSlice({
 
 export const {
 	dashboardLoading,
+	budgetLoadingFailure,
 	setCurrentBudget,
 	newBudgetCreated
 } = budgetDashboardSlice.actions
@@ -48,8 +49,13 @@ export function fetchCurrentBudget() {
 	return async (dispatch, getState) => {
 		const token = tokenSelector(getState())
 		dispatch(dashboardLoading());
-		let budget = await getCurrentBudget(token);
-		dispatch(setCurrentBudget(budget));
+		try {
+			let budget = await getCurrentBudget(token);
+			dispatch(setCurrentBudget(budget));
+		} catch (e) {
+			console.log(e);
+			dispatch(budgetLoadingFailure())
+		}
 	}
 }
 
@@ -58,6 +64,11 @@ export function createNewBudget(year) {
 		const token = tokenSelector(getState())
 		dispatch(dashboardLoading());
 		await createBudget(token, year);
-		dispatch(newBudgetCreated(year));
+		try {
+			dispatch(newBudgetCreated(year));
+		} catch(e) {
+			console.log(e);
+			dispatch(budgetLoadingFailure())
+		}
 	}
 }
