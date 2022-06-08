@@ -33,15 +33,12 @@ const useStyles = makeStyles(theme => ({
         fontWeight: "400", fontSize: "21px", lineHeight: "25px",
     }, mmbsName: {
         fontStyle: "italic", fontSize: "21px", lineHeight: "25px", color: "black",
-
     },cell:{
         fontSize:"13px",
         color: "#212121",
         fontWeight: "500"
-
     }
-
-}))
+}));
 
 const BudgetDetail = () => {
     const classes = useStyles();
@@ -68,7 +65,7 @@ const BudgetDetail = () => {
         </div>
     )
 };
-// export default BudgetDetail;
+
 export default withAuthenticationRequired(BudgetDetail, {
     onRedirecting: () => <Home/>,
 });

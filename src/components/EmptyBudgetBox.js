@@ -53,7 +53,7 @@ const EmptyBudgetBox = ({addNewBudget}) => {
 
 	const addBudget = () => {
 		if (selectedYear) {
-			addNewBudget(selectedYear.substring(0, 3));
+			addNewBudget(selectedYear.substring(0, 4));
 		}
 	}
 
