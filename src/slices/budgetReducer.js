@@ -27,12 +27,16 @@ const budgetDashboardSlice = createSlice({
 			state.error = false
 			state.budgetView = toArray(payload)
 		},
+		setBudgetView: (state, {payload}) => {
+			state.budgetView = payload
+		}
 	},
 });
 
 export const {
 	budgetLoading,
-	setBudget
+	setBudget,
+	setBudgetView
 } = budgetDashboardSlice.actions
 
 export const budgetSelector = state => state.budget;

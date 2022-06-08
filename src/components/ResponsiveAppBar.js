@@ -22,7 +22,7 @@ const ResponsiveAppBar = () => {
 		<AppBar id="navBar">
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<MBSLogo/>
+					<a href="/dashboard"><MBSLogo/></a>
 					{endView}
 				</Toolbar>
 			</Container>

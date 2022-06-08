@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {makeStyles} from "@mui/styles";
 
 const currentYear = () => '2022-23';
 
@@ -19,7 +20,7 @@ const headers = (budget = currentYear()) => (
         `Planned amount`,
         'Actuals for 8 months',
         'Probables for remaining 4 months',
-        `Total`
+        'Total'
     ]
 );
 
@@ -35,34 +36,47 @@ const toArray = ({budgetLines}) => {
         return accumulator + line[key]
     }, 0);
 
+    const getLineName = line => line.name === 'All'? line.minorHead + ' (All)': line.name;
+
     let finalArray = [];
     _.forEach(orderedMajorHeadGroups, (majorHeadGroup) => {
-        finalArray.push([{value: majorHeadGroup, readOnly: true}]);
+        finalArray.push([
+            {value: majorHeadGroup, className: 'Spreadsheet-Major-head-group'},
+            {value: null},
+            {value: null},
+            {value: null},
+            {value: null},
+            {value: null},
+            {value: null},
+            {value: null},
+            {value: null},
+        ]);
         const matchingLines = _.filter(budgetLines, line => line.majorHeadGroup === majorHeadGroup);
         _.forEach(matchingLines, line =>
             finalArray.push([
-                {value: line.name, readOnly: true},
-                {value: line.code, readOnly: true},
-                {value: line.yearMinus3ActualAmount, readOnly: true},
-                {value: line.yearMinus2ActualAmount, readOnly: true},
-                {value: line.yearMinus1ActualAmount, readOnly: true},
-                {value: line.plannedAmount},
-                {value: line.revisedAmount},
-                {value: line.actualAmount},
+                {value: getLineName(line), className: 'Spreadsheet-particulars'},
+                {value: line.code, className: 'Spreadsheet-number'},
+                {value: line.yearMinus3ActualAmount, className: 'Spreadsheet-number'},
+                {value: line.yearMinus2ActualAmount, className: 'Spreadsheet-number'},
+                {value: line.yearMinus1ActualAmount, className: 'Spreadsheet-number'},
+                {value: line.plannedAmount, className: 'Spreadsheet-number'},
+                {value: line.revisedAmount, className: 'Spreadsheet-number'},
+                {value: line.actualAmount, className: 'Spreadsheet-number'},
+                {value: null, className: 'Spreadsheet-number'},
             ]));
 
         finalArray.push([
-                {value: `Total ${majorHeadGroup}`, readOnly: true},
-                {value: null, readOnly: true},
-                {value: addAmounts(matchingLines, 'yearMinus3ActualAmount'), readOnly: true},
-                {value: addAmounts(matchingLines, 'yearMinus2ActualAmount'), readOnly: true},
-                {value: addAmounts(matchingLines, 'yearMinus1ActualAmount'), readOnly: true},
-                {value: addAmounts(matchingLines, 'plannedAmount'), readOnly: true},
-                {value: addAmounts(matchingLines, 'revisedAmount'), readOnly: true},
-                {value: addAmounts(matchingLines, 'actualAmount'), readOnly: true}
+                {value: `Total ${majorHeadGroup}`, className: 'Spreadsheet-total-particulars'},
+                {value: null, className: 'Spreadsheet-total-number'},
+                {value: addAmounts(matchingLines, 'yearMinus3ActualAmount'), className: 'Spreadsheet-total-number'},
+                {value: addAmounts(matchingLines, 'yearMinus2ActualAmount'), className: 'Spreadsheet-total-number'},
+                {value: addAmounts(matchingLines, 'yearMinus1ActualAmount'), className: 'Spreadsheet-total-number'},
+                {value: addAmounts(matchingLines, 'plannedAmount'), className: 'Spreadsheet-total-number'},
+                {value: addAmounts(matchingLines, 'revisedAmount'), className: 'Spreadsheet-total-number'},
+                {value: addAmounts(matchingLines, 'actualAmount'), className: 'Spreadsheet-total-number'},
+                {value: null, className: 'Spreadsheet-total-number'},
             ]
         );
-        finalArray.push([])
     });
 
     return finalArray;

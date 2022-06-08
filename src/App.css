@@ -28,6 +28,52 @@
   color: #61dafb;
 }
 
+.Spreadsheet-Major-head-group {
+  color: #212121;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 24px;
+}
+
+.Spreadsheet__table th {
+  background-color: #F9F9F9;
+  font-weight: 700;
+  font-size: 13px;
+  fontFamily: "Lato";
+}
+
+.Spreadsheet-particulars {
+  color: #212121;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 24px;
+}
+
+.Spreadsheet-number {
+  color: #212121;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: right;
+}
+
+.Spreadsheet-total-particulars {
+  color: #212121;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 24px;
+  background-color: #f2f2f2;
+}
+
+.Spreadsheet-total-number {
+  color: #212121;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 24px;
+  background-color: #f2f2f2;
+  text-align: right;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
