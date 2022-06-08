@@ -1,5 +1,4 @@
 import _ from "lodash";
-import {makeStyles} from "@mui/styles";
 
 const currentYear = () => '2022-23';
 
@@ -41,25 +40,25 @@ const toArray = ({budgetLines}) => {
     let finalArray = [];
     _.forEach(orderedMajorHeadGroups, (majorHeadGroup) => {
         finalArray.push([
-            {value: majorHeadGroup, className: 'Spreadsheet-Major-head-group'},
-            {value: null},
-            {value: null},
-            {value: null},
-            {value: null},
-            {value: null},
-            {value: null},
-            {value: null},
-            {value: null},
+            {value: majorHeadGroup, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
+            {value: null, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
+            {value: null, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
+            {value: null, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
+            {value: null, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
+            {value: null, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
+            {value: null, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
+            {value: null, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
+            {value: null, className: 'Spreadsheet-Major-head-group', details: {line: null, type: 'majorHeadGroup'}},
         ]);
         const matchingLines = _.filter(budgetLines, line => line.majorHeadGroup === majorHeadGroup);
         _.forEach(matchingLines, line =>
             finalArray.push([
-                {value: getLineName(line), className: 'Spreadsheet-particulars'},
-                {value: line.code, className: 'Spreadsheet-number'},
-                {value: line.yearMinus3ActualAmount, className: 'Spreadsheet-number'},
+                {value: getLineName(line), className: 'Spreadsheet-particulars', details: {line, type: 'name'}},
+                {value: line.code, className: 'Spreadsheet-number', details: {line, type: 'code'}},
+                {value: line.yearMinus3ActualAmount, className: 'Spreadsheet-number', details: {line, type: 'yearMinus3ActualAmount'}},
                 {value: line.yearMinus2ActualAmount, className: 'Spreadsheet-number'},
                 {value: line.yearMinus1ActualAmount, className: 'Spreadsheet-number'},
-                {value: line.plannedAmount, className: 'Spreadsheet-number'},
+                {value: line.plannedAmount, className: 'Spreadsheet-number', details: {line, type: 'plannedAmount'}},
                 {value: line.revisedAmount, className: 'Spreadsheet-number'},
                 {value: line.actualAmount, className: 'Spreadsheet-number'},
                 {value: null, className: 'Spreadsheet-number'},

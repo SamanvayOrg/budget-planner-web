@@ -59,7 +59,7 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		if (newBudgetCreated) {
-			navigate(`budget/${newBudgetYear}`);
+			navigate(`/budget/${newBudgetYear}`);
 		}
 	}, [navigate, newBudgetCreated, newBudgetYear]);
 

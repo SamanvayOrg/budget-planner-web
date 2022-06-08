@@ -5,9 +5,10 @@ import Home from "./Home";
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {useParams} from "react-router-dom";
-import {budgetSelector, fetchBudget, setBudgetView} from "../slices/budgetReducer";
+import {budgetSelector, fetchBudget} from "../slices/budgetReducer";
 import Spreadsheet from "react-spreadsheet";
 import {headers} from "../domain/budgetMapper";
+import _ from "lodash";
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -37,12 +38,31 @@ const useStyles = makeStyles(theme => ({
 const BudgetDetail = () => {
     const classes = useStyles();
 
-    const {budgetView = [], budget} = useSelector(budgetSelector)
-    const [view, setView] = useState();
+    const {budgetView = [], budget} = useSelector(budgetSelector);
+
+    const [view, setView] = useState([]);
+    const getLineName = line => line.name === 'All'? line.minorHead + ' (All)': line.name;
+
+
+    const updateView = (newView) => {
+        _.forEach(newView, (row) => {
+            console.log('row', row);
+            const budgetLine = row[0].details.line;
+            _.forEach(row, (cell) => {
+                if (cell.details.type === 'name') {
+                    cell.value = getLineName(cell.details.line);
+                }
+            })
+        });
+        console.log('changed')
+        setView(newView);
+    }
 
     useEffect(() => {
-        setView(budgetView);
-    }, budgetView)
+        if (budgetView.length > 0) {
+            setView(budgetView);
+        }
+    }, [budgetView]);
 
     let {year} = useParams();
     const dispatch = useDispatch();
@@ -56,8 +76,8 @@ const BudgetDetail = () => {
         <>
             <ResponsiveAppBar/>
             <div className={classes.mainContainer}>
-                <Spreadsheet data={budgetView} columnLabels={headers(budget)}
-                             onChange={(view) => setView(view)}/>
+                <Spreadsheet data={view} columnLabels={headers(budget)}
+                             onChange={updateView}/>
             </div>
         </>
     )
