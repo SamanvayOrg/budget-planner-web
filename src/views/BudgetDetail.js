@@ -46,7 +46,7 @@ const useStyles = makeStyles(theme => ({
 const BudgetDetail = () => {
     const classes = useStyles();
 
-    const {loading, budgetView = [], budget} = useSelector(budgetSelector)
+    const {budgetView = [], budget} = useSelector(budgetSelector)
 
     let { year } = useParams();
     const dispatch = useDispatch();
