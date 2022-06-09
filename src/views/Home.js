@@ -16,7 +16,8 @@ const Home = () => {
 
 	const initAuth = () => {
 		return async (dispatch) => {
-			dispatch(setToken(await getAccessTokenSilently()));
+			let token = await getAccessTokenSilently();
+			dispatch(setToken(token));
 		}
 	}
 
@@ -27,7 +28,6 @@ const Home = () => {
 
 
 	let renderInScreeen = <LogInBox/>;
-
 
 	if (!authDetailsAvailable && isAuthenticated) {
 		renderInScreeen = <Spinner/>;

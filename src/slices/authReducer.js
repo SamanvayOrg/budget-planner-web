@@ -32,11 +32,3 @@ export const {
 export const authSelector = state => state.auth;
 export const tokenSelector = state => state.auth.token;
 export default authSlice.reducer;
-
-export function setAuthToken(token) {
-	return async dispatch => {
-		dispatch(setToken(token))
-		dispatch(setUserDetails(token))
-		dispatch(logOut())
-	}
-}

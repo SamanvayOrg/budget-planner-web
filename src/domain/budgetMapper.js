@@ -35,7 +35,7 @@ const toArray = ({budgetLines}) => {
         return accumulator + line[key]
     }, 0);
 
-    const getLineName = line => line.name === 'All'? line.minorHead + ' (All)': line.name;
+    const getLineName = line => line.minorHead + ' - ' + line.name;
 
     let finalArray = [];
     _.forEach(orderedMajorHeadGroups, (majorHeadGroup) => {
