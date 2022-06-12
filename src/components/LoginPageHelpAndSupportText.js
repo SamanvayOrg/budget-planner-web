@@ -3,7 +3,6 @@ import {makeStyles} from "@mui/styles";
 
 const useStyles = makeStyles(theme => ({
 	supportText: {
-		position: "absolute",
 		fontFamily: 'Lato',
 		fontStyle: "normal",
 		fontWeight: "400",
@@ -11,10 +10,9 @@ const useStyles = makeStyles(theme => ({
 		lineHeight: "160%",
 		letterSpacing: "0.01em",
 		color: "#919191",
-		marginTop: "10%"
+		marginTop: "10px"
 
 	}, helpAndSupport: {
-		position: "absolute",
 		fontFamily: 'Lato',
 		fontStyle: "normal",
 		fontWeight: "700",

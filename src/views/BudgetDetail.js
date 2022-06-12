@@ -72,12 +72,14 @@ const BudgetDetail = () => {
         dispatch(fetchBudget(year));
     }, [dispatch, year]);
 
+    console.log("updateView-->",updateView);
     return (
         <>
             <ResponsiveAppBar/>
             <div className={classes.mainContainer}>
                 <Spreadsheet data={view} columnLabels={headers(budget)}
-                             onChange={updateView}/>
+                             // onChange={updateView}
+                />
             </div>
         </>
     )

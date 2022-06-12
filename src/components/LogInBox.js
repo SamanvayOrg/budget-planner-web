@@ -16,6 +16,7 @@ const useStyles = makeStyles(theme => ({
 	}, box: {
 		width: "50%",
 		display: "flex",
+		flexDirection:"column",
 		justifyContent: "center",
 		alignItems: "center",
 		flex: "auto",
@@ -24,16 +25,23 @@ const useStyles = makeStyles(theme => ({
 		borderRadius: "3px",
 		marginTop: "3%",
 		marginBottom: "3%",
-
-	}, signInName: {
-		position: "absolute",
 		fontFamily: 'Lato',
 		fontStyle: "normal",
 		fontWeight: "700",
+
+	},
+	mbsName: {
+		display: "flex",
+		paddingBottom:"20px",
+		fontSize:"24px",
+		fontWeight: "1000",
+
+
+	},signInName: {
 		fontSize: "22px",
 		fontFeatureSettings: "liga",
 		color: "#212121",
-		paddingBottom: "10%"
+		paddingBottom: "20px"
 	},
 
 }));
@@ -45,6 +53,9 @@ const LogInBox = () => {
 
 		<div className={classes.container}>
 			<div className={classes.box}>
+				<span className={classes.mbsName} >
+					Municipality budgeting system
+				</span>
 
 				<div className={classes.signInName}>
 					Sign in to your account
