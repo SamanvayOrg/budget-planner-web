@@ -51,16 +51,16 @@ const BudgetBox = ({versionName, lastUpdated}) => {
 	const classes = styleSheets();
 	return (
 		<Box className={classes.box}>
-			<text className={classes.insideBox}>
+			<span className={classes.insideBox}>
 				<div className={classes.lastUpdateText}>
 					{lastUpdated}
 				</div>
 
 				{versionName}
-			</text>
-			<text className={classes.actionButtons}>
+			</span>
+			<span className={classes.actionButtons}>
 				<ActionButton label={"EDIT BUDGET"} id={"smallActionButton"}/>
-			</text>
+			</span>
 		</Box>
 
 	)

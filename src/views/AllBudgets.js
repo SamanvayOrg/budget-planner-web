@@ -5,6 +5,10 @@ import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "./Home";
 import {makeStyles} from "@mui/styles";
 import Container from "@mui/material/Container";
+import {useDispatch, useSelector} from "react-redux";
+import {allBudgetSelector, fetchAllBudgets} from "../slices/allBudgetReducer";
+import {useEffect} from "react";
+import _ from "lodash";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -36,8 +40,28 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-
 const AllBudgets = () => {
+	const dispatch = useDispatch();
+	const {allBudget} = useSelector(allBudgetSelector);
+
+
+	useEffect(() => {
+		dispatch(fetchAllBudgets());
+	}, [dispatch]);
+
+	console.log('budget-->', allBudget);
+
+
+	function renderBox(allBudget) {
+		let budgetBox = [];
+		_.forEach(allBudget, (bud) => {
+			budgetBox.push(<BudgetBox versionName={"Budget for year " + bud.budgetYear}
+			                          lastUpdated={"last updated 24 hours ago"}/>
+			)
+		})
+		return _.reverse(budgetBox)
+	};
+
 
 	const classes = useStyles();
 	return (
@@ -45,7 +69,7 @@ const AllBudgets = () => {
 			<ResponsiveAppBar/>
 			<Container maxWidth="xl">
 				<div className={classes.mainContainer}>
-					<BudgetBox versionName={"Version 1.0.2"} lastUpdated={"last updated 24 hours ago"}/>
+					{renderBox(allBudget)}
 				</div>
 			</Container>
 
