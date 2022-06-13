@@ -35,7 +35,6 @@ export default allBudgetSlice.reducer;
 export function fetchAllBudgets() {
 	return async (dispatch, getState) => {
 		const token = tokenSelector(getState());
-		console.log(token);
 		dispatch(setBudget());
 		let budget = await getAllBudgets(token);
 		dispatch(setBudget(budget));

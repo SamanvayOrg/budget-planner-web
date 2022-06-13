@@ -16,7 +16,8 @@ const useStyles = makeStyles(theme => ({
 		flexDirection: "column",
 		justifyContent: "center",
 		alignItems: "start",
-		paddingTop: "6%",
+		paddingTop: "64px",
+
 		paddingLeft: "1%",
 		fontFamily: "Lato",
 		fontStyle: "normal",

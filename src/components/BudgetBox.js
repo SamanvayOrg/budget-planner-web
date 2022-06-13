@@ -6,13 +6,13 @@ import ActionButton from "./ActionButton";
 const styleSheets = makeStyles(theme => ({
 	box: {
 		display: "flex",
-		flexDirection: "column",
+		flexDirection: "row",
 		boxSizing: "border-box",
 		width: "100%",
 		background: " #FFFFFF",
 		border: "1px solid #DEDEDE",
 		borderRadius: "3px",
-		justifyContent: "space-around",
+		justifyContent: "space-between",
 		marginTop: "2%",
 		gap: "2vw",
 		paddingTop: "1%",
@@ -25,6 +25,8 @@ const styleSheets = makeStyles(theme => ({
 	}, insideBox: {
 		display: "flex",
 		flexDirection: "column",
+		justifyContent: "flex-start",
+
 		gap: "0.5vw",
 		color: "#212121",
 		fontSize: "19px",
@@ -39,18 +41,18 @@ const styleSheets = makeStyles(theme => ({
 		color: "#616161",
 	}, actionButtons: {
 		display: "flex",
-		justifyContent: "end",
-		// alignItems:"start",
+		justifyContent: "flex-end",
 		fontSize: "11px",
 		textTransform: "uppercase",
 		color: "#616161",
+		marginRight:"1%"
 	}
 
 }))
-const BudgetBox = ({versionName, lastUpdated}) => {
+const BudgetBox = ({versionName, lastUpdated,key}) => {
 	const classes = styleSheets();
 	return (
-		<Box className={classes.box}>
+		<Box className={classes.box} key={key}>
 			<span className={classes.insideBox}>
 				<div className={classes.lastUpdateText}>
 					{lastUpdated}
