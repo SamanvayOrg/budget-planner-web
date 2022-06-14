@@ -9,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {allBudgetSelector, fetchAllBudgets} from "../slices/allBudgetReducer";
 import {useEffect} from "react";
 import _ from "lodash";
+import {useNavigate} from "react-router-dom";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -44,6 +45,7 @@ const useStyles = makeStyles(theme => ({
 const AllBudgets = () => {
 	const dispatch = useDispatch();
 	const {allBudget} = useSelector(allBudgetSelector);
+	let navigate = useNavigate();
 
 
 	useEffect(() => {
@@ -55,8 +57,13 @@ const AllBudgets = () => {
 
 	function renderBox(allBudget) {
 		let budgetBox = [];
-		_.forEach(allBudget, (bud) => {
-			budgetBox.push(<BudgetBox versionName={"Budget for year " + bud.budgetYear}
+		_.forEach(allBudget, (budget) => {
+			const goToBudget = () => {
+				let year = budget.budgetYear.substring(0, 4)
+				navigate(`/budget/${year}`);
+			}
+			budgetBox.push(<BudgetBox action={goToBudget} keys={budget.budgetYear}
+			                          versionName={"Budget for year " + budget.budgetYear}
 			                          lastUpdated={"last updated 24 hours ago"}/>
 			)
 		})

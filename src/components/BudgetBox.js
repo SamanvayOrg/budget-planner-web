@@ -45,14 +45,14 @@ const styleSheets = makeStyles(theme => ({
 		fontSize: "11px",
 		textTransform: "uppercase",
 		color: "#616161",
-		marginRight:"1%"
+		marginRight: "1%"
 	}
 
 }))
-const BudgetBox = ({versionName, lastUpdated,key}) => {
+const BudgetBox = ({versionName, lastUpdated, keys, action}) => {
 	const classes = styleSheets();
 	return (
-		<Box className={classes.box} key={key}>
+		<Box className={classes.box} key={keys}>
 			<span className={classes.insideBox}>
 				<div className={classes.lastUpdateText}>
 					{lastUpdated}
@@ -61,7 +61,7 @@ const BudgetBox = ({versionName, lastUpdated,key}) => {
 				{versionName}
 			</span>
 			<span className={classes.actionButtons}>
-				<ActionButton label={"EDIT BUDGET"} id={"smallActionButton"}/>
+				<ActionButton onClick={action} keys={keys} label={"EDIT BUDGET"} id={"smallActionButton"}/>
 			</span>
 		</Box>
 
