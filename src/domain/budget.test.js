@@ -1,4 +1,5 @@
 import {fromContract} from './budget';
+import getView from './getView'
 import _ from "lodash";
 
 describe('budget', () => {
@@ -207,8 +208,11 @@ describe('budget', () => {
 	describe('toView', () => {
 		it('should get view',()=>{
 			let budget= fromContract(budgetContract);
-
+			console.log(JSON.stringify(getView(budget)));
+			console.log(getView(budget));
 			expect(getView(budget)).toBeDefined();
+			expect(getView(budget)).toHaveLength(4);
+
 		})
 	})
 })
