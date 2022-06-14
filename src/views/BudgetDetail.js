@@ -41,21 +41,15 @@ const BudgetDetail = () => {
     const {budgetView = [], budget} = useSelector(budgetSelector);
 
     const [view, setView] = useState([]);
-    const getLineName = line => line.name === 'All'? line.minorHead + ' (All)': line.name;
 
-
-    const updateView = (newView) => {
-        _.forEach(newView, (row) => {
-            console.log('row', row);
-            const budgetLine = row[0].details.line;
-            _.forEach(row, (cell) => {
-                if (cell.details.type === 'name') {
-                    cell.value = getLineName(cell.details.line);
-                }
-            })
-        });
-        console.log('changed')
-        setView(newView);
+    const updateView = (state) => {
+        const newState = state.map(row => row.map(item => (
+            {
+                ...item,
+                value: _.isNumber(item.value) ? 100: item.value + 1,
+            }
+        )))
+        // setView(newState);
     }
 
     useEffect(() => {
@@ -67,18 +61,16 @@ const BudgetDetail = () => {
     let {year} = useParams();
     const dispatch = useDispatch();
 
-
     useEffect(() => {
         dispatch(fetchBudget(year));
     }, [dispatch, year]);
 
-    console.log("updateView-->",updateView);
     return (
         <>
             <ResponsiveAppBar/>
             <div className={classes.mainContainer}>
                 <Spreadsheet data={view} columnLabels={headers(budget)}
-                             // onChange={updateView}
+                             onChange={updateView}
                 />
             </div>
         </>
