@@ -1,9 +1,7 @@
 import {fromContract} from './index';
 import getView from './getView'
 import _ from "lodash";
-import {updateBudget} from '../slices/budgetReducer';
 import {updateFromView} from './updateFromView';
-import {toJSON} from "lodash/seq";
 
 describe('budget', () => {
 	const budgetContract = {
@@ -221,7 +219,7 @@ describe('budget', () => {
 			let view = getView(budget);
 			expect(view[0][0].value).toBe('A')
 			expect(view[8][0].value).toBe('B')
-			updateFromView(view, budget);
+			console.log(view[0])
 
 
 
