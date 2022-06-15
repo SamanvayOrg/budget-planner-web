@@ -11,12 +11,12 @@ const getDetailLines = (budget) => {
 const findDetailLine = (detailLines, row) => _.find(detailLines, line => line.id === row[0].context.id);
 
 const updateDetailLine = (line, row) => {
-    line.yearMinus2Actuals = row[3].value;
-    line.yearMinus1Actuals = row[4].value;
-    line.previousYearActuals = row[5].value;
-    line.budgetedAmount = row[6].value;
-    line.currentYear8MonthsActuals = row[7].value;
-    line.currentYear4MonthsProbables = row[8].value;
+	line.yearMinus2Actuals = _.get(row[3], 'value');
+	line.yearMinus1Actuals = _.get(row[4], 'value');
+	line.previousYearActuals = _.get(row[5], 'value');
+	line.budgetedAmount = _.get(row[6], 'value');
+	line.currentYear8MonthsActuals = _.get(row[7], 'value');
+	line.currentYear4MonthsProbables = _.get(row[8], 'value');
 }
 
 const updateFromView = (budgetView, budget) => {
@@ -32,5 +32,5 @@ const updateFromView = (budgetView, budget) => {
 }
 
 export {
-    updateFromView
+	updateFromView
 }
