@@ -8,7 +8,7 @@ const addAllValuesFor = (list, labels) => {
 
 	return _.reduce(list, (accum, listItem) => {
 			_.forEach(labels, (label) => {
-				accum[label] = accum[label] + listItem[label];
+				accum[label] = _.toNumber(accum[label]) + _.toNumber(listItem[label]);
 			});
 			return accum;
 		}
@@ -25,7 +25,7 @@ const summary = (lines) => addAllValuesFor(lines, [
 ]);
 
 const updateSummary = (budget) => {
-	for(let i = 0; i < budget.items.length; i++) {
+	for (let i = 0; i < budget.items.length; i++) {
 		let majorHeadGroup = budget.items[i];
 		for (let j = 0; j < majorHeadGroup.items.length; j++) {
 			let majorHead = majorHeadGroup.items[j]
