@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit";
 import {getBudget, getCurrentBudget} from '../api/api';
 import {tokenSelector} from "./authReducer";
 import {toArray} from "../domain/budgetMapper";
+import {fromContract, getView} from '../domain';
 
 export const initialState = {
 	budget: {},
@@ -25,7 +26,7 @@ const budgetDashboardSlice = createSlice({
 			state.loading = false
 			state.budget = payload
 			state.error = false
-			state.budgetView = toArray(payload)
+			state.budgetView = getView(payload)
 		},
 		setBudgetView: (state, {payload}) => {
 			state.budgetView = payload
@@ -47,6 +48,6 @@ export function fetchBudget(year) {
 		const token = tokenSelector(getState())
 		dispatch(budgetLoading());
 		let budget = await getBudget(token, year);
-		dispatch(setBudget(budget));
+		dispatch(setBudget(fromContract(budget)));
 	}
 }

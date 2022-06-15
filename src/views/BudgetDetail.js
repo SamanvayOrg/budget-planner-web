@@ -9,6 +9,8 @@ import {budgetSelector, fetchBudget} from "../slices/budgetReducer";
 import Spreadsheet from "react-spreadsheet";
 import {headers} from "../domain/budgetMapper";
 import _ from "lodash";
+import {updateFromView} from '../domain/updateFromView';
+import {getView} from '../domain';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -43,13 +45,9 @@ const BudgetDetail = () => {
     const [view, setView] = useState([]);
 
     const updateView = (state) => {
-        const newState = state.map(row => row.map(item => (
-            {
-                ...item,
-                value: _.isNumber(item.value) ? 100: item.value + 1,
-            }
-        )))
-        // setView(newState);
+        const newBudget = updateFromView(state, budget);
+        const newState = getView(newBudget);
+        setView(newState);
     }
 
     useEffect(() => {

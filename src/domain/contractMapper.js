@@ -1,5 +1,38 @@
 import _ from "lodash";
 
+const addAllValuesFor = (list, labels) => {
+	let initialValue = _.reduce(labels, (acc, item) => {
+		acc[item] = 0;
+		return acc;
+	}, {});
+
+	return _.reduce(list, (accum, listItem) => {
+			_.forEach(labels, (label) => {
+				accum[label] = accum[label] + listItem[label];
+			});
+			return accum;
+		}
+		, initialValue);
+};
+
+const summary = (lines) => addAllValuesFor(lines, [
+	'budgetedAmount',
+	'currentYear8MonthsActuals',
+	'currentYear4MonthsProbables',
+	'previousYearActuals',
+	'yearMinus1Actuals',
+	'yearMinus2Actuals',
+]);
+
+const updateSummary = (budget) => {
+	for(let majorHeadGroup in budget.items) {
+		for (let majorHead in majorHeadGroup.items) {
+			majorHead.summary = summary(majorHead.items);
+		}
+		majorHeadGroup.summary = summary(_.map(majorHeadGroup.items, ({summary}) => summary))
+	}
+};
+
 const fromContract = ({budgetYear, budgetLines}) => {
 	const filterByKeyValue = (budgetLines, key, value) => {
 		return _.filter(budgetLines, line => line[key] === value);
@@ -39,30 +72,6 @@ const fromContract = ({budgetYear, budgetLines}) => {
 		name: line.minorHead + ' - ' + line.name,
 	}));
 
-	const addAllValuesFor = (list, labels) => {
-		let initialValue = _.reduce(labels, (acc, item) => {
-			acc[item] = 0;
-			return acc;
-		}, {});
-
-		return _.reduce(list, (accum, listItem) => {
-				_.forEach(labels, (label) => {
-					accum[label] = accum[label] + listItem[label];
-				});
-				return accum;
-			}
-			, initialValue);
-	};
-
-	const summary = (lines) => addAllValuesFor(lines, [
-		'budgetedAmount',
-		'currentYear8MonthsActuals',
-		'currentYear4MonthsProbables',
-		'previousYearActuals',
-		'yearMinus1Actuals',
-		'yearMinus2Actuals',
-	]);
-
 	return {
 		year: Number.parseInt(budgetYear.substring(0, 4)),
 		items: mapMajorHeadGroups(budgetLines),
@@ -70,4 +79,7 @@ const fromContract = ({budgetYear, budgetLines}) => {
 	};
 };
 
-export default fromContract;
+export {
+	fromContract,
+	updateSummary
+};

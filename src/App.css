@@ -35,6 +35,13 @@
   line-height: 24px;
 }
 
+.Spreadsheet-Major-head {
+  color: #212121;
+  font-weight: 700;
+  font-size: 13px;
+  line-height: 24px;
+}
+
 .Spreadsheet__table th {
   background-color: #F9F9F9;
   font-weight: 700;

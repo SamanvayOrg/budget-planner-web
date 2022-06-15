@@ -1,4 +1,4 @@
-import {fromContract} from './budget';
+import {fromContract} from './index';
 import getView from './getView'
 import _ from "lodash";
 
@@ -6,6 +6,7 @@ describe('budget', () => {
 	const budgetContract = {
 		"budgetYear": "2023-24",
 		"budgetLines": [{
+			"id": 1,
 			"code": "910-1110",
 			"name": "All",
 			"budgetedAmount": null,
@@ -21,6 +22,7 @@ describe('budget', () => {
 			"majorHead": "Property Tax",
 			"minorHead": "Consolidated Tax on Property"
 		}, {
+			"id": 2,
 			"code": "910-1111",
 			"name": "Residential Property",
 			"budgetedAmount": null,
@@ -36,6 +38,7 @@ describe('budget', () => {
 			"majorHead": "Property Tax",
 			"minorHead": "Consolidated Tax on Property"
 		}, {
+			"id": 3,
 			"code": "920-1120",
 			"name": "All",
 			"budgetedAmount": 10,
@@ -51,6 +54,7 @@ describe('budget', () => {
 			"majorHead": "Property Tax",
 			"minorHead": "Advertisement Tax"
 		}, {
+			"id": 4,
 			"code": "920-1121",
 			"name": "Hoarding on Public Lands",
 			"budgetedAmount": null,
@@ -66,6 +70,7 @@ describe('budget', () => {
 			"majorHead": "Property Tax",
 			"minorHead": "Advertisement Tax"
 		}, {
+			"id": 5,
 			"code": "310-2510",
 			"name": "All",
 			"budgetedAmount": null,
@@ -81,6 +86,7 @@ describe('budget', () => {
 			"majorHead": "Purchases for Operations and Programme implementation",
 			"minorHead": "Purchase of Water for Supply"
 		}, {
+			"id": 6,
 			"code": "314-2520",
 			"name": "All",
 			"budgetedAmount": null,
@@ -96,6 +102,7 @@ describe('budget', () => {
 			"majorHead": "Purchases for Operations and Programme implementation",
 			"minorHead": "Purchase of Consumables"
 		}, {
+			"id": 7,
 			"code": "210-3221",
 			"name": "Road Grants",
 			"budgetedAmount": null,
@@ -111,6 +118,7 @@ describe('budget', () => {
 			"majorHead": "Grants, Contributions for Specific Purpose (Earmarked Funds)",
 			"minorHead": "Government of Maharashtra (Urban Develonment Department)"
 		}, {
+			"id": 8,
 			"code": "315-4234",
 			"name": "Roads & Foot Paths \\Vater Supply System",
 			"budgetedAmount": null,
@@ -126,6 +134,7 @@ describe('budget', () => {
 			"majorHead": "Accumulated Depreciation",
 			"minorHead": "Other Fixed Assets"
 		}, {
+			"id": 9,
 			"code": "740-3230",
 			"name": "All",
 			"budgetedAmount": 200,
@@ -209,10 +218,9 @@ describe('budget', () => {
 		it('should get view',()=>{
 			let budget= fromContract(budgetContract);
 			console.log(JSON.stringify(getView(budget)));
-			console.log(getView(budget));
+			// console.log(getView(budget));
 			expect(getView(budget)).toBeDefined();
 			expect(getView(budget)).toHaveLength(4);
-
 		})
 	})
 })
