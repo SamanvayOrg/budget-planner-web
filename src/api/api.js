@@ -19,7 +19,7 @@ const budgetStub = {
 		"currentYear8MonthsActuals": null,
 		"currentYear4MonthsProbables": null,
 		"previousYearActuals": null,
-		"yearMinus1Actuals": 100,
+		"yearMinus1Actuals": 2021,
 		"yearMinus2Actuals": 200,
 		"yearMinus3Actuals": 200,
 		"displayOrder": 1.00,

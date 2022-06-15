@@ -1,8 +1,8 @@
-import {createSlice} from "@reduxjs/toolkit";
-import {getBudget, getCurrentBudget} from '../api/api';
-import {tokenSelector} from "./authReducer";
-import {toArray} from "../domain/budgetMapper";
+import {createSlice} from '@reduxjs/toolkit';
+import {getBudget} from '../api/api';
+import {tokenSelector} from './authReducer';
 import {fromContract, getView} from '../domain';
+import {updateFromView} from '../domain/updateFromView';
 
 export const initialState = {
 	budget: {},
@@ -30,6 +30,11 @@ const budgetDashboardSlice = createSlice({
 		},
 		setBudgetView: (state, {payload}) => {
 			state.budgetView = payload
+		},
+		updateBudget: (state, {payload}) => {
+			const budget = updateFromView(payload, state.budget);
+			state.budget = budget
+			state.budgetView = getView(budget);
 		}
 	},
 });
@@ -37,7 +42,8 @@ const budgetDashboardSlice = createSlice({
 export const {
 	budgetLoading,
 	setBudget,
-	setBudgetView
+	setBudgetView,
+	updateBudget
 } = budgetDashboardSlice.actions
 
 export const budgetSelector = state => state.budget;

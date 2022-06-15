@@ -52,9 +52,6 @@ const AllBudgets = () => {
 		dispatch(fetchAllBudgets());
 	}, [dispatch]);
 
-	console.log('budget-->', allBudget);
-
-
 	function renderBox(allBudget) {
 		let budgetBox = [];
 		_.forEach(allBudget, (budget) => {

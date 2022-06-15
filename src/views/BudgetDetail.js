@@ -1,16 +1,13 @@
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
-import {makeStyles} from "@mui/styles";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
-import Home from "./Home";
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
-import {budgetSelector, fetchBudget} from "../slices/budgetReducer";
-import Spreadsheet from "react-spreadsheet";
-import {headers} from "../domain/budgetMapper";
-import _ from "lodash";
-import {updateFromView} from '../domain/updateFromView';
-import {getView} from '../domain';
+import ResponsiveAppBar from '../components/ResponsiveAppBar';
+import {makeStyles} from '@mui/styles';
+import {withAuthenticationRequired} from '@auth0/auth0-react';
+import Home from './Home';
+import React, {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import {budgetSelector, fetchBudget, updateBudget} from '../slices/budgetReducer';
+import Spreadsheet from 'react-spreadsheet';
+import {headers} from '../domain/budgetMapper';
 
 const useStyles = makeStyles(theme => ({
     mainContainer: {
@@ -42,22 +39,13 @@ const BudgetDetail = () => {
 
     const {budgetView = [], budget} = useSelector(budgetSelector);
 
-    const [view, setView] = useState([]);
+    let {year} = useParams();
+
+    const dispatch = useDispatch();
 
     const updateView = (state) => {
-        const newBudget = updateFromView(state, budget);
-        const newState = getView(newBudget);
-        setView(newState);
+        dispatch(updateBudget(state));
     }
-
-    useEffect(() => {
-        if (budgetView.length > 0) {
-            setView(budgetView);
-        }
-    }, [budgetView]);
-
-    let {year} = useParams();
-    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(fetchBudget(year));
@@ -67,7 +55,7 @@ const BudgetDetail = () => {
         <>
             <ResponsiveAppBar/>
             <div className={classes.mainContainer}>
-                <Spreadsheet data={view} columnLabels={headers(budget)}
+                <Spreadsheet data={budgetView} columnLabels={headers(budget)}
                              onChange={updateView}
                 />
             </div>

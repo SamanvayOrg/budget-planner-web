@@ -25,8 +25,10 @@ const summary = (lines) => addAllValuesFor(lines, [
 ]);
 
 const updateSummary = (budget) => {
-	for(let majorHeadGroup in budget.items) {
-		for (let majorHead in majorHeadGroup.items) {
+	for(let i = 0; i < budget.items.length; i++) {
+		let majorHeadGroup = budget.items[i];
+		for (let j = 0; j < majorHeadGroup.items.length; j++) {
+			let majorHead = majorHeadGroup.items[j]
 			majorHead.summary = summary(majorHead.items);
 		}
 		majorHeadGroup.summary = summary(_.map(majorHeadGroup.items, ({summary}) => summary))

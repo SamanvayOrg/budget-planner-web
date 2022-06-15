@@ -1,6 +1,8 @@
 import {fromContract} from './index';
 import getView from './getView'
 import _ from "lodash";
+import {updateBudget} from '../slices/budgetReducer';
+import {updateFromView} from './updateFromView';
 
 describe('budget', () => {
 	const budgetContract = {
@@ -13,7 +15,7 @@ describe('budget', () => {
 			"currentYear8MonthsActuals": null,
 			"currentYear4MonthsProbables": null,
 			"previousYearActuals": null,
-			"yearMinus1Actuals": 100,
+			"yearMinus1Actuals": 2021,
 			"yearMinus2Actuals": 200,
 			"yearMinus3Actuals": 200,
 			"displayOrder": 1.00,
@@ -156,7 +158,6 @@ describe('budget', () => {
 		it('should map year', () => {
 			let budget = fromContract(budgetContract);
 			expect(budget.year).toBe(2023);
-			console.log("log-->", budget.items[3]);
 		});
 
 		it('should map major head groups in the right order', () => {
@@ -198,7 +199,6 @@ describe('budget', () => {
 			expect(allConsolidatedTaxOnProperty.yearMinus1Actuals).toBe(100);
 			expect(allConsolidatedTaxOnProperty.yearMinus2Actuals).toBe(200);
 			expect(allConsolidatedTaxOnProperty.displayOrder).toEqual(1);
-			console.log(budget)
 		});
 
 		it('should map total summary', () => {
@@ -217,10 +217,21 @@ describe('budget', () => {
 	describe('toView', () => {
 		it('should get view',()=>{
 			let budget= fromContract(budgetContract);
-			console.log(JSON.stringify(getView(budget)));
+			let view = getView(budget);
+			// console.log(budget.items[0].items[0].items[0]);
+			// console.log(view[2][6].value);
+
+			view[2][6].value = 2022;
+			// console.log(view[2][6].value);
+
+			updateFromView(view, budget)
+			// view = getView(budget);
+			// console.log(budget.items[0].items[0].items[0]);
+			// console.log(view[2][6].value);
+
 			// console.log(getView(budget));
-			expect(getView(budget)).toBeDefined();
-			expect(getView(budget)).toHaveLength(4);
+			// expect(getView(budget)).toBeDefined();
+			// expect(getView(budget)).toHaveLength(4);
 		})
 	})
 })
