@@ -1,6 +1,6 @@
 import {makeStyles} from "@mui/styles";
 import "../styles/style.css";
-import img from '../assets/loginPageImg.jpeg';
+import img from '../assets/loginImage.jpeg';
 import LoginButton from "./LoginButton";
 import LoginPageHelpAndSupportText from "./LoginPageHelpAndSupportText";
 

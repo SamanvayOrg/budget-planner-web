@@ -11,6 +11,7 @@ const getBudgetYearString = (yearString = currentYear(), minus = 0) => {
 
 const headers = (budget = currentYear()) => (
     [
+        'Sr',
         'Particulars',
         'Code Number',
         `${getBudgetYearString(budget.budgetYear, 3)} Actuals`,
@@ -19,7 +20,6 @@ const headers = (budget = currentYear()) => (
         `Planned amount`,
         'Actuals for 8 months',
         'Probables for remaining 4 months',
-        'Total'
     ]
 );
 

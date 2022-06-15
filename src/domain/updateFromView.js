@@ -11,12 +11,12 @@ const getDetailLines = (budget) => {
 const findDetailLine = (detailLines, row) => _.find(detailLines, line => line.id === row[0].context.id);
 
 const updateDetailLine = (line, row) => {
-    line.budgetedAmount = row[2].value;
-    line.currentYear8MonthsActuals = row[3].value;
-    line.currentYear4MonthsProbables = row[4].value;
+    line.yearMinus2Actuals = row[3].value;
+    line.yearMinus1Actuals = row[4].value;
     line.previousYearActuals = row[5].value;
-    line.yearMinus1Actuals = row[6].value;
-    line.yearMinus2Actuals = row[7].value;
+    line.budgetedAmount = row[6].value;
+    line.currentYear8MonthsActuals = row[7].value;
+    line.currentYear4MonthsProbables = row[8].value;
 }
 
 const updateFromView = (budgetView, budget) => {

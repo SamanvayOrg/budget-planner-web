@@ -3,6 +3,7 @@ import getView from './getView'
 import _ from "lodash";
 import {updateBudget} from '../slices/budgetReducer';
 import {updateFromView} from './updateFromView';
+import {toJSON} from "lodash/seq";
 
 describe('budget', () => {
 	const budgetContract = {
@@ -218,20 +219,12 @@ describe('budget', () => {
 		it('should get view',()=>{
 			let budget= fromContract(budgetContract);
 			let view = getView(budget);
-			// console.log(budget.items[0].items[0].items[0]);
-			// console.log(view[2][6].value);
+			expect(view[0][0].value).toBe('A')
+			expect(view[8][0].value).toBe('B')
+			updateFromView(view, budget);
 
-			view[2][6].value = 2022;
-			// console.log(view[2][6].value);
 
-			updateFromView(view, budget)
-			// view = getView(budget);
-			// console.log(budget.items[0].items[0].items[0]);
-			// console.log(view[2][6].value);
 
-			// console.log(getView(budget));
-			// expect(getView(budget)).toBeDefined();
-			// expect(getView(budget)).toHaveLength(4);
 		})
 	})
 })
