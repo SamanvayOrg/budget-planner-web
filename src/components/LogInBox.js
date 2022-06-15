@@ -1,6 +1,6 @@
 import {makeStyles} from "@mui/styles";
 import "../styles/style.css";
-import {ReactComponent as ArrowImg} from '../assets/Arrow.svg';
+import img from '../assets/loginPageImg.jpeg';
 import LoginButton from "./LoginButton";
 import LoginPageHelpAndSupportText from "./LoginPageHelpAndSupportText";
 
@@ -23,8 +23,6 @@ const useStyles = makeStyles(theme => ({
 		boxSizing: "border-box",
 		border: "solid 1px #DEDEDE",
 		borderRadius: "3px",
-		marginTop: "3%",
-		marginBottom: "3%",
 		fontFamily: 'Lato',
 		fontStyle: "normal",
 		fontWeight: "700",
@@ -63,7 +61,7 @@ const LogInBox = () => {
 				<LoginButton />
 				<LoginPageHelpAndSupportText/>
 			</div>
-			<ArrowImg/>
+			<img src={img} className={classes.img}/>
 
 		</div>
 
