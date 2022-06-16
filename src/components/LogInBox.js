@@ -61,7 +61,7 @@ const LogInBox = () => {
 				<LoginButton />
 				<LoginPageHelpAndSupportText/>
 			</div>
-			<img src={img} className={classes.img}/>
+			<img alt={'login'} src={img} className={classes.img}/>
 
 		</div>
 

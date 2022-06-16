@@ -1,7 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
-import {getCurrentBudget, getMunicipalityDetails} from "../api/api";
-import {budgetLoadingFailure, dashboardLoading, setCurrentBudget} from "./budgetDashboardReducer";
+import { getMunicipalityDetails} from "../api/api";
 
 export const initialState = {
 	details: {},
@@ -21,7 +20,7 @@ const municipalityDetailsSlice = createSlice({
 			state.loading = true
 			state.error = false
 		},
-		loadingFailure: (state, {}) => {
+		loadingFailure: (state) => {
 			state.loading = false
 			state.error = true
 		}
@@ -41,7 +40,6 @@ export function fetchMunicipalityDetails() {
 		dispatch(setDetails());
 		let details = await getMunicipalityDetails(token);
 		dispatch(setDetails(details));
-		console.log('reducer der22-->', details)
 
 
 	}
