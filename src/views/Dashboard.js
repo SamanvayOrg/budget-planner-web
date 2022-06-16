@@ -11,6 +11,7 @@ import {budgetDashboardSelector, createNewBudget, fetchCurrentBudget} from "../s
 import {useNavigate} from "react-router-dom";
 import CurrentBudgetBox from "../components/CurrentBudgetBox";
 import Spinner from "../components/Spinner";
+import {GetMunicipalityName} from "../domain/functions";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -47,7 +48,7 @@ const Dashboard = () => {
 
 	let navigate = useNavigate();
 
-	const goToBudget = () =>{
+	const goToBudget = () => {
 		const year = budgetYear.substring(0, 4)
 		navigate(`/budget/${year}`);
 	}
@@ -82,7 +83,8 @@ const Dashboard = () => {
 						HELLO <UserName/>
 					</div>
 					<div><span className={classes.welcomeText}>Welcome to </span>
-						<span className={classes.mmbsName}>Maharashtra Municipality budgeting system.</span>
+						<span
+							className={classes.mmbsName}><GetMunicipalityName/> Budgeting system</span>
 					</div>
 					{renderBox()}
 				</div>

@@ -8,61 +8,66 @@ import {useParams} from 'react-router-dom';
 import {budgetSelector, fetchBudget, updateBudget} from '../slices/budgetReducer';
 import Spreadsheet from 'react-spreadsheet';
 import {headers} from '../domain/budgetMapper';
+import {GetMunicipalityName} from "../domain/functions";
+import HorizontalLine from "../components/HorizontalLine";
 
 const useStyles = makeStyles(theme => ({
-    mainContainer: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "start",
-        paddingTop: "70px",
-        fontFamily: "Lato",
-        fontStyle: "normal",
-        color: "#616161",
-        fontWeight: "700",
-    }, leftUserNameText: {
-        display: "flex",
-        flexDirection: "row",
-        fontSize: "11px",
-        letterSpacing: "0.06em",
-        textTransform: "uppercase",
-        marginBottom: "1%"
-    }, welcomeText: {
-        fontWeight: "400", fontSize: "21px", lineHeight: "25px",
-    }, mmbsName: {
-        fontStyle: "italic", fontSize: "21px", lineHeight: "25px", color: "black",
-    }
+	mainContainer: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "start",
+		paddingTop: "70px",
+		fontFamily: "Lato",
+		fontStyle: "normal",
+		color: "#616161",
+		fontWeight: "700",
+		position:"absolute"
+	}, title: {
+
+		fontSize: "21px",
+		fontStyle: "italic",
+		marginBottom: "10px",
+		color: "#212121"
+	}, budgetView: {
+		marginTop: "10px"
+	}
 }));
 
 const BudgetDetail = () => {
-    const classes = useStyles();
+	const classes = useStyles();
 
-    const {budgetView = [], budget} = useSelector(budgetSelector);
+	const {budgetView = [], budget} = useSelector(budgetSelector);
 
-    let {year} = useParams();
+	let {year} = useParams();
 
-    const dispatch = useDispatch();
+	const dispatch = useDispatch();
 
-    const updateView = (state) => {
-        dispatch(updateBudget(state));
-    }
+	const updateView = (state) => {
+		dispatch(updateBudget(state));
+	}
 
-    useEffect(() => {
-        dispatch(fetchBudget(year));
-    }, [dispatch, year]);
+	useEffect(() => {
+		dispatch(fetchBudget(year));
+	}, [dispatch, year]);
 
-    return (
-        <>
-            <ResponsiveAppBar/>
-            <div className={classes.mainContainer}>
-                <Spreadsheet data={budgetView} columnLabels={headers(budget)}
-                             onChange={updateView}
-                />
-            </div>
-        </>
-    )
+	return (
+		<>
+			<ResponsiveAppBar/>
+			<div className={classes.mainContainer}>
+                <span className={classes.title}><GetMunicipalityName/>
+                </span>
+				<HorizontalLine width={"100%"}/>
+				<div className={classes.budgetView}>
+					<Spreadsheet data={budgetView} columnLabels={headers(budget)}
+					             onChange={updateView}
+					/>
+				</div>
+			</div>
+		</>
+	)
 };
 
 export default withAuthenticationRequired(BudgetDetail, {
-    onRedirecting: () => <Home/>,
+	onRedirecting: () => <Home/>,
 });

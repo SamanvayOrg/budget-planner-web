@@ -7,6 +7,12 @@ const getCurrentBudget = async (token) => {
 	});
 	return result.data;
 }
+const getMunicipalityDetails = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get("/api/municipality", {headers});
+	return result.data;
+
+}
 
 
 const budgetStub = {
@@ -170,7 +176,6 @@ const budgetStub = {
 const getBudget = (token, year) => budgetStub;
 
 
-
 const getAllBudgets = async (token, year) => {
 	const headers = {'Authorization': `Bearer ${token}`};
 	const result = await axios.get(`/api/budgets`, {
@@ -185,5 +190,5 @@ const createBudget = async (token, year) => {
 }
 
 export {
-	getCurrentBudget, getBudget, createBudget, getAllBudgets
+	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails
 };
