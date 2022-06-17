@@ -10,6 +10,9 @@ import {allBudgetSelector, fetchAllBudgets} from "../slices/allBudgetReducer";
 import {useEffect} from "react";
 import _ from "lodash";
 import {useNavigate} from "react-router-dom";
+import {GetMunicipalityName} from "../domain/functions";
+import HorizontalLine from "../components/HorizontalLine";
+import {Breadcrumbs} from "@mui/material";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -18,12 +21,11 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: "center",
 		alignItems: "start",
 		paddingTop: "64px",
-
-		paddingLeft: "1%",
 		fontFamily: "Lato",
 		fontStyle: "normal",
 		color: "#616161",
 		fontWeight: "700",
+		marginTop: "25px",
 
 	}, leftUserNameText: {
 		display: "flex",
@@ -37,6 +39,16 @@ const useStyles = makeStyles(theme => ({
 	}, mmbsName: {
 		fontStyle: "italic", fontSize: "21px", lineHeight: "25px", color: "black",
 
+	}, title: {
+		fontSize: "20px",
+		marginBottom: "10px",
+		color: "#212121",
+		marginLeft: "5px",
+		paddingTop: "10px"
+	}, link: {
+		cursor: "pointer",
+		color: "inherit",
+		fontSize: "11px"
 	}
 
 }));
@@ -72,11 +84,20 @@ const AllBudgets = () => {
 	return (
 		<div>
 			<ResponsiveAppBar/>
-			<Container maxWidth="xl">
-				<div className={classes.mainContainer}>
-					{renderBox(allBudget)}
+			<div className={classes.mainContainer}>
+				<Breadcrumbs aria-label="breadcrumb" style={{fontSize: "11px", marginLeft: "5px"}}>
+					<span className={classes.link} onClick={() => navigate('/dashboard')}>DASHBOARD</span>
+					<span>ALL BUDGETS</span>
+				</Breadcrumbs>
+				<div className={classes.title}>
+					<GetMunicipalityName/>
 				</div>
-			</Container>
+				<HorizontalLine/>
+				<Container maxWidth="xl" >
+					{renderBox(allBudget)}
+				</Container>
+
+			</div>
 
 		</div>
 	)
