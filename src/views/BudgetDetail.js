@@ -33,11 +33,7 @@ const useStyles = makeStyles(theme => ({
 		marginLeft: "5px"
 	}, budgetView: {
 		marginTop: "10px"
-	}, backArrow: {
-		display: "flex",
-		justifyContent: "center",
-		cursor: "pointer"
-	}
+	},
 }));
 
 const BudgetDetail = () => {
@@ -63,7 +59,7 @@ const BudgetDetail = () => {
 			<ResponsiveAppBar/>
 			<div className={classes.mainContainer}>
                 <span className={classes.title}><KeyboardBackspace
-	                onClick={() => navigate('/dashboard')} className={classes.backArrow}/> <GetMunicipalityName/>
+	                onClick={() => navigate('/dashboard')} /> <GetMunicipalityName/>
                 </span>
 				<HorizontalLine width={"100%"}/>
 				<div className={classes.budgetView}>
