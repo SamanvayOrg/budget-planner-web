@@ -8,7 +8,7 @@ const addAllValuesFor = (list, labels) => {
 
 	return _.reduce(list, (accum, listItem) => {
 			_.forEach(labels, (label) => {
-				accum[label] = _.toNumber(accum[label]) + _.toNumber(listItem[label]);
+				accum[label] = _.toNumber(_.isNaN(accum[label]) ? null : accum[label]) + _.toNumber(_.isNaN(listItem[label]) ? null : listItem[label]);
 			});
 			return accum;
 		}
