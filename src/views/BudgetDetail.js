@@ -32,9 +32,13 @@ const useStyles = makeStyles(theme => ({
 		color: "#212121",
 		marginLeft: "5px"
 	}, budgetView: {
-		marginTop: "10px"
-	},backArrow:{
-		cursor:"pointer"
+		marginTop: "10px",
+		float: "left",
+		overflow: "auto",
+		height: "calc(100vh - 150px)",
+		width: "calc(100vw - 10px)",
+	}, backArrow: {
+		cursor: "pointer"
 	}
 }));
 
@@ -61,12 +65,12 @@ const BudgetDetail = () => {
 			<ResponsiveAppBar/>
 			<div className={classes.mainContainer}>
                 <span className={classes.title}><KeyboardBackspace
-	                onClick={() => navigate('/dashboard')} className={classes.backArrow} /> <GetMunicipalityName/>
+	                onClick={() => navigate('/dashboard')} className={classes.backArrow}/> <GetMunicipalityName/>
                 </span>
 				<HorizontalLine/>
 				<div className={classes.budgetView}>
 					<Spreadsheet data={budgetView} columnLabels={headers(budget)}
-					             onChange={updateView}
+					             onChange={(newVIew) => updateView(newVIew)}
 					/>
 				</div>
 			</div>
