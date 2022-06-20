@@ -30,7 +30,7 @@ const getView = (budget) => {
 		}
 	]);
 
-	const summary = (name, line, nameClass, numberClass) => ([
+	const getSummary = (name, line, nameClass, numberClass) => ([
 		{value: null, className: nameClass, context: {type: 'summary', key: 'sr'}, readOnly: true},
 		{value: name, className: nameClass, context: {type: 'summary', key: 'name'}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'summary', key: 'code'}, readOnly: true},
@@ -42,13 +42,11 @@ const getView = (budget) => {
 		{value: line.currentYear4MonthsProbables,className: numberClass,context: {type: 'summary', key: 'currentYear4MonthsProbables'},readOnly: true},
 	]);
 
-	const majorHeadLines = ({majorHead, items}) => {
-
-
+	const majorHeadLines = ({majorHead, items,summary}) => {
 		return _.chain([])
 			.concat([headerLine(majorHead, 'Spreadsheet-Major-head')])
 			.concat(_.map(items, lineItem => singleLine(lineItem)))
-			.concat([summary(majorHead + ' Total', summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
+			.concat([getSummary(majorHead + ' Total', summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
 			.value();
 	};
 
@@ -63,14 +61,14 @@ const getView = (budget) => {
 		return _.chain([])
 			.concat([headerLine(majorHeadGroup.majorHeadGroup, 'Spreadsheet-Major-head-group', majorHeadGroup.items[0].items[0].majorHeadGroupDisplayOrder)])
 			.concat(majorHeadGroupDetailLines(majorHeadGroup))
-			.concat([summary(majorHeadGroup.majorHeadGroup + ' Total', majorHeadGroup.summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
+			.concat([getSummary(majorHeadGroup.majorHeadGroup + ' Total', majorHeadGroup.summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
 			.value();
 	};
 
 	return _.chain(budget.items)
 		.map(majorHeadGroup => majorHeadGroupLines(majorHeadGroup))
 		.flatten()
-		.concat([summary('Total', budget.summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
+		.concat([getSummary('Total', budget.summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
 		.value();
 };
 
