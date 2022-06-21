@@ -58,11 +58,6 @@ const Dashboard = () => {
 		dispatch(fetchCurrentBudget());
 	}, [dispatch]);
 
-	useEffect(() => {
-		if (newBudgetCreated) {
-			navigate(`/budget/${newBudgetYear}`);
-		}
-	}, [navigate, newBudgetCreated, newBudgetYear]);
 
 	const renderBox = () => {
 		if (loading) {

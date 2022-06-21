@@ -4,6 +4,7 @@ import BasicModal from "./BasicModal";
 import BasicSelect from "./BasicSelect";
 import ActionButton from "./ActionButton";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -50,10 +51,13 @@ const EmptyBudgetBox = ({addNewBudget}) => {
 	const classes = styleSheets();
 
 	const [selectedYear, setSelectedYear] = useState();
+	let navigate = useNavigate();
+
 
 	const addBudget = () => {
 		if (selectedYear) {
 			addNewBudget(selectedYear.substring(0, 4));
+			navigate(`/budget/${selectedYear.substring(0, 4)}`);
 		}
 	}
 
