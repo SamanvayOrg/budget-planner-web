@@ -2,6 +2,8 @@ import {fromContract} from './index';
 import getView from './getView'
 import _ from "lodash";
 import {updateFromView} from './updateFromView';
+import {useSelector} from "react-redux";
+import {allBudgetSelector} from "../slices/allBudgetReducer";
 
 describe('budget', () => {
 	const budgetContract = {
@@ -170,13 +172,8 @@ describe('budget', () => {
 		it('should map major heads in the right order', () => {
 			let budget = fromContract(budgetContract);
 			expect(budget.items[0].items[0].majorHead).toBe('Property Tax');
-			expect(budget.items[0].items[1].majorHead).toBe('Property Tax');
-			expect(budget.items[0].items[2].majorHead).toBe('Property Tax');
-			expect(budget.items[0].items[3].majorHead).toBe('Property Tax');
 			expect(budget.items[1].items[0].majorHead).toBe('Purchases for Operations and Programme implementation');
-			expect(budget.items[1].items[1].majorHead).toBe('Purchases for Operations and Programme implementation');
 			expect(budget.items[2].items[0].majorHead).toBe('Grants, Contributions for Specific Purpose (Earmarked Funds)');
-			expect(budget.items[2].items[1].majorHead).toBe('Grants, Contributions for Specific Purpose (Earmarked Funds)');
 			expect(budget.items[3].items[0].majorHead).toBe('Accumulated Depreciation');
 		});
 
@@ -195,7 +192,7 @@ describe('budget', () => {
 			expect(allConsolidatedTaxOnProperty.currentYear8MonthsActuals).toBeNull()
 			expect(allConsolidatedTaxOnProperty.currentYear4MonthsProbables).toBeNull()
 			expect(allConsolidatedTaxOnProperty.previousYearActuals).toBeNull()
-			expect(allConsolidatedTaxOnProperty.yearMinus1Actuals).toBe(100);
+			expect(allConsolidatedTaxOnProperty.yearMinus1Actuals).toBe(2021);
 			expect(allConsolidatedTaxOnProperty.yearMinus2Actuals).toBe(200);
 			expect(allConsolidatedTaxOnProperty.displayOrder).toEqual(1);
 		});
@@ -208,21 +205,28 @@ describe('budget', () => {
 			expect(summary.currentYear8MonthsActuals).toBe(0);
 			expect(summary.currentYear4MonthsProbables).toBe(0);
 			expect(summary.previousYearActuals).toBe(0);
-			expect(summary.yearMinus1Actuals).toBe(900);
+			expect(summary.yearMinus1Actuals).toBe(2821);
 			expect(summary.yearMinus2Actuals).toBe(1800);
 		});
+		it('should get summary for majorHead', () => {
+			let budget = fromContract(budgetContract)
+			expect(budget.items[0].items[0].summary.budgetedAmount).toBe(10);
+			expect(budget.items[0].items[0].summary.currentYear8MonthsActuals).toBe(0);
+			expect(budget.items[0].items[0].summary.currentYear4MonthsProbables).toBe(0);
+			expect(budget.items[0].items[0].summary.previousYearActuals).toBe(0);
+			expect(budget.items[0].items[0].summary.yearMinus1Actuals).toBe(2321);
+			expect(budget.items[0].items[0].summary.yearMinus2Actuals).toBe(800);
+		})
 	});
 
 	describe('toView', () => {
-		it('should get view',()=>{
-			let budget= fromContract(budgetContract);
+		it('should get view', () => {
+			let budget = fromContract(budgetContract);
 			let view = getView(budget);
 			expect(view[0][0].value).toBe('A')
 			expect(view[8][0].value).toBe('B')
-			console.log(view[0])
+		});
 
 
-
-		})
 	})
 })
