@@ -39,7 +39,7 @@ const useStyles = makeStyles(theme => ({
 	}
 }));
 
-const BasicModal = ({buttonLabel, buttonId, style, modalText, dropDown, actionButton, cancelButton}) => {
+const ModalWithButton = ({buttonLabel, buttonId, style, modalText, dropDown, actionButton, cancelButton}) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 	const handleOpen = () => setOpen(true);
@@ -66,4 +66,5 @@ const BasicModal = ({buttonLabel, buttonId, style, modalText, dropDown, actionBu
 		</Modal>
 	</div>);
 }
-export default BasicModal;
+export default ModalWithButton;
+export {useStyles}

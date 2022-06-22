@@ -2,7 +2,7 @@ import ResponsiveAppBar from '../components/ResponsiveAppBar';
 import {makeStyles} from '@mui/styles';
 import {withAuthenticationRequired} from '@auth0/auth0-react';
 import Home from './Home';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import {budgetSelector, fetchBudget, saveBudget, updateBudget} from '../slices/budgetReducer';
@@ -11,9 +11,18 @@ import {headers} from '../domain/budgetMapper';
 import {GetMunicipalityName} from "../domain/functions";
 import HorizontalLine from "../components/HorizontalLine";
 import {KeyboardBackspace} from "@mui/icons-material";
+<<<<<<< Updated upstream
 import ActionButton from '../components/ActionButton';
+=======
+import {Modal} from "@mui/material";
+import Box from "@mui/material/Box";
+import {style} from "../components/EmptyBudgetBox";
+import {useStyles} from "../components/ModalWithButton";
+import ActionButton from "../components/ActionButton";
+import {GetCategory} from "../domain/functions";
+>>>>>>> Stashed changes
 
-const useStyles = makeStyles(theme => ({
+const useStylesBudgetDetails = makeStyles(theme => ({
 	mainContainer: {
 		display: "flex",
 		flexDirection: "column",
@@ -45,9 +54,13 @@ const useStyles = makeStyles(theme => ({
 
 const BudgetDetail = () => {
 	const navigate = useNavigate();
-	const classes = useStyles();
+	const classes = useStylesBudgetDetails();
+    const modalClass=useStyles();
 
 	const {budgetView = [], budget} = useSelector(budgetSelector);
+	const [category,setCategory]=useState('');
+	const [subCategory,setSubCategory]=useState('');
+	const [categoryDetail,setCategoryDetail]=useState('');
 
 	let {year} = useParams();
 
@@ -65,12 +78,18 @@ const BudgetDetail = () => {
 	useEffect(() => {
 		dispatch(fetchBudget(year));
 	}, [dispatch, year]);
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-	const onActivate = (params) => {
-		if(budgetView[params.row][params.column].context.key==='addButton'){
-			console.log('into onActivate')
-		}
-	}
+
+    const onActivate = (params) => {
+        if (budgetView[params.row][params.column].context.key === 'addButton') {
+            return (
+                handleOpen()
+            )
+        }
+    }
 
 	return (
 		<>
@@ -86,6 +105,20 @@ const BudgetDetail = () => {
 					             onChange={(newView) => updateView(newView)}
 					             onActivate={onActivate}/>
 				</div>
+                <div>
+                    <Modal open={open} onClose={handleClose} className={modalClass.modal}>
+                        <Box sx={style}>
+				<span className={modalClass.modalHeading}>Add a new entry</span>
+                            {GetCategory(setCategory)}
+	                        {/*{getSubCategory}*/}
+	                        {/*{getCategoryByCodeOrParticular()}*/}
+	                        <ActionButton label={"ADD A NEW ENTRY"} id={"addNewBudgetButton"}  />
+                            <span className={modalClass.cancelText} onClick={handleClose}>Cancel</span>
+
+                        </Box>
+                    </Modal>
+                </div>
+
 			</div>
 		</>
 	)

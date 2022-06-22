@@ -1,6 +1,6 @@
 import {Box} from "@mui/material";
 import {makeStyles} from "@mui/styles";
-import BasicModal from "./BasicModal";
+import ModalWithButton from "./ModalWithButton";
 import BasicSelect from "./BasicSelect";
 import ActionButton from "./ActionButton";
 import {useState} from "react";
@@ -68,7 +68,7 @@ const EmptyBudgetBox = ({addNewBudget}) => {
 		<span>
 			You can add a new budget by clicking on the Add New Budget button.
 		</span>
-		<BasicModal
+		<ModalWithButton
 			buttonLabel={"Add a new budget"}
 			buttonId={"addNewBudgetButton"}
 			modalText={"Create a new budget"}

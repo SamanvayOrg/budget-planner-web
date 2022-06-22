@@ -77,3 +77,4 @@ const BasicSelect = ({onChange}) => {
 
 };
 export default BasicSelect;
+export {useStyles};

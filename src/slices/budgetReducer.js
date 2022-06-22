@@ -63,6 +63,7 @@ export function saveBudget() {
 export function fetchBudget(year) {
 	return async (dispatch, getState) => {
 		const token = tokenSelector(getState())
+		console.log(token)
 		dispatch(budgetLoading());
 		let budget = await getBudget(token, year);
 		dispatch(setBudget(fromContract(budget)));

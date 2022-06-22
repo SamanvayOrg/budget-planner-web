@@ -58,7 +58,7 @@ const Dashboard = () => {
 		dispatch(fetchCurrentBudget());
 	}, [dispatch]);
 
-
+	console.log(budgetYear)
 	const renderBox = () => {
 		if (loading) {
 			return <Spinner/>;
