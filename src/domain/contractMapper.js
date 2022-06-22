@@ -16,6 +16,7 @@ const addAllValuesFor = (list, labels) => {
 };
 
 const summary = (lines) => addAllValuesFor(lines, [
+	'id',
 	'budgetedAmount',
 	'currentYear8MonthsActuals',
 	'currentYear4MonthsProbables',
@@ -71,7 +72,7 @@ const fromContract = ({budgetYear, budgetLines}) => {
 
 	const mapLineItem = (linesInMajorHead) => _.map(linesInMajorHead, line => ({
 		...line,
-		name: line.minorHead + ' - ' + line.name,
+		name: line.name || line.minorHead + ' - ' + line.name,
 	}));
 
 	return {

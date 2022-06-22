@@ -12,9 +12,9 @@ const getView = (budget) => {
 		{value: null, context: {type: 'header', key: 'yearMinus2Actuals'}},
 		{value: null, context: {type: 'header', key: 'yearMinus1Actuals'}},
 		{value: null, context: {type: 'header', key: 'previousYearActuals'}},
-		{value: null, context: {type: 'header', key: 'budgetedAmount'}},
 		{value: null, context: {type: 'header', key: 'currentYear8MonthsActuals'}},
-		{value: null, context: {type: 'header', key: 'currentYear4MonthsProbables'}}
+		{value: null, context: {type: 'header', key: 'currentYear4MonthsProbables'}},
+		{value: null, context: {type: 'header', key: 'budgetedAmount'}},
 	]);
 
 	const singleLine = (line, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
@@ -24,10 +24,9 @@ const getView = (budget) => {
 		{value: line.yearMinus2Actuals,className: numberClass,context: {id: line.id, type: 'detail', key: 'yearMinus2Actuals'},readOnly: true},
 		{value: line.yearMinus1Actuals,className: numberClass,context: {id: line.id, type: 'detail', key: 'yearMinus1Actuals'},readOnly: true},
 		{value: line.previousYearActuals,className: numberClass,context: {id: line.id, type: 'detail', key: 'previousYearActuals'}},
-		{value: line.budgetedAmount, className: numberClass, context: {id: line.id, type: 'detail', key: 'budgetedAmount'}},
 		{value: line.currentYear8MonthsActuals,className: numberClass,context: {id: line.id, type: 'detail', key: 'currentYear8MonthsActuals'}},
-		{value: line.currentYear4MonthsProbables,className: numberClass,context: {id: line.id, type: 'detail', key: 'currentYear4MonthsProbables'}
-		}
+		{value: line.currentYear4MonthsProbables,className: numberClass,context: {id: line.id, type: 'detail', key: 'currentYear4MonthsProbables'}},
+		{value: line.budgetedAmount, className: numberClass, context: {id: line.id, type: 'detail', key: 'budgetedAmount'}},
 	]);
 
 	const getSummary = (name, line, nameClass, numberClass) => ([
@@ -37,9 +36,9 @@ const getView = (budget) => {
 		{value: line.yearMinus2Actuals,className: numberClass,context: {type: 'summary', key: 'yearMinus2Actuals'},readOnly: true},
 		{value: line.yearMinus1Actuals,className: numberClass,context: {type: 'summary', key: 'yearMinus1Actuals'},readOnly: true},
 		{value: line.previousYearActuals,className: numberClass,context: {type: 'summary', key: 'previousYearActuals'},readOnly: true},
-		{value: line.budgetedAmount,className: numberClass,context: {type: 'summary', key: 'budgetedAmount'},readOnly: true},
 		{value: line.currentYear8MonthsActuals,className: numberClass,context: {type: 'summary', key: 'currentYear8MonthsActuals'},readOnly: true},
 		{value: line.currentYear4MonthsProbables,className: numberClass,context: {type: 'summary', key: 'currentYear4MonthsProbables'},readOnly: true},
+		{value: line.budgetedAmount,className: numberClass,context: {type: 'summary', key: 'budgetedAmount'},readOnly: true},
 	]);
 
 	const majorHeadLines = ({majorHead, items,summary}) => {

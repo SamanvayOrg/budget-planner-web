@@ -2,7 +2,7 @@ import ResponsiveAppBar from '../components/ResponsiveAppBar';
 import {makeStyles} from '@mui/styles';
 import {withAuthenticationRequired} from '@auth0/auth0-react';
 import Home from './Home';
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import {budgetSelector, fetchBudget, updateBudget} from '../slices/budgetReducer';
@@ -69,9 +69,7 @@ const BudgetDetail = () => {
                 </span>
 				<HorizontalLine/>
 				<div className={classes.budgetView}>
-					<Spreadsheet data={budgetView} columnLabels={headers(budget)}
-					             onChange={(newVIew) => updateView(newVIew)}
-					/>
+					<Spreadsheet data={budgetView} columnLabels={headers(budget)} onChange={updateView}/>
 				</div>
 			</div>
 		</>

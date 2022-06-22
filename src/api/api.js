@@ -165,15 +165,15 @@ const budgetStub = {
 };
 
 
-// const getBudget = async (token, year) => {
-// 	const headers = {'Authorization': `Bearer ${token}`};
-// 	const result = await axios.get(`/api/budget?year=${year}`, {
-// 		headers
-// 	});
-// 	return result.data;
-// }
+const getBudget = async (token, year) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/budget?year=${year}`, {
+		headers
+	});
+	return result.data;
+}
 
-const getBudget = (token, year) => budgetStub;
+// const getBudget = (token, year) => budgetStub;
 
 
 const getAllBudgets = async (token, year) => {
