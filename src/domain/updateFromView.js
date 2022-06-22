@@ -45,5 +45,6 @@ const updateFromView = (budgetView, budget) => {
 };
 
 export {
-    updateFromView
+    updateFromView,
+    getDetailLines
 };

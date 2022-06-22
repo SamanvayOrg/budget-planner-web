@@ -1,4 +1,5 @@
 import _ from "lodash";
+import {getDetailLines} from './updateFromView';
 
 const addAllValuesFor = (list, labels) => {
 	let initialValue = _.reduce(labels, (acc, item) => {
@@ -38,7 +39,7 @@ const updateSummary = (budget) => {
 	}
 };
 
-const fromContract = ({budgetYear, budgetLines}) => {
+const fromContract = ({id, budgetYear, budgetLines}) => {
 	const filterByKeyValue = (budgetLines, key, value) => {
 		return _.filter(budgetLines, line => line[key] === value);
 	};
@@ -78,13 +79,27 @@ const fromContract = ({budgetYear, budgetLines}) => {
 	}));
 
 	return {
+		id,
 		year: Number.parseInt(budgetYear.substring(0, 4)),
 		items: mapMajorHeadGroups(budgetLines),
 		summary: summary(budgetLines)
 	};
 };
 
+const toContract = (budget) => {
+	const budgetLines = getDetailLines(budget);
+	console.log(budget);
+
+	return {
+		id: budget.id,
+		budgetYear: budget.year,
+		budgetLines
+	}
+
+}
+
 export {
 	fromContract,
+	toContract,
 	updateSummary
 };

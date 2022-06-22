@@ -1,8 +1,9 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getBudget} from '../api/api';
+import {getBudget, save} from '../api/api';
 import {tokenSelector} from './authReducer';
 import {fromContract, getView} from '../domain';
 import {updateFromView} from '../domain/updateFromView';
+import {toContract} from '../domain/contractMapper';
 
 export const initialState = {
 	budget: {},
@@ -43,11 +44,21 @@ export const {
 	budgetLoading,
 	setBudget,
 	setBudgetView,
-	updateBudget
+	updateBudget,
 } = budgetDashboardSlice.actions
 
 export const budgetSelector = state => state.budget;
 export default budgetDashboardSlice.reducer;
+
+export function saveBudget() {
+	return async (dispatch, getState) => {
+		console.log('saving stuff');
+		const state = getState();
+		const token = tokenSelector(state);
+		const budget = budgetSelector(state).budget;
+		await save(token, toContract(budget));
+	}
+}
 
 export function fetchBudget(year) {
 	return async (dispatch, getState) => {

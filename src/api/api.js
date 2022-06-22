@@ -37,6 +37,13 @@ const createBudget = async (token, year) => {
 	await axios.post(`/api/budget?year=${year}`, null, {headers});
 }
 
+const save = async(token, budget) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	await axios.post(`/api/budget/actuals`, budget, {headers});
+	await axios.post(`/api/budget/estimates`, budget, {headers});
+	await axios.post(`/api/budget/budgeted`, budget, {headers});
+}
+
 export {
-	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails
+	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save
 };

@@ -5,12 +5,13 @@ import Home from './Home';
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
-import {budgetSelector, fetchBudget, updateBudget} from '../slices/budgetReducer';
+import {budgetSelector, fetchBudget, saveBudget, updateBudget} from '../slices/budgetReducer';
 import Spreadsheet from 'react-spreadsheet';
 import {headers} from '../domain/budgetMapper';
 import {GetMunicipalityName} from "../domain/functions";
 import HorizontalLine from "../components/HorizontalLine";
 import {KeyboardBackspace} from "@mui/icons-material";
+import ActionButton from '../components/ActionButton';
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -56,6 +57,11 @@ const BudgetDetail = () => {
 		dispatch(updateBudget(state));
 	}
 
+	const save = () => {
+		console.log('saving');
+		dispatch(saveBudget());
+	}
+
 	useEffect(() => {
 		dispatch(fetchBudget(year));
 	}, [dispatch, year]);
@@ -74,6 +80,7 @@ const BudgetDetail = () => {
 	                onClick={() => navigate('/dashboard')} className={classes.backArrow}/> <GetMunicipalityName/>
                 </span>
 				<HorizontalLine/>
+				<ActionButton onClick={save} label="Save" id={'smallActionButton'}/>
 				<div className={classes.budgetView}>
 					<Spreadsheet data={budgetView} columnLabels={headers(budget)}
 					             onChange={(newView) => updateView(newView)}
