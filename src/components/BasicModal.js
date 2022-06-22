@@ -1,9 +1,8 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import {Modal} from "@mui/material";
-import ActionButton from "./ActionButton";
-import {makeStyles} from "@mui/styles";
-import Button from "@mui/material/Button";
+import {Modal} from '@mui/material';
+import ActionButton from './ActionButton';
+import {makeStyles} from '@mui/styles';
 
 const useStyles = makeStyles(theme => ({
 	modal: {
