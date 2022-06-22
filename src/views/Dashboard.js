@@ -44,7 +44,7 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
 	const classes = useStyles();
 
-	const {loading, currentBudget: {budgetYear}, newBudgetCreated, newBudgetYear} = useSelector(budgetDashboardSelector)
+	const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector)
 
 	let navigate = useNavigate();
 

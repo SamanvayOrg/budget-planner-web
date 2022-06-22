@@ -78,4 +78,5 @@ const EmptyBudgetBox = ({addNewBudget}) => {
 		/>
 	</Box>)
 }
-export default EmptyBudgetBox
+export default EmptyBudgetBox;
+export {style}

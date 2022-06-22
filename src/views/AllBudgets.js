@@ -93,7 +93,7 @@ const AllBudgets = () => {
 					<GetMunicipalityName/>
 				</div>
 				<HorizontalLine/>
-				<Container maxWidth="xl" >
+				<Container maxWidth="xl">
 					{renderBox(allBudget)}
 				</Container>
 

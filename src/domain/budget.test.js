@@ -214,6 +214,13 @@ describe('budget', () => {
 			expect(budget.items[0].items[0].summary.previousYearActuals).toBe(0);
 			expect(budget.items[0].items[0].summary.yearMinus1Actuals).toBe(2321);
 			expect(budget.items[0].items[0].summary.yearMinus2Actuals).toBe(800);
+			expect(budget.items[1].items[0].summary.budgetedAmount).toBe(0);
+			expect(budget.items[1].items[0].summary.currentYear8MonthsActuals).toBe(0);
+			expect(budget.items[1].items[0].summary.currentYear4MonthsProbables).toBe(0);
+			expect(budget.items[1].items[0].summary.previousYearActuals).toBe(0);
+			expect(budget.items[1].items[0].summary.yearMinus1Actuals).toBe(200);
+			expect(budget.items[1].items[0].summary.yearMinus2Actuals).toBe(400);
+
 		})
 	});
 

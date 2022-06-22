@@ -6,7 +6,12 @@ const getView = (budget) => {
 	}
 
 	const headerLine = (value, headerClass, majorHeadGroupOrder) => ([
-		{value: headerClass === 'Spreadsheet-Major-head-group' ? getChar(majorHeadGroupOrder) : null, className: headerClass,context: {type: 'sr', key: 'sr'},readOnly:true},
+		{
+			value: headerClass === 'Spreadsheet-Major-head-group' ? getChar(majorHeadGroupOrder) : null,
+			className: headerClass,
+			context: {type: 'sr', key: 'sr'},
+			readOnly: true
+		},
 		{value, className: headerClass, context: {type: 'header', key: 'name'}},
 		{value: null, context: {type: 'header', key: 'code'}},
 		{value: null, context: {type: 'header', key: 'yearMinus2Actuals'}},
@@ -41,10 +46,25 @@ const getView = (budget) => {
 		{value: line.budgetedAmount,className: numberClass,context: {type: 'summary', key: 'budgetedAmount'},readOnly: true},
 	]);
 
-	const majorHeadLines = ({majorHead, items,summary}) => {
+	const getAddNewLine = ( nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
+		{value: null, className: nameClass, context: {type: 'addNewLine', key: 'sr'}, readOnly: true},
+		{value: 'Add a new entry',id:'addRowButton', className: "Spresheet-addNewLineBox", context: {type: 'addNewLine', key: 'addButton'}, readOnly: true},
+		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'code'}, readOnly: true},
+		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'yearMinus2Actuals'}, readOnly: true},
+		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'yearMinus1Actuals'}, readOnly: true},
+		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'previousYearActuals'}, readOnly: true},
+		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'budgetedAmount'}, readOnly: true},
+		{value: null,className: numberClass,context: {type: 'addNewLine', key: 'currentYear8MonthsActuals'},readOnly: true},
+		{value: null,className: numberClass,context: {type: 'addNewLine', key: 'currentYear4MonthsProbables'},readOnly: true},
+	]);
+
+
+
+	const majorHeadLines = ({majorHead, items, summary}) => {
 		return _.chain([])
 			.concat([headerLine(majorHead, 'Spreadsheet-Major-head')])
 			.concat(_.map(items, lineItem => singleLine(lineItem)))
+			.concat([getAddNewLine()])
 			.concat([getSummary(majorHead + ' Total', summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
 			.value();
 	};

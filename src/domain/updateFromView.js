@@ -10,15 +10,27 @@ const getDetailLines = (budget) => {
 
 const findDetailLine = (detailLines, row) => _.find(detailLines, line => line.id === row[0].context.id);
 
+
+//todo: This can use the key attribute and can be generalized
 const updateDetailLine = (line, row = []) => {
-    //todo: This can use the key attribute and can be generalized
-    line.yearMinus2Actuals = _.get(row[3], 'value');
-    line.yearMinus1Actuals = _.get(row[4], 'value');
-    line.previousYearActuals = _.get(row[5], 'value');
-    line.currentYear8MonthsActuals = _.get(row[6], 'value');
-    line.currentYear4MonthsProbables = _.get(row[7], 'value');
-    line.budgetedAmount = _.get(row[8], 'value');
-};
+    line.yearMinus2Actuals = getNumber(_.get(row[3], 'value'));
+    line.yearMinus1Actuals = getNumber(_.get(row[4], 'value'));
+    line.previousYearActuals = getNumber(_.get(row[5], 'value'));
+    line.currentYear8MonthsActuals = getNumber(_.get(row[6], 'value'));
+    line.currentYear4MonthsProbables = getNumber(_.get(row[7], 'value'));
+    line.budgetedAmount = getNumber(_.get(row[8], 'value'));
+}
+
+const getNumber = (item) => {
+	if (_.isNull(item)) {
+		return null;
+	}
+	const num = _.toNumber(item);
+	if (_.isNaN(num)) {
+		return null;
+	}
+	return num;
+}
 
 const updateFromView = (budgetView, budget) => {
     const viewLines = _.filter(budgetView, item => {
