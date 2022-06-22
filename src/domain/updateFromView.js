@@ -11,6 +11,7 @@ const getDetailLines = (budget) => {
 const findDetailLine = (detailLines, row) => _.find(detailLines, line => line.id === row[0].context.id);
 
 const updateDetailLine = (line, row = []) => {
+    //todo: This can use the key attribute and can be generalized
     line.yearMinus2Actuals = _.get(row[3], 'value');
     line.yearMinus1Actuals = _.get(row[4], 'value');
     line.previousYearActuals = _.get(row[5], 'value');
