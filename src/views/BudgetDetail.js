@@ -11,16 +11,13 @@ import {headers} from '../domain/budgetMapper';
 import {GetMunicipalityName} from "../domain/functions";
 import HorizontalLine from "../components/HorizontalLine";
 import {KeyboardBackspace} from "@mui/icons-material";
-<<<<<<< Updated upstream
 import ActionButton from '../components/ActionButton';
-=======
 import {Modal} from "@mui/material";
 import Box from "@mui/material/Box";
 import {style} from "../components/EmptyBudgetBox";
 import {useStyles} from "../components/ModalWithButton";
-import ActionButton from "../components/ActionButton";
 import {GetCategory} from "../domain/functions";
->>>>>>> Stashed changes
+
 
 const useStylesBudgetDetails = makeStyles(theme => ({
 	mainContainer: {
