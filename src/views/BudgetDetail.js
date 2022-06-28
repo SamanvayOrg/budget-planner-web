@@ -20,19 +20,39 @@ import {GetCategory} from "../domain/functions";
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({
-	mainContainer: {
+
+	top: {
 		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "start",
+		flexDirection: "row",
 		paddingTop: "70px",
 		fontFamily: "Lato",
 		fontStyle: "normal",
 		color: "#616161",
 		fontWeight: "700",
+		alignItems: "center",
+		justifyContent: "space-between",
+	},
+	topLeft: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "flex-start"
+	}, topRight: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "flex-end"
+	},
+	mainContainer: {
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "start",
+		fontFamily: "Lato",
+		fontStyle: "normal",
+		color: "#616161",
+		fontWeight: "700",
 		position: "absolute"
-	}, title: {
-
+	},
+	title: {
 		fontSize: "21px",
 		fontStyle: "italic",
 		marginBottom: "10px",
@@ -44,6 +64,7 @@ const useStylesBudgetDetails = makeStyles(theme => ({
 		overflow: "auto",
 		height: "calc(100vh - 150px)",
 		width: "calc(100vw - 10px)",
+		marginRight: "30px"
 	}, backArrow: {
 		cursor: "pointer"
 	}
@@ -52,12 +73,12 @@ const useStylesBudgetDetails = makeStyles(theme => ({
 const BudgetDetail = () => {
 	const navigate = useNavigate();
 	const classes = useStylesBudgetDetails();
-    const modalClass=useStyles();
+	const modalClass = useStyles();
 
 	const {budgetView = [], budget} = useSelector(budgetSelector);
-	const [category,setCategory]=useState('');
-	const [subCategory,setSubCategory]=useState('');
-	const [categoryDetail,setCategoryDetail]=useState('');
+	const [category, setCategory] = useState('');
+	const [subCategory, setSubCategory] = useState('');
+	const [categoryDetail, setCategoryDetail] = useState('');
 
 	let {year} = useParams();
 
@@ -75,47 +96,55 @@ const BudgetDetail = () => {
 	useEffect(() => {
 		dispatch(fetchBudget(year));
 	}, [dispatch, year]);
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+	const [open, setOpen] = React.useState(false);
+	const handleOpen = () => setOpen(true);
+	const handleClose = () => setOpen(false);
 
 
-    const onActivate = (params) => {
-        if (budgetView[params.row][params.column].context.key === 'addButton') {
-            return (
-                handleOpen()
-            )
-        }
-    }
+	const onActivate = (params) => {
+		const context = budgetView[params.row][params.column].context;
+		if (context.key === 'addButton') {
+			return (
+				handleOpen()
+			)
+		}
+	}
 
 	return (
 		<>
 			<ResponsiveAppBar/>
-			<div className={classes.mainContainer}>
+			<div>
+				<div className={classes.top}>
+					<div className={classes.topLeft}>
                 <span className={classes.title}><KeyboardBackspace
 	                onClick={() => navigate('/dashboard')} className={classes.backArrow}/> <GetMunicipalityName/>
                 </span>
-				<HorizontalLine/>
-				<ActionButton onClick={save} label="Save" id={'smallActionButton'}/>
-				<div className={classes.budgetView}>
-					<Spreadsheet data={budgetView} columnLabels={headers(budget)}
-					             onChange={(newView) => updateView(newView)}
-					             onActivate={onActivate}/>
+					</div>
+					<div className={classes.topRight}>
+						<ActionButton onClick={save} label="Save" id={'smallActionButton'}/>
+					</div>
 				</div>
-                <div>
-                    <Modal open={open} onClose={handleClose} className={modalClass.modal}>
-                        <Box sx={style}>
-				<span className={modalClass.modalHeading}>Add a new entry</span>
-                            {GetCategory(setCategory)}
-	                        {/*{getSubCategory}*/}
-	                        {/*{getCategoryByCodeOrParticular()}*/}
-	                        <ActionButton label={"ADD A NEW ENTRY"} id={"addNewBudgetButton"}  />
-                            <span className={modalClass.cancelText} onClick={handleClose}>Cancel</span>
+				<div className={classes.mainContainer}>
+					<HorizontalLine/>
+					<div className={classes.budgetView}>
+						<Spreadsheet data={budgetView} columnLabels={headers(budget)}
+						             onChange={(newView) => updateView(newView)}
+						             onActivate={onActivate}/>
+					</div>
+					<div>
+						<Modal open={open} onClose={handleClose} className={modalClass.modal}>
+							<Box sx={style}>
+								<span className={modalClass.modalHeading}>Add a new entry</span>
+								{GetCategory(setCategory)}
+								{/*{getSubCategory}*/}
+								{/*{getCategoryByCodeOrParticular()}*/}
+								<ActionButton label={"ADD A NEW ENTRY"} id={"addNewBudgetButton"}/>
+								<span className={modalClass.cancelText} onClick={handleClose}>Cancel</span>
 
-                        </Box>
-                    </Modal>
-                </div>
-
+							</Box>
+						</Modal>
+					</div>
+				</div>
 			</div>
 		</>
 	)

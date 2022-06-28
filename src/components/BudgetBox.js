@@ -26,13 +26,10 @@ const styleSheets = makeStyles(theme => ({
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "flex-start",
-
 		gap: "0.5vw",
 		color: "#212121",
 		fontSize: "19px",
 		marginLeft: "1%",
-
-
 	}, lastUpdateText: {
 		display: "flex",
 

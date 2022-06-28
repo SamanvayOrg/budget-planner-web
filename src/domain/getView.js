@@ -46,9 +46,9 @@ const getView = (budget) => {
 		{value: line.budgetedAmount,className: numberClass,context: {type: 'summary', key: 'budgetedAmount'},readOnly: true},
 	]);
 
-	const getAddNewLine = ( nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
+	const getAddNewLine = (majorHead, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
 		{value: null, className: nameClass, context: {type: 'addNewLine', key: 'sr'}, readOnly: true},
-		{value: 'Add a new entry',id:'addRowButton', className: "Spresheet-addNewLineBox", context: {type: 'addNewLine', key: 'addButton'}, readOnly: true},
+		{value: 'Add a new entry',id:'addRowButton', className: "Spresheet-addNewLineBox", context: {type: 'addNewLine', key: 'addButton',majorHead:majorHead}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'code'}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'yearMinus2Actuals'}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'yearMinus1Actuals'}, readOnly: true},
@@ -64,7 +64,7 @@ const getView = (budget) => {
 		return _.chain([])
 			.concat([headerLine(majorHead, 'Spreadsheet-Major-head')])
 			.concat(_.map(items, lineItem => singleLine(lineItem)))
-			.concat([getAddNewLine()])
+			.concat([getAddNewLine(majorHead)])
 			.concat([getSummary(majorHead + ' Total', summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
 			.value();
 	};
