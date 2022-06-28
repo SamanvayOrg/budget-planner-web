@@ -36,13 +36,21 @@ const useStylesBudgetDetails = makeStyles(theme => ({
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "flex-start"
-	}, topRight: {
+	},topCenter: {
+		display: "flex",
+		flexDirection: "row",
+		justifyContent: "center",
+		alignItems: "end",
+
+
+	},
+	topRight: {
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "flex-end",
 		alignItems: "center",
 	},
-	mainContainer: {
+		mainContainer: {
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "center",
@@ -119,6 +127,9 @@ const BudgetDetail = () => {
                 <span className={classes.title}><KeyboardBackspace
 	                onClick={() => navigate('/dashboard')} className={classes.backArrow}/> <GetMunicipalityName/>
                 </span>
+					</div>
+					<div className={classes.topCenter}>
+						<em>All values are in INR</em>
 					</div>
 					<div className={classes.topRight}>
 						<ActionButton onClick={save} label={saved} id={'dynamicWidthButton'}/>
