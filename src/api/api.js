@@ -1,4 +1,7 @@
 import axios from "axios";
+import {useDispatch} from "react-redux";
+import {saveBudgetStatus} from '../slices/budgetReducer';
+
 
 const getCurrentBudget = async (token) => {
 	const headers = {'Authorization': `Bearer ${token}`};
@@ -39,9 +42,13 @@ const createBudget = async (token, year) => {
 
 const save = async(token, budget) => {
 	const headers = {'Authorization': `Bearer ${token}`};
-	await axios.post(`/api/budget/actuals`, budget, {headers});
-	await axios.post(`/api/budget/estimates`, budget, {headers});
-	await axios.post(`/api/budget/budgeted`, budget, {headers});
+	const actuals = await axios.post(`/api/budget/actuals`, budget, {headers});
+	const estimate = await axios.post(`/api/budget/estimates`, budget, {headers});
+	const budgeted = await axios.post(`/api/budget/budgeted`, budget, {headers});
+
+	let saveApiStatus = actuals.status === 200 && estimate.status === 200 && budgeted.status === 200;
+	return saveApiStatus;
+
 }
 
 export {

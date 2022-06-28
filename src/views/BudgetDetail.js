@@ -39,7 +39,8 @@ const useStylesBudgetDetails = makeStyles(theme => ({
 	}, topRight: {
 		display: "flex",
 		flexDirection: "row",
-		justifyContent: "flex-end"
+		justifyContent: "flex-end",
+		alignItems: "center",
 	},
 	mainContainer: {
 		display: "flex",
@@ -75,7 +76,7 @@ const BudgetDetail = () => {
 	const classes = useStylesBudgetDetails();
 	const modalClass = useStyles();
 
-	const {budgetView = [], budget} = useSelector(budgetSelector);
+	const {budgetView = [], budget, saved} = useSelector(budgetSelector);
 	const [category, setCategory] = useState('');
 	const [subCategory, setSubCategory] = useState('');
 	const [categoryDetail, setCategoryDetail] = useState('');
@@ -89,7 +90,6 @@ const BudgetDetail = () => {
 	}
 
 	const save = () => {
-		console.log('saving');
 		dispatch(saveBudget());
 	}
 
@@ -121,7 +121,7 @@ const BudgetDetail = () => {
                 </span>
 					</div>
 					<div className={classes.topRight}>
-						<ActionButton onClick={save} label="Save" id={'smallActionButton'}/>
+						<ActionButton onClick={save} label={saved} id={'dynamicWidthButton'}/>
 					</div>
 				</div>
 				<div className={classes.mainContainer}>
