@@ -17,7 +17,7 @@ const headers = (budget = currentYear()) => (
         `${getBudgetYearString(budget.budgetYear, 2)} Actuals`,
         `${getBudgetYearString(budget.budgetYear, 1)} Actuals for 8 months`,
         `${getBudgetYearString(budget.budgetYear, 1)} Probables for remaining 4 months`,
-        `Budgeted amount`,
+        `${getBudgetYearString(budget.budgetYear, 0)} Budgeted amount`,
     ]
 );
 export {headers}
