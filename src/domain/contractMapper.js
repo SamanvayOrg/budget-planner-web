@@ -88,8 +88,6 @@ const fromContract = ({id, budgetYear, budgetLines}) => {
 
 const toContract = (budget) => {
 	const budgetLines = getDetailLines(budget);
-	console.log(budget);
-
 	return {
 		id: budget.id,
 		budgetYear: budget.year,

@@ -24,10 +24,8 @@ const getBudget = async (token, year) => {
 	return result.data;
 }
 
-// const getBudget = (token, year) => budgetStub;
 
-
-const getAllBudgets = async (token, year) => {
+const getAllBudgets = async (token) => {
 	const headers = {'Authorization': `Bearer ${token}`};
 	const result = await axios.get(`/api/budgets`, {
 		headers
@@ -40,7 +38,7 @@ const createBudget = async (token, year) => {
 	await axios.post(`/api/budget?year=${year}`, null, {headers});
 }
 
-const save = async(token, budget) => {
+const save = async (token, budget) => {
 	const headers = {'Authorization': `Bearer ${token}`};
 	const actuals = await axios.post(`/api/budget/actuals`, budget, {headers});
 	const estimate = await axios.post(`/api/budget/estimates`, budget, {headers});
@@ -51,6 +49,14 @@ const save = async(token, budget) => {
 
 }
 
+const getMetadata = async (token ) => {
+	const headers={'Authorization':`Bearer ${token}`};
+	const result= await axios.get(`/api/metadata`,{headers});
+	return result.data;
+
+}
+
+
 export {
-	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save
+	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save,getMetadata
 };
