@@ -35,7 +35,7 @@ const useStylesBudgetDetails = makeStyles(theme => ({
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "flex-start"
-	},topCenter: {
+	}, topCenter: {
 		display: "flex",
 		flexDirection: "row",
 		justifyContent: "center",
@@ -49,7 +49,7 @@ const useStylesBudgetDetails = makeStyles(theme => ({
 		justifyContent: "flex-end",
 		alignItems: "center",
 	},
-		mainContainer: {
+	mainContainer: {
 		display: "flex",
 		flexDirection: "column",
 		justifyContent: "center",
@@ -149,10 +149,12 @@ const BudgetDetail = () => {
 					</div>
 					<div>
 						<Modal open={open} onClose={handleClose} className={modalClass.modal}>
-							<BudgetLineSelector metadata={metadata} onSelect={(selectedItem) => {
-								dispatch(addBudgetLine(selectedItem));
-								handleClose();
-							}} context={popupContext} onCancel={handleClose}/>
+							<>
+								<BudgetLineSelector metadata={metadata} onSelect={(selectedItem) => {
+									dispatch(addBudgetLine(selectedItem));
+									handleClose();
+								}} context={popupContext} onCancel={handleClose}/>
+							</>
 						</Modal>
 					</div>
 				</div>
