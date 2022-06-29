@@ -69,7 +69,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
                     {list.map((item, index) => {
                         return (
                             <MenuItem
-                                selected={value && (value.name === item.name)}
+                                // selected={value && (value.name === item.name)}
                                 key={index}
                                 value={item}>
                                 {item.name}
@@ -88,7 +88,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
     return (
         <Box sx={style}>
             <Box sx={{minWidth: 100}}>
-                <FormGroup fullWidth>
+                <FormGroup fullwidth="true">
                     <Typography variant={'h6'} style={{marginTop: 32, marginBottom: 16}}>Budget Head</Typography>
                     <SelectView list={minorHeadOptions} onSelect={handleMinorHeadSelection} label={'Minor Head'}
                                 value={minorHead}/>
