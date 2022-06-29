@@ -1,9 +1,10 @@
 import Button from "@mui/material/Button";
 
 
-const ActionButton = ({onClick, label, id,keys}) => {
+const ActionButton = ({label, ...props}) => {
 	return (
-		<Button key={keys} id={id} onClick={onClick}>
+		<Button {...props}
+		>
 			{label}
 		</Button>
 

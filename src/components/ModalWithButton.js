@@ -61,7 +61,6 @@ const ModalWithButton = ({buttonLabel, buttonId, style, modalText, dropDown, act
 				{actionButton}
 				{cancelButton}
 				<span className={classes.cancelText} onClick={handleClose}>Cancel</span>
-
 			</Box>
 		</Modal>
 	</div>);

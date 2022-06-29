@@ -1,4 +1,4 @@
-import {toArray} from "./budgetMapper";
+import {toArray} from "./budgetHeaders";
 
 describe("Stuff", () => {
     test('should map current budget into arrays', () => {

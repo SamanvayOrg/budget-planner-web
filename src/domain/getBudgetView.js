@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-const getView = (budget) => {
+const getBudgetView = (budget) => {
 	function getChar(order) {
 		return String.fromCharCode('A'.charCodeAt(0) + order - 1);
 	}
@@ -91,4 +91,4 @@ const getView = (budget) => {
 		.value();
 };
 
-export default getView;
+export default getBudgetView;

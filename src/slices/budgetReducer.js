@@ -1,81 +1,111 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {getBudget, save} from '../api/api';
 import {tokenSelector} from './authReducer';
-import {fromContract, getView} from '../domain';
+import {fromContract, getBudgetView} from '../domain';
 import {updateFromView} from '../domain/updateFromView';
-import {toContract} from '../domain/contractMapper';
+import {toContract} from '../domain/budgetContractMapper';
+import _ from 'lodash';
 
 export const initialState = {
-	budget: {},
-	loading: false,
-	error: false,
-	saved: '✓ saved'
-}
+    budget: {},
+    loading: false,
+    error: false,
+    saved: '✓ saved'
+};
 
 const budgetDashboardSlice = createSlice({
-	name: 'budget',
-	initialState,
-	reducers: {
-		budgetLoading: (state, {payload}) => {
-			state.loading = true
-			state.error = false
-		},
-		budgetLoadingFailure: (state, {payload}) => {
-			state.loading = false
-			state.error = true
-		},
-		setBudget: (state, {payload}) => {
-			state.loading = false
-			state.budget = payload
-			state.error = false
-			state.budgetView = getView(payload)
-		},
-		setBudgetView: (state, {payload}) => {
-			state.budgetView = payload
-		},
-		updateBudget: (state, {payload}) => {
-			const budget = updateFromView(payload, state.budget);
-			state.budget = budget
-			state.budgetView = getView(budget);
-			state.saved='Save the changes'
-		}, saveBudgetStatus: (state, {payload}) => {
-			if (payload) {
-				state.saved = '✓ saved'
-			}else {
-				state.saved='saving...'
-			}
-		}
-	},
+    name: 'budget',
+    initialState,
+    reducers: {
+        budgetLoading: (state, {payload}) => {
+            state.loading = true;
+            state.error = false;
+        },
+        budgetLoadingFailure: (state, {payload}) => {
+            state.loading = false;
+            state.error = true;
+        },
+        setBudget: (state, {payload}) => {
+            state.loading = false;
+            state.budget = payload;
+            state.error = false;
+            state.budgetView = getBudgetView(payload);
+        },
+        setBudgetView: (state, {payload}) => {
+            state.budgetView = payload;
+        },
+        updateBudget: (state, {payload}) => {
+            const budget = updateFromView(payload, state.budget);
+            state.budget = budget;
+            state.budgetView = getBudgetView(budget);
+            state.saved = 'Save the changes';
+        },
+        saveBudgetStatus: (state, {payload}) => {
+            state.saved = payload ? '✓ saved' : 'saving...';
+        },
+        addBudgetLine: (state, {
+            payload: {
+                majorHeadGroup,
+                majorHead,
+                minorHead,
+                detailedHead,
+                functionGroup,
+                theFunction,
+                name
+            }
+        }) => {
+            const matchingMajorHead = _.chain(state.budget)
+                .get('items')
+                .map(group => group.items)
+                .flatten()
+                .find(head => head.majorHead === majorHead.name)
+                .value();
+
+            console.log(majorHead);
+            console.log('matchingMajorHead', matchingMajorHead)
+
+            matchingMajorHead.items.push({
+                code: theFunction.code + '-' + detailedHead.code,
+                name,
+                functionCode: theFunction.fullCode,
+                detailedHeadCode: detailedHead.code,
+                majorHeadGroup: majorHeadGroup.name,
+                majorHead: majorHead.name,
+                minorHead: minorHead.name
+            });
+            state.budgetView = getBudgetView(state.budget);
+        }
+    },
 });
 
 export const {
-	budgetLoading,
-	setBudget,
-	setBudgetView,
-	updateBudget,
-	saveBudgetStatus
-} = budgetDashboardSlice.actions
+    budgetLoading,
+    setBudget,
+    setBudgetView,
+    updateBudget,
+    addBudgetLine,
+    saveBudgetStatus
+} = budgetDashboardSlice.actions;
 
 export const budgetSelector = state => state.budget;
 export default budgetDashboardSlice.reducer;
 
 export function saveBudget() {
-	return async (dispatch, getState) => {
-		const state = getState();
-		const token = tokenSelector(state);
-		const budget = budgetSelector(state).budget;
-		dispatch(saveBudgetStatus(false));
-		const data = await save(token, toContract(budget));
-		dispatch(saveBudgetStatus(data));
-	}
+    return async (dispatch, getState) => {
+        const state = getState();
+        const token = tokenSelector(state);
+        const budget = budgetSelector(state).budget;
+        dispatch(saveBudgetStatus(false));
+        const data = await save(token, toContract(budget));
+        dispatch(saveBudgetStatus(data));
+    };
 }
 
 export function fetchBudget(year) {
-	return async (dispatch, getState) => {
-		const token = tokenSelector(getState())
-		console.log(token)
-		dispatch(budgetLoading());
-		let budget = await getBudget(token, year);
-		dispatch(setBudget(fromContract(budget)));
-	}
+    return async (dispatch, getState) => {
+        const token = tokenSelector(getState());
+        dispatch(budgetLoading());
+        let budget = await getBudget(token, year);
+        dispatch(setBudget(fromContract(budget)));
+    };
 }

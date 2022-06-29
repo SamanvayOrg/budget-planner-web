@@ -1,5 +1,5 @@
 import {fromContract} from './index';
-import getView from './getView';
+import getBudgetView from './getBudgetView';
 import _ from 'lodash';
 import {updateFromView} from './updateFromView';
 
@@ -227,7 +227,7 @@ describe('budget', () => {
 	describe('toView', () => {
 		it('should get view', () => {
 			let budget = fromContract(budgetContract);
-			let view = getView(budget);
+			let view = getBudgetView(budget);
 			expect(view[0][0].value).toBe('A')
 			expect(view[8][0].value).toBe('B')
 			console.log(view[0])

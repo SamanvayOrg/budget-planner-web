@@ -5,18 +5,17 @@ import Home from './Home';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
-import {budgetSelector, fetchBudget, saveBudget, updateBudget} from '../slices/budgetReducer';
+import {addBudgetLine, budgetSelector, fetchBudget, saveBudget, updateBudget} from '../slices/budgetReducer';
 import Spreadsheet from 'react-spreadsheet';
-import {headers} from '../domain/budgetMapper';
-import {GetMunicipalityName} from "../domain/functions";
-import HorizontalLine from "../components/HorizontalLine";
-import {KeyboardBackspace} from "@mui/icons-material";
+import {headers} from '../domain/budgetHeaders';
+import {GetMunicipalityName} from '../domain/functions';
+import HorizontalLine from '../components/HorizontalLine';
+import {KeyboardBackspace} from '@mui/icons-material';
 import ActionButton from '../components/ActionButton';
-import {Modal} from "@mui/material";
-import Box from "@mui/material/Box";
-import {style} from "../components/EmptyBudgetBox";
-import {useStyles} from "../components/ModalWithButton";
-import {GetCategory} from "../domain/functions";
+import {Modal} from '@mui/material';
+import {useStyles} from '../components/ModalWithButton';
+import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
+import BudgetLineSelector from '../components/BudgetLineSelector';
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({
@@ -85,9 +84,7 @@ const BudgetDetail = () => {
 	const modalClass = useStyles();
 
 	const {budgetView = [], budget, saved} = useSelector(budgetSelector);
-	const [category, setCategory] = useState('');
-	const [subCategory, setSubCategory] = useState('');
-	const [categoryDetail, setCategoryDetail] = useState('');
+	const {metadata} = useSelector(metadataSelector);
 
 	let {year} = useParams();
 
@@ -103,17 +100,25 @@ const BudgetDetail = () => {
 
 	useEffect(() => {
 		dispatch(fetchBudget(year));
+		dispatch(fetchMetadata());
 	}, [dispatch, year]);
-	const [open, setOpen] = React.useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+	const [open, setOpen] = useState(false);
+	const [popupContext, setPopupContext] = useState({});
+	const handleOpen = (context) => {
+		setPopupContext(context);
+		setOpen(true);
+	}
+	const handleClose = () => {
+		setPopupContext({});
+		setOpen(false);
+	}
 
 
 	const onActivate = (params) => {
 		const context = budgetView[params.row][params.column].context;
 		if (context.key === 'addButton') {
 			return (
-				handleOpen()
+				handleOpen(context)
 			)
 		}
 	}
@@ -144,15 +149,10 @@ const BudgetDetail = () => {
 					</div>
 					<div>
 						<Modal open={open} onClose={handleClose} className={modalClass.modal}>
-							<Box sx={style}>
-								<span className={modalClass.modalHeading}>Add a new entry</span>
-								{GetCategory(setCategory)}
-								{/*{getSubCategory}*/}
-								{/*{getCategoryByCodeOrParticular()}*/}
-								<ActionButton label={"ADD A NEW ENTRY"} id={"addNewBudgetButton"}/>
-								<span className={modalClass.cancelText} onClick={handleClose}>Cancel</span>
-
-							</Box>
+							<BudgetLineSelector metadata={metadata} onSelect={(selectedItem) => {
+								dispatch(addBudgetLine(selectedItem));
+								handleClose();
+							}} context={popupContext} onCancel={handleClose}/>
 						</Modal>
 					</div>
 				</div>

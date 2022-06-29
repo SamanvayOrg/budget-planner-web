@@ -1,7 +1,7 @@
-import {fromContract} from "./contractMapper";
-import getView from './getView';
+import {fromContract} from "./budgetContractMapper";
+import getBudgetView from './getBudgetView';
 
 export {
 	fromContract,
-	getView,
+	getBudgetView,
 };

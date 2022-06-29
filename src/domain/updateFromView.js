@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import {updateSummary} from './contractMapper';
+import {updateSummary} from './budgetContractMapper';
 
 const getDetailLines = (budget) => {
     return _.chain(budget.items)
