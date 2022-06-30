@@ -22,8 +22,8 @@ const getBudgetView = (budget) => {
 		{value: null, context: {type: 'header', key: 'budgetedAmount'}},
 	]);
 
-	const singleLine = (line, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
-		{value: line.displayOrder,className: nameClass, context: {id: line.id, type: 'detail', key: 'sr'}, readOnly: true},
+	const singleLine = (line, index, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
+		{value: index + 1,className: nameClass, context: {id: line.id, type: 'detail', key: 'sr'}, readOnly: true},
 		{value: line.name, className: nameClass, context: {id: line.id, type: 'detail', key: 'name'}, readOnly: true},
 		{value: line.code, className: numberClass, context: {id: line.id, type: 'detail', key: 'code'}, readOnly: true},
 		{value: line.yearMinus2Actuals,className: numberClass,context: {id: line.id, type: 'detail', key: 'yearMinus2Actuals'},readOnly: true},
@@ -58,18 +58,16 @@ const getBudgetView = (budget) => {
 		{value: null,className: numberClass,context: {type: 'addNewLine', key: 'currentYear4MonthsProbables'},readOnly: true},
 	]);
 
-
-
 	const majorHeadLines = ({majorHead, items, summary}) => {
 		return _.chain([])
 			.concat([headerLine(majorHead, 'Spreadsheet-Major-head')])
-			.concat(_.map(items, lineItem => singleLine(lineItem)))
+			.concat(_.map(items, (lineItem, index) => singleLine(lineItem, index)))
 			.concat([getAddNewLine(majorHead)])
 			.concat([getSummary(majorHead + ' Total', summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
 			.value();
 	};
 
-	function majorHeadGroupDetailLines(majorHeadGroup) {
+	const majorHeadGroupDetailLines = (majorHeadGroup) => {
 		return _.chain(majorHeadGroup.items)
 			.map(budgetHead => majorHeadLines(budgetHead, majorHeadGroup))
 			.flatten()
