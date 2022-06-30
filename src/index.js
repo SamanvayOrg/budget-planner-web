@@ -1,10 +1,11 @@
-import React from "react";
+import React,{Suspense} from "react";
 import * as ReactDOMClient from 'react-dom/client';
 import App from "./App";
 import {Auth0Provider} from "@auth0/auth0-react";
 import {getConfig} from "./config";
 import {Provider} from "react-redux";
 import store from "./store/store";
+import "./i18n"
 
 
 const config = getConfig();
@@ -27,7 +28,9 @@ const root = ReactDOMClient.createRoot(container);
 root.render(
 	<Provider store={store}>
 		<Auth0Provider {...providerConfig}>
+			<Suspense fallback={<div>Loading……</div>}>
 			<App/>
+			</Suspense>
 		</Auth0Provider>
 	</Provider>
 );

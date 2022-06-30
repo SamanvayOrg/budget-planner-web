@@ -17,7 +17,7 @@ const allBudgetSlice = createSlice({
 			state.error = false
 			state.loading = false
 		},
-		budgetLoading: (state, {}) => {
+		budgetLoading: (state) => {
 			state.loading = false
 			state.error = true
 		}

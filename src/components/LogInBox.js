@@ -3,6 +3,7 @@ import "../styles/style.css";
 import img from '../assets/loginImage.jpeg';
 import LoginButton from "./LoginButton";
 import LoginPageHelpAndSupportText from "./LoginPageHelpAndSupportText";
+import {useTranslation} from "react-i18next";
 
 
 const useStyles = makeStyles(theme => ({
@@ -47,16 +48,17 @@ const useStyles = makeStyles(theme => ({
 
 const LogInBox = () => {
 	const classes = useStyles();
+	const {t}=useTranslation();
 	return (
 
 		<div className={classes.container}>
 			<div className={classes.box}>
 				<span className={classes.mbsName} >
-					Municipality budgeting system
+					{t('Municipality budgeting system')}
 				</span>
 
 				<div className={classes.signInName}>
-					Sign in to your account
+					{t('Sign in to your account')}
 				</div>
 				<LoginButton />
 				<LoginPageHelpAndSupportText/>
