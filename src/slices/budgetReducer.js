@@ -69,8 +69,6 @@ const budgetDashboardSlice = createSlice({
                 majorHeadGroup: majorHeadGroup.name,
                 majorHead: majorHead.name,
                 minorHead: minorHead.name,
-                detailedHeadId: detailedHead.id,
-                functionId: theFunction.id
             });
             state.budgetView = getBudgetView(state.budget);
         }
