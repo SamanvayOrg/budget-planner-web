@@ -1,4 +1,3 @@
-
 export function getConfig() {
   // Configure the audience here. By default, it will take whatever is in the config
   // (specified by the `audience` key) unless it's the default value of "YOUR_API_IDENTIFIER" (which
@@ -17,3 +16,5 @@ export function getConfig() {
     ...(audience ? { audience } : null),
   };
 }
+
+export const languages = [{value: 'en', title: 'English'}, {value: 'mr', title: 'Marathi'},]

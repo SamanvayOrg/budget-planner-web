@@ -7,6 +7,7 @@ import budgetReducer from './budgetReducer';
 import allBudgetReducer from './allBudgetReducer';
 import municipalityReducer from './municipalityReducer';
 import metadataReducer from './metadataReducer';
+import i18nReducer from './i18nReducer';
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
     budget: budgetReducer,
     allBudgets: allBudgetReducer,
     municipalityDetails: municipalityReducer,
-    metadata: metadataReducer
+    metadata: metadataReducer,
+    i18Lang: i18nReducer
 });
 
 export default rootReducer;
