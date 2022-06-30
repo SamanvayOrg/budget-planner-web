@@ -69,10 +69,9 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
                     {list.map((item, index) => {
                         return (
                             <MenuItem
-                                // selected={value && (value.name === item.name)}
                                 key={index}
                                 value={item}>
-                                {item.name}
+                                {`${item.name} (${item.code})`}
                             </MenuItem>);
                     })}
                 </Select>

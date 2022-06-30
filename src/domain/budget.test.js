@@ -21,7 +21,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Revenue Receipt",
 			"majorHeadGroupDisplayOrder": 1.00,
 			"majorHead": "Property Tax",
-			"minorHead": "Consolidated Tax on Property"
+			"minorHead": "Consolidated Tax on Property",
+			"detailedHeadId": 12,
+			"functionId": 92
 		}, {
 			"id": 2,
 			"code": "910-1111",
@@ -37,7 +39,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Revenue Receipt",
 			"majorHeadGroupDisplayOrder": 1.00,
 			"majorHead": "Property Tax",
-			"minorHead": "Consolidated Tax on Property"
+			"minorHead": "Consolidated Tax on Property",
+			"detailedHeadId": 13,
+			"functionId": 91
 		}, {
 			"id": 3,
 			"code": "920-1120",
@@ -53,7 +57,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Revenue Receipt",
 			"majorHeadGroupDisplayOrder": 1.00,
 			"majorHead": "Property Tax",
-			"minorHead": "Advertisement Tax"
+			"minorHead": "Advertisement Tax",
+			"detailedHeadId": 14,
+			"functionId": 96
 		}, {
 			"id": 4,
 			"code": "920-1121",
@@ -69,7 +75,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Revenue Receipt",
 			"majorHeadGroupDisplayOrder": 1.00,
 			"majorHead": "Property Tax",
-			"minorHead": "Advertisement Tax"
+			"minorHead": "Advertisement Tax",
+			"detailedHeadId": 19,
+			"functionId": 31
 		}, {
 			"id": 5,
 			"code": "310-2510",
@@ -85,7 +93,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Expenses",
 			"majorHeadGroupDisplayOrder": 2.00,
 			"majorHead": "Purchases for Operations and Programme implementation",
-			"minorHead": "Purchase of Water for Supply"
+			"minorHead": "Purchase of Water for Supply",
+			"detailedHeadId": 34,
+			"functionId": 93
 		}, {
 			"id": 6,
 			"code": "314-2520",
@@ -101,7 +111,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Expenses",
 			"majorHeadGroupDisplayOrder": 2.00,
 			"majorHead": "Purchases for Operations and Programme implementation",
-			"minorHead": "Purchase of Consumables"
+			"minorHead": "Purchase of Consumables",
+			"detailedHeadId": 349,
+			"functionId": 494
 		}, {
 			"id": 7,
 			"code": "210-3221",
@@ -117,7 +129,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Liability",
 			"majorHeadGroupDisplayOrder": 3.00,
 			"majorHead": "Grants, Contributions for Specific Purpose (Earmarked Funds)",
-			"minorHead": "Government of Maharashtra (Urban Develonment Department)"
+			"minorHead": "Government of Maharashtra (Urban Develonment Department)",
+			"detailedHeadId": 1122,
+			"functionId": 9121
 		}, {
 			"id": 8,
 			"code": "315-4234",
@@ -133,7 +147,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Assets",
 			"majorHeadGroupDisplayOrder": 4.00,
 			"majorHead": "Accumulated Depreciation",
-			"minorHead": "Other Fixed Assets"
+			"minorHead": "Other Fixed Assets",
+			"detailedHeadId": 1222,
+			"functionId": 9121
 		}, {
 			"id": 9,
 			"code": "740-3230",
@@ -149,7 +165,9 @@ describe('budget', () => {
 			"majorHeadGroup": "Liability",
 			"majorHeadGroupDisplayOrder": 3.00,
 			"majorHead": "Grants, Contributions for Specific Purpose (Earmarked Funds)",
-			"minorHead": "Government of Maharashtra (Other Diaa(tagnsive mats)"
+			"minorHead": "Government of Maharashtra (Other Diaa(tagnsive mats)",
+			"detailedHeadId": 1312,
+			"functionId": 9121
 		}]
 	};
 
@@ -220,7 +238,12 @@ describe('budget', () => {
 			expect(budget.items[1].items[0].summary.previousYearActuals).toBe(0);
 			expect(budget.items[1].items[0].summary.yearMinus1Actuals).toBe(200);
 			expect(budget.items[1].items[0].summary.yearMinus2Actuals).toBe(400);
+		});
 
+		it('should populate ids of detailed head and function', () => {
+			let budget = fromContract(budgetContract)
+			expect(budget.items[0].items[0].items[0].detailedHeadId).toBe(12);
+			expect(budget.items[0].items[0].items[0].functionId).toBe(92);
 		})
 	});
 

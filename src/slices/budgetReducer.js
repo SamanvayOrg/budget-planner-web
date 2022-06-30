@@ -61,17 +61,16 @@ const budgetDashboardSlice = createSlice({
                 .find(head => head.majorHead === majorHead.name)
                 .value();
 
-            console.log(majorHead);
-            console.log('matchingMajorHead', matchingMajorHead)
-
             matchingMajorHead.items.push({
-                code: theFunction.code + '-' + detailedHead.code,
+                code: theFunction.fullCode + '-' + detailedHead.fullCode,
                 name,
                 functionCode: theFunction.fullCode,
-                detailedHeadCode: detailedHead.code,
+                detailedHeadCode: detailedHead.fullCode,
                 majorHeadGroup: majorHeadGroup.name,
                 majorHead: majorHead.name,
-                minorHead: minorHead.name
+                minorHead: minorHead.name,
+                detailedHeadId: detailedHead.id,
+                functionId: theFunction.id
             });
             state.budgetView = getBudgetView(state.budget);
         }
