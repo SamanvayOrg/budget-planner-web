@@ -13,8 +13,6 @@ const LangSelector = () => {
 		i18n.changeLanguage(event.target.value);
 	}
 	const languages = [{value: 'en', title: 'English'}, {value: 'mr', title: 'Marathi'},]
-	// const languages = 111;
-
 
 	return (
 		<FormControl variant="standard" sx={{m: 2, minWidth: 120}}>
