@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import {makeStyles} from "@mui/styles";
 import ActionButton from "./ActionButton";
+import {useTranslation} from "react-i18next";
 
 
 const styleSheets = makeStyles(theme => ({
@@ -41,12 +42,13 @@ const styleSheets = makeStyles(theme => ({
 
 }))
 const CurrentBudgetBox = ({onClick,year}) => {
+	const {t}=useTranslation();
 	const classes = styleSheets();
 	return (
 		<Box className={classes.box}>
 			<div className={classes.innerBox}>
 				<div className={classes.text}>
-					<span>Budget for year {year}</span>
+					<span>{t('Budget for year')} {t(year)}</span>
 				</div>
 
 			</div>

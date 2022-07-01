@@ -40,7 +40,6 @@ export function fetchMetadata() {
 		dispatch(loading());
 		let data = await getMetadata(token);
 		dispatch(setMetadata(data));
-		console.log('data--->',data);
 	}
 }
 

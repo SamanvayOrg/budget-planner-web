@@ -46,10 +46,10 @@ const styleSheets = makeStyles(theme => ({
 	}
 
 }))
-const BudgetBox = ({versionName, lastUpdated, keys, action}) => {
+const BudgetBox = ({versionName, lastUpdated, index, action}) => {
 	const classes = styleSheets();
 	return (
-		<Box className={classes.box} key={keys}>
+		<Box className={classes.box} key={index}>
 			<span className={classes.insideBox}>
 				<div className={classes.lastUpdateText}>
 					{lastUpdated}
@@ -58,7 +58,7 @@ const BudgetBox = ({versionName, lastUpdated, keys, action}) => {
 				{versionName}
 			</span>
 			<span className={classes.actionButtons}>
-				<ActionButton onClick={action} keys={keys} label={"EDIT BUDGET"} id={"smallActionButton"}/>
+				<ActionButton key={index} onClick={action} label={"EDIT BUDGET"} id={"smallActionButton"}/>
 			</span>
 		</Box>
 

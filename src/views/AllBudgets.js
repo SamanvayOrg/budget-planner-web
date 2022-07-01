@@ -66,12 +66,12 @@ const AllBudgets = () => {
 
 	function renderBox(allBudget) {
 		let budgetBox = [];
-		_.forEach(allBudget, (budget) => {
+		_.forEach(allBudget, (budget,index) => {
 			const goToBudget = () => {
 				let year = budget.budgetYear.substring(0, 4)
 				navigate(`/budget/${year}`);
 			}
-			budgetBox.push(<BudgetBox action={goToBudget} keys={budget.budgetYear}
+			budgetBox.push(<BudgetBox action={goToBudget} index={index}
 			                          versionName={"Budget for year " + budget.budgetYear}
 			                          lastUpdated={"last updated 24 hours ago"}/>
 			)
