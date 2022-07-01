@@ -1,5 +1,6 @@
 import {makeStyles} from "@mui/styles";
 import {NavLink} from "react-router-dom";
+import {t} from "i18next";
 
 
 const useStyles = makeStyles(theme => ({
@@ -28,8 +29,8 @@ const NavBarMenu = () => {
 	const classes = useStyles();
 	return (
 		<div id="navBarRightNavigation" className={classes.mainContainer}>
-			<NavLink to="/dashboard" className={classes.links}>Dashboard</NavLink>
-			<NavLink to="/allBudgets" className={classes.links}>All budgets</NavLink>
+			<NavLink to="/dashboard" className={classes.links}>{t('Dashboard')}</NavLink>
+			<NavLink to="/allBudgets" className={classes.links}>{t('All budgets')}</NavLink>
 
 		</div>
 	)

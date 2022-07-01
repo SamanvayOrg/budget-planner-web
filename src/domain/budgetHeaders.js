@@ -1,3 +1,5 @@
+import {t} from "i18next";
+
 const currentYear = () => '2022-23';
 
 const getBudgetYearString = (yearString = currentYear(), minus = 0) => {
@@ -10,8 +12,8 @@ const getBudgetYearString = (yearString = currentYear(), minus = 0) => {
 const headers = (budget = currentYear()) => (
     [
         'Sr',
-        'Particulars',
-        'Code Number',
+        t('Particulars'),
+        t('Code Number'),
         `${getBudgetYearString(budget.budgetYear, 4)} Actuals`,
         `${getBudgetYearString(budget.budgetYear, 3)} Actuals`,
         `${getBudgetYearString(budget.budgetYear, 2)} Actuals`,

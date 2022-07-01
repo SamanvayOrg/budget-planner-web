@@ -1,9 +1,13 @@
 import _ from 'lodash';
+import {useTranslation} from "react-i18next";
+import {t} from "i18next"
 
 const getBudgetView = (budget) => {
 	const getChar =  (order, startingChar) => {
 		return String.fromCharCode(startingChar.charCodeAt(0) + order);
 	};
+	// const {t}=useTranslation();
+
 
 	const headerLine = (value, headerClass, index) => ([
 		{
@@ -12,7 +16,7 @@ const getBudgetView = (budget) => {
 			context: {type: 'sr', key: 'sr'},
 			readOnly: true
 		},
-		{value, className: headerClass, context: {type: 'header', key: 'name'}},
+		{value:t(value), className: headerClass, context: {type: 'header', key: 'name'}},
 		{value: null, context: {type: 'header', key: 'code'}},
 		{value: null, context: {type: 'header', key: 'yearMinus2Actuals'}},
 		{value: null, context: {type: 'header', key: 'yearMinus1Actuals'}},
@@ -23,8 +27,8 @@ const getBudgetView = (budget) => {
 	]);
 
 	const singleLine = (line, index, indexClass = 'Spreadsheet-particulars-index', nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
-		{value: index + 1,className: indexClass, context: {id: line.id, type: 'detail', key: 'sr'}, readOnly: true},
-		{value: line.name, className: nameClass, context: {id: line.id, type: 'detail', key: 'name'}, readOnly: true},
+		{value: t(index + 1),className: indexClass, context: {id: line.id, type: 'detail', key: 'sr'}, readOnly: true},
+		{value: t(line.name), className: nameClass, context: {id: line.id, type: 'detail', key: 'name'}, readOnly: true},
 		{value: line.code, className: numberClass, context: {id: line.id, type: 'detail', key: 'code'}, readOnly: true},
 		{value: line.yearMinus2Actuals,className: numberClass,context: {id: line.id, type: 'detail', key: 'yearMinus2Actuals'},readOnly: true},
 		{value: line.yearMinus1Actuals,className: numberClass,context: {id: line.id, type: 'detail', key: 'yearMinus1Actuals'},readOnly: true},

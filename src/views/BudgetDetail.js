@@ -16,6 +16,7 @@ import {Modal} from '@mui/material';
 import {useStyles} from '../components/ModalWithButton';
 import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
+import {useTranslation} from "react-i18next";
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({
@@ -82,6 +83,8 @@ const BudgetDetail = () => {
 	const navigate = useNavigate();
 	const classes = useStylesBudgetDetails();
 	const modalClass = useStyles();
+	const {t}=useTranslation();
+
 
 	const {budgetView = [], budget, saved} = useSelector(budgetSelector);
 	const {metadata} = useSelector(metadataSelector);
@@ -134,7 +137,7 @@ const BudgetDetail = () => {
                 </span>
 					</div>
 					<div className={classes.topCenter}>
-						<em>All values are in INR</em>
+						<em>{t('All values are in INR')}</em>
 					</div>
 					<div className={classes.topRight}>
 						<ActionButton onClick={save} label={saved} id={'dynamicWidthButton'}/>
@@ -143,7 +146,7 @@ const BudgetDetail = () => {
 				<div className={classes.mainContainer}>
 					<HorizontalLine/>
 					<div className={classes.budgetView}>
-						<Spreadsheet data={budgetView} columnLabels={headers(budget)}
+						<Spreadsheet data={budgetView} columnLabels={headers(t(budget))}
 						             onChange={(newView) => updateView(newView)}
 						             onActivate={onActivate}/>
 					</div>
