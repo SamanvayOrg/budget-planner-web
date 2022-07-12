@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 import CurrentBudgetBox from "../components/CurrentBudgetBox";
 import Spinner from "../components/Spinner";
 import {GetMunicipalityName} from "../domain/functions";
+import {fetchTranslations, translationSelector} from "../slices/translationsReducer";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -44,7 +45,8 @@ const useStyles = makeStyles(theme => ({
 const Dashboard = () => {
 	const classes = useStyles();
 
-	const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector)
+	const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector);
+	const {translations} = useSelector(translationSelector)
 
 	let navigate = useNavigate();
 
@@ -56,8 +58,10 @@ const Dashboard = () => {
 
 	useEffect(() => {
 		dispatch(fetchCurrentBudget());
+		dispatch(fetchTranslations());
 	}, [dispatch]);
 
+	console.log('dash-trans', translations)
 	const renderBox = () => {
 		if (loading) {
 			return <Spinner/>;

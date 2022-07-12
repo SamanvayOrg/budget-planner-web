@@ -47,14 +47,18 @@ const save = async (token, budget) => {
 
 }
 
-const getMetadata = async (token ) => {
-	const headers={'Authorization':`Bearer ${token}`};
-	const result= await axios.get(`/api/metadata`,{headers});
+const getMetadata = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/metadata`, {headers});
 	return result.data;
 
 }
-
+const getTranslations = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/translation`, {headers});
+	return result.data;
+}
 
 export {
-	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save,getMetadata
+	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata, getTranslations
 };

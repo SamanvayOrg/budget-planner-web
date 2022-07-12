@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
-import { getMunicipalityDetails} from "../api/api";
+import {getMunicipalityDetails, getTranslations} from "../api/api";
 
 export const initialState = {
 	details: {},
@@ -40,8 +40,6 @@ export function fetchMunicipalityDetails() {
 		dispatch(setDetails());
 		let details = await getMunicipalityDetails(token);
 		dispatch(setDetails(details));
-
-
 	}
 }
 
