@@ -7,7 +7,6 @@ import {ReactComponent as MBSLogo} from '../assets/MBSLogo.svg';
 import Profile from "./Profile";
 import {useAuth0} from "@auth0/auth0-react";
 import NavBarNavigationBeforeAuth from "./NavBarNavigationBeforeAuth";
-import LangSelector from "./LangSelector";
 
 
 const ResponsiveAppBar = () => {
@@ -24,8 +23,6 @@ const ResponsiveAppBar = () => {
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 					<a href="/dashboard"><MBSLogo/></a>
-					<LangSelector />
-
 					{endView}
 				</Toolbar>
 			</Container>
