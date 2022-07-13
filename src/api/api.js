@@ -55,7 +55,7 @@ const getMetadata = async (token) => {
 }
 const getTranslations = async (token) => {
 	const headers = {'Authorization': `Bearer ${token}`};
-	const result = await axios.get(`/api/translation`, {headers});
+	const result = await axios.get(`/api/translations`, {headers});
 	return result.data;
 }
 
