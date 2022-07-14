@@ -13,6 +13,7 @@ import CurrentBudgetBox from "../components/CurrentBudgetBox";
 import Spinner from "../components/Spinner";
 import {GetMunicipalityName} from "../domain/functions";
 import {fetchTranslations, translationSelector} from "../slices/translationsReducer";
+import {t} from "i18next";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -80,6 +81,7 @@ const Dashboard = () => {
 					<div className={classes.leftUserNameText}>
 						HELLO <UserName/>
 					</div>
+					<div>{t('municipality')}</div>
 					<div><span className={classes.welcomeText}>Welcome to </span>
 						<span
 							className={classes.mmbsName}><GetMunicipalityName/> Budgeting system</span>

@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
 import {getTranslations} from "../api/api";
+import i18n from "i18next";
 
 export const initialState = {
 	translations: {},
@@ -35,12 +36,10 @@ export const translationSelector = state => state.translation;
 export default translationsSlice.reducer;
 
 
-export const fetchTranslations = () => {
-	return async (dispatch, getState) => {
-		const token = tokenSelector(getState());
-		dispatch(setTranslations());
-		const translation = await getTranslations(token);
-		dispatch(setTranslations(translation));
-	}
-
-}
+export const fetchTranslations = () => async (dispatch, getState) => {
+	const token = tokenSelector(getState());
+	dispatch(setTranslations());
+	const translation = await getTranslations(token);
+	i18n.addResources('mr', 'translation', translation);
+	dispatch(setTranslations(translation));
+};
