@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const BasicSelect = ({onChange}) => {
+const SelectYears = ({onChange}) => {
 	const classes = useStyles();
 
 	const [budgetYear, setBudgetYear] = React.useState('');
@@ -76,5 +76,5 @@ const BasicSelect = ({onChange}) => {
 	</Box>);
 
 };
-export default BasicSelect;
+export default SelectYears;
 export {useStyles};

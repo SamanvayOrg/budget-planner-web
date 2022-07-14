@@ -8,7 +8,7 @@ import {useNavigate, useParams} from 'react-router-dom';
 import {addBudgetLine, budgetSelector, fetchBudget, saveBudget, updateBudget} from '../slices/budgetReducer';
 import Spreadsheet from 'react-spreadsheet';
 import {headers} from '../domain/budgetHeaders';
-import {GetMunicipalityName} from '../domain/functions';
+import {MunicipalityName} from '../domain/functions';
 import HorizontalLine from '../components/HorizontalLine';
 import {KeyboardBackspace} from '@mui/icons-material';
 import ActionButton from '../components/ActionButton';
@@ -133,7 +133,7 @@ const BudgetDetail = () => {
 				<div className={classes.top}>
 					<div className={classes.topLeft}>
                 <span className={classes.title}><KeyboardBackspace
-	                onClick={() => navigate('/dashboard')} className={classes.backArrow}/> <GetMunicipalityName/>
+	                onClick={() => navigate('/dashboard')} className={classes.backArrow}/> <MunicipalityName/>
                 </span>
 					</div>
 					<div className={classes.topCenter}>

@@ -2,7 +2,7 @@ import {useEffect} from 'react';
 import {allMunicipalityDetailsSelector, fetchMunicipalityDetails} from '../slices/municipalityReducer';
 import {useDispatch, useSelector} from 'react-redux';
 
-const GetMunicipalityName = () => {
+const MunicipalityName = () => {
 	const dispatch = useDispatch();
 	const {details} = useSelector(allMunicipalityDetailsSelector)
 
@@ -15,4 +15,4 @@ const GetMunicipalityName = () => {
 
 }
 
-export {GetMunicipalityName}
+export {MunicipalityName}

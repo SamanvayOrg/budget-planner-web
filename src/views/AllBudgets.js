@@ -10,9 +10,10 @@ import {allBudgetSelector, fetchAllBudgets} from "../slices/allBudgetReducer";
 import {useEffect} from "react";
 import _ from "lodash";
 import {useNavigate} from "react-router-dom";
-import {GetMunicipalityName} from "../domain/functions";
+import {MunicipalityName} from "../domain/functions";
 import HorizontalLine from "../components/HorizontalLine";
 import {Breadcrumbs} from "@mui/material";
+import {t} from "i18next";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -72,7 +73,7 @@ const AllBudgets = () => {
 				navigate(`/budget/${year}`);
 			}
 			budgetBox.push(<BudgetBox action={goToBudget} index={index}
-			                          versionName={"Budget for year " + budget.budgetYear}
+			                          versionName={t("Budget for year") + '-' + t(budget.budgetYear)}
 			                          lastUpdated={"last updated 24 hours ago"}/>
 			)
 		})
@@ -90,7 +91,7 @@ const AllBudgets = () => {
 					<span>ALL BUDGETS</span>
 				</Breadcrumbs>
 				<div className={classes.title}>
-					<GetMunicipalityName/>
+					<MunicipalityName/>
 				</div>
 				<HorizontalLine/>
 				<Container maxWidth="xl">

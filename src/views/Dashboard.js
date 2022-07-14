@@ -8,12 +8,10 @@ import Home from "./Home";
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {budgetDashboardSelector, createNewBudget, fetchCurrentBudget} from "../slices/budgetDashboardReducer";
-import {useNavigate} from "react-router-dom";
 import CurrentBudgetBox from "../components/CurrentBudgetBox";
 import Spinner from "../components/Spinner";
-import {GetMunicipalityName} from "../domain/functions";
+import {MunicipalityName} from "../domain/functions";
 import {fetchTranslations} from "../slices/translationsReducer";
-import {t} from "i18next";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -45,15 +43,7 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
 	const classes = useStyles();
-
 	const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector);
-
-	let navigate = useNavigate();
-
-	const goToBudget = () => {
-		const year = budgetYear.substring(0, 4)
-		navigate(`/budget/${year}`);
-	}
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -66,7 +56,7 @@ const Dashboard = () => {
 			return <Spinner/>;
 		}
 		if (budgetYear) {
-			return <CurrentBudgetBox onClick={goToBudget} year={budgetYear}/>;
+			return <CurrentBudgetBox year={budgetYear}/>;
 		}
 		return <EmptyBudgetBox addNewBudget={(year) => dispatch(createNewBudget(year))}/>;
 	}
@@ -79,10 +69,9 @@ const Dashboard = () => {
 					<div className={classes.leftUserNameText}>
 						HELLO <UserName/>
 					</div>
-					<div>{t('municipality')}</div>
 					<div><span className={classes.welcomeText}>Welcome to </span>
 						<span
-							className={classes.mmbsName}><GetMunicipalityName/> Budgeting system</span>
+							className={classes.mmbsName}><MunicipalityName/> Budgeting system</span>
 					</div>
 					{renderBox()}
 				</div>
@@ -90,7 +79,6 @@ const Dashboard = () => {
 		</div>
 	)
 };
-// export default Dashboard;
 export default withAuthenticationRequired(Dashboard, {
 	onRedirecting: () => <Home/>,
 });

@@ -1,7 +1,7 @@
 import {Box} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import ModalWithButton from "./ModalWithButton";
-import BasicSelect from "./BasicSelect";
+import SelectYears from "./SelectYears";
 import ActionButton from "./ActionButton";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -73,7 +73,7 @@ const EmptyBudgetBox = ({addNewBudget}) => {
 			buttonId={"addNewBudgetButton"}
 			modalText={"Create a new budget"}
 			style={style}
-			dropDown={<BasicSelect onChange={setSelectedYear}/>}
+			dropDown={<SelectYears onChange={setSelectedYear}/>}
 			actionButton={<ActionButton label={"CREATE A NEW BUDGET"} id={"addNewBudgetButton"} onClick={addBudget} />}
 		/>
 	</Box>)
