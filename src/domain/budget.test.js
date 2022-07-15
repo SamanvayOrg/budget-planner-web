@@ -183,7 +183,8 @@ describe('budget', () => {
 			const propertyTax = _.find(revenueReceipt.items, item => item.majorHead === 'Property Tax')
 			expect(propertyTax).toBeDefined();
 			expect(propertyTax.items).toHaveLength(4);
-			const allConsolidatedTaxOnProperty = _.find(propertyTax.items, item => item.name === 'Consolidated Tax on Property - All');
+			console.log(propertyTax.items);
+			const allConsolidatedTaxOnProperty = _.find(propertyTax.items, item => item.minorHead === 'Consolidated Tax on Property');
 			expect(allConsolidatedTaxOnProperty).toBeDefined();
 			expect(allConsolidatedTaxOnProperty.code).toBe('910-1110');
 			expect(allConsolidatedTaxOnProperty.budgetedAmount).toBeNull();
