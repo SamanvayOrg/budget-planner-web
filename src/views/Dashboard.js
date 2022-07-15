@@ -12,8 +12,9 @@ import CurrentBudgetBox from "../components/CurrentBudgetBox";
 import Spinner from "../components/Spinner";
 import {MunicipalityName} from "../domain/functions";
 import {fetchTranslations} from "../slices/translationsReducer";
-import DataTable from "../components/DataTable";
-import {fetchBudget} from "../slices/budgetReducer";
+import {useTranslation} from "react-i18next";
+
+
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -47,6 +48,7 @@ const Dashboard = () => {
 	const classes = useStyles();
 	const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector);
 	const dispatch = useDispatch();
+	const {t}=useTranslation();
 
 	useEffect(() => {
 		dispatch(fetchCurrentBudget());
@@ -69,7 +71,7 @@ const Dashboard = () => {
 			<Container maxWidth="xl">
 				<div className={classes.mainContainer}>
 					<div className={classes.leftUserNameText}>
-						HELLO <UserName/>
+						{t('HELLO')} <UserName/>
 					</div>
 					<div><span className={classes.welcomeText}>Welcome to </span>
 						<span

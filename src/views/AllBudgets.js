@@ -13,7 +13,7 @@ import {useNavigate} from "react-router-dom";
 import {MunicipalityName} from "../domain/functions";
 import HorizontalLine from "../components/HorizontalLine";
 import {Breadcrumbs} from "@mui/material";
-import {t} from "i18next";
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -59,6 +59,7 @@ const AllBudgets = () => {
 	const dispatch = useDispatch();
 	const {allBudget} = useSelector(allBudgetSelector);
 	let navigate = useNavigate();
+	const {t}=useTranslation();
 
 
 	useEffect(() => {
