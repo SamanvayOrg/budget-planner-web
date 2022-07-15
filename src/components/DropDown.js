@@ -1,5 +1,6 @@
 import {MenuItem, Select} from "@mui/material";
 import * as React from "react";
+import {t} from "i18next";
 
 const DropDown = ({list, value, label, onSelect}) => {
 
@@ -14,7 +15,7 @@ const DropDown = ({list, value, label, onSelect}) => {
 					<MenuItem
 						key={index}
 						value={item}>
-						{item}
+						{t(item)}
 					</MenuItem>);
 			})}
 		</Select>

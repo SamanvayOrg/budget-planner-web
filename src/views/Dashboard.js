@@ -12,6 +12,8 @@ import CurrentBudgetBox from "../components/CurrentBudgetBox";
 import Spinner from "../components/Spinner";
 import {MunicipalityName} from "../domain/functions";
 import {fetchTranslations} from "../slices/translationsReducer";
+import DataTable from "../components/DataTable";
+import {fetchBudget} from "../slices/budgetReducer";
 
 const useStyles = makeStyles(theme => ({
 	mainContainer: {
@@ -20,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 		justifyContent: "center",
 		alignItems: "start",
 		paddingTop: "64px",
-		paddingLeft: "1%",
+		paddingLeft: "0%",
 		fontFamily: "Lato",
 		fontStyle: "normal",
 		color: "#616161",

@@ -4,9 +4,12 @@ import ActionButton from "./ActionButton";
 import DropDown from "./DropDown";
 import {useDispatch, useSelector} from "react-redux";
 import {allBudgetSelector, fetchAllBudgets} from "../slices/allBudgetReducer";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import _ from "lodash"
 import {useNavigate} from "react-router-dom";
+import DataTable from "./DataTable";
+import {budgetSelector, fetchBudget} from "../slices/budgetReducer";
+import {toBudgetSummaryReport} from "../domain/budgetSummaryTableMapper";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -45,14 +48,12 @@ const styleSheets = makeStyles(theme => ({
 	}
 
 }))
-const CurrentBudgetBox = ({ year}) => {
+const CurrentBudgetBox = ({year}) => {
 	const {allBudget} = useSelector(allBudgetSelector);
 	const dispatch = useDispatch();
 	const classes = styleSheets();
 	const [budgetYear, setBudgetYear] = useState(year);
 	let navigate = useNavigate();
-
-
 	useEffect(() => {
 		dispatch(fetchAllBudgets());
 	}, [dispatch]);
@@ -67,16 +68,18 @@ const CurrentBudgetBox = ({ year}) => {
 
 	const handleChange = (event) => {
 		setBudgetYear(event.target.value);
-		console.log('target',event.target.value);
+		console.log('target', event.target.value);
 	};
 
 	const goToBudget = () => {
 		const year = budgetYear.substring(0, 4)
 		navigate(`/budget/${year}`);
 	};
+	let heading = ['abc', 'd', "d"];
+	toBudgetSummaryReport(allBudget, budgetYear);
 
 	return (
-		<Box className={classes.box}>
+		<><Box className={classes.box}>
 			<div className={classes.innerBox}>
 				<div className={classes.text}>
 					<DropDown list={getBudgetYears(allBudget)} value={budgetYear} onSelect={handleChange}/>
@@ -85,7 +88,15 @@ const CurrentBudgetBox = ({ year}) => {
 			<div className={classes.actionButtons}>
 				<ActionButton label={"Open budget"} id={"addNewBudgetButton"} onClick={goToBudget}/>
 			</div>
+
 		</Box>
+			<div className={classes.box}>
+				<DataTable headings={toBudgetSummaryReport(allBudget, year).headings}
+				           rows={toBudgetSummaryReport(allBudget, year).data}/>
+				<DataTable headings={toBudgetSummaryReport(allBudget, year).headings}
+				           rows={toBudgetSummaryReport(allBudget, year).data}/>
+			</div>
+		</>
 
 	);
 };
