@@ -6,7 +6,7 @@ import LangSelector from "./LangSelector";
 const NavBarNavigationBeforeAuth = () => {
 	return (
 		<div id="navBarRightNavigation">
-			<LangSelector/>
+			<LangSelector />
 			<Contact/>
 			<HelpAndSupport/>
 		</div>

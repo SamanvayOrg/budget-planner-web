@@ -25,10 +25,8 @@ const LangSelector = () => {
 
 
 	return (
-		<FormControl variant="standard" sx={{m: 2, minWidth: 120}}>
+		<FormControl variant="standard" sx={{m: 2, minWidth: 100,margin:"0px 16px 0px 0px"}} >
 			<Select
-				labelId="demo-simple-select-standard-label"
-				id="demo-simple-select-standard"
 				value={!_.isNull(language) ? language : selectedLang}
 				onChange={changeLanguage}
 			>

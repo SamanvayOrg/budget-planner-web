@@ -8,7 +8,6 @@
     background: #FFFFFF1A;
     height: 64px;
     background-color: #FFFFFF1A;
-
 }
 
 #settingOnNavBar {
@@ -19,7 +18,6 @@
 }
 
 #navRightBarMenu {
-    flex: 1;
     display: flex;
     justify-content: flex-end;
     width: 49px;
@@ -53,7 +51,6 @@
     display: flex;
     justify-content: flex-end;
     color: #616161;
-
 }
 #loginBox{
     box-sizing: border-box;
