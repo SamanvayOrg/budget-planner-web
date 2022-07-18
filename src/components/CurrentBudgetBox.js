@@ -8,7 +8,6 @@ import React, {useEffect, useState} from "react";
 import _ from "lodash"
 import {useNavigate} from "react-router-dom";
 import DataTable from "./DataTable";
-import {budgetSelector, fetchBudget} from "../slices/budgetReducer";
 import {toBudgetSummaryReport} from "../domain/budgetSummaryTableMapper";
 
 const styleSheets = makeStyles(theme => ({
@@ -68,15 +67,12 @@ const CurrentBudgetBox = ({year}) => {
 
 	const handleChange = (event) => {
 		setBudgetYear(event.target.value);
-		console.log('target', event.target.value);
 	};
-
 	const goToBudget = () => {
 		const year = budgetYear.substring(0, 4)
 		navigate(`/budget/${year}`);
 	};
-	let heading = ['abc', 'd', "d"];
-	toBudgetSummaryReport(allBudget, budgetYear);
+
 
 	return (
 		<><Box className={classes.box}>
@@ -91,10 +87,10 @@ const CurrentBudgetBox = ({year}) => {
 
 		</Box>
 			<div className={classes.box}>
-				<DataTable headings={toBudgetSummaryReport(allBudget, year).headings}
-				           rows={toBudgetSummaryReport(allBudget, year).data}/>
-				<DataTable headings={toBudgetSummaryReport(allBudget, year).headings}
-				           rows={toBudgetSummaryReport(allBudget, year).data}/>
+				<DataTable headings={toBudgetSummaryReport(allBudget, budgetYear).headings}
+				           rows={toBudgetSummaryReport(allBudget, budgetYear).data}/>
+				<DataTable headings={toBudgetSummaryReport(allBudget, budgetYear).headings}
+				           rows={toBudgetSummaryReport(allBudget, budgetYear).data}/>
 			</div>
 		</>
 
