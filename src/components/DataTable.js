@@ -13,21 +13,21 @@ const DataTable = ({headings, rows}) => {
 	return (<TableContainer component={Paper}>
 		<Table sx={{minWidth: 650}} aria-label="simple table">
 			<TableHead>
-				<TableRow>
-					{_.map(headings, heading => {
-						return <TableCell >{heading}</TableCell>
+				<TableRow >
+					{_.map(headings, (heading,index) => {
+						return <TableCell key={index} >{heading}</TableCell>
 					})}
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{rows.map((row) => (
+				{_.map(rows,row => (
 					<TableRow
 						key={row.name}
 						sx={{'&:last-child td, &:last-child th': {border: 0}}}
 					>
-						<TableCell>{row.name}</TableCell>
-						<TableCell>{row.revised}</TableCell>
-						<TableCell>{row.budgeted}</TableCell>
+						<TableCell key={row.name}>{row.name}</TableCell>
+						<TableCell key={row.revised}>{row.revised}</TableCell>
+						<TableCell key={row.budgeted}>{row.budgeted}</TableCell>
 					</TableRow>))}
 			</TableBody>
 		</Table>
