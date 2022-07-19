@@ -7,20 +7,26 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import _ from "lodash";
+import {Typography} from "@mui/material";
 
 
-const DataTable = ({headings, rows}) => {
+const DataTable = ({headings, rows, title}) => {
 	return (<TableContainer component={Paper}>
 		<Table sx={{minWidth: 600}} aria-label="simple table">
 			<TableHead>
-				<TableRow >
-					{_.map(headings, (heading,index) => {
-						return <TableCell key={index} >{heading}</TableCell>
+				<TableRow><TableCell align="center" colSpan={3} style={{
+					fontSize: 20,
+					fontWeight: "bold",
+					color: "#616161"
+				}}>{title}</TableCell></TableRow>
+				<TableRow>
+					{_.map(headings, (heading, index) => {
+						return <TableCell key={index}>{heading}</TableCell>
 					})}
 				</TableRow>
 			</TableHead>
 			<TableBody>
-				{_.map(rows,row => (
+				{_.map(rows, row => (
 					<TableRow
 						key={row.name}
 						sx={{'&:last-child td, &:last-child th': {border: 0}}}

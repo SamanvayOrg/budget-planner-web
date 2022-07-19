@@ -8,9 +8,9 @@ import React, {useEffect, useState} from "react";
 import _ from "lodash"
 import {useNavigate} from "react-router-dom";
 import DataTable from "./DataTable";
-import { budgetSummaryData} from "../domain/budgetSummaryMapper";
-import PieChart from "./PieChart";
+import {budgetSummaryData} from "../domain/budgetSummaryMapper";
 import ResponsivePieChart from "./ResponsivePieChart";
+import {Paper} from "@mui/material";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -90,8 +90,12 @@ const CurrentBudgetBox = ({year}) => {
 		</Box>
 			<div className={classes.box}>
 				<DataTable headings={budgetSummaryData(allBudget, budgetYear).headings}
-				           rows={budgetSummaryData(allBudget, budgetYear).data}/>
-				<div style={{height:400, width:'100%'}}> <ResponsivePieChart data={budgetSummaryData(allBudget, budgetYear).pieChartData}/></div>
+				           rows={budgetSummaryData(allBudget, budgetYear).data}
+				           title={`Budget Summary FY ${budgetYear} (in lakhs)`}/>
+				<Paper style={{height: 400, width: '90%', paddingBottom: 20, paddingTop: 15, color:'#616161'}}><ResponsivePieChart
+					data={budgetSummaryData(allBudget, budgetYear).pieChartData}
+					title={`Key Budget Highlights FY ${budgetYear} (in lakhs)`}
+				/></Paper>
 
 			</div>
 
