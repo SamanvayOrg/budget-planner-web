@@ -8,7 +8,8 @@ import React, {useEffect, useState} from "react";
 import _ from "lodash"
 import {useNavigate} from "react-router-dom";
 import DataTable from "./DataTable";
-import {toBudgetSummaryReport} from "../domain/budgetSummaryTableMapper";
+import { budgetSummaryData} from "../domain/budgetSummaryMapper";
+import PieChart from "./PieChart";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -87,11 +88,11 @@ const CurrentBudgetBox = ({year}) => {
 
 		</Box>
 			<div className={classes.box}>
-				<DataTable headings={toBudgetSummaryReport(allBudget, budgetYear).headings}
-				           rows={toBudgetSummaryReport(allBudget, budgetYear).data}/>
-				<DataTable headings={toBudgetSummaryReport(allBudget, budgetYear).headings}
-				           rows={toBudgetSummaryReport(allBudget, budgetYear).data}/>
+				<DataTable headings={budgetSummaryData(allBudget, budgetYear).headings}
+				           rows={budgetSummaryData(allBudget, budgetYear).data}/>
+				<PieChart data={budgetSummaryData(allBudget, budgetYear).pieChartData} width={500} height={400}/>
 			</div>
+
 		</>
 
 	);

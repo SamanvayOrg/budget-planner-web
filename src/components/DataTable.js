@@ -11,7 +11,7 @@ import _ from "lodash";
 
 const DataTable = ({headings, rows}) => {
 	return (<TableContainer component={Paper}>
-		<Table sx={{minWidth: 650}} aria-label="simple table">
+		<Table sx={{minWidth: 600}} aria-label="simple table">
 			<TableHead>
 				<TableRow >
 					{_.map(headings, (heading,index) => {
@@ -25,9 +25,9 @@ const DataTable = ({headings, rows}) => {
 						key={row.name}
 						sx={{'&:last-child td, &:last-child th': {border: 0}}}
 					>
-						<TableCell key={row.name}>{row.name}</TableCell>
-						<TableCell key={row.revised}>{row.revised}</TableCell>
-						<TableCell key={row.budgeted}>{row.budgeted}</TableCell>
+						<TableCell key={row.name.index}>{row.name}</TableCell>
+						<TableCell key={row.revised.index}>{row.revised}</TableCell>
+						<TableCell key={row.budgeted.index}>{row.budgeted}</TableCell>
 					</TableRow>))}
 			</TableBody>
 		</Table>

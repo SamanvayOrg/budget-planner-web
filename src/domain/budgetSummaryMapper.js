@@ -2,8 +2,7 @@ import _ from "lodash";
 import {fromContract} from "./budgetContractMapper";
 
 
-const toBudgetSummaryReport = (budgets, year) => {
-
+const budgetSummaryData = (budgets, year) => {
 	const currentYearBudget = _.chain(budgets)
 		.filter((e) => e.budgetYear === year)
 		.first()
@@ -139,8 +138,22 @@ const toBudgetSummaryReport = (budgets, year) => {
 		});
 		return dataLine;
 	}
-	return {headings: getHeadings(), data: getData()};
+	const piechartData = () => {
+		let pieData = [{id: '0', value: 0}];
+		pieData.push({
+			id: 'Revenue Budget',
+			value: budgetedRevenueExpenditure(currentYearBudget)
+		});
+		pieData.push({
+			id: 'Capital Budget',
+			value: budgetedCapitalExpenditure(currentYearBudget)
+		});
+		return pieData;
+	}
+
+	return {headings: getHeadings(), data: getData(), pieChartData: piechartData()};
 }
 
-export {toBudgetSummaryReport}
+
+export {budgetSummaryData}
 
