@@ -7,7 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import _ from "lodash";
-import {Typography} from "@mui/material";
 
 
 const DataTable = ({headings, rows, title}) => {
@@ -16,8 +15,9 @@ const DataTable = ({headings, rows, title}) => {
 			<TableHead>
 				<TableRow><TableCell align="center" colSpan={3} style={{
 					fontSize: 20,
-					fontWeight: "bold",
-					color: "#616161"
+					fontWeight: "700",
+					color: "#616161",
+					fontFamily:"Lato"
 				}}>{title}</TableCell></TableRow>
 				<TableRow>
 					{_.map(headings, (heading, index) => {

@@ -12,11 +12,11 @@ const budgetSummaryData = (budgets, year) => {
 		.first()
 		.value()
 
-	const budgetedRevenueIncome = (budget) => {
+	const getBudgetedValue = (budget, itemName) => {
 		let revenue = 0;
 		if (!_.isEqual(budget, undefined)) {
 			const revenueIncome = _.chain(fromContract(budget).items)
-				.filter((e) => e.majorHeadGroup === 'Revenue Receipt')
+				.filter((e) => e.majorHeadGroup === itemName)
 				.first()
 				.value()
 			revenue = revenueIncome.summary.budgetedAmount;
@@ -24,46 +24,11 @@ const budgetSummaryData = (budgets, year) => {
 		return revenue;
 	}
 
-	const budgetedRevenueExpenditure = (budget) => {
-		let expenses = 0;
-		if (!_.isEqual(budget, undefined)) {
-			const revenueIncome = _.chain(fromContract(budget).items)
-				.filter((e) => e.majorHeadGroup === 'Expenses')
-				.first()
-				.value()
-			expenses = revenueIncome.summary.budgetedAmount;
-		}
-		return expenses;
-	}
-	const budgetedCapitalIncome = (budget) => {
-		let assets = 0;
-		if (!_.isEqual(budget, undefined)) {
-			const revenueIncome = _.chain(fromContract(budget).items)
-				.filter((e) => e.majorHeadGroup === 'Assets')
-				.first()
-				.value()
-			assets = revenueIncome.summary.budgetedAmount;
-		}
-		return assets;
-	}
-	const budgetedCapitalExpenditure = (budget) => {
-		let liability = 0;
-		if (!_.isEqual(budget, undefined)) {
-			const revenueIncome = _.chain(fromContract(budget).items)
-				.filter((e) => e.majorHeadGroup === 'Liability')
-				.first()
-				.value()
-			liability = revenueIncome.summary.budgetedAmount;
-		}
-		return liability;
-	}
-
-
-	const revisedRevenueIncome = (budget) => {
+	const getRevisedValue = (budget, itemName) => {
 		let revenue = 0;
 		if (!_.isEqual(budget, undefined)) {
 			const revenueIncome = _.chain(fromContract(budget).items)
-				.filter((e) => e.majorHeadGroup === 'Revenue Receipt')
+				.filter((e) => e.majorHeadGroup === itemName)
 				.first()
 				.value()
 			revenue = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
@@ -71,39 +36,6 @@ const budgetSummaryData = (budgets, year) => {
 		return revenue;
 	}
 
-	const revisedRevenueExpenditure = (budget) => {
-		let revisedExpenses = 0;
-		if (!_.isEqual(budget, undefined)) {
-			const revenueIncome = _.chain(fromContract(budget).items)
-				.filter((e) => e.majorHeadGroup === 'Expenses')
-				.first()
-				.value()
-			revisedExpenses = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
-		}
-		return revisedExpenses;
-	}
-	const revisedCapitalIncome = (budget) => {
-		let assets = 0;
-		if (!_.isEqual(budget, undefined)) {
-			const revenueIncome = _.chain(fromContract(budget).items)
-				.filter((e) => e.majorHeadGroup === 'Assets')
-				.first()
-				.value()
-			assets = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
-		}
-		return assets;
-	}
-	const revisedCapitalExpenditure = (budget) => {
-		let liability = 0;
-		if (!_.isEqual(budget, undefined)) {
-			const revenueIncome = _.chain(fromContract(budget).items)
-				.filter((e) => e.majorHeadGroup === 'Liability')
-				.first()
-				.value()
-			liability = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
-		}
-		return liability;
-	}
 
 	const getHeadings = () => {
 		let headings = [];
@@ -117,23 +49,23 @@ const budgetSummaryData = (budgets, year) => {
 		let dataLine = [];
 		dataLine.push({
 			name: 'Revenue Income',
-			revised: revisedRevenueIncome(prevYearBudget),
-			budgeted: budgetedRevenueIncome(currentYearBudget)
+			revised: getRevisedValue(prevYearBudget, 'Revenue Receipt'),
+			budgeted: getBudgetedValue(currentYearBudget, 'Revenue Receipt')
 		});
 		dataLine.push({
 			name: 'Revenue Expenditure',
-			revised: revisedRevenueExpenditure(prevYearBudget),
-			budgeted: budgetedRevenueExpenditure(currentYearBudget)
+			revised: getRevisedValue(prevYearBudget, 'Expenses'),
+			budgeted: getBudgetedValue(currentYearBudget, 'Expenses')
 		});
 		dataLine.push({
 			name: 'Capital Income',
-			revised: revisedCapitalIncome(prevYearBudget),
-			budgeted: budgetedCapitalIncome(currentYearBudget)
+			revised: getRevisedValue(prevYearBudget, 'Assets'),
+			budgeted: getBudgetedValue(currentYearBudget, 'Assets')
 		});
 		dataLine.push({
 			name: 'Capital Expenditure',
-			revised: revisedCapitalExpenditure(prevYearBudget),
-			budgeted: budgetedCapitalExpenditure(currentYearBudget)
+			revised: getRevisedValue(prevYearBudget, 'Liability'),
+			budgeted: getBudgetedValue(currentYearBudget, 'Liability')
 		});
 		return dataLine;
 	}
@@ -141,11 +73,11 @@ const budgetSummaryData = (budgets, year) => {
 		let pieData = [];
 		pieData.push({
 			id: 'Revenue Budget',
-			value: budgetedRevenueExpenditure(currentYearBudget)
+			value: getBudgetedValue(currentYearBudget, 'Expenses')
 		});
 		pieData.push({
 			id: 'Capital Budget',
-			value: budgetedCapitalExpenditure(currentYearBudget)
+			value: getBudgetedValue(currentYearBudget, 'Liability')
 		});
 		return pieData;
 	}
