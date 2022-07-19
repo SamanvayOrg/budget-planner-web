@@ -139,7 +139,7 @@ const budgetSummaryData = (budgets, year) => {
 		return dataLine;
 	}
 	const piechartData = () => {
-		let pieData = [{id: '0', value: 0}];
+		let pieData = [];
 		pieData.push({
 			id: 'Revenue Budget',
 			value: budgetedRevenueExpenditure(currentYearBudget)

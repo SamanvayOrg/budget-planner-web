@@ -10,6 +10,7 @@ import {useNavigate} from "react-router-dom";
 import DataTable from "./DataTable";
 import { budgetSummaryData} from "../domain/budgetSummaryMapper";
 import PieChart from "./PieChart";
+import ResponsivePieChart from "./ResponsivePieChart";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -90,7 +91,8 @@ const CurrentBudgetBox = ({year}) => {
 			<div className={classes.box}>
 				<DataTable headings={budgetSummaryData(allBudget, budgetYear).headings}
 				           rows={budgetSummaryData(allBudget, budgetYear).data}/>
-				<PieChart data={budgetSummaryData(allBudget, budgetYear).pieChartData} width={500} height={400}/>
+				<div style={{height:400, width:'100%'}}> <ResponsivePieChart data={budgetSummaryData(allBudget, budgetYear).pieChartData}/></div>
+
 			</div>
 
 		</>
