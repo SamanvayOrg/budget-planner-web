@@ -7,7 +7,6 @@ const budgetSummaryData = (budgets, year) => {
 		.filter((e) => e.budgetYear === year)
 		.first()
 		.value()
-
 	const prevYearBudget = _.chain(budgets)
 		.filter((e) => e.budgetYear === `${year.substring(0, 4) - 1}-${year.substring(7, 5) - 1}`)
 		.first()
@@ -118,22 +117,22 @@ const budgetSummaryData = (budgets, year) => {
 		let dataLine = [];
 		dataLine.push({
 			name: 'Revenue Income',
-			revised: revisedRevenueIncome(currentYearBudget),
+			revised: revisedRevenueIncome(prevYearBudget),
 			budgeted: budgetedRevenueIncome(currentYearBudget)
 		});
 		dataLine.push({
 			name: 'Revenue Expenditure',
-			revised: revisedRevenueExpenditure(currentYearBudget),
+			revised: revisedRevenueExpenditure(prevYearBudget),
 			budgeted: budgetedRevenueExpenditure(currentYearBudget)
 		});
 		dataLine.push({
 			name: 'Capital Income',
-			revised: revisedCapitalIncome(currentYearBudget),
+			revised: revisedCapitalIncome(prevYearBudget),
 			budgeted: budgetedCapitalIncome(currentYearBudget)
 		});
 		dataLine.push({
 			name: 'Capital Expenditure',
-			revised: revisedCapitalExpenditure(currentYearBudget),
+			revised: revisedCapitalExpenditure(prevYearBudget),
 			budgeted: budgetedCapitalExpenditure(currentYearBudget)
 		});
 		return dataLine;
