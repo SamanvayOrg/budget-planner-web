@@ -3,6 +3,7 @@ import {fromContract} from "./budgetContractMapper";
 
 
 const toBudgetSummaryReport = (budgets, year) => {
+
 	const currentYearBudget = _.chain(budgets)
 		.filter((e) => e.budgetYear === year)
 		.first()
@@ -13,7 +14,7 @@ const toBudgetSummaryReport = (budgets, year) => {
 		.first()
 		.value()
 
-	const revenueIncome = (budget) => {
+	const budgetedRevenueIncome = (budget) => {
 		let revenue = 0;
 		if (!_.isEqual(budget, undefined)) {
 			const revenueIncome = _.chain(fromContract(budget).items)
@@ -25,10 +26,9 @@ const toBudgetSummaryReport = (budgets, year) => {
 		return revenue;
 	}
 
-	const revenueExpenditure = (budget) => {
+	const budgetedRevenueExpenditure = (budget) => {
 		let expenses = 0;
 		if (!_.isEqual(budget, undefined)) {
-			console.log(fromContract(budget))
 			const revenueIncome = _.chain(fromContract(budget).items)
 				.filter((e) => e.majorHeadGroup === 'Expenses')
 				.first()
@@ -37,7 +37,7 @@ const toBudgetSummaryReport = (budgets, year) => {
 		}
 		return expenses;
 	}
-	const capitalIncome = (budget) => {
+	const budgetedCapitalIncome = (budget) => {
 		let assets = 0;
 		if (!_.isEqual(budget, undefined)) {
 			const revenueIncome = _.chain(fromContract(budget).items)
@@ -48,7 +48,7 @@ const toBudgetSummaryReport = (budgets, year) => {
 		}
 		return assets;
 	}
-	const capitalExpenditure = (budget) => {
+	const budgetedCapitalExpenditure = (budget) => {
 		let liability = 0;
 		if (!_.isEqual(budget, undefined)) {
 			const revenueIncome = _.chain(fromContract(budget).items)
@@ -56,6 +56,53 @@ const toBudgetSummaryReport = (budgets, year) => {
 				.first()
 				.value()
 			liability = revenueIncome.summary.budgetedAmount;
+		}
+		return liability;
+	}
+
+
+	const revisedRevenueIncome = (budget) => {
+		let revenue = 0;
+		if (!_.isEqual(budget, undefined)) {
+			const revenueIncome = _.chain(fromContract(budget).items)
+				.filter((e) => e.majorHeadGroup === 'Revenue Receipt')
+				.first()
+				.value()
+			revenue = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
+		}
+		return revenue;
+	}
+
+	const revisedRevenueExpenditure = (budget) => {
+		let revisedExpenses = 0;
+		if (!_.isEqual(budget, undefined)) {
+			const revenueIncome = _.chain(fromContract(budget).items)
+				.filter((e) => e.majorHeadGroup === 'Expenses')
+				.first()
+				.value()
+			revisedExpenses = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
+		}
+		return revisedExpenses;
+	}
+	const revisedCapitalIncome = (budget) => {
+		let assets = 0;
+		if (!_.isEqual(budget, undefined)) {
+			const revenueIncome = _.chain(fromContract(budget).items)
+				.filter((e) => e.majorHeadGroup === 'Assets')
+				.first()
+				.value()
+			assets = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
+		}
+		return assets;
+	}
+	const revisedCapitalExpenditure = (budget) => {
+		let liability = 0;
+		if (!_.isEqual(budget, undefined)) {
+			const revenueIncome = _.chain(fromContract(budget).items)
+				.filter((e) => e.majorHeadGroup === 'Liability')
+				.first()
+				.value()
+			liability = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
 		}
 		return liability;
 	}
@@ -70,10 +117,26 @@ const toBudgetSummaryReport = (budgets, year) => {
 
 	const getData = () => {
 		let dataLine = [];
-		dataLine.push({name: 'Revenue Income', revised: 2965, budgeted: revenueIncome(currentYearBudget)});
-		dataLine.push({name: 'Revenue Expenditure', revised: 2965, budgeted: revenueExpenditure(currentYearBudget)});
-		dataLine.push({name: 'Capital Income', revised: 2965, budgeted: capitalIncome(currentYearBudget)});
-		dataLine.push({name: 'Capital Expenditure', revised: 2965, budgeted: capitalExpenditure(currentYearBudget)});
+		dataLine.push({
+			name: 'Revenue Income',
+			revised: revisedRevenueIncome(currentYearBudget),
+			budgeted: budgetedRevenueIncome(currentYearBudget)
+		});
+		dataLine.push({
+			name: 'Revenue Expenditure',
+			revised: revisedRevenueExpenditure(currentYearBudget),
+			budgeted: budgetedRevenueExpenditure(currentYearBudget)
+		});
+		dataLine.push({
+			name: 'Capital Income',
+			revised: revisedCapitalIncome(currentYearBudget),
+			budgeted: budgetedCapitalIncome(currentYearBudget)
+		});
+		dataLine.push({
+			name: 'Capital Expenditure',
+			revised: revisedCapitalExpenditure(currentYearBudget),
+			budgeted: budgetedCapitalExpenditure(currentYearBudget)
+		});
 		return dataLine;
 	}
 	return {headings: getHeadings(), data: getData()};

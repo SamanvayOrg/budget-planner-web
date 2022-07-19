@@ -23,6 +23,7 @@
     "i18next-xhr-backend": "^3.2.2",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
+    "nivo": "^0.31.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-i18next": "^11.17.3",
