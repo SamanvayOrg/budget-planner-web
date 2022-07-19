@@ -17,7 +17,7 @@ const DataTable = ({headings, rows, title}) => {
 					fontSize: 20,
 					fontWeight: "700",
 					color: "#616161",
-					fontFamily:"Lato"
+					fontFamily: "Lato"
 				}}>{title}</TableCell></TableRow>
 				<TableRow>
 					{_.map(headings, (heading, index) => {

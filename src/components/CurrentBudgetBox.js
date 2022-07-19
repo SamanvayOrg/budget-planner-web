@@ -92,7 +92,7 @@ const CurrentBudgetBox = ({year}) => {
 				<DataTable headings={budgetSummaryData(allBudget, budgetYear).headings}
 				           rows={budgetSummaryData(allBudget, budgetYear).data}
 				           title={`Budget Summary FY ${budgetYear} (in lakhs)`}/>
-				<Paper style={{height: 400, width: '90%', paddingBottom: 20, paddingTop: 15, color:'#616161'}}><ResponsivePieChart
+				<Paper style={{height: 350, width: '90%', paddingBottom: 20, paddingTop: 15, color:'#616161'}}><ResponsivePieChart
 					data={budgetSummaryData(allBudget, budgetYear).pieChartData}
 					title={`Key Budget Highlights FY ${budgetYear} (in lakhs)`}
 				/></Paper>

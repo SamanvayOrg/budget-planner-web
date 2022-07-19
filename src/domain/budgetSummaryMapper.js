@@ -45,6 +45,13 @@ const budgetSummaryData = (budgets, year) => {
 		return headings
 	};
 
+	const getBudgetedTotalSurplusOrDef = () => {
+		return (getBudgetedValue(currentYearBudget, 'Revenue Receipt') + getBudgetedValue(currentYearBudget, 'Assets')) - (getBudgetedValue(currentYearBudget, 'Expenses') + getBudgetedValue(currentYearBudget, 'Liability'))
+	}
+	const getRevisedTotalSurplusOrDef = () => {
+		return (getRevisedValue(prevYearBudget, 'Revenue Receipt') + getRevisedValue(prevYearBudget, 'Assets')) - (getRevisedValue(prevYearBudget, 'Expenses') + getRevisedValue(prevYearBudget, 'Liability'))
+	}
+
 	const getData = () => {
 		let dataLine = [];
 		dataLine.push({
@@ -66,6 +73,11 @@ const budgetSummaryData = (budgets, year) => {
 			name: 'Capital Expenditure',
 			revised: getRevisedValue(prevYearBudget, 'Liability'),
 			budgeted: getBudgetedValue(currentYearBudget, 'Liability')
+		});
+		dataLine.push({
+			name: 'Total surplus/deficit',
+			revised: getRevisedTotalSurplusOrDef(prevYearBudget, 'Liability'),
+			budgeted: getBudgetedTotalSurplusOrDef(currentYearBudget, 'Liability')
 		});
 		return dataLine;
 	}
