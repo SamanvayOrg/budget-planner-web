@@ -19,7 +19,7 @@ const budgetSummaryData = (budgets, year) => {
 				.filter((e) => e.majorHeadGroup === itemName)
 				.first()
 				.value()
-			revenue = revenueIncome.summary.budgetedAmount;
+			revenue = _.ceil(revenueIncome.summary.budgetedAmount/100000);
 		}
 		return revenue;
 	}
@@ -31,7 +31,7 @@ const budgetSummaryData = (budgets, year) => {
 				.filter((e) => e.majorHeadGroup === itemName)
 				.first()
 				.value()
-			revenue = revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals;
+			revenue = _.ceil(revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals);
 		}
 		return revenue;
 	}
