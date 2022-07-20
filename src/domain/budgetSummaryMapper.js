@@ -56,28 +56,28 @@ const budgetSummaryData = (budgets, year) => {
 		let dataLine = [];
 		dataLine.push({
 			name: 'Revenue Income',
-			revised: _.ceil(getRevisedValue(prevYearBudget, 'Revenue Receipt')/100000),
-			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Revenue Receipt')/100000)
+			revised: _.ceil(getRevisedValue(prevYearBudget, 'Revenue Receipt') / 100000),
+			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Revenue Receipt') / 100000)
 		});
 		dataLine.push({
 			name: 'Revenue Expenditure',
-			revised: _.ceil(getRevisedValue(prevYearBudget, 'Expenses')/100000),
-			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Expenses')/100000)
+			revised: _.ceil(getRevisedValue(prevYearBudget, 'Expenses') / 100000),
+			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Expenses') / 100000)
 		});
 		dataLine.push({
 			name: 'Capital Income',
-			revised: _.ceil(getRevisedValue(prevYearBudget, 'Assets')/100000),
-			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Assets')/100000)
+			revised: _.ceil(getRevisedValue(prevYearBudget, 'Assets') / 100000),
+			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Assets') / 100000)
 		});
 		dataLine.push({
 			name: 'Capital Expenditure',
-			revised: _.ceil(getRevisedValue(prevYearBudget, 'Liability')/100000),
-			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Liability')/100000)
+			revised: _.ceil(getRevisedValue(prevYearBudget, 'Liability') / 100000),
+			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Liability') / 100000)
 		});
 		dataLine.push({
 			name: 'Total surplus/deficit',
-			revised: _.ceil(getRevisedTotalSurplusOrDef(prevYearBudget, 'Liability')/100000),
-			budgeted: _.ceil(getBudgetedTotalSurplusOrDef(currentYearBudget, 'Liability')/100000)
+			revised: _.ceil(getRevisedTotalSurplusOrDef(prevYearBudget, 'Liability') / 100000),
+			budgeted: _.ceil(getBudgetedTotalSurplusOrDef(currentYearBudget, 'Liability') / 100000)
 		});
 		return dataLine;
 	}
@@ -85,19 +85,33 @@ const budgetSummaryData = (budgets, year) => {
 		let pieData = [];
 		pieData.push({
 			id: 'Revenue Budget',
-			value: _.ceil(getBudgetedValue(currentYearBudget, 'Expenses')/100000)
+			value: _.ceil(getBudgetedValue(currentYearBudget, 'Expenses') / 100000)
 		});
 		pieData.push({
 			id: 'Capital Budget',
-			value: _.ceil(getBudgetedValue(currentYearBudget, 'Liability')/100000)
+			value: _.ceil(getBudgetedValue(currentYearBudget, 'Liability') / 100000)
 		});
 		return pieData;
 	}
+	const getBarGraphData = () => {
+		let barData = [];
+		barData.push({
+			"name": 'Revenue Income',
+			"Revenue Income": _.ceil(getBudgetedValue(currentYearBudget, 'Revenue Receipt') / 100000)
+		});
+		barData.push({
+			"name": 'Revenue Expenditure',
+			"Revenue Expenditure": _.ceil(getBudgetedValue(currentYearBudget, 'Expenses') / 100000)
+		})
+		return barData;
+	}
+
 
 	return {
 		headings: getHeadings(),
 		data: getData(),
 		pieChartData: piechartData(),
+		barGraphData: getBarGraphData(),
 		revenueBudget: getBudgetedValue(currentYearBudget, 'Expenses'),
 		capitalBudget: getBudgetedValue(currentYearBudget, 'Liability')
 	};

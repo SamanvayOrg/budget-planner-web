@@ -9,11 +9,12 @@ import _ from "lodash"
 import {useNavigate} from "react-router-dom";
 import DataTable from "./DataTable";
 import {budgetSummaryData} from "../domain/budgetSummaryMapper";
-import ResponsivePieChart from "./ResponsivePieChart";
 import {Paper} from "@mui/material";
 import Typography from "@mui/material/Typography";
 import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
 import ManIcon from '@mui/icons-material/Man';
+import ResponsiveBarGraph from "./ResponsiveBarGraph";
+import ResponsivePieChart from "./ResponsivePieChart";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -157,10 +158,50 @@ const CurrentBudgetBox = ({year}) => {
 						</div>
 					</div>
 				</Paper>
-
 			</div>
 			<div className={classes.box}>
+				<Paper style={{
+					height: 400,
+					width: '50%'
+				}}><ResponsiveBarGraph data={budgetSummaryData(allBudget, budgetYear).barGraphData} indexBy={"name"}
+				                       keys={['Revenue Income', 'Revenue Expenditure']}/>
+				</Paper>
+				<Paper style={{
+					height: 400,
+					width: '40%',
+					color: '#616161',
+					paddingRight: 5,
+					paddingLeft: 5,
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "space-around"
 
+				}}>
+					<Typography style={{paddingBottom: 10, color: "#333333"}}>
+						{`The total budget of WMC FY ${budgetYear} is
+						expected to be Rs.${getBudgetCount().totalBudget} lakhs.The
+						revenue budget is Rs.${getBudgetCount().revenueBudget} lakhs (${getBudgetCount().revenuePercentage}%)
+						and	the capital budget is Rs.${getBudgetCount().capitalBudget} lakhs
+						(${getBudgetCount().capitalPercentage}%).`}
+					</Typography>
+					<div className={classes.boxWithIcon}>
+						<div>
+							<ManIcon sx={{fontSize: 80}} color="primary"/>
+						</div>
+						<div>
+							<Typography color="primary">
+								<span
+									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).revenueBudget / details.population)}/
+						person`}
+							</Typography>
+							<Typography color="primary">
+								<span
+									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).capitalBudget / details.population)}/
+						person`}
+							</Typography>
+						</div>
+					</div>
+				</Paper>
 			</div>
 
 		</>
