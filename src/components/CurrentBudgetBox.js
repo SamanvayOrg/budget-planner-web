@@ -10,11 +10,11 @@ import {useNavigate} from "react-router-dom";
 import DataTable from "./DataTable";
 import {budgetSummaryData} from "../domain/budgetSummaryMapper";
 import {Paper} from "@mui/material";
-import Typography from "@mui/material/Typography";
 import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
-import ManIcon from '@mui/icons-material/Man';
 import ResponsiveBarGraph from "./ResponsiveBarGraph";
 import ResponsivePieChart from "./ResponsivePieChart";
+import PerPersonExpenditure from "./PerPersonExpenditure";
+import PerPersonRevenue from "./PerPersonRevenue";
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -42,18 +42,10 @@ const styleSheets = makeStyles(theme => ({
 		fontSize: "19px",
 		marginLeft: "1%",
 	}, text: {
-		fontWeight: "700",
-		fontSize: "19px"
+		fontWeight: "700", fontSize: "19px"
 	}, actionButtons: {
-		display: "flex",
-		justifyContent: "flex-end",
-		fontSize: "11px",
-		textTransform: "uppercase",
-		color: "#616161",
-	}, boxWithIcon: {
-		display: "flex",
-		flexDirection: "row"
-	}
+		display: "flex", justifyContent: "flex-end", fontSize: "11px", textTransform: "uppercase", color: "#616161",
+	},
 
 }))
 const CurrentBudgetBox = ({year}) => {
@@ -83,19 +75,9 @@ const CurrentBudgetBox = ({year}) => {
 		const year = budgetYear.substring(0, 4)
 		navigate(`/budget/${year}`);
 	};
-	const getBudgetCount = () => {
-		return {
-			totalBudget: _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000))]),
-			revenueBudget: _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)),
-			capitalBudget: _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000)),
-			revenuePercentage: _.ceil((_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000))])) * 100),
-			capitalPercentage: _.floor((_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000))])) * 100)
-		}
-	}
 
 
-	return (
-		<><Box className={classes.box}>
+	return (<><Box className={classes.box}>
 			<div className={classes.innerBox}>
 				<div className={classes.text}>
 					<DropDown list={getBudgetYears(allBudget)} value={budgetYear} onSelect={handleChange}/>
@@ -111,11 +93,7 @@ const CurrentBudgetBox = ({year}) => {
 				           rows={budgetSummaryData(allBudget, budgetYear).data}
 				           title={`Budget Summary FY ${budgetYear} (in lakhs)`}/>
 				<Paper style={{
-					height: 400,
-					width: '70%',
-					paddingBottom: 20,
-					paddingTop: 15,
-					color: '#616161'
+					height: 400, width: '70%', paddingBottom: 20, paddingTop: 15, color: '#616161'
 				}}><ResponsivePieChart
 					data={budgetSummaryData(allBudget, budgetYear).pieChartData}
 					title={`Key Budget Highlights FY ${budgetYear} (in lakhs)`}
@@ -133,36 +111,13 @@ const CurrentBudgetBox = ({year}) => {
 					justifyContent: "space-around"
 
 				}}>
-					<Typography style={{paddingBottom: 10, color: "#333333"}}>
-						{`The total budget of WMC FY ${budgetYear} is
-						expected to be Rs.${getBudgetCount().totalBudget} lakhs.The
-						revenue budget is Rs.${getBudgetCount().revenueBudget} lakhs (${getBudgetCount().revenuePercentage}%)
-						and	the capital budget is Rs.${getBudgetCount().capitalBudget} lakhs
-						(${getBudgetCount().capitalPercentage}%).`}
-					</Typography>
-					<div className={classes.boxWithIcon}>
-						<div>
-							<ManIcon sx={{fontSize: 80}} color="primary"/>
-						</div>
-						<div>
-							<Typography color="primary">
-								<span
-									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).revenueBudget / details.population)}/
-						person`}
-							</Typography>
-							<Typography color="primary">
-								<span
-									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).capitalBudget / details.population)}/
-						person`}
-							</Typography>
-						</div>
-					</div>
+					<PerPersonExpenditure allBudget={allBudget} budgetYear={budgetYear}
+					                      municipalityPopulation={details.population}/>
 				</Paper>
 			</div>
 			<div className={classes.box}>
 				<Paper style={{
-					height: 400,
-					width: '50%'
+					height: 400, width: '50%'
 				}}><ResponsiveBarGraph data={budgetSummaryData(allBudget, budgetYear).barGraphData} indexBy={"name"}
 				                       keys={['Revenue Income', 'Revenue Expenditure']}/>
 				</Paper>
@@ -177,30 +132,8 @@ const CurrentBudgetBox = ({year}) => {
 					justifyContent: "space-around"
 
 				}}>
-					<Typography style={{paddingBottom: 10, color: "#333333"}}>
-						{`The total budget of WMC FY ${budgetYear} is
-						expected to be Rs.${getBudgetCount().totalBudget} lakhs.The
-						revenue budget is Rs.${getBudgetCount().revenueBudget} lakhs (${getBudgetCount().revenuePercentage}%)
-						and	the capital budget is Rs.${getBudgetCount().capitalBudget} lakhs
-						(${getBudgetCount().capitalPercentage}%).`}
-					</Typography>
-					<div className={classes.boxWithIcon}>
-						<div>
-							<ManIcon sx={{fontSize: 80}} color="primary"/>
-						</div>
-						<div>
-							<Typography color="primary">
-								<span
-									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).revenueBudget / details.population)}/
-						person`}
-							</Typography>
-							<Typography color="primary">
-								<span
-									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).capitalBudget / details.population)}/
-						person`}
-							</Typography>
-						</div>
-					</div>
+					<PerPersonRevenue allBudget={allBudget} budgetYear={budgetYear}
+					                  municipalityPopulation={details.population}/>
 				</Paper>
 			</div>
 

@@ -112,8 +112,10 @@ const budgetSummaryData = (budgets, year) => {
 		data: getData(),
 		pieChartData: piechartData(),
 		barGraphData: getBarGraphData(),
-		revenueBudget: getBudgetedValue(currentYearBudget, 'Expenses'),
-		capitalBudget: getBudgetedValue(currentYearBudget, 'Liability')
+		budgetedRevenueIncome:getBudgetedValue(currentYearBudget,'Revenue Receipt'),
+		budgetedRevenueExpenditure: getBudgetedValue(currentYearBudget, 'Expenses'),
+		budgetedCapitalExpenditure: getBudgetedValue(currentYearBudget, 'Liability')
+
 	};
 }
 
