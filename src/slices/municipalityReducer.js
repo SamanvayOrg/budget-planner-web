@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
-import {getMunicipalityDetails, getTranslations} from "../api/api";
+import {getMunicipalityDetails} from "../api/api";
 
 export const initialState = {
 	details: {},

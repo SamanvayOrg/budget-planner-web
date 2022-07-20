@@ -15,15 +15,6 @@ const PerPersonRevenue = ({allBudget, budgetYear, municipalityPopulation}) => {
 
 	const classes = styleSheets();
 
-	const getBudgetCount = () => {
-		return {
-			totalBudget: _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000))]),
-			revenueBudget: _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)),
-			capitalBudget: _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000)),
-			revenuePercentage: _.ceil((_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000))])) * 100),
-			capitalPercentage: _.floor((_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000))])) * 100)
-		}
-	}
 	return (<>
 		<div className={classes.boxWithIcon}>
 			<div>
