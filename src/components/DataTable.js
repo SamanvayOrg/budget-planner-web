@@ -11,7 +11,7 @@ import _ from "lodash";
 
 const DataTable = ({headings, rows, title}) => {
 	return (<TableContainer component={Paper}>
-		<Table sx={{minWidth: 600}} aria-label="simple table">
+		<Table sx={{minWidth: 450}} aria-label="simple table">
 			<TableHead>
 				<TableRow><TableCell align="center" colSpan={3} style={{
 					fontSize: 20,

@@ -11,6 +11,9 @@ import DataTable from "./DataTable";
 import {budgetSummaryData} from "../domain/budgetSummaryMapper";
 import ResponsivePieChart from "./ResponsivePieChart";
 import {Paper} from "@mui/material";
+import Typography from "@mui/material/Typography";
+import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
+import ManIcon from '@mui/icons-material/Man';
 
 const styleSheets = makeStyles(theme => ({
 	box: {
@@ -46,6 +49,9 @@ const styleSheets = makeStyles(theme => ({
 		fontSize: "11px",
 		textTransform: "uppercase",
 		color: "#616161",
+	}, boxWithIcon: {
+		display: "flex",
+		flexDirection: "row"
 	}
 
 }))
@@ -55,6 +61,8 @@ const CurrentBudgetBox = ({year}) => {
 	const classes = styleSheets();
 	const [budgetYear, setBudgetYear] = useState(year);
 	let navigate = useNavigate();
+	const {details} = useSelector(allMunicipalityDetailsSelector);
+
 	useEffect(() => {
 		dispatch(fetchAllBudgets());
 	}, [dispatch]);
@@ -74,6 +82,15 @@ const CurrentBudgetBox = ({year}) => {
 		const year = budgetYear.substring(0, 4)
 		navigate(`/budget/${year}`);
 	};
+	const getBudgetCount = () => {
+		return {
+			totalBudget: _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000))]),
+			revenueBudget: _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)),
+			capitalBudget: _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000)),
+			revenuePercentage: _.ceil((_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000))])) * 100),
+			capitalPercentage: _.floor((_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).revenueBudget, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).capitalBudget, 100000))])) * 100)
+		}
+	}
 
 
 	return (
@@ -92,10 +109,57 @@ const CurrentBudgetBox = ({year}) => {
 				<DataTable headings={budgetSummaryData(allBudget, budgetYear).headings}
 				           rows={budgetSummaryData(allBudget, budgetYear).data}
 				           title={`Budget Summary FY ${budgetYear} (in lakhs)`}/>
-				<Paper style={{height: 350, width: '90%', paddingBottom: 20, paddingTop: 15, color:'#616161'}}><ResponsivePieChart
+				<Paper style={{
+					height: 400,
+					width: '70%',
+					paddingBottom: 20,
+					paddingTop: 15,
+					color: '#616161'
+				}}><ResponsivePieChart
 					data={budgetSummaryData(allBudget, budgetYear).pieChartData}
 					title={`Key Budget Highlights FY ${budgetYear} (in lakhs)`}
 				/></Paper>
+				<Paper style={{
+					height: 400,
+					width: '40%',
+					paddingBottom: 20,
+					paddingTop: 15,
+					color: '#616161',
+					paddingRight: 5,
+					paddingLeft: 5,
+					display: "flex",
+					flexDirection: "column",
+					justifyContent: "space-around"
+
+				}}>
+					<Typography style={{paddingBottom: 10, color: "#333333"}}>
+						{`The total budget of WMC FY ${budgetYear} is
+						expected to be Rs.${getBudgetCount().totalBudget} lakhs.The
+						revenue budget is Rs.${getBudgetCount().revenueBudget} lakhs (${getBudgetCount().revenuePercentage}%)
+						and	the capital budget is Rs.${getBudgetCount().capitalBudget} lakhs
+						(${getBudgetCount().capitalPercentage}%).`}
+					</Typography>
+					<div className={classes.boxWithIcon}>
+						<div>
+							<ManIcon sx={{fontSize: 80}} color="primary"/>
+						</div>
+						<div>
+							<Typography color="primary">
+								<span
+									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).revenueBudget / details.population)}/
+						person`}
+							</Typography>
+							<Typography color="primary">
+								<span
+									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).capitalBudget / details.population)}/
+						person`}
+							</Typography>
+						</div>
+					</div>
+				</Paper>
+
+			</div>
+			<div className={classes.box}>
 
 			</div>
 

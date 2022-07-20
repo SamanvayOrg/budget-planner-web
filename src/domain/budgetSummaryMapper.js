@@ -19,7 +19,7 @@ const budgetSummaryData = (budgets, year) => {
 				.filter((e) => e.majorHeadGroup === itemName)
 				.first()
 				.value()
-			revenue = _.ceil(revenueIncome.summary.budgetedAmount/100000);
+			revenue = revenueIncome.summary.budgetedAmount;
 		}
 		return revenue;
 	}
@@ -56,28 +56,28 @@ const budgetSummaryData = (budgets, year) => {
 		let dataLine = [];
 		dataLine.push({
 			name: 'Revenue Income',
-			revised: getRevisedValue(prevYearBudget, 'Revenue Receipt'),
-			budgeted: getBudgetedValue(currentYearBudget, 'Revenue Receipt')
+			revised: _.ceil(getRevisedValue(prevYearBudget, 'Revenue Receipt')/100000),
+			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Revenue Receipt')/100000)
 		});
 		dataLine.push({
 			name: 'Revenue Expenditure',
-			revised: getRevisedValue(prevYearBudget, 'Expenses'),
-			budgeted: getBudgetedValue(currentYearBudget, 'Expenses')
+			revised: _.ceil(getRevisedValue(prevYearBudget, 'Expenses')/100000),
+			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Expenses')/100000)
 		});
 		dataLine.push({
 			name: 'Capital Income',
-			revised: getRevisedValue(prevYearBudget, 'Assets'),
-			budgeted: getBudgetedValue(currentYearBudget, 'Assets')
+			revised: _.ceil(getRevisedValue(prevYearBudget, 'Assets')/100000),
+			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Assets')/100000)
 		});
 		dataLine.push({
 			name: 'Capital Expenditure',
-			revised: getRevisedValue(prevYearBudget, 'Liability'),
-			budgeted: getBudgetedValue(currentYearBudget, 'Liability')
+			revised: _.ceil(getRevisedValue(prevYearBudget, 'Liability')/100000),
+			budgeted: _.ceil(getBudgetedValue(currentYearBudget, 'Liability')/100000)
 		});
 		dataLine.push({
 			name: 'Total surplus/deficit',
-			revised: getRevisedTotalSurplusOrDef(prevYearBudget, 'Liability'),
-			budgeted: getBudgetedTotalSurplusOrDef(currentYearBudget, 'Liability')
+			revised: _.ceil(getRevisedTotalSurplusOrDef(prevYearBudget, 'Liability')/100000),
+			budgeted: _.ceil(getBudgetedTotalSurplusOrDef(currentYearBudget, 'Liability')/100000)
 		});
 		return dataLine;
 	}
@@ -85,16 +85,22 @@ const budgetSummaryData = (budgets, year) => {
 		let pieData = [];
 		pieData.push({
 			id: 'Revenue Budget',
-			value: getBudgetedValue(currentYearBudget, 'Expenses')
+			value: _.ceil(getBudgetedValue(currentYearBudget, 'Expenses')/100000)
 		});
 		pieData.push({
 			id: 'Capital Budget',
-			value: getBudgetedValue(currentYearBudget, 'Liability')
+			value: _.ceil(getBudgetedValue(currentYearBudget, 'Liability')/100000)
 		});
 		return pieData;
 	}
 
-	return {headings: getHeadings(), data: getData(), pieChartData: piechartData()};
+	return {
+		headings: getHeadings(),
+		data: getData(),
+		pieChartData: piechartData(),
+		revenueBudget: getBudgetedValue(currentYearBudget, 'Expenses'),
+		capitalBudget: getBudgetedValue(currentYearBudget, 'Liability')
+	};
 }
 
 
