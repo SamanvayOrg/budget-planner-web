@@ -13,28 +13,34 @@ const style = {
     position: 'absolute',
     display: 'flex',
     flexDirection: 'column',
-    top: '30%',
-    left: '50%',
+    top: '50%',
+    left: '70%',
     transform: 'translate(-50%, -50%)',
-    width: '20%',
+    width: '50%',
     bgcolor: 'background.paper',
     border: '0px  #000',
     boxShadow: '0px 0px 4px  #000000',
     p: 4,
-    gap: '1vw'
+    gap: '1vw',
+    overflow:'scroll'
 };
 
 
 const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
     const {majorHead, majorHeadGroup} = getDetailsForMajorHeadName(metadata, _.get(context, 'majorHead')) || {minorHeads: []};
     const allFunctionGroups = metadata.functionGroups;
-    const minorHeadOptions = majorHead.minorHeads;
+    const allMajorHeadOption = majorHeadGroup.majorHeads;
     const [minorHead, setMinorHead] = useState('');
     const [detailedHead, setDetailedHead] = useState('');
     const [functionGroup, setFunctionGroup] = useState('');
     const [theFunction, setTheFunction] = useState('');
     const [name, setName] = useState('');
+    const [theMajorHead, setTheMajorHead] = useState('');
 
+    const handleMajorHeadSelection = (event) => {
+        setTheMajorHead(event.target.value);
+        event.preventDefault();
+    };
     const handleMinorHeadSelection = (event) => {
         setMinorHead(event.target.value);
         event.preventDefault();
@@ -89,11 +95,13 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
             <Box sx={{minWidth: 100}}>
                 <FormGroup fullwidth="true">
                     <Typography variant={'h6'} style={{marginTop: 32, marginBottom: 16}}>Budget Head</Typography>
-                    <SelectView list={minorHeadOptions} onSelect={handleMinorHeadSelection} label={'Minor Head'}
+                    <SelectView list={allMajorHeadOption} onSelect={handleMajorHeadSelection} label={'Major Head'}
+                                value={theMajorHead}/>
+                    <SelectView list={_.get(theMajorHead, 'minorHeads')} onSelect={handleMinorHeadSelection}
+                                label={'Minor Head'}
                                 value={minorHead}/>
                     <SelectView list={_.get(minorHead, 'detailedHeads', [])} onSelect={handleDetailedHeadSelection}
                                 label={'Detailed Head'} value={detailedHead}/>
-
                     <Typography variant={'h6'} style={{marginTop: 32, marginBottom: 16}}>Function Code</Typography>
                     <SelectView list={allFunctionGroups} onSelect={handleFunctionGroupSelection}
                                 label={'Function Group'} value={functionGroup}/>
@@ -116,7 +124,14 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
                     <ActionButton label={'Cancel'} onClick={onCancel}
                                   style={{marginRight: 32}} color={'warning'}/>
 
-                    <ActionButton label={'Ok'} onClick={() => onSelect({majorHeadGroup, majorHead, minorHead, detailedHead, theFunction, name})} variant={'contained'}
+                    <ActionButton label={'Ok'} onClick={() => onSelect({
+                        majorHeadGroup,
+                        majorHead,
+                        minorHead,
+                        detailedHead,
+                        theFunction,
+                        name
+                    })} variant={'contained'}
                                   disabled={!(detailedHead && theFunction)}
                                   style={{marginLeft: 32}} color={'primary'}
                     />
