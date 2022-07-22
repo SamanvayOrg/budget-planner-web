@@ -22,12 +22,12 @@ const style = {
     boxShadow: '0px 0px 4px  #000000',
     p: 4,
     gap: '1vw',
-    overflow:'scroll'
+    overflow: 'scroll'
 };
 
 
 const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
-    const {majorHead, majorHeadGroup} = getDetailsForMajorHeadName(metadata, _.get(context, 'majorHead')) || {minorHeads: []};
+    const { majorHeadGroup} = getDetailsForMajorHeadName(metadata, _.get(context, 'majorHead')) || {minorHeads: []};
     const allFunctionGroups = metadata.functionGroups;
     const allMajorHeadOption = majorHeadGroup.majorHeads;
     const [minorHead, setMinorHead] = useState('');
@@ -126,7 +126,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
 
                     <ActionButton label={'Ok'} onClick={() => onSelect({
                         majorHeadGroup,
-                        majorHead,
+                        theMajorHead,
                         minorHead,
                         detailedHead,
                         theFunction,

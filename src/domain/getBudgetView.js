@@ -2,6 +2,7 @@ import _ from 'lodash';
 import {t} from "i18next"
 
 const getBudgetView = (budget) => {
+	console.log('getBudgetView',budget)
 	const getChar =  (order, startingChar) => {
 		return String.fromCharCode(startingChar.charCodeAt(0) + order);
 	};

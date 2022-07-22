@@ -46,7 +46,7 @@ const budgetDashboardSlice = createSlice({
         addBudgetLine: (state, {
             payload: {
                 majorHeadGroup,
-                majorHead,
+                theMajorHead: majorHead,
                 minorHead,
                 detailedHead,
                 functionGroup,

@@ -83,7 +83,7 @@ const BudgetDetail = () => {
 	const navigate = useNavigate();
 	const classes = useStylesBudgetDetails();
 	const modalClass = useStyles();
-	const {t}=useTranslation();
+	const {t} = useTranslation();
 
 
 	const {budgetView = [], budget, saved} = useSelector(budgetSelector);
@@ -147,8 +147,17 @@ const BudgetDetail = () => {
 					<HorizontalLine/>
 					<div className={classes.budgetView}>
 						<Spreadsheet data={budgetView} columnLabels={headers(t(budget))}
-						             onChange={(newView) => updateView(newView)}
-						             onActivate={onActivate}/>
+						             onChange={(newView) => {
+							             console.log('budgetView-->',budgetView);
+							             console.log('newView-->',newView);
+							             updateView(newView);
+
+						             }}
+						             onActivate={onActivate}
+						             onModeChange={()=>{
+							             console.log('onModeChange')
+						             }}
+						/>
 					</div>
 					<div>
 						<Modal open={open} onClose={handleClose} className={modalClass.modal}>
