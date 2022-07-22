@@ -14,7 +14,7 @@ const style = {
     display: 'flex',
     flexDirection: 'column',
     top: '50%',
-    left: '70%',
+    left: '50%',
     transform: 'translate(-50%, -50%)',
     width: '50%',
     bgcolor: 'background.paper',
