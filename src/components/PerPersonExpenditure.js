@@ -12,7 +12,6 @@ const styleSheets = makeStyles(theme => ({
 	}
 }))
 const PerPersonExpenditure = ({allBudget, budgetYear, municipalityPopulation}) => {
-	console.log(budgetYear)
 	const classes = styleSheets();
 	const getBudgetCount = () => {
 		return {

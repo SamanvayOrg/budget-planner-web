@@ -36,7 +36,6 @@ export function fetchLanguage(lang) {
 	return async (dispatch) => {
 		dispatch(loading());
 		dispatch(seti18Lang(lang));
-		console.log('language--->', lang);
 	}
 }
 

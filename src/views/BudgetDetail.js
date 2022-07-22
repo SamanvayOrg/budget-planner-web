@@ -148,14 +148,11 @@ const BudgetDetail = () => {
 					<div className={classes.budgetView}>
 						<Spreadsheet data={budgetView} columnLabels={headers(t(budget))}
 						             onChange={(newView) => {
-							             console.log('budgetView-->',budgetView);
-							             console.log('newView-->',newView);
 							             updateView(newView);
 
 						             }}
 						             onActivate={onActivate}
 						             onModeChange={()=>{
-							             console.log('onModeChange')
 						             }}
 						/>
 					</div>
