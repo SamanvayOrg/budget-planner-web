@@ -54,12 +54,31 @@ const budgetDashboardSlice = createSlice({
                 name
             }
         }) => {
+
+            // const matchingMajorHeadGroup = _.chain(state.budget)
+            //     .get('items')
+            //     .filter((item) => item.majorHeadGroup === majorHeadGroup.name)
+            //     .value();
+            //
+            //
+            // console.log('majorHeadGroup', majorHeadGroup)
+            // console.log('matchingMajorHeadGroup', matchingMajorHeadGroup)
+            // console.log('majorHead', majorHead)
+            //
+            // matchingMajorHeadGroup.push({
+            //     items:majorHeadGroup.items,
+            //     majorHead:majorHead.name,
+            //     summary:{}
+            // })
+
             const matchingMajorHead = _.chain(state.budget)
                 .get('items')
                 .map(group => group.items)
                 .flatten()
                 .find(head => head.majorHead === majorHead.name)
                 .value();
+            // console.log('matmatchingMajorHead-->', matchingMajorHead)
+
 
             matchingMajorHead.items.push({
                 code: theFunction.fullCode + '-' + detailedHead.fullCode,
