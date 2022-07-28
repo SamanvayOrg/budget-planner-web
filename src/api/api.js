@@ -59,6 +59,12 @@ const getTranslations = async (token) => {
 	return result.data;
 }
 
+const getUsers = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/users`, {headers});
+	return result.data;
+}
+
 export {
-	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata, getTranslations
+	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata, getTranslations, getUsers
 };
