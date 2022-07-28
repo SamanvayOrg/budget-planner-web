@@ -19,7 +19,7 @@ const ResponsiveAppBar = () => {
 
 
 	return (
-		<AppBar id="navBar">
+		<AppBar id="navBar" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 					<a href="/dashboard"><MBSLogo/></a>

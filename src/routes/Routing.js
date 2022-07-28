@@ -4,7 +4,7 @@ import React from "react";
 import Home from "../views/Home";
 import BudgetDetail from "../views/BudgetDetail";
 import AllBudgets from "../views/AllBudgets";
-import AdminView from "../views/AdminView";
+import AdminScreen from "../views/AdminView";
 
 const Routing = () => {
 	return (<HashRouter>
@@ -13,7 +13,7 @@ const Routing = () => {
 			<Route path="/dashboard" element={<Dashboard/>}/>
 			<Route path="/budget/:year" element={<BudgetDetail/>}/>
 			<Route path="/allBudgets" element={<AllBudgets/>}/>
-			<Route path="/admin" element={<AdminView/>}/>
+			<Route path="/admin" element={<AdminScreen/>}/>
 		</Routes>
 	</HashRouter>)
 };
