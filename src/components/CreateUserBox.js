@@ -1,15 +1,16 @@
-import {Button, Paper, TextField, Typography} from "@mui/material";
+import {FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
 import ActionButton from "./ActionButton";
 import {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {saveUser} from "../slices/allUsersReducer";
+import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
 
-const EditUser = ({data}) => {
-    const [name, setName] = useState(data.name);
-    const [userName, setUserName] = useState(data.userName);
-    const [isAdmin, setIsAdmin] = useState(data.admin);
+const CreateUserBox = () => {
+    const [name, setName] = useState('');
+    const [userName, setUserName] = useState('');
+    const [isAdmin, setIsAdmin] = useState(false);
     const dispatch = useDispatch();
-
+    const {details} = useSelector(allMunicipalityDetailsSelector)
 
     const handleChange = (event, type) => {
         console.log('data in edit user', event.target.value, type);
@@ -17,31 +18,31 @@ const EditUser = ({data}) => {
             setName(event.target.value);
         } else if (type === 'userName') {
             setUserName(event.target.value);
+        } else if (type === 'admin') {
+            if (event.target.value === 'on') {
+                setIsAdmin(true)
+            }
         }
     }
+
     const handleSave = () => {
-
-
         let newUserOb = {};
         newUserOb = {
-            "id": data.id,
             name,
             userName,
             "municipality": {
-                "id": data.municipality.id,
-                "name": data.municipality.name,
-                "state": data.municipality.state
+                "id": details.id,
+                "name": details.name,
+                "state": details.state
             },
-            "admin": data.admin
+            "admin": isAdmin
         };
-        console.log('new data', newUserOb);
         dispatch(saveUser(newUserOb));
-
     }
 
     return (
         <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
-            <Typography>User details</Typography>
+            <Typography>Create new user</Typography>
             <br/>
             <div style={{
                 display: 'flex',
@@ -54,9 +55,10 @@ const EditUser = ({data}) => {
                            onChange={(e) => handleChange(e, 'name')}/>
                 <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"User name"} defaultValue={userName}
                            onChange={(e) => handleChange(e, 'userName')}/>
+                <FormControlLabel control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>} label="Make this user an administrator"/>
                 <ActionButton label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>
             </div>
         </Paper>
     )
 }
-export default EditUser;
+export default CreateUserBox;

@@ -9,7 +9,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Drawer from "@mui/material/Drawer";
 import * as React from "react";
 
-const HorizontalMenuDrawer = ({menuList, drawerWidth}) => {
+const HorizontalMenuDrawer = ({menuList, drawerWidth,onClick}) => {
     return (
         <Drawer
             variant="permanent"
@@ -28,7 +28,7 @@ const HorizontalMenuDrawer = ({menuList, drawerWidth}) => {
                                 <ListItemIcon>
                                     <MenuIcon/>
                                 </ListItemIcon>
-                                <ListItemText primary={text}/>
+                                <ListItemText primary={text} onClick={(e)=>onClick(text)}/>
                             </ListItemButton>
                         </ListItem>
                     ))}

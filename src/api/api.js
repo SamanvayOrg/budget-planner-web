@@ -65,6 +65,13 @@ const getUsers = async (token) => {
 	return result.data;
 }
 
+const updateUser = async (token, data) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.post(`/api/user`, data, {headers})
+	return result.status === 200;
+}
+
 export {
-	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata, getTranslations, getUsers
+	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
+    getTranslations, getUsers, updateUser
 };

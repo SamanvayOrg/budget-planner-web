@@ -9,7 +9,7 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 
 
-const ResponsiveTable = ({columns, rows}) => {
+const ResponsiveTable = ({columns, rows, onClick}) => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -23,7 +23,7 @@ const ResponsiveTable = ({columns, rows}) => {
     };
 
     return (
-        <Paper sx={{width: '100%', overflow: 'hidden'}}>
+        <>
             <TableContainer sx={{maxHeight: 440}}>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -44,9 +44,8 @@ const ResponsiveTable = ({columns, rows}) => {
                             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             .map((row, index) => {
                                 return (
-                                    <TableRow hover role="checkbox" tabIndex={-1} key={index} onClick={(e) => {
-                                        console.log('clicked', row)
-                                    }}>
+                                    <TableRow hover role="checkbox" tabIndex={-1} key={index}
+                                              onClick={(e)=>onClick(row)}>
                                         {columns.map((column, index) => {
                                             const value = row[column.id];
                                             return (
@@ -72,7 +71,8 @@ const ResponsiveTable = ({columns, rows}) => {
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
             />
-        </Paper>
+        </>
+
     );
 }
 
