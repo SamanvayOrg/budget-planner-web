@@ -28,37 +28,27 @@ const CreateUserBox = () => {
     const handleSave = () => {
         let newUserOb = {};
         newUserOb = {
-            name,
-            userName,
-            "municipality": {
-                "id": details.id,
-                "name": details.name,
-                "state": details.state
-            },
-            "admin": isAdmin
+            name, userName, "municipality": {
+                "id": details.id, "name": details.name, "state": details.state
+            }, "admin": isAdmin
         };
         dispatch(saveUser(newUserOb));
     }
 
-    return (
-        <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
-            <Typography>Create new user</Typography>
-            <br/>
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'space-around',
-                margin: '20px',
-                gap: '20px'
-            }}>
-                <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"name"} defaultValue={name}
-                           onChange={(e) => handleChange(e, 'name')}/>
-                <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"User name"} defaultValue={userName}
-                           onChange={(e) => handleChange(e, 'userName')}/>
-                <FormControlLabel control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>} label="Make this user an administrator"/>
-                <ActionButton label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>
-            </div>
-        </Paper>
-    )
+    return (<Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
+        <Typography>Create new user</Typography>
+        <br/>
+        <div style={{
+            display: 'flex', flexDirection: 'column', justifyContent: 'space-around', margin: '20px', gap: '20px'
+        }}>
+            <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"Name"} defaultValue={name}
+                       onChange={(e) => handleChange(e, 'name')}/>
+            <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"User name"} defaultValue={userName}
+                       onChange={(e) => handleChange(e, 'userName')}/>
+            <FormControlLabel control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>}
+                              label="Make this user an administrator"/>
+            <ActionButton label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>
+        </div>
+    </Paper>)
 }
 export default CreateUserBox;

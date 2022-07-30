@@ -3,25 +3,26 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../components/HorizontalMenuDrawer";
-import UserBox from "../components/UserBox";
+import AllUsers from "./AllUsers";
 import {useState} from "react";
+import Municipalities from "./Municipalities";
 
 
 const AdminScreen = () => {
-    let menus = ['Users','Municipality'];
-    const [selectedMenu,setSelectedMenu]=useState('Users');
+    let menus = ['Users', 'Municipality'];
+    const [selectedMenu, setSelectedMenu] = useState('Users');
     const handleClick = (data) => {
         setSelectedMenu(data)
 
     }
 
     const renderBox = () => {
-      if(selectedMenu==='Users'){
-          return <UserBox/>
-      }
-      if(selectedMenu==='Municipality'){
-          return <><h1>Municipality</h1></>
-      }
+        if (selectedMenu === 'Users') {
+            return <AllUsers/>
+        }
+        if (selectedMenu === 'Municipality') {
+            return <><Municipalities/></>
+        }
     }
 
     return (

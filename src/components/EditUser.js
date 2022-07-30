@@ -1,4 +1,4 @@
-import {Button, Paper, TextField, Typography} from "@mui/material";
+import {Paper, TextField, Typography} from "@mui/material";
 import ActionButton from "./ActionButton";
 import {useState} from "react";
 import {useDispatch} from "react-redux";
@@ -7,7 +7,6 @@ import {saveUser} from "../slices/allUsersReducer";
 const EditUser = ({data}) => {
     const [name, setName] = useState(data.name);
     const [userName, setUserName] = useState(data.userName);
-    const [isAdmin, setIsAdmin] = useState(data.admin);
     const dispatch = useDispatch();
 
 

@@ -59,7 +59,7 @@ const AllBudgets = () => {
 	const dispatch = useDispatch();
 	const {allBudget} = useSelector(allBudgetSelector);
 	let navigate = useNavigate();
-	const {t}=useTranslation();
+	const {t} = useTranslation();
 
 
 	useEffect(() => {
@@ -68,7 +68,7 @@ const AllBudgets = () => {
 
 	function renderBox(allBudget) {
 		let budgetBox = [];
-		_.forEach(allBudget, (budget,index) => {
+		_.forEach(allBudget, (budget, index) => {
 			const goToBudget = () => {
 				let year = budget.budgetYear.substring(0, 4)
 				navigate(`/budget/${year}`);

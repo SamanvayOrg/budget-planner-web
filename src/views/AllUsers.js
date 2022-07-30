@@ -1,14 +1,14 @@
-import ResponsiveTable from "./ResponsiveTable";
+import ResponsiveTable from "../components/ResponsiveTable";
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {allUsersSelector, fetchUsers} from "../slices/allUsersReducer";
 import _ from "lodash";
-import EditUser from "./EditUser";
+import EditUser from "../components/EditUser";
 import {Paper, Typography} from "@mui/material";
-import CreateUserBox from "./CreateUserBox";
+import CreateUserBox from "../components/CreateUserBox";
 
-const UserBox = () => {
+const AllUsers = () => {
     const [user, setUser] = useState(null);
     const [create, setCreate] = useState(null);
     const {users} = useSelector(allUsersSelector);
@@ -20,7 +20,6 @@ const UserBox = () => {
     const columns = [
         {id: 'name', label: 'Name', minWidth: 170},
         {id: 'userName', label: 'UserName', minWidth: 100},
-        {id: 'admin', label: 'Is admin', minWidth: 170, align: 'right',}
     ];
     let rows = [];
 
@@ -58,4 +57,4 @@ const UserBox = () => {
         return renderBox()
     } else return <CreateUserBox/>;
 }
-export default UserBox
+export default AllUsers
