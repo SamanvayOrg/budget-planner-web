@@ -1,11 +1,11 @@
 import * as React from 'react';
+import {useState} from 'react';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../components/HorizontalMenuDrawer";
-import AllUsers from "./AllUsers";
-import {useState} from "react";
-import Municipalities from "./Municipalities";
+import Users from "./Users";
+import Municipality from "./Municipality";
 
 
 const AdminScreen = () => {
@@ -17,12 +17,15 @@ const AdminScreen = () => {
     }
 
     const renderBox = () => {
-        if (selectedMenu === 'Users') {
-            return <AllUsers/>
+        switch (selectedMenu) {
+            case 'Users':
+                return <Users/>
+                break;
+            case 'Municipality':
+                return <Municipality/>
+                break;
         }
-        if (selectedMenu === 'Municipality') {
-            return <><Municipalities/></>
-        }
+
     }
 
     return (

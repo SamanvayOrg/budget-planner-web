@@ -6,7 +6,7 @@ import {useState} from "react";
 import {useSelector} from "react-redux";
 import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
 
-const Municipalities = () => {
+const Municipality = () => {
     const [municipality, setMunicipality] = useState(null);
     const {details} = useSelector(allMunicipalityDetailsSelector)
     const rowClick = (data) => {
@@ -41,4 +41,4 @@ const Municipalities = () => {
 
 
 }
-export default Municipalities;
+export default Municipality;

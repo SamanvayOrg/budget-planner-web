@@ -8,7 +8,7 @@ import EditUser from "../components/EditUser";
 import {Paper, Typography} from "@mui/material";
 import CreateUserBox from "../components/CreateUserBox";
 
-const AllUsers = () => {
+const Users = () => {
     const [user, setUser] = useState(null);
     const [create, setCreate] = useState(null);
     const {users} = useSelector(allUsersSelector);
@@ -45,9 +45,7 @@ const AllUsers = () => {
                                     console.log('clicked', setUser(null))
                                 }}
                     >+ Create</Typography>
-                    <ResponsiveTable columns={columns} rows={rows} onClick={(data) => {
-                        rowClick(data)
-                    }}/></Paper>
+                    <ResponsiveTable columns={columns} rows={rows} onClick={rowClick}/></Paper>
             );
         } else {
             return (<EditUser data={user}/>);
@@ -57,4 +55,4 @@ const AllUsers = () => {
         return renderBox()
     } else return <CreateUserBox/>;
 }
-export default AllUsers
+export default Users
