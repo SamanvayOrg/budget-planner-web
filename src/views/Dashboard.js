@@ -13,76 +13,83 @@ import Spinner from "../components/Spinner";
 import {MunicipalityName} from "../domain/functions";
 import {fetchTranslations} from "../slices/translationsReducer";
 import {useTranslation} from "react-i18next";
-
+import {currentUserSelector, fetchCurrentUser} from "../slices/currentUserReducer";
+import {getCurrentUser} from "../api/api";
 
 
 const useStyles = makeStyles(theme => ({
-	mainContainer: {
-		display: "flex",
-		flexDirection: "column",
-		justifyContent: "center",
-		alignItems: "start",
-		paddingTop: "64px",
-		paddingLeft: "0%",
-		fontFamily: "Lato",
-		fontStyle: "normal",
-		color: "#616161",
-		fontWeight: "700",
-	}, leftUserNameText: {
-		display: "flex",
-		flexDirection: "row",
-		fontSize: "11px",
-		letterSpacing: "0.06em",
-		textTransform: "uppercase",
-		marginBottom: "1%"
-	}, welcomeText: {
-		fontWeight: "400", fontSize: "21px", lineHeight: "25px",
-	}, mmbsName: {
-		fontStyle: "italic", fontSize: "21px", lineHeight: "25px", color: "black",
+    mainContainer: {
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "start",
+        paddingTop: "64px",
+        paddingLeft: "0%",
+        fontFamily: "Lato",
+        fontStyle: "normal",
+        color: "#616161",
+        fontWeight: "700",
+    }, leftUserNameText: {
+        display: "flex",
+        flexDirection: "row",
+        fontSize: "11px",
+        letterSpacing: "0.06em",
+        textTransform: "uppercase",
+        marginBottom: "1%"
+    }, welcomeText: {
+        fontWeight: "400", fontSize: "21px", lineHeight: "25px",
+    }, mmbsName: {
+        fontStyle: "italic", fontSize: "21px", lineHeight: "25px", color: "black",
 
-	}
+    }
 
 }))
 
 const Dashboard = () => {
-	const classes = useStyles();
-	const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector);
-	const dispatch = useDispatch();
-	const {t}=useTranslation();
+    const classes = useStyles();
+    const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector);
+    const {user} = useSelector(currentUserSelector);
+    const dispatch = useDispatch();
+    const {t} = useTranslation();
 
-	useEffect(() => {
-		dispatch(fetchCurrentBudget());
-		dispatch(fetchTranslations());
-	}, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchCurrentBudget());
+        dispatch(fetchTranslations());
+        dispatch(fetchCurrentUser());
+    }, [dispatch]);
 
-	const renderBox = () => {
-		if (loading) {
-			return <Spinner/>;
-		}
-		if (budgetYear) {
-			return <CurrentBudgetBox year={budgetYear}/>;
-		}
-		return <EmptyBudgetBox addNewBudget={(year) => dispatch(createNewBudget(year))}/>;
-	}
+    const getCurrentUserName = () => {
+        if (user) return user.name
+    }
 
-	return (
-		<div>
-			<ResponsiveAppBar/>
-			<Container maxWidth="xl">
-				<div className={classes.mainContainer}>
-					<div className={classes.leftUserNameText}>
-						{t('HELLO')} <UserName/>
-					</div>
-					<div><span className={classes.welcomeText}>Welcome to </span>
-						<span
-							className={classes.mmbsName}><MunicipalityName/> Budgeting system</span>
-					</div>
-					{renderBox()}
-				</div>
-			</Container>
-		</div>
-	)
+    const renderBox = () => {
+        if (loading) {
+            return <Spinner/>;
+        }
+        if (budgetYear) {
+            return <CurrentBudgetBox year={budgetYear}/>;
+        }
+        return <EmptyBudgetBox addNewBudget={(year) => dispatch(createNewBudget(year))}/>;
+    }
+
+    return (
+        <div>
+            <ResponsiveAppBar/>
+            <Container maxWidth="xl">
+                <div className={classes.mainContainer}>
+                    <div className={classes.leftUserNameText}>
+                        {t('HELLO')} {getCurrentUserName()}
+                    </div>
+                    <div><span className={classes.welcomeText}>Welcome to </span>
+                        <span
+                            className={classes.mmbsName}><MunicipalityName/> Budgeting system</span>
+                    </div>
+                    {renderBox()}
+                </div>
+            </Container>
+        </div>
+    )
 };
 export default withAuthenticationRequired(Dashboard, {
-	onRedirecting: () => <Home/>,
+    onRedirecting: () => <Home/>,
 });
