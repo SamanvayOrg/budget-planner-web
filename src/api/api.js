@@ -71,7 +71,13 @@ const updateUser = async (token, data) => {
 	return result.status === 200;
 }
 
+const getCurrentUser = async (token, data)=>{
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/user`,{headers})
+	return result.data;
+}
+
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
-    getTranslations, getUsers, updateUser
+    getTranslations, getUsers, updateUser,getCurrentUser
 };
