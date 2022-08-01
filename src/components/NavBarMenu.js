@@ -33,7 +33,7 @@ const NavBarMenu = () => {
 			<LangSelector/>
 			<NavLink to="/dashboard" className={classes.links}>{t('Dashboard')}</NavLink>
 			<NavLink to="/allBudgets" className={classes.links}>{t('All budgets')}</NavLink>
-			<NavLink to="/admin" className={classes.links}>{t('Admin')}</NavLink>
+			<NavLink to="/admin/users" className={classes.links}>{t('Admin')}</NavLink>
 
 		</div>
 	)
