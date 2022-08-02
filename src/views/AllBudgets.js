@@ -73,7 +73,7 @@ const AllBudgets = () => {
 				let year = budget.budgetYear.substring(0, 4)
 				navigate(`/budget/${year}`);
 			}
-			budgetBox.push(<BudgetBox action={goToBudget} index={index}
+			budgetBox.push(<BudgetBox action={goToBudget} index={index} key={index}
 			                          versionName={t("Budget for year") + '-' + t(budget.budgetYear)}
 			                          lastUpdated={"last updated 24 hours ago"}/>
 			)
