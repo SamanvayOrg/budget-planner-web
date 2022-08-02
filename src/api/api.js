@@ -67,7 +67,7 @@ const getUsers = async (token) => {
 
 const updateUser = async (token, data) => {
 	const headers = {'Authorization': `Bearer ${token}`};
-	const result = await axios.post(`/api/user`, data, {headers})
+	const result = await axios.put(`/api/user/${data.id}`, data, {headers})
 	return result.status === 200;
 }
 

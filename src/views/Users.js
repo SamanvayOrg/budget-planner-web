@@ -1,12 +1,10 @@
 import ResponsiveTable from "../components/ResponsiveTable";
 import * as React from 'react';
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {allUsersSelector, fetchUsers} from "../slices/allUsersReducer";
 import _ from "lodash";
-import EditUser from "../components/EditUser";
 import {Box, Paper, Typography} from "@mui/material";
-import CreateUserBox from "../components/CreateUserBox";
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../components/HorizontalMenuDrawer";
 import {adminMenus} from "../config";
@@ -14,13 +12,11 @@ import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
 
 const Users = () => {
-    const [user, setUser] = useState(null);
-    const [create, setCreate] = useState(null);
     const {users} = useSelector(allUsersSelector);
     const dispatch = useDispatch();
     const rowClick = (data) => {
-        console.log('clickedfs---', JSON.stringify(data), data.id);
-        setUser(data);
+        handleClick('updateUser',data.id)
+        console.log('updateUser',data)
     }
     const columns = [
         {id: 'name', label: 'Name', minWidth: 170},
@@ -35,13 +31,19 @@ const Users = () => {
         rows = users
     }
     let navigate = useNavigate();
-    const handleClick = (data) => {
-        switch (data) {
+    const handleClick = (param,id) => {
+        switch (param) {
             case 'Users':
                 navigate('/admin/users');
                 break;
             case 'Municipality':
                 navigate('/admin/municipality');
+                break;
+            case 'create':
+                navigate('/admin/user/create');
+                break;
+            case 'updateUser':
+                navigate(`/admin/user/update/${id}`);
                 break;
             default:
                 navigate('/admin')
@@ -50,7 +52,7 @@ const Users = () => {
 
 
     const renderBox = () => {
-        if (_.isNull(user)) {
+
             return (
                 <Box sx={{display: 'flex'}}>
                     <ResponsiveAppBar/>
@@ -65,21 +67,14 @@ const Users = () => {
                                 color: 'blue',
                                 cursor: 'pointer'
                             }}
-                                        onClick={event => {
-                                            setCreate(1)
-                                            console.log('clicked', setUser(null))
-                                        }}
-                            >+ Create</Typography>
+                                        onClick={(e) => handleClick('create')}>+ Create</Typography>
                             <ResponsiveTable columns={columns} rows={rows} onClick={rowClick}/></Paper>
                     </Box>
                 </Box>
             );
-        } else {
-            return (<EditUser data={user}/>);
-        }
+
     }
-    if (_.isNull(create)) {
-        return renderBox()
-    } else return <CreateUserBox/>;
+
+    return renderBox();
 }
 export default Users

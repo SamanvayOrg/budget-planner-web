@@ -6,6 +6,8 @@ import BudgetDetail from "../views/BudgetDetail";
 import AllBudgets from "../views/AllBudgets";
 import Users from "../views/Users";
 import Municipality from "../views/Municipality";
+import CreateUserBox from "../components/CreateUserBox";
+import UpdateUser from "../components/UpdateUser";
 
 const Routing = () => {
 	return (<HashRouter>
@@ -15,6 +17,8 @@ const Routing = () => {
 			<Route path="/budget/:year" element={<BudgetDetail/>}/>
 			<Route path="/allBudgets" element={<AllBudgets/>}/>
             <Route path="/admin/users" element={<Users/>}/>
+            <Route path="/admin/user/create" element={<CreateUserBox/>}/>
+            <Route path="/admin/user/update/:userId" element={<UpdateUser/>}/>
             <Route path="/admin/municipality" element={<Municipality/>}/>
 		</Routes>
 	</HashRouter>)
