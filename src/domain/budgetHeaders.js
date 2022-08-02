@@ -20,4 +20,4 @@ const headers = (year) => (
         `${getBudgetYearString(year, 1)} Probables for remaining 4 months`,
         `${getBudgetYearString(year, 0)} Budgeted amount`,
     ]);
-export {headers}
+export {headers, getBudgetYearString}
