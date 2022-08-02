@@ -65,7 +65,7 @@ const CurrentBudgetBox = ({year}) => {
 		_.forEach(allBudgets, budget => {
 			budgetYears.push(budget.budgetYear);
 		});
-		return budgetYears;
+		return _.sortBy(budgetYears).reverse();
 	};
 
 	const handleChange = (event) => {
