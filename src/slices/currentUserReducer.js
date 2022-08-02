@@ -23,7 +23,7 @@ export default currentUserSlice.reducer;
 
 export function fetchCurrentUser() {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState());
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         dispatch(setCurrentUser());
         let details = await getCurrentUser(token);
         dispatch(setCurrentUser(details));

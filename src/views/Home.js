@@ -9,39 +9,40 @@ import Spinner from "../components/Spinner";
 
 
 const Home = () => {
-	const {isAuthenticated, getAccessTokenSilently} = useAuth0();
+    const {isAuthenticated, getAccessTokenSilently} = useAuth0();
 
-	const dispatch = useDispatch();
-	const {authDetailsAvailable} = useSelector(authSelector);
+    const dispatch = useDispatch();
+    const {authDetailsAvailable} = useSelector(authSelector);
 
-	const initAuth = () => {
-		return async (dispatch) => {
-			let token = await getAccessTokenSilently();
-			dispatch(setToken(token));
-		}
-	}
+    const initAuth = () => {
+        return async (dispatch) => {
+            let token = await getAccessTokenSilently();
+            localStorage.setItem('authToken', token);
+            dispatch(setToken(token));
+        }
+    }
 
-	useEffect(() => {
-		dispatch(initAuth());
-		// eslint-disable-next-line
-	}, [dispatch, isAuthenticated]);
-
-
-	let renderInScreeen = <LogInBox/>;
-
-	if (!authDetailsAvailable && isAuthenticated) {
-		renderInScreeen = <Spinner/>;
-	} else if (authDetailsAvailable && isAuthenticated) {
-		return <Navigate to='/dashboard'/>
-	}
+    useEffect(() => {
+        dispatch(initAuth());
+        // eslint-disable-next-line
+    }, [dispatch, isAuthenticated]);
 
 
-	return (<div>
-		<ResponsiveAppBar/>
-		<div style={{padding: "10%"}}>
-			{renderInScreeen}
-		</div>
-	</div>);
+    let renderInScreeen = <LogInBox/>;
+
+    if (!authDetailsAvailable && isAuthenticated) {
+        renderInScreeen = <Spinner/>;
+    } else if (authDetailsAvailable && isAuthenticated) {
+        return <Navigate to='/dashboard'/>
+    }
+
+
+    return (<div>
+        <ResponsiveAppBar/>
+        <div style={{padding: "10%"}}>
+            {renderInScreeen}
+        </div>
+    </div>);
 
 
 }

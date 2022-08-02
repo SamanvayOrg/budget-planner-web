@@ -21,7 +21,7 @@ export default allUsersSlice.reducer;
 
 export function fetchUsers() {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState());
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         dispatch(setUsers());
         let users = await getUsers(token);
         dispatch(setUsers(users));

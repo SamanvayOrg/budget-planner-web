@@ -36,7 +36,7 @@ export default municipalityDetailsSlice.reducer;
 
 export function fetchMunicipalityDetails() {
 	return async (dispatch, getState) => {
-		const token = tokenSelector(getState());
+		const token = tokenSelector(getState() || localStorage.getItem('authToken'));
 		dispatch(setDetails());
 		let details = await getMunicipalityDetails(token);
 		dispatch(setDetails(details));
