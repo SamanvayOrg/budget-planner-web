@@ -14,16 +14,15 @@ import _ from "lodash";
 const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
     const {users} = useSelector(allUsersSelector);
     let {userId} = useParams();
-
     const selectedUser = _.chain(users)
         .filter((e) => e.id == userId)
         .first()
         .value()
 
-
     const [name, setName] = useState(selectedUser.name);
     const [userName, setUserName] = useState(selectedUser.userName);
     const dispatch = useDispatch();
+    const [editUser, setEditUser] = useState(false);
 
     const handleChange = (event, type) => {
         if (type === 'name') {
@@ -33,8 +32,6 @@ const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
         }
     }
     const handleSave = () => {
-
-
         let newUserOb = {};
         newUserOb = {
             "id": selectedUser.id,
@@ -43,7 +40,7 @@ const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
             "municipalityId": selectedUser.municipalityId,
             "admin": selectedUser.admin
         };
-        console.log('new data', newUserOb);
+        setEditUser(false);
         dispatch(saveUser(newUserOb));
 
     }
@@ -67,8 +64,21 @@ const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
             <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleClick}/>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>
-                <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
-                    <Typography>User details</Typography>
+                <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '10px', paddingTop: '20px'}}>
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                        <Typography sx={{
+                            display: 'flex', fontSize: '18px'
+                        }}>User details</Typography>
+                        {!editUser && <Typography sx={{
+                            display: 'flex',
+
+                            marginRight: '30px',
+                            color: 'blue',
+                            cursor: 'pointer',
+                            fontSize: '18px'
+                        }} onClick={(e) => setEditUser(true)}>Edit user</Typography>}
+                    </div>
+
                     <br/>
                     <div style={{
                         display: 'flex',
@@ -77,11 +87,17 @@ const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
                         margin: '20px',
                         gap: '20px'
                     }}>
-                        <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"name"} defaultValue={name}
+                        <TextField disabled={!editUser} sx={{maxWidth: 1 / 4}} variant="standard"
+                                   label={"name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"User name"} defaultValue={userName}
+                        <TextField disabled={!editUser} inputProps={{readOnly: !editUser}} sx={{maxWidth: 1 / 4}}
+                                   variant="standard"
+                                   label={"User name"} defaultValue={userName}
                                    onChange={(e) => handleChange(e, 'userName')}/>
-                        <ActionButton label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>
+                        <ActionButton disabled={!editUser}
+                                      style={editUser ? {} : {background: "#b7e1e8"}} label={"Submit"}
+                                      id={"smallActionButton"}
+                                      onClick={handleSave}/>
                     </div>
                 </Paper>
             </Box>

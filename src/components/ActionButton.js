@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 
 const ActionButton = ({label, ...props}) => {
 	return (
-		<Button {...props}
+		<Button  {...props}
 		>
 			{label}
 		</Button>
