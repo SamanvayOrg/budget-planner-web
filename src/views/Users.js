@@ -15,8 +15,7 @@ const Users = () => {
     const {users} = useSelector(allUsersSelector);
     const dispatch = useDispatch();
     const rowClick = (data) => {
-        handleClick('updateUser',data.id)
-        console.log('updateUser',data)
+        handleClick('updateUser', data.id)
     }
     const columns = [
         {id: 'name', label: 'Name', minWidth: 170},
@@ -31,7 +30,7 @@ const Users = () => {
         rows = users
     }
     let navigate = useNavigate();
-    const handleClick = (param,id) => {
+    const handleClick = (param, id) => {
         switch (param) {
             case 'Users':
                 navigate('/admin/users');
@@ -53,25 +52,25 @@ const Users = () => {
 
     const renderBox = () => {
 
-            return (
-                <Box sx={{display: 'flex'}}>
-                    <ResponsiveAppBar/>
-                    <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleClick}/>
-                    <Box component="main" sx={{flexGrow: 1, p: 3}}>
-                        <Toolbar/>
-                        <Paper sx={{width: '100%', overflow: 'hidden', paddingTop: "40px"}}>
-                            <Typography sx={{
-                                display: 'flex',
-                                justifyContent: 'flex-end',
-                                marginRight: '20px',
-                                color: 'blue',
-                                cursor: 'pointer'
-                            }}
-                                        onClick={(e) => handleClick('create')}>+ Create</Typography>
-                            <ResponsiveTable columns={columns} rows={rows} onClick={rowClick}/></Paper>
-                    </Box>
+        return (
+            <Box sx={{display: 'flex'}}>
+                <ResponsiveAppBar/>
+                <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleClick}/>
+                <Box component="main" sx={{flexGrow: 1, p: 3}}>
+                    <Toolbar/>
+                    <Paper sx={{width: '100%', overflow: 'hidden', paddingTop: "40px"}}>
+                        <Typography sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            marginRight: '20px',
+                            color: 'blue',
+                            cursor: 'pointer'
+                        }}
+                                    onClick={(e) => handleClick('create')}>+ Create</Typography>
+                        <ResponsiveTable columns={columns} rows={rows} onClick={rowClick}/></Paper>
                 </Box>
-            );
+            </Box>
+        );
 
     }
 
