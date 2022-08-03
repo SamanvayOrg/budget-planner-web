@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import {getDetailsForMajorHeadName} from '../domain/metadata';
 import _ from 'lodash';
 import {FormGroup, InputLabel, TextField, Typography} from '@mui/material';
+import {useTranslation} from "react-i18next";
 
 const style = {
     position: 'absolute',
@@ -26,8 +27,8 @@ const style = {
 };
 
 
-const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
-    const { majorHeadGroup} = getDetailsForMajorHeadName(metadata, _.get(context, 'majorHead')) || {minorHeads: []};
+const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => {
+    const {majorHeadGroup} = getDetailsForMajorHeadName(metadata, _.get(context, 'majorHead')) || {minorHeads: []};
     const allFunctionGroups = metadata.functionGroups;
     const allMajorHeadOption = majorHeadGroup.majorHeads;
     const [minorHead, setMinorHead] = useState('');
@@ -36,6 +37,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
     const [theFunction, setTheFunction] = useState('');
     const [name, setName] = useState('');
     const [theMajorHead, setTheMajorHead] = useState('');
+    const {t} = useTranslation();
 
     const handleMajorHeadSelection = (event) => {
         setTheMajorHead(event.target.value);
@@ -85,6 +87,21 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
         );
 
     };
+    let budgetLineItems = []
+    _.forEach(budget.items, majorHead => {
+        _.forEach(majorHead.items, minorHead => {
+            _.forEach(minorHead.items, detailedHead => {
+                budgetLineItems.push(detailedHead.name);
+            })
+        })
+    })
+
+    const isAbleToAddNewLine = () => {
+        if (_.includes(budgetLineItems, name)) {
+            return false;
+        }
+        return true
+    }
 
     const onNameChange = (event) => {
         setName(event.target.value);
@@ -111,12 +128,13 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
                     {detailedHead && theFunction && (
                         <>
                             <Typography variant={'h6'} style={{marginTop: 32, marginBottom: 16}}>Name</Typography>
-                            <TextField
-                                required
-                                id="outlined-required"
-                                label="Name"
-                                value={name}
-                                onChange={onNameChange}
+                            <TextField error={!isAbleToAddNewLine()}
+                                       helperText={isAbleToAddNewLine() ? '' : t('Particular name must be unique')}
+                                       required
+                                       id="outlined-required"
+                                       label="Name"
+                                       value={name}
+                                       onChange={onNameChange}
                             />
                         </>)}
                 </FormGroup>
@@ -132,7 +150,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel}) => {
                         theFunction,
                         name
                     })} variant={'contained'}
-                                  disabled={!(detailedHead && theFunction)}
+                                  disabled={!(detailedHead && theFunction && isAbleToAddNewLine())}
                                   style={{marginLeft: 32}} color={'primary'}
                     />
                 </Box>

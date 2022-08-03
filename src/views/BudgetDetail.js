@@ -161,7 +161,7 @@ const BudgetDetail = () => {
                     <div>
                         <Modal open={open} onClose={handleClose} className={modalClass.modal}>
                             <>
-                                <BudgetLineSelector metadata={metadata} onSelect={(selectedItem) => {
+                                <BudgetLineSelector metadata={metadata} budget={budget} onSelect={(selectedItem) => {
                                     dispatch(addBudgetLine(selectedItem));
                                     handleClose();
                                 }} context={popupContext} onCancel={handleClose}/>
