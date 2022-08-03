@@ -1,47 +1,39 @@
+import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import HorizontalMenuDrawer from "../components/HorizontalMenuDrawer";
+import {adminMenus} from "../config";
 import {Box, Paper, TextField, Typography} from "@mui/material";
-import ActionButton from "./ActionButton";
+import Toolbar from "@mui/material/Toolbar";
+import ActionButton from "../components/ActionButton";
 import * as React from "react";
 import {useState} from "react";
+import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, saveUser} from "../slices/allUsersReducer";
-import ResponsiveAppBar from "./ResponsiveAppBar";
-import HorizontalMenuDrawer from "./HorizontalMenuDrawer";
-import {adminMenus} from "../config";
-import Toolbar from "@mui/material/Toolbar";
-import {useNavigate, useParams} from "react-router-dom";
-import _ from "lodash";
+import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
+import DropDown from "../components/DropDown";
+import {useTranslation} from "react-i18next";
 
-const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
-    const {users} = useSelector(allUsersSelector);
-    let {userId} = useParams();
-    const selectedUser = _.chain(users)
-        .filter((e) => e.id == userId)
-        .first()
-        .value()
-
-    const [name, setName] = useState(selectedUser.name);
-    const [userName, setUserName] = useState(selectedUser.userName);
+const UpdateMunicipality = () => {
+    const {details} = useSelector(allMunicipalityDetailsSelector);
+    const {t} = useTranslation();
+    const [name, setName] = useState(details.name);
+    const [cityClass, setCityClass] = useState(details.cityClass);
     const dispatch = useDispatch();
-    const [editUser, setEditUser] = useState(false);
-
+    const [editMunicipality, setEditMunicipality] = useState(false);
     const handleChange = (event, type) => {
         if (type === 'name') {
             setName(event.target.value);
         } else if (type === 'userName') {
-            setUserName(event.target.value);
+            setCityClass(event.target.value);
         }
     }
     const handleSave = () => {
         let newUserOb = {};
         newUserOb = {
-            "id": selectedUser.id,
+            "id": details.id,
             name,
-            userName,
-            "municipalityId": selectedUser.municipalityId,
-            "admin": selectedUser.admin
+            cityClass: cityClass
         };
-        setEditUser(false);
-        dispatch(saveUser(newUserOb));
+        setEditMunicipality(false);
 
     }
     let navigate = useNavigate();
@@ -57,6 +49,7 @@ const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
                 navigate('/admin')
         }
     }
+    let classList = ['option1','option2'];
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -68,15 +61,15 @@ const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
                     <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
                         <Typography sx={{
                             display: 'flex', fontSize: '18px'
-                        }}>User details</Typography>
-                        {!editUser && <Typography sx={{
+                        }}>{t('Municipality details')}</Typography>
+                        {!editMunicipality && <Typography sx={{
                             display: 'flex',
 
                             marginRight: '30px',
                             color: '#4d73db',
                             cursor: 'pointer',
                             fontSize: '18px'
-                        }} onClick={(e) => setEditUser(true)}>Edit user</Typography>}
+                        }} onClick={(e) => setEditMunicipality(true)}>{t('Edit municipality')}</Typography>}
                     </div>
 
                     <br/>
@@ -87,15 +80,13 @@ const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
                         margin: '20px',
                         gap: '20px'
                     }}>
-                        <TextField disabled={!editUser} sx={{maxWidth: 1 / 4}} variant="standard"
-                                   label={"name"} defaultValue={name}
+                        <TextField disabled={!editMunicipality} sx={{maxWidth: 1 / 4}} variant="standard"
+                                   label={t("Municipality name")} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField disabled={!editUser} inputProps={{readOnly: !editUser}} sx={{maxWidth: 1 / 4}}
-                                   variant="standard"
-                                   label={"User name"} defaultValue={userName}
-                                   onChange={(e) => handleChange(e, 'userName')}/>
-                        <ActionButton disabled={!editUser}
-                                      style={editUser ? {} : {background: "#b7e1e8"}} label={"Submit"}
+                        <DropDown disabled={!editMunicipality} value={cityClass} sx={{maxWidth: 1 / 4}}
+                                  label={t("Municipality class")} list={classList} onSelect={(e) => setCityClass(e.target.value)}/>
+                        <ActionButton disabled={!editMunicipality}
+                                      style={editMunicipality ? {} : {background: "#b7e1e8"}} label={"Submit"}
                                       id={"smallActionButton"}
                                       onClick={handleSave}/>
                     </div>
@@ -104,4 +95,4 @@ const UpdateUser = ({data = {name: 'abc', userName: 'sdf'}}) => {
         </Box>
     )
 }
-export default UpdateUser;
+export default UpdateMunicipality;

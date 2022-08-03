@@ -25,24 +25,25 @@ const Municipality = () => {
         {id: 'cityClass', label: 'Municipality class', minWidth: 170,}
     ];
 
+    const rowClick = (data) => {
+        handleClick('updateMunicipality', data.id)
+    }
+
     let rows = [];
     if (!_.isEmpty(details)) {
-        rows = [
-            {
-                "name": details.name,
-                "state": details.state,
-                "cityClass": details.cityClass
-            }
-        ]
+        rows = [details]
     }
     let navigate = useNavigate();
-    const handleClick = (data) => {
-        switch (data) {
+    const handleClick = (param,id) => {
+        switch (param) {
             case 'Users':
                 navigate('/admin/users');
                 break;
             case 'Municipality':
                 navigate('/admin/municipality');
+                break;
+            case 'updateMunicipality':
+                navigate(`/admin/municipality/update/${id}`);
                 break;
             default:
                 navigate('/admin')
@@ -57,7 +58,7 @@ const Municipality = () => {
                 <Box component="main" sx={{flexGrow: 1, p: 3}}>
                     <Toolbar/>
                     <Paper sx={{width: '100%', overflow: 'hidden', paddingTop: "40px"}}>
-                        <ResponsiveTable columns={columns} rows={rows}/></Paper>
+                        <ResponsiveTable columns={columns} rows={rows} onClick={rowClick}/></Paper>
                 </Box>
             </Box>);
     }

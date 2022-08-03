@@ -63,7 +63,7 @@ const Users = () => {
                             display: 'flex',
                             justifyContent: 'flex-end',
                             marginRight: '20px',
-                            color: 'blue',
+                            color: '#4d73db',
                             cursor: 'pointer'
                         }}
                                     onClick={(e) => handleClick('create')}>+ Create</Typography>
