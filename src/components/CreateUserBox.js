@@ -3,7 +3,7 @@ import ActionButton from "./ActionButton";
 import * as React from "react";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {saveUser} from "../slices/allUsersReducer";
+import {createNewUser, saveUser} from "../slices/allUsersReducer";
 import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import HorizontalMenuDrawer from "./HorizontalMenuDrawer";
@@ -14,6 +14,7 @@ import {useNavigate} from "react-router-dom";
 const CreateUserBox = () => {
     const [name, setName] = useState('');
     const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
     const dispatch = useDispatch();
     const {details} = useSelector(allMunicipalityDetailsSelector)
@@ -22,8 +23,8 @@ const CreateUserBox = () => {
         console.log('data in edit user', event.target.value, type);
         if (type === 'name') {
             setName(event.target.value);
-        } else if (type === 'userName') {
-            setUserName(event.target.value);
+        } else if (type === 'email') {
+            setEmail(event.target.value);
         } else if (type === 'admin') {
             if (event.target.value === 'on') {
                 setIsAdmin(true)
@@ -35,10 +36,11 @@ const CreateUserBox = () => {
         let newUserOb = {};
         newUserOb = {
             name,
-            userName,
-            "admin": isAdmin
+            "email": email,
+            "isAdmin": isAdmin,
+            "municipalityId": details.id
         };
-        dispatch(saveUser(newUserOb));
+        dispatch(createNewUser(newUserOb));
     }
 
     let navigate = useNavigate();
@@ -72,8 +74,8 @@ const CreateUserBox = () => {
                     }}>
                         <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"Name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"User name"} defaultValue={userName}
-                                   onChange={(e) => handleChange(e, 'userName')}/>
+                        <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"User name"} defaultValue={email}
+                                   onChange={(e) => handleChange(e, 'email')}/>
                         <FormControlLabel control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>}
                                           label="Make this user an administrator"/>
                         <ActionButton label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>

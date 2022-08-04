@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
-import {getUsers, updateUser} from "../api/api";
+import {createUser, getUsers, updateUser} from "../api/api";
 
 export const initialState = {
     users: {},
@@ -34,6 +34,13 @@ export function saveUser(data) {
         const token = tokenSelector(getState());
         console.log('daata in save reducer', data);
         await updateUser(token, data)
+    }
+}
+
+export function createNewUser(data) {
+    return async (dispatch, getState) => {
+        const token = tokenSelector(getState());
+        await createUser(token, data)
     }
 }
 

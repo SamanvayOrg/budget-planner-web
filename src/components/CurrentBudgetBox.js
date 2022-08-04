@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
 import DataTable from "./DataTable";
 import {budgetSummaryData} from "../domain/budgetSummaryMapper";
 import {Paper} from "@mui/material";
-import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
+import {allMunicipalityDetailsSelector, fetchMunicipalityDetails} from "../slices/municipalityReducer";
 import ResponsiveBarGraph from "./ResponsiveBarGraph";
 import ResponsivePieChart from "./ResponsivePieChart";
 import PerPersonExpenditure from "./PerPersonExpenditure";
@@ -58,6 +58,7 @@ const CurrentBudgetBox = ({year}) => {
 
 	useEffect(() => {
 		dispatch(fetchAllBudgets());
+		dispatch(fetchMunicipalityDetails());
 	}, [dispatch]);
 
 	const getBudgetYears = (allBudgets) => {
@@ -112,7 +113,7 @@ const CurrentBudgetBox = ({year}) => {
 
 				}}>
 					<PerPersonExpenditure allBudget={allBudget} budgetYear={budgetYear}
-					                      municipalityPopulation={details.population}/>
+                                          municipalityPopulation={details ? details.population : 0}/>
 				</Paper>
 			</div>
 			<div className={classes.box}>
@@ -133,7 +134,7 @@ const CurrentBudgetBox = ({year}) => {
 
 				}}>
 					<PerPersonRevenue allBudget={allBudget} budgetYear={budgetYear}
-					                  municipalityPopulation={details.population}/>
+                                      municipalityPopulation={details ? details.population : 0}/>
 				</Paper>
 			</div>
 
