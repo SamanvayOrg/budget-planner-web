@@ -1,9 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
-import {getMunicipalityDetails, updateMunicipality} from "../api/api";
+import {getAllMunicipalities, getMunicipalityDetails, updateMunicipality} from "../api/api";
 
 export const initialState = {
-    details: {},
+    currentMunicipality: {},
+    allMunicipalities: {},
     loading: false,
     error: false,
     saved: false
@@ -12,8 +13,13 @@ const municipalityDetailsSlice = createSlice({
     name: 'municipalityDetails',
     initialState,
     reducers: {
-        setDetails: (state, {payload}) => {
-            state.details = payload
+        setCurrentMunicipalityDetails: (state, {payload}) => {
+            state.currentMunicipality = payload
+            state.loading = false
+            state.error = false
+        },
+        setAllMunicipalities: (state, {payload}) => {
+            state.allMunicipalities = payload
             state.loading = false
             state.error = false
         },
@@ -33,8 +39,8 @@ const municipalityDetailsSlice = createSlice({
     }
 })
 export const {
-    setDetails,
-    loading, loadingFailure, saveStatus
+    setCurrentMunicipalityDetails,
+    loading, loadingFailure, saveStatus, setAllMunicipalities
 } = municipalityDetailsSlice.actions;
 
 export const allMunicipalityDetailsSelector = state => state.municipalityDetails;
@@ -43,9 +49,9 @@ export default municipalityDetailsSlice.reducer;
 export function fetchMunicipalityDetails() {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState()) || localStorage.getItem('authToken');
-        dispatch(setDetails());
+        dispatch(setCurrentMunicipalityDetails());
         let details = await getMunicipalityDetails(token);
-        dispatch(setDetails(details));
+        dispatch(setCurrentMunicipalityDetails(details));
     }
 }
 
@@ -58,6 +64,14 @@ export function saveMunicipality(data) {
     }
 }
 
+
+export function fetchAllMunicipalities() {
+    return async (dispatch, getState) => {
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
+        let data = await getAllMunicipalities(token);
+        dispatch(setAllMunicipalities(data));
+    }
+}
 
 
 

@@ -96,8 +96,14 @@ const createUser = async (token, data) => {
 	return result.status === 200;
 }
 
+const getAllMunicipalities = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/allMunicipalities`,{headers})
+	return result.data;
+}
+
 
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
-	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser
+	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser, getAllMunicipalities
 };
