@@ -55,30 +55,34 @@ const budgetDashboardSlice = createSlice({
             }
         }) => {
 
-            // const matchingMajorHeadGroup = _.chain(state.budget)
-            //     .get('items')
-            //     .filter((item) => item.majorHeadGroup === majorHeadGroup.name)
-            //     .value();
-            //
-            //
-            // console.log('majorHeadGroup', majorHeadGroup)
-            // console.log('matchingMajorHeadGroup', matchingMajorHeadGroup)
-            // console.log('majorHead', majorHead)
-            //
-            // matchingMajorHeadGroup.push({
-            //     items:majorHeadGroup.items,
-            //     majorHead:majorHead.name,
-            //     summary:{}
-            // })
-
-            const matchingMajorHead = _.chain(state.budget)
+            let matchingMajorHead = _.chain(state.budget)
                 .get('items')
                 .map(group => group.items)
                 .flatten()
                 .find(head => head.majorHead === majorHead.name)
                 .value();
-            // console.log('matmatchingMajorHead-->', matchingMajorHead)
 
+            if(_.isUndefined(matchingMajorHead)) {
+                const matchingMajorHeadGroup = _.chain(state.budget)
+                    .get('items')
+                    .filter((group) => group.majorHeadGroup === majorHeadGroup.name)
+                    .value();
+                matchingMajorHead = {
+                    majorHead:  majorHead.name,
+                    summary: {
+                        budgetedAmount: 0,
+                        currentYear8MonthsActuals: 0,
+                        currentYear4MonthsProbables: 0,
+                        previousYearActuals: 0,
+                        yearMinus1Actuals: 0,
+                        yearMinus2Actuals: 0,
+                        functionCode: 0,
+                        detailedHeadCode: 0
+                    },
+                    items: []
+                }
+                matchingMajorHeadGroup[0].items.push(matchingMajorHead)
+            }
 
             matchingMajorHead.items.push({
                 code: theFunction.fullCode + '-' + detailedHead.fullCode,
