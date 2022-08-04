@@ -1,11 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
-import {getMunicipalityDetails} from "../api/api";
+import {getMunicipalityDetails, updateMunicipality} from "../api/api";
 
 export const initialState = {
     details: {},
     loading: false,
-    error: false
+    error: false,
+    saved: false
 }
 const municipalityDetailsSlice = createSlice({
     name: 'municipalityDetails',
@@ -23,12 +24,17 @@ const municipalityDetailsSlice = createSlice({
         loadingFailure: (state) => {
             state.loading = false
             state.error = true
+        },
+        saveStatus: (state) => {
+            state.saved = true
+            state.error = false
         }
+
     }
 })
 export const {
     setDetails,
-    loading, loadingFailure
+    loading, loadingFailure, saveStatus
 } = municipalityDetailsSlice.actions;
 
 export const allMunicipalityDetailsSelector = state => state.municipalityDetails;
@@ -40,6 +46,15 @@ export function fetchMunicipalityDetails() {
         dispatch(setDetails());
         let details = await getMunicipalityDetails(token);
         dispatch(setDetails(details));
+    }
+}
+
+export function saveMunicipality(data) {
+    return async (dispatch, getState) => {
+        const state = getState();
+        const token = tokenSelector(state) || localStorage.getItem('authToken');
+        const status = await updateMunicipality(token, data);
+        dispatch(saveStatus(status));
     }
 }
 

@@ -5,12 +5,14 @@ import {Box, Paper, TextField, Typography} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import ActionButton from "../components/ActionButton";
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
+import {allMunicipalityDetailsSelector, saveMunicipality} from "../slices/municipalityReducer";
 import DropDown from "../components/DropDown";
 import {useTranslation} from "react-i18next";
+import {cityClassesSelector, fetchCityClasses} from "../slices/cityClassReducer";
+import _ from "lodash";
 
 const UpdateMunicipality = () => {
     const {details} = useSelector(allMunicipalityDetailsSelector);
@@ -19,6 +21,12 @@ const UpdateMunicipality = () => {
     const [cityClass, setCityClass] = useState(details.cityClass);
     const dispatch = useDispatch();
     const [editMunicipality, setEditMunicipality] = useState(false);
+    let navigate = useNavigate();
+    const {cityClasses} = useSelector(cityClassesSelector);
+
+    useEffect(() => {
+        dispatch(fetchCityClasses());
+    }, [dispatch]);
     const handleChange = (event, type) => {
         if (type === 'name') {
             setName(event.target.value);
@@ -30,13 +38,14 @@ const UpdateMunicipality = () => {
         let newUserOb = {};
         newUserOb = {
             "id": details.id,
-            name,
-            cityClass: cityClass
+            "name": name,
+            "cityClass": cityClass,
+            "population": details.population
         };
+        dispatch(saveMunicipality(newUserOb));
         setEditMunicipality(false);
 
     }
-    let navigate = useNavigate();
     const handleClick = (data) => {
         switch (data) {
             case 'Users':
@@ -49,7 +58,11 @@ const UpdateMunicipality = () => {
                 navigate('/admin')
         }
     }
-    let classList = ['option1','option2'];
+
+    let cityClassesList = [];
+    _.forEach(cityClasses, cityClass => {
+        cityClassesList.push(cityClass.name)
+    })
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -84,7 +97,8 @@ const UpdateMunicipality = () => {
                                    label={t("Municipality name")} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
                         <DropDown disabled={!editMunicipality} value={cityClass} sx={{maxWidth: 1 / 4}}
-                                  label={t("Municipality class")} list={classList} onSelect={(e) => setCityClass(e.target.value)}/>
+                                  label={t("Municipality class")} list={cityClassesList}
+                                  onSelect={(e) => setCityClass(e.target.value)}/>
                         <ActionButton disabled={!editMunicipality}
                                       style={editMunicipality ? {} : {background: "#b7e1e8"}} label={"Submit"}
                                       id={"smallActionButton"}
