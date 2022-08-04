@@ -77,7 +77,27 @@ const getCurrentUser = async (token, data)=>{
 	return result.data;
 }
 
+const getCityClasses = async (token) => {
+    const headers = {'Authorization': `Bearer ${token}`};
+    const result = await axios.get(`/api/cityclasses`, {headers});
+    return result.data;
+}
+
+
+const updateMunicipality = async (token, data) => {
+    const headers = {'Authorization': `Bearer ${token}`};
+    const result = await axios.put(`/api/municipality/${data.id}`, data, {headers})
+    return result.status === 200;
+}
+
+const createUser = async (token, data) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.post(`/api/user`, data, {headers})
+	return result.status === 200;
+}
+
+
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
-    getTranslations, getUsers, updateUser,getCurrentUser
+	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser
 };
