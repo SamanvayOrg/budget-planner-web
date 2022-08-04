@@ -1,8 +1,10 @@
 import {createSlice} from "@reduxjs/toolkit";
+import jwt_decode from "jwt-decode";
 
 export const initialState = {
     user: {}, token: '', authDetailsAvailable: false,
-    isLoading: false
+    isLoading: false,
+    tokenData: {}
 }
 
 
@@ -13,6 +15,7 @@ const authSlice = createSlice({
         setToken: (state, {payload}) => {
             state.token = payload
             state.authDetailsAvailable = true
+            state.tokenData = jwt_decode(payload)
         },
         setUserDetails: (state, {payload}) => {
             state.user = payload

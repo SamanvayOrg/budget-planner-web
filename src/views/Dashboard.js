@@ -13,6 +13,11 @@ import {MunicipalityName} from "../domain/functions";
 import {fetchTranslations} from "../slices/translationsReducer";
 import {useTranslation} from "react-i18next";
 import {currentUserSelector, fetchCurrentUser} from "../slices/currentUserReducer";
+import jwt_decode from "jwt-decode";
+import {authSelector} from "../slices/authReducer";
+import _ from "lodash";
+import SuperAdmin from "./SuperAdmin";
+import {useNavigate} from "react-router-dom";
 
 
 const useStyles = makeStyles(theme => ({
@@ -47,8 +52,14 @@ const Dashboard = () => {
     const classes = useStyles();
     const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector);
     const {user} = useSelector(currentUserSelector);
+    const {tokenData} = useSelector(authSelector);
     const dispatch = useDispatch();
     const {t} = useTranslation();
+    const navigate = useNavigate();
+    console.log('tokenData', tokenData)
+    if (tokenData && _.includes(tokenData.permissions, 'superAdmin')) {
+        navigate('/superAdmin')
+    }
 
     useEffect(() => {
         dispatch(fetchCurrentBudget());

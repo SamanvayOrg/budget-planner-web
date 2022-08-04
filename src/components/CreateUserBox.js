@@ -10,6 +10,8 @@ import HorizontalMenuDrawer from "./HorizontalMenuDrawer";
 import {adminMenus} from "../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../views/Home";
 
 const CreateUserBox = () => {
     const [name, setName] = useState('');
@@ -84,4 +86,6 @@ const CreateUserBox = () => {
             </Box></Box>
     )
 }
-export default CreateUserBox;
+export default withAuthenticationRequired(CreateUserBox, {
+    onRedirecting: () => <Home/>,
+});
