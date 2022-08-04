@@ -4,13 +4,13 @@ import {useDispatch, useSelector} from 'react-redux';
 
 const MunicipalityName = () => {
 	const dispatch = useDispatch();
-	const {details} = useSelector(allMunicipalityDetailsSelector)
+	const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector)
 
 	useEffect(() => {
 		dispatch(fetchMunicipalityDetails());
 	}, [dispatch]);
 
-	return details ? details.name + ' ' + details.cityClass + ' ' : ''
+	return currentMunicipality ? currentMunicipality.name + ' ' + currentMunicipality.cityClass + ' ' : ''
 
 
 }

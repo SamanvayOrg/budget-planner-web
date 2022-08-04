@@ -15,11 +15,10 @@ import Home from "../views/Home";
 
 const CreateUserBox = () => {
     const [name, setName] = useState('');
-    const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
     const dispatch = useDispatch();
-    const {details} = useSelector(allMunicipalityDetailsSelector)
+    const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector)
 
     const handleChange = (event, type) => {
         console.log('data in edit user', event.target.value, type);
@@ -40,7 +39,7 @@ const CreateUserBox = () => {
             name,
             "email": email,
             "isAdmin": isAdmin,
-            "municipalityId": details.id
+            "municipalityId": currentMunicipality.id
         };
         dispatch(createNewUser(newUserOb));
     }

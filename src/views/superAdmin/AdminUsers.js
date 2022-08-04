@@ -1,13 +1,13 @@
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
+import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import React from "react";
-import HorizontalMenuDrawer from "../components/HorizontalMenuDrawer";
-import {superAdminMenus} from "../config";
+import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
+import {superAdminMenus} from "../../config";
 import {Box, Paper, Typography} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
-import ResponsiveTable from "../components/ResponsiveTable";
+import ResponsiveTable from "../../components/ResponsiveTable";
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, fetchUsers} from "../slices/allUsersReducer";
+import {allUsersSelector, fetchUsers} from "../../slices/allUsersReducer";
 import {useEffect} from "react";
 import _ from "lodash";
 
@@ -40,7 +40,10 @@ const AdminUsers = () => {
                 navigate('/superAdmin/municipality');
                 break;
             case 'updateUser':
-                navigate(`/admin/user/update/${id}`);
+                navigate(`/superAdmin/user/update/${id}`);
+                break;
+            case 'create':
+                navigate('/superAdmin/user/create');
                 break;
             default:
                 navigate('/superAdmin')

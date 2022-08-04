@@ -54,7 +54,7 @@ const CurrentBudgetBox = ({year}) => {
 	const classes = styleSheets();
 	const [budgetYear, setBudgetYear] = useState(year);
 	let navigate = useNavigate();
-	const {details} = useSelector(allMunicipalityDetailsSelector);
+	const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector);
 
 	useEffect(() => {
 		dispatch(fetchAllBudgets());
@@ -113,7 +113,7 @@ const CurrentBudgetBox = ({year}) => {
 
 				}}>
 					<PerPersonExpenditure allBudget={allBudget} budgetYear={budgetYear}
-                                          municipalityPopulation={details ? details.population : 0}/>
+                                          municipalityPopulation={currentMunicipality ? currentMunicipality.population : 0}/>
 				</Paper>
 			</div>
 			<div className={classes.box}>
@@ -134,7 +134,7 @@ const CurrentBudgetBox = ({year}) => {
 
 				}}>
 					<PerPersonRevenue allBudget={allBudget} budgetYear={budgetYear}
-                                      municipalityPopulation={details ? details.population : 0}/>
+                                      municipalityPopulation={currentMunicipality ? currentMunicipality.population : 0}/>
 				</Paper>
 			</div>
 

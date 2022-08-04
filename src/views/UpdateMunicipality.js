@@ -15,10 +15,10 @@ import {cityClassesSelector, fetchCityClasses} from "../slices/cityClassReducer"
 import _ from "lodash";
 
 const UpdateMunicipality = () => {
-    const {details} = useSelector(allMunicipalityDetailsSelector);
+    const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector);
     const {t} = useTranslation();
-    const [name, setName] = useState(details.name);
-    const [cityClass, setCityClass] = useState(details.cityClass);
+    const [name, setName] = useState(currentMunicipality.name);
+    const [cityClass, setCityClass] = useState(currentMunicipality.cityClass);
     const dispatch = useDispatch();
     const [editMunicipality, setEditMunicipality] = useState(false);
     let navigate = useNavigate();
@@ -37,10 +37,10 @@ const UpdateMunicipality = () => {
     const handleSave = () => {
         let newUserOb = {};
         newUserOb = {
-            "id": details.id,
+            "id": currentMunicipality.id,
             "name": name,
             "cityClass": cityClass,
-            "population": details.population
+            "population": currentMunicipality.population
         };
         dispatch(saveMunicipality(newUserOb));
         setEditMunicipality(false);

@@ -16,7 +16,7 @@ import {currentUserSelector, fetchCurrentUser} from "../slices/currentUserReduce
 import jwt_decode from "jwt-decode";
 import {authSelector} from "../slices/authReducer";
 import _ from "lodash";
-import SuperAdmin from "./SuperAdmin";
+import AdminUsers from "./superAdmin/AdminUsers";
 import {useNavigate} from "react-router-dom";
 
 

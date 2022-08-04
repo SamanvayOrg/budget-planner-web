@@ -12,7 +12,7 @@ import Toolbar from "@mui/material/Toolbar";
 import {useEffect} from "react";
 
 const Municipality = () => {
-    const {details} = useSelector(allMunicipalityDetailsSelector);
+    const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -30,8 +30,8 @@ const Municipality = () => {
     }
 
     let rows = [];
-    if (!_.isEmpty(details)) {
-        rows = [details]
+    if (!_.isEmpty(currentMunicipality)) {
+        rows = [currentMunicipality]
     }
     let navigate = useNavigate();
     const handleClick = (param,id) => {
