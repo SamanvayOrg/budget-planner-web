@@ -48,19 +48,24 @@ const CreateAdmin = () => {
             "isAdmin": isAdmin,
             "municipalityId": municipality.id
         };
+        dispatch(createNewUser(newUserOb));
     }
     const handleClick = (data) => {
         switch (data) {
             case 'Users':
-                navigate('/admin/users');
+                navigate('/superAdmin/users');
                 break;
             case 'Municipality':
-                navigate('/admin/municipality');
+                navigate('/superAdmin/municipality');
                 break;
             default:
                 navigate('/superAdmin')
         }
     }
+    const formValidation = () => {
+      return !_.isNull(name) && !_.isNull(email) && !_.isNull(municipality);
+    }
+
     return (
         <Box sx={{display: 'flex'}}>
             <ResponsiveAppBar/>
@@ -77,19 +82,20 @@ const CreateAdmin = () => {
                         margin: '20px',
                         gap: '20px'
                     }}>
-                        <TextField error={_.isEqual(name,'')}
-                                   helperText={!_.isEqual(name,'') ? '' : t('Please enter name')} sx={{maxWidth: 1 / 4}} variant="standard" label={"Name"} defaultValue={name}
+                        <TextField error={!formValidation}
+                                   helperText={!_.isNull(name) ? '' : t('Please enter name')}
+                                   sx={{maxWidth: 1 / 4}} variant="standard" label={"Name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField error={_.isEqual(email,'')}
-                                   helperText={!_.isEqual(email,'') ? '' : t('Please enter email')}
-                            sx={{maxWidth: 1 / 4}} variant="standard" label={"Email id"} defaultValue={email}
+                        <TextField error={_.isNull(email)}
+                                   helperText={!_.isNull(email) ? '' : t('Please enter email')}
+                                   sx={{maxWidth: 1 / 4}} variant="standard" label={"Email id"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
-                        <DropDown error={_.isEqual(municipality,'')}
-                                  helperText={!_.isEqual(municipality,'') ? '' : t('Please enter email')}
+                        <DropDown error={_.isNull(municipality)}
+                                  helperText={!_.isNull(municipality) ? '' : t('Please enter email')}
                                   value={municipality} sx={{maxWidth: 1 / 4}}
                                   label={t("Municipality class")} list={municipalityList}
                                   onSelect={(e) => setMunicipality(e.target.value)}/>
-                        <ActionButton label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>
+                        <ActionButton label={"Submit"} id={"smallActionButton"} disable={!formValidation()} onClick={handleSave}/>
                     </div>
                 </Paper>
             </Box></Box>

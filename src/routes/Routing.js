@@ -26,7 +26,7 @@ const Routing = () => {
             <Route path="/admin/municipality" element={<Municipality/>}/>
             <Route path="/admin/municipality/update/:municipalityId" element={<UpdateMunicipality/>}/>
             <Route path="/superAdmin" element={<AdminUsers/>}/>
-            <Route path="/superAdmin/users" element={<SuperAdminOrgAdmin/>}/>
+            <Route path="/superAdmin/users" element={<AdminUsers/>}/>
             <Route path="/superAdmin/user/create" element={<CreateAdmin/>}/>
 
         </Routes>
