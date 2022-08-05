@@ -32,7 +32,6 @@ export function fetchUsers() {
 export function saveUser(data) {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState());
-        console.log('daata in save reducer', data);
         await updateUser(token, data)
     }
 }

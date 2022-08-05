@@ -1,7 +1,7 @@
-import {Box, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
+import {Box, Paper, TextField, Typography} from "@mui/material";
 import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
-import {adminMenus} from "../../config";
+import {superAdminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import ActionButton from "../../components/ActionButton";
 import * as React from "react";
@@ -69,7 +69,7 @@ const CreateAdmin = () => {
     return (
         <Box sx={{display: 'flex'}}>
             <ResponsiveAppBar/>
-            <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleClick}/>
+            <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleClick}/>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>
                 <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
@@ -91,7 +91,7 @@ const CreateAdmin = () => {
                                    sx={{maxWidth: 1 / 4}} variant="standard" label={"Email id"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
                         <DropDown error={_.isNull(municipality)}
-                                  helperText={!_.isNull(municipality) ? '' : t('Please enter email')}
+                                  helperText={!_.isNull(municipality) ? '' : t('Please select municipality')}
                                   value={municipality} sx={{maxWidth: 1 / 4}}
                                   label={t("Municipality class")} list={municipalityList}
                                   onSelect={(e) => setMunicipality(e.target.value)}/>

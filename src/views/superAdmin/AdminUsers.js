@@ -18,7 +18,9 @@ const AdminUsers = () => {
 
     const columns = [
         {id: 'name', label: 'Name', minWidth: 170},
-        {id: 'userName', label: 'UserName', minWidth: 100},
+        {id: 'email', label: 'Email', minWidth: 100},
+        {id: 'municipalityId', label: 'municipalityId', minWidth: 100},
+
     ];
     let rows = [];
 

@@ -17,7 +17,6 @@ import {useStyles} from '../components/ModalWithButton';
 import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
 import {useTranslation} from "react-i18next";
-import {budgetDashboardSelector} from "../slices/budgetDashboardReducer";
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({

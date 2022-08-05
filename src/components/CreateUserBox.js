@@ -3,7 +3,7 @@ import ActionButton from "./ActionButton";
 import * as React from "react";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {createNewUser, saveUser} from "../slices/allUsersReducer";
+import {createNewUser} from "../slices/allUsersReducer";
 import {allMunicipalityDetailsSelector} from "../slices/municipalityReducer";
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import HorizontalMenuDrawer from "./HorizontalMenuDrawer";
