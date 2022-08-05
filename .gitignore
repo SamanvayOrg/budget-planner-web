@@ -27,3 +27,4 @@ yarn-debug.log*
 yarn-error.log*
 
 .idea/
+/budget-planner-web.zip
