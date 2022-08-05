@@ -10,25 +10,38 @@ import {useDispatch, useSelector} from "react-redux";
 import {allUsersSelector, fetchUsers} from "../../slices/allUsersReducer";
 import {useEffect} from "react";
 import _ from "lodash";
+import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
 
 const AdminUsers = () => {
     const navigate = useNavigate();
     const {users} = useSelector(allUsersSelector);
     const dispatch = useDispatch();
+    const {allMunicipalities} = useSelector(allMunicipalityDetailsSelector);
 
     const columns = [
         {id: 'name', label: 'Name', minWidth: 170},
         {id: 'email', label: 'Email', minWidth: 100},
-        {id: 'municipalityId', label: 'municipalityId', minWidth: 100},
+        {id: 'municipality', label: 'Municipality', minWidth: 100},
 
     ];
     let rows = [];
 
     useEffect((e) => {
         dispatch(fetchUsers());
+        dispatch(fetchAllMunicipalities());
     }, [dispatch])
+
+
     if (!_.isEmpty(users)) {
-        rows = users
+        _.forEach(users, user => {
+            const userMunicipality = _.chain(allMunicipalities)
+                .filter((municipality) => municipality.id === user.municipalityId)
+                .first()
+                .value()
+            if (userMunicipality) {
+                rows.push({...user, municipality: userMunicipality.name});
+            }
+        });
     }
     const rowClick = (data) => {
         handleClick('updateUser', data.id)
