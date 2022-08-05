@@ -10,7 +10,7 @@ import LangSelector from "./LangSelector";
 
 
 const Profile = (user, isSuperUser) => {
-    const settings = ['Profile', 'Change password', <LogoutButton/>];
+    const settings = ['Profile', <LogoutButton/>];
 
 
     const [anchorElUser, setAnchorElUser] = React.useState(null);
