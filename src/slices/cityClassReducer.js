@@ -25,7 +25,6 @@ export function fetchCityClasses() {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState()) || localStorage.getItem('authToken')
         const data = await getCityClasses(token);
-        console.log('data',data);
         dispatch(setCityClasses(data));
     }
 }

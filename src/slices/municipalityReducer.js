@@ -74,7 +74,6 @@ export function fetchAllMunicipalities() {
 }
 
 export function createNewMunicipality(data) {
-    loading('data in reducer', data)
     return async (dispatch, getState) => {
         const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         await createMunicipality(token, data);
