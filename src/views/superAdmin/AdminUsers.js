@@ -39,7 +39,7 @@ const AdminUsers = () => {
                 navigate('/superAdmin/users');
                 break;
             case 'Municipality':
-                navigate('/superAdmin/municipality');
+                navigate('/superAdmin/municipalities');
                 break;
             case 'updateUser':
                 navigate(`/superAdmin/user/update/${id}`);

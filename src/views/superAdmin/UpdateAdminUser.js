@@ -61,7 +61,7 @@ const UpdateAdminUser = () => {
                 navigate('/superAdmin/users');
                 break;
             case 'Municipality':
-                navigate('/superAdmin/municipality');
+                navigate('/superAdmin/municipalities');
                 break;
             default:
                 navigate('/superAdmin')
