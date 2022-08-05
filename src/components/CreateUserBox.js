@@ -38,7 +38,7 @@ const CreateUserBox = () => {
         newUserOb = {
             name,
             "email": email,
-            "isAdmin": isAdmin,
+            "admin": isAdmin,
             "municipalityId": currentMunicipality.id
         };
         dispatch(createNewUser(newUserOb));
