@@ -113,14 +113,14 @@ const UpdateAdminUser = () => {
                         <TextField disabled={!editUser} sx={{maxWidth: 1 / 4}} variant="standard"
                                    label={"name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField disabled={!editUser} inputProps={{readOnly: !editUser}} sx={{maxWidth: 1 / 4}}
+                        <TextField disabled  sx={{maxWidth: 1 / 4}}
                                    variant="standard"
                                    label={"Email"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
                         <DropDown
-                            disabled={!editUser} inputProps={{readOnly: !editUser}}
+                            disabled inputProps={{readOnly: !editUser}}
                             value={municipality} sx={{maxWidth: 1 / 4}}
-                            label={t("Municipality class")} list={municipalityList}
+                            label={t("Municipality")} list={municipalityList}
                             onSelect={(e) => setMunicipality(e.target.value)}/>
                         <ActionButton disabled={!editUser}
                                       style={editUser ? {} : {background: "#b7e1e8"}} label={"Submit"}
