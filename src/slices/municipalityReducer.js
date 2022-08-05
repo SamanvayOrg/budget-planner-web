@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
-import {getAllMunicipalities, getMunicipalityDetails, updateMunicipality} from "../api/api";
+import {createMunicipality, getAllMunicipalities, getMunicipalityDetails, updateMunicipality} from "../api/api";
 
 export const initialState = {
     currentMunicipality: {},
@@ -70,6 +70,14 @@ export function fetchAllMunicipalities() {
         const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         let data = await getAllMunicipalities(token);
         dispatch(setAllMunicipalities(data));
+    }
+}
+
+export function createNewMunicipality(data) {
+    loading('data in reducer', data)
+    return async (dispatch, getState) => {
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
+        await createMunicipality(token, data);
     }
 }
 
