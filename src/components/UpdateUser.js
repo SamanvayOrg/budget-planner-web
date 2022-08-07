@@ -20,7 +20,7 @@ const UpdateUser = () => {
         .value()
 
     const [name, setName] = useState(selectedUser.name);
-    const [email, setEmail] = useState(selectedUser.userName);
+    const [email, setEmail] = useState(selectedUser.email);
     const dispatch = useDispatch();
     const [editUser, setEditUser] = useState(false);
 
@@ -88,7 +88,7 @@ const UpdateUser = () => {
                         gap: '20px'
                     }}>
                         <TextField disabled={!editUser} sx={{maxWidth: 1 / 4}} variant="standard"
-                                   label={"name"} defaultValue={name}
+                                   label={"Name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
                         <TextField disabled={!editUser} inputProps={{readOnly: !editUser}} sx={{maxWidth: 1 / 4}}
                                    variant="standard"

@@ -63,7 +63,7 @@ const Dashboard = () => {
         if (tokenData && _.includes(tokenData.permissions, 'superAdmin')) {
             navigate('/superAdmin')
         }
-    }, [dispatch]);
+    }, [dispatch, navigate, tokenData]);
 
     const getCurrentUserName = () => {
         if (user) return user.name

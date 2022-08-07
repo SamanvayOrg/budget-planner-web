@@ -19,7 +19,7 @@ const Users = () => {
     }
     const columns = [
         {id: 'name', label: 'Name', minWidth: 170},
-        {id: 'userName', label: 'UserName', minWidth: 100},
+        {id: 'email', label: 'Email Id', minWidth: 100},
     ];
     let rows = [];
 

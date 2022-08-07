@@ -75,7 +75,7 @@ const CreateUserBox = () => {
                     }}>
                         <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"Name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"User name"} defaultValue={email}
+                        <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"Email"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
                         <FormControlLabel control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>}
                                           label="Make this user an administrator"/>
