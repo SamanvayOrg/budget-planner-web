@@ -1,4 +1,3 @@
-import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
 import {Box, Paper, TextField, Typography} from "@mui/material";
@@ -11,8 +10,9 @@ import DropDown from "../../components/DropDown";
 import {useTranslation} from "react-i18next";
 import {useDispatch, useSelector} from "react-redux";
 import {cityClassesSelector, fetchCityClasses} from "../../slices/cityClassReducer";
-import {createNewMunicipality, saveMunicipality} from "../../slices/municipalityReducer";
+import {createNewMunicipality} from "../../slices/municipalityReducer";
 import {useNavigate} from "react-router-dom";
+import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 
 const CreateMunicipality = () => {
     const [name, setName] = useState('');
@@ -68,7 +68,7 @@ const CreateMunicipality = () => {
 
 
     return (<Box sx={{display: 'flex'}}>
-        <ResponsiveAppBar/>
+        <SuperAdminAppBar/>
         <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleMenuClick}/>
         <Box component="main" sx={{flexGrow: 1, p: 3}}>
             <Toolbar/>

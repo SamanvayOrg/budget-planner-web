@@ -9,7 +9,7 @@ import NavBarMenu from "./NavBarMenu";
 import LangSelector from "./LangSelector";
 
 
-const Profile = (user, isSuperUser) => {
+const Profile = ({user, isSuperUser}) => {
     const settings = ['Profile', <LogoutButton/>];
 
 
@@ -30,7 +30,7 @@ const Profile = (user, isSuperUser) => {
         {navBarMenu}
         <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                <Avatar src={user.user.picture}/>
+                <Avatar src={user.picture}/>
             </IconButton>
         </Tooltip>
         <Menu

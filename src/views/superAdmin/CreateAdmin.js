@@ -1,5 +1,4 @@
 import {Box, Paper, TextField, Typography} from "@mui/material";
-import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {superAdminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +12,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
 import DropDown from "../../components/DropDown";
 import _ from "lodash";
+import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 
 const CreateAdmin = () => {
     const {t} = useTranslation();
@@ -68,7 +68,7 @@ const CreateAdmin = () => {
 
     return (
         <Box sx={{display: 'flex'}}>
-            <ResponsiveAppBar/>
+            <SuperAdminAppBar/>
             <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleClick}/>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>

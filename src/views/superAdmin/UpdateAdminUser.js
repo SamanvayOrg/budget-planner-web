@@ -1,4 +1,3 @@
-import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {superAdminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
@@ -13,6 +12,7 @@ import _ from "lodash";
 import DropDown from "../../components/DropDown";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
 import {useTranslation} from "react-i18next";
+import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 
 
 const UpdateAdminUser = () => {
@@ -84,7 +84,7 @@ const UpdateAdminUser = () => {
 
     return (
         <Box sx={{display: 'flex'}}>
-            <ResponsiveAppBar/>
+            <SuperAdminAppBar/>
             <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleClick}/>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>

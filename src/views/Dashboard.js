@@ -54,15 +54,15 @@ const Dashboard = () => {
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const navigate = useNavigate();
-    console.log('tokenData', tokenData)
-    if (tokenData && _.includes(tokenData.permissions, 'superAdmin')) {
-        navigate('/superAdmin')
-    }
+
 
     useEffect(() => {
         dispatch(fetchCurrentBudget());
         dispatch(fetchTranslations());
         dispatch(fetchCurrentUser());
+        if (tokenData && _.includes(tokenData.permissions, 'superAdmin')) {
+            navigate('/superAdmin')
+        }
     }, [dispatch]);
 
     const getCurrentUserName = () => {

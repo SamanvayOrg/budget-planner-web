@@ -1,4 +1,3 @@
-import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
 import {Box, Paper, Typography} from "@mui/material";
@@ -10,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
 import _ from "lodash";
 import {useNavigate} from "react-router-dom";
+import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 
 const SuperAdminMunicipalities = () => {
     const {allMunicipalities} = useSelector(allMunicipalityDetailsSelector);
@@ -53,7 +53,7 @@ const SuperAdminMunicipalities = () => {
 
     return (
         <Box sx={{display: 'flex'}}>
-            <ResponsiveAppBar/>
+            <SuperAdminAppBar/>
             <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleClick}/>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>

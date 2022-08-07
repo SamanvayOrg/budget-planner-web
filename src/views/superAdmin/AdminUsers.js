@@ -1,4 +1,3 @@
-import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import React, {useEffect} from "react";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {superAdminMenus} from "../../config";
@@ -10,6 +9,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {allUsersSelector, fetchAdminUser} from "../../slices/allUsersReducer";
 import _ from "lodash";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
+import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 
 const AdminUsers = () => {
     const navigate = useNavigate();
@@ -67,7 +67,7 @@ const AdminUsers = () => {
 
     return (
         <Box sx={{display: 'flex'}}>
-            <ResponsiveAppBar/>
+            <SuperAdminAppBar/>
             <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleClick}/>
 
             <Box component="main" sx={{flexGrow: 1, p: 3}}>

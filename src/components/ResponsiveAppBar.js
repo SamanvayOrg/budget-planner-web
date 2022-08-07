@@ -9,12 +9,12 @@ import {useAuth0} from "@auth0/auth0-react";
 import NavBarNavigationBeforeAuth from "./NavBarNavigationBeforeAuth";
 
 
-const ResponsiveAppBar = ({isSuperUser}) => {
+const ResponsiveAppBar = () => {
 	const {user, isAuthenticated} = useAuth0();
 
 	let endView = <NavBarNavigationBeforeAuth/>;
 	if (isAuthenticated) {
-		endView = <Profile user={user} isSuperUser={isSuperUser} />
+		endView = <Profile user={user} />
 	}
 
 
