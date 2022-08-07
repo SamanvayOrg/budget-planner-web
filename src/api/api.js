@@ -106,10 +106,15 @@ const createMunicipality = async (token, data) => {
     const result = await axios.post(`api/municipality`, data, {headers});
     return result.status === 200;
 }
+const getAdminUsers = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`api/municipality/admins`, {headers});
+	return result.data;
+}
 
 
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
 	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser,
-    getAllMunicipalities, createMunicipality
+	getAllMunicipalities, createMunicipality, getAdminUsers
 };

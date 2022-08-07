@@ -8,7 +8,7 @@ import {Box, Paper, TextField, Typography} from "@mui/material";
 import ActionButton from "../../components/ActionButton";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, saveUser} from "../../slices/allUsersReducer";
+import {allUsersSelector, fetchAdminUser, saveUser} from "../../slices/allUsersReducer";
 import _ from "lodash";
 import DropDown from "../../components/DropDown";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
@@ -17,9 +17,9 @@ import {useTranslation} from "react-i18next";
 
 const UpdateAdminUser = () => {
     const navigate = useNavigate();
-    const {users} = useSelector(allUsersSelector);
+    const {adminUsers} = useSelector(allUsersSelector);
     let {userId} = useParams();
-    const selectedUser = _.chain(users)
+    const selectedUser = _.chain(adminUsers)
         .filter((e) => e.id == userId)
         .first()
         .value()
@@ -33,7 +33,8 @@ const UpdateAdminUser = () => {
     const {t} = useTranslation();
 
     useEffect((e) => {
-        dispatch(fetchAllMunicipalities())
+        dispatch(fetchAllMunicipalities());
+        dispatch(fetchAdminUser());
     }, [dispatch])
     let municipalityList = [];
     _.forEach(allMunicipalities, municipality => {
@@ -113,7 +114,7 @@ const UpdateAdminUser = () => {
                         <TextField disabled={!editUser} sx={{maxWidth: 1 / 4}} variant="standard"
                                    label={"name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField disabled  sx={{maxWidth: 1 / 4}}
+                        <TextField disabled sx={{maxWidth: 1 / 4}}
                                    variant="standard"
                                    label={"Email"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>

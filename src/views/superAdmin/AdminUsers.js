@@ -1,5 +1,5 @@
 import ResponsiveAppBar from "../../components/ResponsiveAppBar";
-import React from "react";
+import React, {useEffect} from "react";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {superAdminMenus} from "../../config";
 import {Box, Paper, Typography} from "@mui/material";
@@ -7,14 +7,14 @@ import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
 import ResponsiveTable from "../../components/ResponsiveTable";
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, fetchUsers} from "../../slices/allUsersReducer";
-import {useEffect} from "react";
+import {allUsersSelector, fetchAdminUser} from "../../slices/allUsersReducer";
 import _ from "lodash";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
 
 const AdminUsers = () => {
     const navigate = useNavigate();
-    const {users} = useSelector(allUsersSelector);
+    const {adminUsers} = useSelector(allUsersSelector);
+
     const dispatch = useDispatch();
     const {allMunicipalities} = useSelector(allMunicipalityDetailsSelector);
 
@@ -27,13 +27,13 @@ const AdminUsers = () => {
     let rows = [];
 
     useEffect((e) => {
-        dispatch(fetchUsers());
         dispatch(fetchAllMunicipalities());
+        dispatch(fetchAdminUser());
     }, [dispatch])
 
 
-    if (!_.isEmpty(users)) {
-        _.forEach(users, user => {
+    if (!_.isEmpty(adminUsers)) {
+        _.forEach(adminUsers, user => {
             const userMunicipality = _.chain(allMunicipalities)
                 .filter((municipality) => municipality.id === user.municipalityId)
                 .first()
