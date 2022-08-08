@@ -1,12 +1,12 @@
 import {Box, Paper, TextField, Typography} from "@mui/material";
-import ActionButton from "./ActionButton";
+import ActionButton from "../../components/ActionButton";
 import * as React from "react";
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, saveUser} from "../slices/allUsersReducer";
-import ResponsiveAppBar from "./ResponsiveAppBar";
-import HorizontalMenuDrawer from "./HorizontalMenuDrawer";
-import {adminMenus} from "../config";
+import {allUsersSelector, saveUser} from "../../slices/allUsersReducer";
+import ResponsiveAppBar from "../../components/ResponsiveAppBar";
+import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
+import {adminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate, useParams} from "react-router-dom";
 import _ from "lodash";

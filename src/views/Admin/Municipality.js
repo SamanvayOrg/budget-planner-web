@@ -1,12 +1,12 @@
 import {Box, Paper} from "@mui/material";
 import _ from "lodash";
-import ResponsiveTable from "../components/ResponsiveTable";
+import ResponsiveTable from "../../components/ResponsiveTable";
 import * as React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {allMunicipalityDetailsSelector, fetchMunicipalityDetails} from "../slices/municipalityReducer";
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
-import HorizontalMenuDrawer from "../components/HorizontalMenuDrawer";
-import {adminMenus} from "../config";
+import {allMunicipalityDetailsSelector, fetchMunicipalityDetails} from "../../slices/municipalityReducer";
+import ResponsiveAppBar from "../../components/ResponsiveAppBar";
+import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
+import {adminMenus} from "../../config";
 import {useNavigate} from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import {useEffect} from "react";

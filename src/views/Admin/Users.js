@@ -1,13 +1,13 @@
-import ResponsiveTable from "../components/ResponsiveTable";
+import ResponsiveTable from "../../components/ResponsiveTable";
 import * as React from 'react';
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, fetchUsers} from "../slices/allUsersReducer";
+import {allUsersSelector, fetchUsers} from "../../slices/allUsersReducer";
 import _ from "lodash";
 import {Box, Paper, Typography} from "@mui/material";
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
-import HorizontalMenuDrawer from "../components/HorizontalMenuDrawer";
-import {adminMenus} from "../config";
+import ResponsiveAppBar from "../../components/ResponsiveAppBar";
+import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
+import {adminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
 

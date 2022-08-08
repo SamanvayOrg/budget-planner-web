@@ -1,17 +1,17 @@
-import ResponsiveAppBar from "../components/ResponsiveAppBar";
-import HorizontalMenuDrawer from "../components/HorizontalMenuDrawer";
-import {adminMenus} from "../config";
+import ResponsiveAppBar from "../../components/ResponsiveAppBar";
+import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
+import {adminMenus} from "../../config";
 import {Box, Paper, TextField, Typography} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
-import ActionButton from "../components/ActionButton";
+import ActionButton from "../../components/ActionButton";
 import * as React from "react";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {allMunicipalityDetailsSelector, saveMunicipality} from "../slices/municipalityReducer";
-import DropDown from "../components/DropDown";
+import {allMunicipalityDetailsSelector, saveMunicipality} from "../../slices/municipalityReducer";
+import DropDown from "../../components/DropDown";
 import {useTranslation} from "react-i18next";
-import {cityClassesSelector, fetchCityClasses} from "../slices/cityClassReducer";
+import {cityClassesSelector, fetchCityClasses} from "../../slices/cityClassReducer";
 import _ from "lodash";
 
 const UpdateMunicipality = () => {
