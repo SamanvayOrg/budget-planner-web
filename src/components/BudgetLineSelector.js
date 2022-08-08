@@ -139,18 +139,14 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
                                        id="outlined-required"
                                        label="Name"
                                        value={name}
-                                       onChange={onNameChange}
-                            />
+                                       onChange={onNameChange}/>
                             <br/>
                             <TextField required
                                        id="outlined-required"
                                        label={t('Name in marathi')}
                                        value={translation}
-                                       onChange={handleTranslation}
-                            />
-
+                                       onChange={handleTranslation}/>
                         </>)}
-
                 </FormGroup>
                 <Box style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'row'}}>
                     <ActionButton label={'Cancel'} onClick={onCancel}

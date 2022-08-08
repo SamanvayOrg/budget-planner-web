@@ -13,17 +13,17 @@ import {cityClassesSelector, fetchCityClasses} from "../../slices/cityClassReduc
 import {createNewMunicipality} from "../../slices/municipalityReducer";
 import {useNavigate} from "react-router-dom";
 import SuperAdminAppBar from "../../components/SuperAdminAppBar";
+import {saveTranslations} from "../../slices/translationsReducer";
 
 const CreateMunicipality = () => {
     const [name, setName] = useState('');
     const {t} = useTranslation();
     const navigate = useNavigate();
     const {cityClasses} = useSelector(cityClassesSelector);
-    const [state, setState] = useState('');
+    const [state, setState] = useState('Maharashtra');
     const [cityClass, setCityClass] = useState('');
-
+    const [translation, setTranslation] = useState('');
     const dispatch = useDispatch();
-
     useEffect(() => {
         dispatch(fetchCityClasses());
     }, [dispatch]);
@@ -32,7 +32,6 @@ const CreateMunicipality = () => {
     _.forEach(cityClasses, cityClass => {
         cityClassesList.push(cityClass.name)
     })
-    let stateList = ['Maharashtra'];
 
 
     const handleChange = (event, type) => {
@@ -52,6 +51,11 @@ const CreateMunicipality = () => {
             "population": 5000
         };
         dispatch(createNewMunicipality(newUserOb));
+        dispatch(saveTranslations({
+            modelName: name,
+            value: translation,
+            language: "mr"
+        }))
     }
     const handleMenuClick = (data) => {
         switch (data) {
@@ -65,7 +69,12 @@ const CreateMunicipality = () => {
                 navigate('/superAdmin')
         }
     }
-
+    const handleTranslation = (event) => {
+        setTranslation(event.target.value);
+    }
+    const formValidation = () => {
+        return !_.isEqual(name, '') && !_.isEqual(cityClass, '');
+    }
 
     return (<Box sx={{display: 'flex'}}>
         <SuperAdminAppBar/>
@@ -82,19 +91,18 @@ const CreateMunicipality = () => {
                     margin: '20px',
                     gap: '20px'
                 }}>
-                    <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"Name"} defaultValue={name}
+                    <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={t('Name')} defaultValue={t(name)}
                                onChange={(e) => handleChange(e, 'name')}/>
-                    <DropDown error={_.isNull(state)}
-                              helperText={!_.isNull(state) ? '' : t('Please select state')}
-                              value={state} sx={{maxWidth: 1 / 4}}
-                              label={t("State")} list={stateList}
-                              onSelect={(e) => setState(e.target.value)}/>
-                    <DropDown error={_.isNull(cityClass)}
-                              helperText={!_.isNull(cityClass) ? '' : t('Please select cityClass')}
-                              value={cityClass} sx={{maxWidth: 1 / 4}}
+                    <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={t('Municipality name in marathi')}
+                               defaultValue={translation}
+                               onChange={handleTranslation}
+                    />
+                    <DropDown value={cityClass} sx={{maxWidth: 1 / 4}}
                               label={t("City class")} list={cityClassesList}
                               onSelect={(e) => setCityClass(e.target.value)}/>
-                    <ActionButton label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>
+                    <ActionButton label={t('Save')} id={"smallActionButton"}
+                                  style={formValidation() ? {} : {background: "#b7e1e8"}}
+                                  onClick={handleSave} disabled={!formValidation()}/>
                 </div>
             </Paper>
         </Box></Box>)

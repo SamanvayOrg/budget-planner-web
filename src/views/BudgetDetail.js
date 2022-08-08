@@ -170,8 +170,7 @@ const BudgetDetail = () => {
                                         modelName: selectedItem.name,
                                         value: selectedItem.translation,
                                         language: "mr"
-                                    }))
-                                    ;
+                                    }));
                                     handleClose();
                                 }} context={popupContext} onCancel={handleClose}/>
                             </>

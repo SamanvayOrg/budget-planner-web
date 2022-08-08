@@ -6,9 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import {useTranslation} from "react-i18next";
 
 
 const ResponsiveTable = ({columns, rows, onClick}) => {
+    const {t} = useTranslation();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -33,7 +35,7 @@ const ResponsiveTable = ({columns, rows, onClick}) => {
                                     align={column.align}
                                     style={{minWidth: column.minWidth}}
                                 >
-                                    {column.label}
+                                    {t(column.label)}
                                 </TableCell>
                             ))}
                         </TableRow>
@@ -44,14 +46,12 @@ const ResponsiveTable = ({columns, rows, onClick}) => {
                             .map((row, index) => {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={index}
-                                              onClick={(e)=>onClick(row)}>
+                                              onClick={(e) => onClick(row)}>
                                         {columns.map((column, index) => {
                                             const value = row[column.id];
                                             return (
                                                 <TableCell key={index} align={column.align}>
-                                                    {column.format && typeof value === 'number'
-                                                        ? column.format(value)
-                                                        : value}
+                                                    {t(value)}
                                                 </TableCell>
                                             );
                                         })}
