@@ -17,6 +17,7 @@ import {useStyles} from '../components/ModalWithButton';
 import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
 import {useTranslation} from "react-i18next";
+import {saveTranslations} from "../slices/translationsReducer";
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({
@@ -140,9 +141,9 @@ const BudgetDetail = () => {
                         <em>{t('All values are in INR')}</em>
                     </div>
                     <div className={classes.topRight}>
-                        <TextField  variant="standard"
-                            label={t('Population')} defaultValue={population}
-                            onChange={(e) => setPopulation(e)}/>
+                        <TextField variant="standard"
+                                   label={t('Population')} defaultValue={population}
+                                   onChange={(e) => setPopulation(e)}/>
                         <ActionButton onClick={save} label={t(saved)} id={'dynamicWidthButton'}/>
                     </div>
                 </div>
@@ -164,6 +165,13 @@ const BudgetDetail = () => {
                             <>
                                 <BudgetLineSelector metadata={metadata} budget={budget} onSelect={(selectedItem) => {
                                     dispatch(addBudgetLine(selectedItem));
+                                    console.log(selectedItem);
+                                    dispatch(saveTranslations({
+                                        modelName: selectedItem.name,
+                                        value: selectedItem.translation,
+                                        language: "mr"
+                                    }))
+                                    ;
                                     handleClose();
                                 }} context={popupContext} onCancel={handleClose}/>
                             </>

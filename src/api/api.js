@@ -119,8 +119,10 @@ const createAdminFromSuperUser = async (token, municipalityId, data) => {
 }
 
 const addTranslations = async (token, data) => {
-    const headers = {'Authorization': `Bearer ${token}`};
-    const result = await axios.post('/api/translations', data, {headers});
+	console.log(' in api',data)
+
+	const headers = {'Authorization': `Bearer ${token}`};
+    const result = await axios.post('/api/translation', data, {headers});
     return result.status === 200;
 }
 

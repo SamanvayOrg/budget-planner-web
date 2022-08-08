@@ -23,7 +23,8 @@ const style = {
     boxShadow: '0px 0px 4px  #000000',
     p: 4,
     gap: '1vw',
-    overflow: 'scroll'
+    overflow: 'scroll',
+    maxHeight: '80%'
 };
 
 
@@ -38,6 +39,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
     const [name, setName] = useState('');
     const [theMajorHead, setTheMajorHead] = useState('');
     const {t} = useTranslation();
+    const [translation, setTranslation] = useState('');
 
     const handleMajorHeadSelection = (event) => {
         setTheMajorHead(event.target.value);
@@ -106,6 +108,9 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
     const onNameChange = (event) => {
         setName(event.target.value);
     };
+    const handleTranslation = (event) => {
+        setTranslation(event.target.value);
+    }
 
     return (
         <Box sx={style}>
@@ -136,7 +141,16 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
                                        value={name}
                                        onChange={onNameChange}
                             />
+                            <br/>
+                            <TextField required
+                                       id="outlined-required"
+                                       label={t('Name in marathi')}
+                                       value={translation}
+                                       onChange={handleTranslation}
+                            />
+
                         </>)}
+
                 </FormGroup>
                 <Box style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'row'}}>
                     <ActionButton label={'Cancel'} onClick={onCancel}
@@ -148,7 +162,8 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
                         minorHead,
                         detailedHead,
                         theFunction,
-                        name
+                        name,
+                        translation
                     })} variant={'contained'}
                                   disabled={!(detailedHead && theFunction && isAbleToAddNewLine())}
                                   style={{marginLeft: 32}} color={'primary'}
