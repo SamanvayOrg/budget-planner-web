@@ -12,7 +12,7 @@ import {MunicipalityName} from '../domain/functions';
 import HorizontalLine from '../components/HorizontalLine';
 import {KeyboardBackspace} from '@mui/icons-material';
 import ActionButton from '../components/ActionButton';
-import {Modal} from '@mui/material';
+import {Modal, TextField} from '@mui/material';
 import {useStyles} from '../components/ModalWithButton';
 import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
@@ -47,7 +47,7 @@ const useStylesBudgetDetails = makeStyles(theme => ({
     topRight: {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
         alignItems: "center",
     },
     mainContainer: {
@@ -84,8 +84,7 @@ const BudgetDetail = () => {
     const classes = useStylesBudgetDetails();
     const modalClass = useStyles();
     const {t} = useTranslation();
-
-
+    const [population, setPopulation] = useState(0);
     const {budgetView = [], budget, saved} = useSelector(budgetSelector);
     const {metadata} = useSelector(metadataSelector);
 
@@ -141,7 +140,10 @@ const BudgetDetail = () => {
                         <em>{t('All values are in INR')}</em>
                     </div>
                     <div className={classes.topRight}>
-                        <ActionButton onClick={save} label={saved} id={'dynamicWidthButton'}/>
+                        <TextField  variant="standard"
+                            label={t('Population')} defaultValue={population}
+                            onChange={(e) => setPopulation(e)}/>
+                        <ActionButton onClick={save} label={t(saved)} id={'dynamicWidthButton'}/>
                     </div>
                 </div>
                 <div className={classes.mainContainer}>
