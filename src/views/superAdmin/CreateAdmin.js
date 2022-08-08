@@ -67,7 +67,7 @@ const CreateAdmin = () => {
         }
     }
     const formValidation = () => {
-        return !_.isNull(name) && !_.isNull(email) && !_.isNull(municipality);
+        return !_.isEqual(name, '') && !_.isEqual(email, '') && !_.isEqual(municipality, '');
     }
 
     return (
@@ -86,20 +86,18 @@ const CreateAdmin = () => {
                         margin: '20px',
                         gap: '20px'
                     }}>
-                        <TextField error={_.isNull(name)}
-                                   helperText={!_.isNull(name) ? '' : t('Please enter name')}
+                        <TextField required
                                    sx={{maxWidth: 1 / 4}} variant="standard" label={"Name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField error={_.isNull(email)}
-                                   helperText={!_.isNull(email) ? '' : t('Please enter email')}
+                        <TextField required
                                    sx={{maxWidth: 1 / 4}} variant="standard" label={"Email id"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
-                        <DropDown error={_.isNull(municipality)}
-                                  helperText={!_.isNull(municipality) ? '' : t('Please select municipality')}
+                        <DropDown error={_.isEqual(municipality, '')}
+                                  helperText={!_.isEqual(municipality, '') ? '' : t('Please select municipality')}
                                   value={municipality} sx={{maxWidth: 1 / 4}}
                                   label={t("Municipality")} list={municipalityList}
                                   onSelect={(e) => setMunicipality(e.target.value)}/>
-                        <ActionButton label={"Submit"} id={"smallActionButton"} disabled={true}
+                        <ActionButton label={"Submit"} id={"smallActionButton"} disabled={!formValidation()}
                                       onClick={handleSave}/>
                     </div>
                 </Paper>
