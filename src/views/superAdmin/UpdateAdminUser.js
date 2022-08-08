@@ -24,9 +24,8 @@ const UpdateAdminUser = () => {
         .first()
         .value()
 
-    console.log('selectedUser', selectedUser)
     const [name, setName] = useState(selectedUser.name);
-    const [email, setEmail] = useState(selectedUser.userName);
+    const [email, setEmail] = useState(selectedUser.email);
     const [editUser, setEditUser] = useState(false);
     const {allMunicipalities} = useSelector(allMunicipalityDetailsSelector);
     const dispatch = useDispatch();

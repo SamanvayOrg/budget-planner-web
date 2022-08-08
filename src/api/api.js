@@ -112,9 +112,14 @@ const getAdminUsers = async (token) => {
 	return result.data;
 }
 
+const createAdminFromSuperUser = async (token, municipalityId, data) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.post(`api/municipality/${municipalityId}/adminUser`, data, {headers});
+	return result.status === 200;
+}
 
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
 	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser,
-	getAllMunicipalities, createMunicipality, getAdminUsers
+	getAllMunicipalities, createMunicipality, getAdminUsers, createAdminFromSuperUser
 };

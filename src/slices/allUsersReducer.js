@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {tokenSelector} from "./authReducer";
-import {createUser, getAdminUsers, getUsers, updateUser} from "../api/api";
+import {createAdminFromSuperUser, createUser, getAdminUsers, getUsers, updateUser} from "../api/api";
 
 export const initialState = {
     users: {},
@@ -47,13 +47,19 @@ export function createNewUser(data) {
     }
 }
 
-
 export function fetchAdminUser() {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState());
         dispatch(setAdminUsers());
         let users = await getAdminUsers(token);
         dispatch(setAdminUsers(users));
+    }
+}
+
+export function createNewAdmin(data, municipalityId) {
+    return async (dispatch, getState) => {
+        const token = tokenSelector(getState());
+        await createAdminFromSuperUser(token, municipalityId, data)
     }
 }
 

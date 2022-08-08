@@ -7,7 +7,7 @@ import * as React from "react";
 import {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {useNavigate} from "react-router-dom";
-import {createNewUser} from "../../slices/allUsersReducer";
+import {createNewAdmin} from "../../slices/allUsersReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
 import DropDown from "../../components/DropDown";
@@ -39,16 +39,20 @@ const CreateAdmin = () => {
     _.forEach(allMunicipalities, municipality => {
         municipalityList.push(municipality.name);
     })
-
     const handleSave = () => {
         let newUserOb = {};
+        const selectedMunicipality = _.chain(allMunicipalities)
+            .filter((e) => e.name === municipality)
+            .first()
+            .value()
+
         newUserOb = {
             name,
             "email": email,
-            "isAdmin": isAdmin,
-            "municipalityId": municipality.id
+            "admin": isAdmin,
+            "municipalityId": selectedMunicipality.id
         };
-        dispatch(createNewUser(newUserOb));
+        dispatch(createNewAdmin(newUserOb, selectedMunicipality.id));
     }
     const handleClick = (data) => {
         switch (data) {
@@ -63,7 +67,7 @@ const CreateAdmin = () => {
         }
     }
     const formValidation = () => {
-      return !_.isNull(name) && !_.isNull(email) && !_.isNull(municipality);
+        return !_.isNull(name) && !_.isNull(email) && !_.isNull(municipality);
     }
 
     return (
@@ -82,7 +86,7 @@ const CreateAdmin = () => {
                         margin: '20px',
                         gap: '20px'
                     }}>
-                        <TextField error={!formValidation}
+                        <TextField error={_.isNull(name)}
                                    helperText={!_.isNull(name) ? '' : t('Please enter name')}
                                    sx={{maxWidth: 1 / 4}} variant="standard" label={"Name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
@@ -93,9 +97,10 @@ const CreateAdmin = () => {
                         <DropDown error={_.isNull(municipality)}
                                   helperText={!_.isNull(municipality) ? '' : t('Please select municipality')}
                                   value={municipality} sx={{maxWidth: 1 / 4}}
-                                  label={t("Municipality class")} list={municipalityList}
+                                  label={t("Municipality")} list={municipalityList}
                                   onSelect={(e) => setMunicipality(e.target.value)}/>
-                        <ActionButton label={"Submit"} id={"smallActionButton"} disable={!formValidation()} onClick={handleSave}/>
+                        <ActionButton label={"Submit"} id={"smallActionButton"} disabled={true}
+                                      onClick={handleSave}/>
                     </div>
                 </Paper>
             </Box></Box>
