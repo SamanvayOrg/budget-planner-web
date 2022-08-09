@@ -28,10 +28,10 @@ const Home = () => {
     }, [dispatch, isAuthenticated]);
 
 
-    let renderInScreeen = <LogInBox/>;
+    let renderInScreen = <LogInBox/>;
 
     if (!authDetailsAvailable && isAuthenticated) {
-        renderInScreeen = <Spinner/>;
+        renderInScreen = <Spinner/>;
     } else if (authDetailsAvailable && isAuthenticated) {
         return <Navigate to='/dashboard'/>
     }
@@ -40,7 +40,7 @@ const Home = () => {
     return (<div>
         <ResponsiveAppBar/>
         <div style={{padding: "10%"}}>
-            {renderInScreeen}
+            {renderInScreen}
         </div>
     </div>);
 
