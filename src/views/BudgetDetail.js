@@ -17,7 +17,7 @@ import {useStyles} from '../components/ModalWithButton';
 import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
 import {useTranslation} from "react-i18next";
-import {saveTranslations} from "../slices/translationsReducer";
+import {fetchTranslations, saveTranslations} from "../slices/translationsReducer";
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({
@@ -104,6 +104,7 @@ const BudgetDetail = () => {
     useEffect(() => {
         dispatch(fetchBudget(year));
         dispatch(fetchMetadata());
+        dispatch(fetchTranslations());
     }, [dispatch, year]);
     const [open, setOpen] = useState(false);
     const [popupContext, setPopupContext] = useState({});

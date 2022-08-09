@@ -12,6 +12,7 @@ import Toolbar from "@mui/material/Toolbar";
 import {useEffect} from "react";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
+import {fetchTranslations} from "../../slices/translationsReducer";
 
 const Municipality = () => {
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector);
@@ -19,6 +20,8 @@ const Municipality = () => {
 
     useEffect(() => {
         dispatch(fetchMunicipalityDetails());
+        dispatch(fetchTranslations());
+
     }, [dispatch]);
 
     const columns = [

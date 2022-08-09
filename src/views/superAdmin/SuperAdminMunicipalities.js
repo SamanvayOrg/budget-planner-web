@@ -12,6 +12,7 @@ import {useNavigate} from "react-router-dom";
 import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
+import {fetchTranslations} from "../../slices/translationsReducer";
 
 const SuperAdminMunicipalities = () => {
     const {allMunicipalities} = useSelector(allMunicipalityDetailsSelector);
@@ -19,6 +20,7 @@ const SuperAdminMunicipalities = () => {
     let navigate = useNavigate();
     useEffect(() => {
         dispatch(fetchAllMunicipalities());
+        dispatch(fetchTranslations());
     }, [dispatch]);
 
     const columns = [
