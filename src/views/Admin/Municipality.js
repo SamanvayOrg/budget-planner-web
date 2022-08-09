@@ -34,7 +34,7 @@ const Municipality = () => {
         rows = [currentMunicipality]
     }
     let navigate = useNavigate();
-    const handleClick = (param,id) => {
+    const handleClick = (param, id) => {
         switch (param) {
             case 'Users':
                 navigate('/admin/users');
@@ -44,6 +44,9 @@ const Municipality = () => {
                 break;
             case 'updateMunicipality':
                 navigate(`/admin/municipality/update/${id}`);
+                break;
+            case 'Translation':
+                navigate('/admin/translation');
                 break;
             default:
                 navigate('/admin')

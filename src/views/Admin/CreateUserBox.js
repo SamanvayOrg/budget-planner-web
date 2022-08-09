@@ -53,6 +53,9 @@ const CreateUserBox = () => {
             case 'Municipality':
                 navigate('/admin/municipality');
                 break;
+            case 'Translation':
+                navigate('/admin/translation');
+                break;
             default:
                 navigate('/admin')
         }

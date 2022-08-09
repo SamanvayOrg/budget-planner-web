@@ -14,6 +14,7 @@ import CreateAdmin from "../views/superAdmin/CreateAdmin";
 import UpdateAdminUser from "../views/superAdmin/UpdateAdminUser";
 import SuperAdminMunicipalities from "../views/superAdmin/SuperAdminMunicipalities";
 import CreateMunicipality from "../views/superAdmin/CreateMunicipality";
+import Translation from "../views/Admin/Translation";
 
 const Routing = () => {
     return (<HashRouter>
@@ -27,6 +28,7 @@ const Routing = () => {
             <Route path="/admin/user/update/:userId" element={<UpdateUser/>}/>
             <Route path="/admin/municipality" element={<Municipality/>}/>
             <Route path="/admin/municipality/update/:municipalityId" element={<UpdateMunicipality/>}/>
+            <Route path="/admin/translation" element={<Translation/>}/>
             <Route path="/superAdmin" element={<AdminUsers/>}/>
             <Route path="/superAdmin/users" element={<AdminUsers/>}/>
             <Route path="/superAdmin/user/create" element={<CreateAdmin/>}/>
