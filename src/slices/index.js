@@ -9,6 +9,7 @@ import i18nReducer from './i18nReducer';
 import allUsersReducer from "./allUsersReducer";
 import currentUserReducer from "./currentUserReducer";
 import cityClassReducer from "./cityClassReducer";
+import stateReducer from "./stateReducer";
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     i18Lang: i18nReducer,
     allUsers: allUsersReducer,
     currentUser: currentUserReducer,
-    cityClasses: cityClassReducer
+    cityClasses: cityClassReducer,
+    stateDetailsSlice: stateReducer
 });
 
 export default rootReducer;
