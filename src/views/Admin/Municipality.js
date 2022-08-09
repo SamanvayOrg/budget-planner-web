@@ -10,6 +10,8 @@ import {adminMenus} from "../../config";
 import {useNavigate} from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import {useEffect} from "react";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../Home";
 
 const Municipality = () => {
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector);
@@ -70,4 +72,6 @@ const Municipality = () => {
 
 
 }
-export default Municipality;
+export default withAuthenticationRequired(Municipality, {
+    onRedirecting: () => <Home/>,
+});

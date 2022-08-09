@@ -10,6 +10,8 @@ import {adminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate, useParams} from "react-router-dom";
 import _ from "lodash";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../Home";
 
 const UpdateUser = () => {
     const {users} = useSelector(allUsersSelector);
@@ -107,4 +109,6 @@ const UpdateUser = () => {
         </Box>
     )
 }
-export default UpdateUser;
+export default withAuthenticationRequired(UpdateUser, {
+    onRedirecting: () => <Home/>,
+});

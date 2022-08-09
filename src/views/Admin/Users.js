@@ -10,6 +10,8 @@ import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../Home";
 
 const Users = () => {
     const {users} = useSelector(allUsersSelector);
@@ -79,4 +81,6 @@ const Users = () => {
 
     return renderBox();
 }
-export default Users
+export default withAuthenticationRequired(Users, {
+    onRedirecting: () => <Home/>,
+});

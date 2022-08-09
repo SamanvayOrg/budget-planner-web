@@ -13,6 +13,8 @@ import DropDown from "../../components/DropDown";
 import {useTranslation} from "react-i18next";
 import {cityClassesSelector, fetchCityClasses} from "../../slices/cityClassReducer";
 import _ from "lodash";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../Home";
 
 const UpdateMunicipality = () => {
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector);
@@ -112,4 +114,7 @@ const UpdateMunicipality = () => {
         </Box>
     )
 }
-export default UpdateMunicipality;
+
+export default withAuthenticationRequired(UpdateMunicipality, {
+    onRedirecting: () => <Home/>,
+});

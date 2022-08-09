@@ -10,6 +10,8 @@ import {useState} from "react";
 import {useDispatch} from "react-redux";
 import {saveTranslations} from "../../slices/translationsReducer";
 import {useTranslation} from "react-i18next";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../Home";
 
 const Translation = () => {
     let navigate = useNavigate();
@@ -70,4 +72,6 @@ const Translation = () => {
         </Box>
     )
 }
-export default Translation;
+export default withAuthenticationRequired(Translation, {
+    onRedirecting: () => <Home/>,
+});

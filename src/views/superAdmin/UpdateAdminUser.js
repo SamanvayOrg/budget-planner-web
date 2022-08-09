@@ -13,6 +13,8 @@ import DropDown from "../../components/DropDown";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
 import {useTranslation} from "react-i18next";
 import SuperAdminAppBar from "../../components/SuperAdminAppBar";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../Home";
 
 
 const UpdateAdminUser = () => {
@@ -44,8 +46,8 @@ const UpdateAdminUser = () => {
         .filter((municipality) => municipality.id === selectedUser.municipalityId)
         .first()
         .value()
-    console.log('currentMunicipality',currentMunicipality)
-    const [municipality, setMunicipality] =useState(currentMunicipality.name);
+    console.log('currentMunicipality', currentMunicipality)
+    const [municipality, setMunicipality] = useState(currentMunicipality.name);
 
 
     const handleChange = (event, type) => {
@@ -132,4 +134,6 @@ const UpdateAdminUser = () => {
         </Box>
     )
 }
-export default UpdateAdminUser;
+export default withAuthenticationRequired(UpdateAdminUser, {
+    onRedirecting: () => <Home/>,
+});

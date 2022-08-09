@@ -14,6 +14,8 @@ import {createNewMunicipality} from "../../slices/municipalityReducer";
 import {useNavigate} from "react-router-dom";
 import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 import {saveTranslations} from "../../slices/translationsReducer";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../Home";
 
 const CreateMunicipality = () => {
     const [name, setName] = useState('');
@@ -107,4 +109,6 @@ const CreateMunicipality = () => {
             </Paper>
         </Box></Box>)
 }
-export default CreateMunicipality;
+export default withAuthenticationRequired(CreateMunicipality, {
+    onRedirecting: () => <Home/>,
+});

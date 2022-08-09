@@ -10,6 +10,8 @@ import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slic
 import _ from "lodash";
 import {useNavigate} from "react-router-dom";
 import SuperAdminAppBar from "../../components/SuperAdminAppBar";
+import {withAuthenticationRequired} from "@auth0/auth0-react";
+import Home from "../Home";
 
 const SuperAdminMunicipalities = () => {
     const {allMunicipalities} = useSelector(allMunicipalityDetailsSelector);
@@ -70,4 +72,6 @@ const SuperAdminMunicipalities = () => {
         </Box>
     )
 }
-export default SuperAdminMunicipalities;
+export default withAuthenticationRequired(SuperAdminMunicipalities, {
+    onRedirecting: () => <Home/>,
+});
