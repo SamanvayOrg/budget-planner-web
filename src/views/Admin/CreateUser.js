@@ -12,6 +12,9 @@ import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
+import Text from "../../components/Text";
+import {useTranslation} from "react-i18next";
+import _ from "lodash";
 
 const CreateUser = () => {
     const [name, setName] = useState('');
@@ -19,6 +22,8 @@ const CreateUser = () => {
     const [isAdmin, setIsAdmin] = useState(false);
     const dispatch = useDispatch();
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector)
+    const [status, setStatus] = useState('');
+    const {t} = useTranslation();
 
     const handleChange = (event, type) => {
         if (type === 'name') {
@@ -32,7 +37,7 @@ const CreateUser = () => {
         }
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         let newUserOb = {};
         newUserOb = {
             name,
@@ -40,7 +45,8 @@ const CreateUser = () => {
             "admin": isAdmin,
             "municipalityId": currentMunicipality.id
         };
-        dispatch(createNewUser(newUserOb));
+        const result = await dispatch(createNewUser(newUserOb));
+        setStatus(result);
     }
 
     let navigate = useNavigate();
@@ -57,6 +63,14 @@ const CreateUser = () => {
                 break;
             default:
                 navigate('/admin')
+        }
+    }
+    const showStatus = () => {
+        if (status == 200) {
+            return <Text value={t('User added')}/>
+        }
+        if (status === 409) {
+            return <Text style={{color: "red"}} value={t('User already present')}/>
         }
     }
     return (
@@ -81,7 +95,11 @@ const CreateUser = () => {
                                    onChange={(e) => handleChange(e, 'email')}/>
                         <FormControlLabel control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>}
                                           label="Make this user an administrator"/>
-                        <ActionButton label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>
+                        <ActionButton
+                            disabled={_.isEqual(name, '') || _.isEqual(email, '')}
+                            style={!(_.isEqual(name, '') || _.isEqual(email, '')) ? {} : {background: "#b7e1e8"}}
+                            label={"Submit"} id={"smallActionButton"} onClick={handleSave}/>
+                        {showStatus()}
                     </div>
                 </Paper>
             </Box></Box>

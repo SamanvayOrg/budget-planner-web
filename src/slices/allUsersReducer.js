@@ -43,7 +43,7 @@ export function saveUser(data) {
 export function createNewUser(data) {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState());
-        await createUser(token, data)
+       return  await createUser(token, data);
     }
 }
 

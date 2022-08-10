@@ -92,8 +92,10 @@ const updateMunicipality = async (token, data) => {
 
 const createUser = async (token, data) => {
 	const headers = {'Authorization': `Bearer ${token}`};
-	const result = await axios.post(`/api/user`, data, {headers})
-	return result.status === 200;
+	const result = await axios.post(`/api/user`, data, {headers}).catch(function (error) {
+		return error.response
+	});
+	return result.status;
 }
 
 const getAllMunicipalities = async (token) => {
