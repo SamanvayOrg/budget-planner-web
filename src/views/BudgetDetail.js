@@ -18,6 +18,8 @@ import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
 import {useTranslation} from "react-i18next";
 import {fetchTranslations, saveTranslations} from "../slices/translationsReducer";
+import _ from "lodash";
+import currentUserReducer from "../slices/currentUserReducer";
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({
@@ -90,17 +92,7 @@ const BudgetDetail = () => {
     const {metadata} = useSelector(metadataSelector);
 
     let {year} = useParams();
-
     const dispatch = useDispatch();
-
-    const updateView = (state) => {
-        dispatch(updateBudget(state));
-    }
-
-    const save = () => {
-        dispatch(saveBudget());
-    }
-
     useEffect(() => {
         dispatch(fetchBudget(year));
         dispatch(fetchMetadata());
@@ -109,6 +101,16 @@ const BudgetDetail = () => {
     const [open, setOpen] = useState(false);
     const [popupContext, setPopupContext] = useState({});
     const [currentPopulation, setCurrentPopulation] = useState(population);
+
+    const updateView = (state) => {
+        dispatch(updateBudget(state));
+    }
+    const save = () => {
+        dispatch(saveBudget(currentPopulation));
+    }
+    useEffect(() => {
+        setCurrentPopulation(population)
+    }, [population])
 
     const handleOpen = (context) => {
         setPopupContext(context);
