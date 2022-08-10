@@ -14,6 +14,7 @@ import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
 import {fetchState, stateSelector} from "../../slices/stateReducer";
 import _ from "lodash";
+import Text from "../../components/Text";
 
 const Translation = () => {
     let navigate = useNavigate();
@@ -21,6 +22,7 @@ const Translation = () => {
     const {t} = useTranslation();
     const [translation, setTranslation] = useState('');
     const [key, setKey] = useState('');
+    const [status, setStatus] = useState('');
     useEffect(() => {
         dispatch(fetchState())
     }, [dispatch]);
@@ -42,47 +44,57 @@ const Translation = () => {
     }
 
 
-    const handleSave = () => {
-        let retStatus = dispatch(saveTranslations({
+    const handleSave = async () => {
+        let retStatus = await dispatch(saveTranslations({
             stateId: stateDetails.id,
             key,
             value: translation,
             language: stateDetails.languages.filter(lang => lang.code !== 'en')[0].code
         }));
-        console.log('ret',retStatus);
+        setStatus(retStatus.status);
+
+    }
+    const showStatus = () => {
+        if (status == 200) {
+            return <Text value={t('Translation added')}/>
+        }
+        if (status === 400) {
+            return <Text style={{color: "red"}} value={t('Translation already present')}/>
+        }
     }
 
-
-
     return (<Box sx={{display: 'flex'}}>
-            <ResponsiveAppBar/>
-            <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleClick}/>
-            <Box component="main" sx={{flexGrow: 1, p: 3}}>
-                <Toolbar/>
-                <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
-                    <Typography>{t('Add translations')}</Typography>
-                    <br/>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        justifyContent: 'space-around',
-                        margin: '20px',
-                        gap: '20px'
-                    }}>
-                        <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={t("Key")} defaultValue={key}
-                                   onChange={(e) => setKey(e.target.value)}/>
-                        <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={t('Translation')}
-                                   defaultValue={translation}
-                                   onChange={(e) => setTranslation(e.target.value)}/>
-                        <ActionButton label={t('Save')}
-                                      disabled={_.isEqual(key, '') || _.isEqual(translation, '')}
-                                      style={!(_.isEqual(key, '') || _.isEqual(translation, ''))? {} : {background: "#b7e1e8"}} label={"Submit"}
-                                      id={"smallActionButton"} onClick={handleSave}/>
-                    </div>
-                </Paper>
-            </Box>
+        <ResponsiveAppBar/>
+        <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleClick}/>
+        <Box component="main" sx={{flexGrow: 1, p: 3}}>
+            <Toolbar/>
+            <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
+                <Typography>{t('Add translations')}</Typography>
+                <br/>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-around',
+                    margin: '20px',
+                    gap: '20px'
+                }}>
+                    <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={t("Key")} defaultValue={key}
+                               onChange={(e) => setKey(e.target.value)}/>
+                    <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={t('Translation')}
+                               defaultValue={translation}
+                               onChange={(e) => setTranslation(e.target.value)}/>
+                    <ActionButton label={t('Save')}
+                                  disabled={_.isEqual(key, '') || _.isEqual(translation, '')}
+                                  style={!(_.isEqual(key, '') || _.isEqual(translation, '')) ? {} : {background: "#b7e1e8"}}
+                                  label={"Submit"}
+                                  id={"smallActionButton"} onClick={handleSave}/>
+
+                    {showStatus()}
+
+                </div>
+            </Paper>
         </Box>
-    )
+    </Box>)
 }
 export default withAuthenticationRequired(Translation, {
     onRedirecting: () => <Home/>,
