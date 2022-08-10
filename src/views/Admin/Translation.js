@@ -2,11 +2,11 @@ import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
 import * as React from "react";
-import {Box, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
+import {useEffect, useState} from "react";
+import {Box, Paper, TextField, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import ActionButton from "../../components/ActionButton";
-import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {saveTranslations} from "../../slices/translationsReducer";
 import {useTranslation} from "react-i18next";
@@ -40,6 +40,8 @@ const Translation = () => {
                 navigate('/admin')
         }
     }
+
+
     const handleSave = () => {
         let retStatus = dispatch(saveTranslations({
             stateId: stateDetails.id,
