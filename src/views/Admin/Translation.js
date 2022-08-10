@@ -17,8 +17,10 @@ const Translation = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
     const {t} = useTranslation();
-    const [translation, setTranslation] = useState();
-    const [key, setKey] = useState();
+    const [translation, setTranslation] = useState('');
+    const [key, setKey] = useState('');
+    const [buttonStatus, setButtonStatus] = useState('Save');
+
     const handleClick = (data) => {
         switch (data) {
             case 'Users':
@@ -34,14 +36,17 @@ const Translation = () => {
                 navigate('/admin')
         }
     }
+
+
     const handleSave = () => {
         console.log('key', key)
         console.log('translation', translation)
-        dispatch(saveTranslations({
+        const status = dispatch(saveTranslations({
             modelName: key,
             value: translation,
             language: "mr"
         }));
+        console.log('status', status)
     }
 
 
@@ -65,7 +70,7 @@ const Translation = () => {
                         <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={t('Translation')}
                                    defaultValue={translation}
                                    onChange={(e) => setTranslation(e.target.value)}/>
-                        <ActionButton label={t('Save')} id={"smallActionButton"} onClick={handleSave}/>
+                        <ActionButton label={t('Save')}  id={"smallActionButton"} onClick={handleSave}/>
                     </div>
                 </Paper>
             </Box>

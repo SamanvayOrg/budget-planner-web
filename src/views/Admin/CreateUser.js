@@ -13,7 +13,7 @@ import {useNavigate} from "react-router-dom";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
 
-const CreateUserBox = () => {
+const CreateUser = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [isAdmin, setIsAdmin] = useState(false);
@@ -21,7 +21,6 @@ const CreateUserBox = () => {
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector)
 
     const handleChange = (event, type) => {
-        console.log('data in edit user', event.target.value, type);
         if (type === 'name') {
             setName(event.target.value);
         } else if (type === 'email') {
@@ -88,6 +87,6 @@ const CreateUserBox = () => {
             </Box></Box>
     )
 }
-export default withAuthenticationRequired(CreateUserBox, {
+export default withAuthenticationRequired(CreateUser, {
     onRedirecting: () => <Home/>,
 });
