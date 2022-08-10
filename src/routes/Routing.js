@@ -6,7 +6,7 @@ import BudgetDetail from "../views/BudgetDetail";
 import AllBudgets from "../views/AllBudgets";
 import Users from "../views/Admin/Users";
 import Municipality from "../views/Admin/Municipality";
-import CreateUserBox from "../views/Admin/CreateUserBox";
+import CreateUserBox from "../views/Admin/CreateUser";
 import UpdateUser from "../views/Admin/UpdateUser";
 import UpdateMunicipality from "../views/Admin/UpdateMunicipality";
 import AdminUsers from "../views/superAdmin/AdminUsers";
