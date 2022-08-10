@@ -12,6 +12,6 @@ export const fetchTranslations = () => async (dispatch, getState) => {
 export const saveTranslations = (data) => {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState()) || localStorage.getItem('authToken');
-        await addTranslations(token, data);
+        return await addTranslations(token, data);
     }
 }

@@ -123,11 +123,18 @@ const addTranslations = async (token, data) => {
 
 	const headers = {'Authorization': `Bearer ${token}`};
     const result = await axios.post('/api/translation', data, {headers});
-    return result.status === 200;
+    return result.status;
+}
+
+const getStateDetails = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/state`, {headers});
+	return result.data;
 }
 
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
 	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser,
-	getAllMunicipalities, createMunicipality, getAdminUsers, createAdminFromSuperUser, addTranslations
+	getAllMunicipalities, createMunicipality, getAdminUsers, createAdminFromSuperUser, addTranslations,
+	getStateDetails
 };

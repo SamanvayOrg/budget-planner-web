@@ -2,16 +2,18 @@ import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
 import * as React from "react";
-import {Box, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
+import {useEffect, useState} from "react";
+import {Box, Paper, TextField, Typography} from "@mui/material";
 import {useNavigate} from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
 import ActionButton from "../../components/ActionButton";
-import {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {saveTranslations} from "../../slices/translationsReducer";
 import {useTranslation} from "react-i18next";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
+import {fetchState, stateSelector} from "../../slices/stateReducer";
+import _ from "lodash";
 
 const Translation = () => {
     let navigate = useNavigate();
@@ -19,8 +21,10 @@ const Translation = () => {
     const {t} = useTranslation();
     const [translation, setTranslation] = useState('');
     const [key, setKey] = useState('');
-    const [buttonStatus, setButtonStatus] = useState('Save');
-
+    useEffect(() => {
+        dispatch(fetchState())
+    }, [dispatch]);
+    const {stateDetails} = useSelector(stateSelector);
     const handleClick = (data) => {
         switch (data) {
             case 'Users':
@@ -39,15 +43,15 @@ const Translation = () => {
 
 
     const handleSave = () => {
-        console.log('key', key)
-        console.log('translation', translation)
-        const status = dispatch(saveTranslations({
-            modelName: key,
+        let retStatus = dispatch(saveTranslations({
+            stateId: stateDetails.id,
+            key,
             value: translation,
-            language: "mr"
+            language: stateDetails.languages.filter(lang => lang.code !== 'en')[0].code
         }));
-        console.log('status', status)
+        console.log('ret',retStatus);
     }
+
 
 
     return (<Box sx={{display: 'flex'}}>
@@ -70,7 +74,10 @@ const Translation = () => {
                         <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={t('Translation')}
                                    defaultValue={translation}
                                    onChange={(e) => setTranslation(e.target.value)}/>
-                        <ActionButton label={t('Save')}  id={"smallActionButton"} onClick={handleSave}/>
+                        <ActionButton label={t('Save')}
+                                      disabled={_.isEqual(key, '') || _.isEqual(translation, '')}
+                                      style={!(_.isEqual(key, '') || _.isEqual(translation, ''))? {} : {background: "#b7e1e8"}} label={"Submit"}
+                                      id={"smallActionButton"} onClick={handleSave}/>
                     </div>
                 </Paper>
             </Box>
