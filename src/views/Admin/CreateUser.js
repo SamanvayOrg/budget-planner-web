@@ -47,6 +47,9 @@ const CreateUser = () => {
         };
         const result = await dispatch(createNewUser(newUserOb));
         setStatus(result);
+        setTimeout(() => {
+            handleClick('Users')
+        }, 5000);
     }
 
     let navigate = useNavigate();
