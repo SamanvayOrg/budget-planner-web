@@ -8,6 +8,7 @@ import _ from 'lodash';
 
 export const initialState = {
     budget: {},
+    population: {},
     loading: false,
     error: false,
     saved: '✓ saved'
@@ -26,10 +27,12 @@ const budgetDashboardSlice = createSlice({
             state.error = true;
         },
         setBudget: (state, {payload}) => {
+            console.log("payment",payload);
             state.loading = false;
-            state.budget = payload;
+            state.budget = fromContract(payload);
             state.error = false;
-            state.budgetView = getBudgetView(payload);
+            state.budgetView = getBudgetView(fromContract(payload));
+            state.population = payload.population;
         },
         setBudgetView: (state, {payload}) => {
             state.budgetView = payload;
@@ -110,13 +113,13 @@ export const {
 export const budgetSelector = state => state.budget;
 export default budgetDashboardSlice.reducer;
 
-export function saveBudget() {
+export function saveBudget(population) {
     return async (dispatch, getState) => {
         const state = getState();
         const token = tokenSelector(state);
         const budget = budgetSelector(state).budget;
         dispatch(saveBudgetStatus(false));
-        const data = await save(token, toContract(budget));
+        const data = await save(token, {...toContract(budget),population});
         dispatch(saveBudgetStatus(data));
     };
 }
@@ -126,6 +129,6 @@ export function fetchBudget(year) {
         const token = tokenSelector(getState());
         dispatch(budgetLoading());
         let budget = await getBudget(token, year);
-        dispatch(setBudget(fromContract(budget)));
+        dispatch(setBudget(budget));
     };
 }

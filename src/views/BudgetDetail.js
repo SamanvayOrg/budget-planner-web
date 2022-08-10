@@ -12,7 +12,7 @@ import {MunicipalityName} from '../domain/functions';
 import HorizontalLine from '../components/HorizontalLine';
 import {KeyboardBackspace} from '@mui/icons-material';
 import ActionButton from '../components/ActionButton';
-import {Modal, TextField} from '@mui/material';
+import {Input, Modal, TextField} from '@mui/material';
 import {useStyles} from '../components/ModalWithButton';
 import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
@@ -85,8 +85,8 @@ const BudgetDetail = () => {
     const classes = useStylesBudgetDetails();
     const modalClass = useStyles();
     const {t} = useTranslation();
-    const [population, setPopulation] = useState(0);
-    const {budgetView = [], budget, saved} = useSelector(budgetSelector);
+    const {budgetView = [], budget, saved, population} = useSelector(budgetSelector);
+
     const {metadata} = useSelector(metadataSelector);
 
     let {year} = useParams();
@@ -108,10 +108,13 @@ const BudgetDetail = () => {
     }, [dispatch, year]);
     const [open, setOpen] = useState(false);
     const [popupContext, setPopupContext] = useState({});
+    const [currentPopulation, setCurrentPopulation] = useState(population);
+
     const handleOpen = (context) => {
         setPopupContext(context);
         setOpen(true);
     }
+
     const handleClose = () => {
         setPopupContext({});
         setOpen(false);
@@ -142,9 +145,9 @@ const BudgetDetail = () => {
                         <em>{t('All values are in INR')}</em>
                     </div>
                     <div className={classes.topRight}>
-                        <TextField variant="standard"
-                                   label={t('Population')} defaultValue={population}
-                                   onChange={(e) => setPopulation(e)}/>
+                        <TextField type="number" variant="standard"
+                                   label={t('Population')} defaultValue={currentPopulation}
+                                   onChange={(e) => setCurrentPopulation(e.target.value)}/>
                         <ActionButton onClick={save} label={t(saved)} id={'dynamicWidthButton'}/>
                     </div>
                 </div>
