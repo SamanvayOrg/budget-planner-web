@@ -3,8 +3,7 @@ define _alert_success
 endef
 
 zip-only:
-	cd build
-	zip ../budget-planner-web.zip *
+	cd build && zip -r ../budget-planner-web.zip .
 
 build-app:
 	npm run build
