@@ -31,9 +31,9 @@ const UpdateTranslation = () => {
         newTranslationOb = {
             "id" : currentTranslation.id,
             "stateId": currentTranslation.stateId,
-            "key": currentTranslation.key,
-            "value": currentTranslation.value,
-            "language": currentTranslation.language
+            "key": key,
+            "value": value,
+            "language": language
         }
         let retStatus = await dispatch(updateTranslations(newTranslationOb));
         setStatus(retStatus.status);
