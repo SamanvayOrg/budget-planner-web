@@ -53,11 +53,6 @@ const getMetadata = async (token) => {
 	return result.data;
 
 }
-const getTranslations = async (token) => {
-	const headers = {'Authorization': `Bearer ${token}`};
-	const result = await axios.get(`/api/translations`, {headers});
-	return result.data;
-}
 
 const getUsers = async (token) => {
 	const headers = {'Authorization': `Bearer ${token}`};
@@ -120,12 +115,35 @@ const createAdminFromSuperUser = async (token, municipalityId, data) => {
 	return result.status === 200;
 }
 
+/** API Used to do the translation */
+const getTranslations = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/translations`, {headers});
+	return result.data;
+}
+
 const addTranslations = async (token, data) => {
 	const headers = {'Authorization': `Bearer ${token}`};
 	const result = await axios.post('/api/translation', data, {headers}).catch(function (error) {
 		return error.response
 	});
 	return result;
+}
+
+const modifyTranslations = async (token, data) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const url = '/api/translation/'+data.id;
+	const result = await axios.put(url, data, {headers}).catch(function (error) {
+		return error.response
+	});
+	return result;
+}
+
+/** API used to list out Translations for Admin User View / Update */
+const getAllTranslationsData = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get(`/api/translation/all`, {headers});
+	return result.data;
 }
 
 const getStateDetails = async (token) => {
@@ -138,5 +156,5 @@ export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
 	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser,
 	getAllMunicipalities, createMunicipality, getAdminUsers, createAdminFromSuperUser, addTranslations,
-	getStateDetails
+	modifyTranslations, getAllTranslationsData, getStateDetails
 };

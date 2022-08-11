@@ -16,7 +16,7 @@ import {fetchState, stateSelector} from "../../slices/stateReducer";
 import _ from "lodash";
 import Text from "../../components/Text";
 
-const Translation = () => {
+const CreateTranslation = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
     const {t} = useTranslation();
@@ -35,8 +35,8 @@ const Translation = () => {
             case 'Municipality':
                 navigate('/admin/municipality');
                 break;
-            case 'Translation':
-                navigate('/admin/translation');
+            case 'Translations':
+                navigate('/admin/translations');
                 break;
             default:
                 navigate('/admin')
@@ -96,6 +96,6 @@ const Translation = () => {
         </Box>
     </Box>)
 }
-export default withAuthenticationRequired(Translation, {
+export default withAuthenticationRequired(CreateTranslation, {
     onRedirecting: () => <Home/>,
 });

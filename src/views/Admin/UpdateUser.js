@@ -55,8 +55,8 @@ const UpdateUser = () => {
             case 'Municipality':
                 navigate('/admin/municipality');
                 break;
-            case 'Translation':
-                navigate('/admin/translation');
+            case 'Translations':
+                navigate('/admin/translations');
                 break;
             default:
                 navigate('/admin')

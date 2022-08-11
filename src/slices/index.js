@@ -10,6 +10,7 @@ import allUsersReducer from "./allUsersReducer";
 import currentUserReducer from "./currentUserReducer";
 import cityClassReducer from "./cityClassReducer";
 import stateReducer from "./stateReducer";
+import translationsReducer from "./translationsReducer";
 
 const rootReducer = combineReducers({
     auth: authReducer,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
     allUsers: allUsersReducer,
     currentUser: currentUserReducer,
     cityClasses: cityClassReducer,
-    stateDetailsSlice: stateReducer
+    stateDetailsSlice: stateReducer,
+    allTranslations: translationsReducer
 });
 
 export default rootReducer;

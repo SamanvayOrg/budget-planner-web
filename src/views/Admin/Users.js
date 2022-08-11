@@ -46,8 +46,8 @@ const Users = () => {
             case 'updateUser':
                 navigate(`/admin/user/update/${id}`);
                 break;
-            case 'Translation':
-                navigate('/admin/translation');
+            case 'Translations':
+                navigate('/admin/translations');
                 break;
             default:
                 navigate('/admin')

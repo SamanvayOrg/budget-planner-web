@@ -1,42 +1,42 @@
-import {Box, Paper} from "@mui/material";
-import _ from "lodash";
 import ResponsiveTable from "../../components/ResponsiveTable";
-import * as React from "react";
+import * as React from 'react';
+import {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {allMunicipalityDetailsSelector, fetchMunicipalityDetails} from "../../slices/municipalityReducer";
+import {
+    allTranslationsSelector,
+    getAllTranslations,
+    setCurrentTranslation
+} from "../../slices/translationsReducer";
+import _ from "lodash";
+import {Box, Paper, Typography} from "@mui/material";
 import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
-import {useNavigate} from "react-router-dom";
 import Toolbar from "@mui/material/Toolbar";
-import {useEffect} from "react";
+import {useNavigate} from "react-router-dom";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
-import {fetchTranslations} from "../../slices/translationsReducer";
 
-const Municipality = () => {
-    const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector);
+const Translations = () => {
+
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(fetchMunicipalityDetails());
-        dispatch(fetchTranslations());
-
-    }, [dispatch]);
-
     const columns = [
-        {id: 'name', label: 'Municipality name', minWidth: 170},
-        {id: 'state', label: 'State', minWidth: 100},
-        {id: 'cityClass', label: 'Municipality class', minWidth: 170,}
+        {id: 'language', label: 'Language', minWidth: 100},
+        {id: 'key', label: 'Key', minWidth: 100},
+        {id: 'value', label: 'Translation', minWidth: 100},
     ];
-
     const rowClick = (data) => {
-        handleClick('updateMunicipality', data.id)
+        dispatch(setCurrentTranslation(data));
+        handleClick('updateTranslations', data.id)
     }
-
     let rows = [];
-    if (!_.isEmpty(currentMunicipality)) {
-        rows = [currentMunicipality]
+
+    useEffect((e) => {
+        dispatch(getAllTranslations());
+    }, [dispatch])
+    const {translations} = useSelector(allTranslationsSelector);
+    if (!_.isEmpty(translations)) {
+        rows = translations
     }
     let navigate = useNavigate();
     const handleClick = (param, id) => {
@@ -47,8 +47,11 @@ const Municipality = () => {
             case 'Municipality':
                 navigate('/admin/municipality');
                 break;
-            case 'updateMunicipality':
-                navigate(`/admin/municipality/update/${id}`);
+            case 'create':
+                navigate('/admin/translation/create');
+                break;
+            case 'updateTranslations':
+                navigate(`/admin/translation/update/${id}`);
                 break;
             case 'Translations':
                 navigate('/admin/translations');
@@ -57,6 +60,8 @@ const Municipality = () => {
                 navigate('/admin')
         }
     }
+
+
     const renderBox = () => {
 
         return (
@@ -66,15 +71,23 @@ const Municipality = () => {
                 <Box component="main" sx={{flexGrow: 1, p: 3}}>
                     <Toolbar/>
                     <Paper sx={{width: '100%', overflow: 'hidden', paddingTop: "40px"}}>
+                        <Typography sx={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            marginRight: '20px',
+                            color: '#4d73db',
+                            cursor: 'pointer'
+                        }}
+                        onClick={(e) => handleClick('create')}>+ Create</Typography>
                         <ResponsiveTable columns={columns} rows={rows} onClick={rowClick}/></Paper>
                 </Box>
-            </Box>);
+            </Box>
+        );
+
     }
 
     return renderBox();
-
-
 }
-export default withAuthenticationRequired(Municipality, {
+export default withAuthenticationRequired(Translations, {
     onRedirecting: () => <Home/>,
 });
