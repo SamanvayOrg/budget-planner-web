@@ -52,7 +52,7 @@ export function fetchAdminUser() {
         const token = tokenSelector(getState());
         dispatch(setAdminUsers());
         let users = await getAdminUsers(token);
-        dispatch(setAdminUsers(users));
+      await  dispatch(setAdminUsers(users));
     }
 }
 
