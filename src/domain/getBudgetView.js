@@ -34,6 +34,8 @@ const getBudgetView = (budget) => {
 		{value: line.currentYear8MonthsActuals,className: numberClass,context: {id: line.id, type: 'detail', key: 'currentYear8MonthsActuals'}},
 		{value: line.currentYear4MonthsProbables,className: numberClass,context: {id: line.id, type: 'detail', key: 'currentYear4MonthsProbables'}},
 		{value: line.budgetedAmount, className: numberClass, context: {id: line.id, type: 'detail', key: 'budgetedAmount'}},
+		{value: "delete",className: "Spreadsheet-deleteButton" , context: {type: 'header', key: 'deleteButton', detailCode: line.code}},
+
 	]);
 
 	const getSummary = (name, line, nameClass, numberClass) => ([

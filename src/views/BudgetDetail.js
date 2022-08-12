@@ -5,7 +5,14 @@ import Home from './Home';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
-import {addBudgetLine, budgetSelector, fetchBudget, saveBudget, updateBudget} from '../slices/budgetReducer';
+import {
+    addBudgetLine,
+    budgetSelector,
+    deleteBudgetLine,
+    fetchBudget,
+    saveBudget,
+    updateBudget
+} from '../slices/budgetReducer';
 import Spreadsheet from 'react-spreadsheet';
 import {getBudgetYearString, headers} from '../domain/budgetHeaders';
 import {MunicipalityName} from '../domain/functions';
@@ -125,11 +132,18 @@ const BudgetDetail = () => {
 
     const onActivate = (params) => {
         const context = budgetView[params.row][params.column].context;
+        const detailCode = budgetView[params.row][params.column].context.detailCode;
         if (context.key === 'addButton') {
             return (
                 handleOpen(context)
             )
+        }else  if(context.key === 'deleteButton'){
+            if(window.confirm('are you sure')){
+                console.log('delete',detailCode);
+                dispatch(deleteBudgetLine(detailCode));
+            }
         }
+
     }
 
     return (
@@ -171,7 +185,6 @@ const BudgetDetail = () => {
                             <>
                                 <BudgetLineSelector metadata={metadata} budget={budget} onSelect={(selectedItem) => {
                                     dispatch(addBudgetLine(selectedItem));
-                                    console.log(selectedItem);
                                     dispatch(saveTranslations({
                                         modelName: selectedItem.name,
                                         value: selectedItem.translation,

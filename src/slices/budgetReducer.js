@@ -27,7 +27,6 @@ const budgetDashboardSlice = createSlice({
             state.error = true;
         },
         setBudget: (state, {payload}) => {
-            console.log("payment",payload);
             state.loading = false;
             state.budget = fromContract(payload);
             state.error = false;
@@ -97,7 +96,13 @@ const budgetDashboardSlice = createSlice({
                 minorHead: minorHead.name,
             });
             state.budgetView = getBudgetView(state.budget);
-        }
+        },
+        deleteBudgetLine: (state,{payload})=>{
+            console.log('payload',payload);
+            console.log('state',state.budget)
+
+
+}
     },
 });
 
@@ -107,7 +112,8 @@ export const {
     setBudgetView,
     updateBudget,
     addBudgetLine,
-    saveBudgetStatus
+    saveBudgetStatus,
+    deleteBudgetLine
 } = budgetDashboardSlice.actions;
 
 export const budgetSelector = state => state.budget;
