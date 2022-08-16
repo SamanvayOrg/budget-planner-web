@@ -25,6 +25,7 @@ import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
 import {useTranslation} from "react-i18next";
 import {fetchTranslations, saveTranslations} from "../slices/translationsReducer";
+import BudgetPropertySelector from "../components/BudgetPropertySelector";
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({
@@ -105,17 +106,14 @@ const BudgetDetail = () => {
     }, [dispatch, year]);
     const [open, setOpen] = useState(false);
     const [popupContext, setPopupContext] = useState({});
-    const [currentPopulation, setCurrentPopulation] = useState(population);
 
     const updateView = (state) => {
         dispatch(updateBudget(state));
     }
     const save = () => {
-        dispatch(saveBudget(currentPopulation));
+        dispatch(saveBudget(population));
     }
-    useEffect(() => {
-        setCurrentPopulation(population)
-    }, [population])
+
 
     const handleOpen = (context) => {
         setPopupContext(context);
@@ -124,6 +122,7 @@ const BudgetDetail = () => {
 
     const handleClose = () => {
         setPopupContext({});
+        setModal(false);
         setOpen(false);
     }
 
@@ -135,16 +134,19 @@ const BudgetDetail = () => {
             return (
                 handleOpen(context)
             )
-        }else  if(context.key === 'deleteButton'){
-            if(window.confirm('are you sure')){
-                console.log('delete',detailCode);
+        } else if (context.key === 'deleteButton') {
+            if (window.confirm('are you sure')) {
                 dispatch(deleteBudgetLine(detailCode));
             }
         }
 
     }
-
-    console.log('budgetView',budgetView);    return (
+    const [modal, setModal] = useState(false);
+    const onClickProperties = (data) => {
+        dispatch(saveBudget(data.population));
+        dispatch(fetchBudget(year));
+    };
+    return (
         <>
             <ResponsiveAppBar/>
             <div>
@@ -159,9 +161,7 @@ const BudgetDetail = () => {
                         <em>{t('All values are in INR')}</em>
                     </div>
                     <div className={classes.topRight}>
-                        <TextField type="number" variant="standard"
-                                   label={t('Population')} defaultValue={currentPopulation}
-                                   onChange={(e) => setCurrentPopulation(e.target.value)}/>
+                        <ActionButton label={'Add Properties'} onClick={() => setModal(true)}/>
                         <ActionButton onClick={save} label={t(saved)} id={'dynamicWidthButton'}/>
                     </div>
                 </div>
@@ -190,6 +190,17 @@ const BudgetDetail = () => {
                                     }));
                                     handleClose();
                                 }} context={popupContext} onCancel={handleClose}/>
+                            </>
+                        </Modal>
+                    </div>
+                    <div>
+                        <Modal open={modal} onClose={handleClose} className={modalClass.modal}>
+                            <>
+                                <BudgetPropertySelector onClose={handleClose} thePopulation={population}
+                                                        onSelect={(data) => {
+                                                            onClickProperties(data);
+                                                            handleClose();
+                                                        }}/>
                             </>
                         </Modal>
                     </div>

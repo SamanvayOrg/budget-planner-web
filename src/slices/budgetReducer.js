@@ -98,9 +98,6 @@ const budgetDashboardSlice = createSlice({
             state.budgetView = getBudgetView(state.budget);
         },
         deleteBudgetLine: (state,{payload})=>{
-            console.log('payload',payload);
-            console.log('state',state.budget)
-
 
 }
     },

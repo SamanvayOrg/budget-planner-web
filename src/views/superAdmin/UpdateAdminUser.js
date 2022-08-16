@@ -46,7 +46,6 @@ const UpdateAdminUser = () => {
         .filter((municipality) => municipality.id === selectedUser.municipalityId)
         .first()
         .value()
-    console.log('currentMunicipality', currentMunicipality)
     const [municipality, setMunicipality] = useState(currentMunicipality.name);
 
 
