@@ -19,14 +19,12 @@ import {MunicipalityName} from '../domain/functions';
 import HorizontalLine from '../components/HorizontalLine';
 import {KeyboardBackspace} from '@mui/icons-material';
 import ActionButton from '../components/ActionButton';
-import {Input, Modal, TextField} from '@mui/material';
+import {Modal, TextField} from '@mui/material';
 import {useStyles} from '../components/ModalWithButton';
 import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
 import {useTranslation} from "react-i18next";
 import {fetchTranslations, saveTranslations} from "../slices/translationsReducer";
-import _ from "lodash";
-import currentUserReducer from "../slices/currentUserReducer";
 
 
 const useStylesBudgetDetails = makeStyles(theme => ({
@@ -146,7 +144,7 @@ const BudgetDetail = () => {
 
     }
 
-    return (
+    console.log('budgetView',budgetView);    return (
         <>
             <ResponsiveAppBar/>
             <div>

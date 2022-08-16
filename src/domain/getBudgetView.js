@@ -52,7 +52,7 @@ const getBudgetView = (budget) => {
 
 	const getAddNewLine = (majorHead, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
 		{value: null, className: nameClass, context: {type: 'addNewLine', key: 'sr'}, readOnly: true},
-		{value: 'Add a new entry',id:'addRowButton', className: "Spresheet-addNewLineBox", context: {type: 'addNewLine', key: 'addButton',majorHead:majorHead}, readOnly: true},
+		{value: 'Add a new entry',id:'addRowButton', className: "Spreadsheet-addNewLineBox", context: {type: 'addNewLine', key: 'addButton',majorHead:majorHead}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'code'}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'yearMinus2Actuals'}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'yearMinus1Actuals'}, readOnly: true},
