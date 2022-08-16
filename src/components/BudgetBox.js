@@ -62,7 +62,7 @@ const BudgetBox = ({versionName, lastUpdated, index, firstButtonAction, secondBu
 				{versionName}
 			</span>
             <span className={classes.actionButtons}>
-				<ActionButton style={{marginLeft: '10px'}} key={index} onClick={firstButtonAction}  label={t("DOWNLOAD")}
+				<ActionButton style={{marginLeft: '10px'}} key={index.key} onClick={firstButtonAction}  label={t("DOWNLOAD")}
                               id={"smallActionButton"}/>
 
 				<ActionButton style={{marginLeft: '10px'}} key={index} onClick={secondButtonAction} label={t("EDIT BUDGET")}

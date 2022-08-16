@@ -69,7 +69,7 @@ const CreateUser = () => {
         }
     }
     const showStatus = () => {
-        if (status == 200) {
+        if (status === 200) {
             return <Text value={t('User added')}/>
         }
         if (status === 409) {

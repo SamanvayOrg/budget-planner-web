@@ -55,7 +55,7 @@ const CreateTranslation = () => {
 
     }
     const showStatus = () => {
-        if (status == 200) {
+        if (status === 200) {
             return <Text value={t('Translation added')}/>
         }
         if (status === 400) {
@@ -86,7 +86,6 @@ const CreateTranslation = () => {
                     <ActionButton label={t('Save')}
                                   disabled={_.isEqual(key, '') || _.isEqual(translation, '')}
                                   style={!(_.isEqual(key, '') || _.isEqual(translation, '')) ? {} : {background: "#b7e1e8"}}
-                                  label={"Submit"}
                                   id={"smallActionButton"} onClick={handleSave}/>
 
                     {showStatus()}

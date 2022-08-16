@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
 import DataTable from "./DataTable";
 import {budgetSummaryData} from "../domain/budgetSummaryMapper";
 import {Paper} from "@mui/material";
-import {allMunicipalityDetailsSelector, fetchMunicipalityDetails} from "../slices/municipalityReducer";
+import {fetchMunicipalityDetails} from "../slices/municipalityReducer";
 import ResponsiveBarGraph from "./ResponsiveBarGraph";
 import ResponsivePieChart from "./ResponsivePieChart";
 import PerPersonExpenditure from "./PerPersonExpenditure";
@@ -54,7 +54,6 @@ const CurrentBudgetBox = ({year}) => {
     const classes = styleSheets();
     const [budgetYear, setBudgetYear] = useState(year);
     let navigate = useNavigate();
-    const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector);
 
     useEffect(() => {
         dispatch(fetchAllBudgets());
