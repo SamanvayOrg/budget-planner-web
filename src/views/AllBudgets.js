@@ -70,7 +70,7 @@ const AllBudgets = () => {
 
     function renderBox(allBudget) {
         let budgetBox = [];
-        _.forEach(allBudget, (budget, index) => {
+        _.forEach(_.sortBy(allBudget,['budgetYear']), (budget, index) => {
             let year = budget.budgetYear.substring(0, 4)
             const goToBudget = () => {
                 navigate(`/budget/${year}`);
