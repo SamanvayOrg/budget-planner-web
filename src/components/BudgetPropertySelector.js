@@ -19,9 +19,9 @@ const style = {
     maxHeight: '80%'
 };
 
-const BudgetPropertySelector = ({onClose, onSelect, thePopulation}) => {
+const BudgetPropertySelector = ({onClose, onSelect, thePopulation, openingBal}) => {
     const [population, setPopulation] = useState(thePopulation);
-    const [openingBal, setOpeningBal] = useState();
+    const [openingBalance, setOpeningBalance] = useState(openingBal);
     return (
         <Box sx={style}>
             <Box sx={{minWidth: 50}}>
@@ -36,15 +36,15 @@ const BudgetPropertySelector = ({onClose, onSelect, thePopulation}) => {
                     <TextField
                         id="outlined-required"
                         label="Opening Balance"
-                        value={openingBal}
-                        onChange={(e) => setOpeningBal(e.target.value)}
+                        value={openingBalance}
+                        onChange={(e) => setOpeningBalance(e.target.value)}
                     />
                 </FormGroup>
                 <Box style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'row'}}>
                     <ActionButton label={'Cancel'} onClick={onClose}
                                   style={{marginRight: 32}} color={'warning'}/>
 
-                    <ActionButton label={'Ok'} onClick={() => onSelect({population, openingBal})} variant={'contained'}
+                    <ActionButton label={'Ok'} onClick={() => onSelect({population, openingBalance})} variant={'contained'}
                         // disabled={!(detailedHead && theFunction && isAbleToAddNewLine())}
                                   style={{marginLeft: 32}} color={'primary'}
                     />

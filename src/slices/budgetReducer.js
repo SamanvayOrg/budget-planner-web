@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getBudget, save} from '../api/api';
+import {getBudget, save, updateBudgetProperties} from '../api/api';
 import {tokenSelector} from './authReducer';
 import {fromContract, getBudgetView} from '../domain';
 import {updateFromView} from '../domain/updateFromView';
@@ -8,7 +8,9 @@ import _ from 'lodash';
 
 export const initialState = {
     budget: {},
-    population: {},
+    population: null,
+    closingBalance: null,
+    openingBalance: null,
     loading: false,
     error: false,
     saved: '✓ saved'
@@ -32,6 +34,8 @@ const budgetDashboardSlice = createSlice({
             state.error = false;
             state.budgetView = getBudgetView(fromContract(payload));
             state.population = payload.population;
+            state.openingBalance = payload.openingBalance;
+            state.closingBalance = payload.closingBalance;
         },
         setBudgetView: (state, {payload}) => {
             state.budgetView = payload;
@@ -64,13 +68,13 @@ const budgetDashboardSlice = createSlice({
                 .find(head => head.majorHead === majorHead.name)
                 .value();
 
-            if(_.isUndefined(matchingMajorHead)) {
+            if (_.isUndefined(matchingMajorHead)) {
                 const matchingMajorHeadGroup = _.chain(state.budget)
                     .get('items')
                     .filter((group) => group.majorHeadGroup === majorHeadGroup.name)
                     .value();
                 matchingMajorHead = {
-                    majorHead:  majorHead.name,
+                    majorHead: majorHead.name,
                     summary: {
                         budgetedAmount: 0,
                         currentYear8MonthsActuals: 0,
@@ -97,9 +101,14 @@ const budgetDashboardSlice = createSlice({
             });
             state.budgetView = getBudgetView(state.budget);
         },
-        deleteBudgetLine: (state,{payload})=>{
+        deleteBudgetLine: (state, {payload}) => {
 
-}
+        },
+        setBudgetProps: (state, {payload}) => {
+            state.population = payload.population;
+            state.openingBalance = payload.openingBalance;
+            state.closingBalance = payload.closingBalance;
+        }
     },
 });
 
@@ -110,19 +119,20 @@ export const {
     updateBudget,
     addBudgetLine,
     saveBudgetStatus,
-    deleteBudgetLine
+    deleteBudgetLine,
+    setBudgetProps
 } = budgetDashboardSlice.actions;
 
 export const budgetSelector = state => state.budget;
 export default budgetDashboardSlice.reducer;
 
-export function saveBudget(population) {
+export function saveBudget() {
     return async (dispatch, getState) => {
         const state = getState();
         const token = tokenSelector(state);
         const budget = budgetSelector(state).budget;
         dispatch(saveBudgetStatus(false));
-        const data = await save(token, {...toContract(budget),population});
+        const data = await save(token, toContract(budget));
         dispatch(saveBudgetStatus(data));
     };
 }
@@ -134,4 +144,13 @@ export function fetchBudget(year) {
         let budget = await getBudget(token, year);
         dispatch(setBudget(budget));
     };
+}
+
+export function updateBudgetProps(data, id) {
+    return async (dispatch, getState) => {
+        const token = tokenSelector(getState());
+        let result = await updateBudgetProperties(token, data, id);
+        dispatch(setBudgetProps(result));
+    }
+
 }

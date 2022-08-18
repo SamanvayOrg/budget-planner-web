@@ -152,9 +152,15 @@ const getStateDetails = async (token) => {
 	return result.data;
 }
 
+const updateBudgetProperties = async (token, data, id) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.put(`/api/budget/${id}/properties`, data,{headers});
+	return result.data;
+}
+
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
 	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser,
 	getAllMunicipalities, createMunicipality, getAdminUsers, createAdminFromSuperUser, addTranslations,
-	modifyTranslations, getAllTranslationsData, getStateDetails
+	modifyTranslations, getAllTranslationsData, getStateDetails, updateBudgetProperties
 };
