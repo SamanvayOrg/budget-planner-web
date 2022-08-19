@@ -25,9 +25,7 @@ const AccessDenied = () => {
         <div>
             <ResponsiveAppBar/>
             <div className={classes.mainContainer}>
-
-                  <center> <Text style={{fontSize: "25px"}} value={'Access denied'}/></center>
-
+                <center><Text style={{fontSize: "25px"}} value={'Access denied'}/></center>
             </div>
         </div>
     )
