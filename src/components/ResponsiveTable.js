@@ -7,9 +7,10 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import {useTranslation} from "react-i18next";
+import ActionButton from "./ActionButton";
 
 
-const ResponsiveTable = ({columns, rows, onClick}) => {
+const ResponsiveTable = ({columns, rows, onClick, actionHeaders, action, actionClick}) => {
     const {t} = useTranslation();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -22,6 +23,17 @@ const ResponsiveTable = ({columns, rows, onClick}) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+    const getActionHeader = () => {
+        if (actionHeaders) {
+            return <TableCell>{t('Actions')}</TableCell>
+        }
+    }
+
+    const getActions = (row) => {
+        if (action) {
+            return <TableCell><ActionButton onClick={() => actionClick(row)} label={t(action)}/></TableCell>
+        }
+    }
 
     return (
         <>
@@ -38,6 +50,7 @@ const ResponsiveTable = ({columns, rows, onClick}) => {
                                     {t(column.label)}
                                 </TableCell>
                             ))}
+                            {getActionHeader()}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -46,15 +59,17 @@ const ResponsiveTable = ({columns, rows, onClick}) => {
                             .map((row, index) => {
                                 return (
                                     <TableRow hover role="checkbox" tabIndex={-1} key={index}
-                                              onClick={(e) => onClick(row)}>
+                                    >
                                         {columns.map((column, index) => {
                                             const value = row[column.id];
                                             return (
-                                                <TableCell key={index} align={column.align}>
+                                                <TableCell key={index} align={column.align}
+                                                           onClick={(e) => onClick(row)}>
                                                     {t(value)}
                                                 </TableCell>
                                             );
                                         })}
+                                        {getActions(row)}
                                     </TableRow>
                                 );
                             })}

@@ -158,9 +158,15 @@ const updateBudgetProperties = async (token, data, id) => {
 	return result.data;
 }
 
+const deleteTranslation = async (token, id) => {
+    const headers = {'Authorization': `Bearer ${token}`};
+    const result = await axios.delete(`/api/translation/${id}`, {headers});
+    return result.status;
+}
+
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
 	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser,
 	getAllMunicipalities, createMunicipality, getAdminUsers, createAdminFromSuperUser, addTranslations,
-	modifyTranslations, getAllTranslationsData, getStateDetails, updateBudgetProperties
+	modifyTranslations, getAllTranslationsData, getStateDetails, updateBudgetProperties, deleteTranslation
 };

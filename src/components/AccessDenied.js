@@ -1,6 +1,5 @@
 import ResponsiveAppBar from "./ResponsiveAppBar";
 import React from "react";
-import {Paper, Typography} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import Text from "./Text";
 

@@ -1,5 +1,11 @@
 import {tokenSelector} from "./authReducer";
-import {addTranslations, getTranslations, modifyTranslations, getAllTranslationsData} from "../api/api";
+import {
+    addTranslations,
+    getTranslations,
+    modifyTranslations,
+    getAllTranslationsData,
+    deleteTranslation
+} from "../api/api";
 import i18n from "i18next";
 import {createSlice} from "@reduxjs/toolkit";
 
@@ -50,5 +56,13 @@ export const updateTranslations = (data) => {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         return await modifyTranslations(token, data);
+    }
+}
+
+export const removeTranslation = (id) => {
+    return async (dispatch, getState) => {
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
+        const result = await deleteTranslation(token, id);
+        dispatch(getAllTranslations());
     }
 }

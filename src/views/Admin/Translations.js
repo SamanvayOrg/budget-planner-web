@@ -5,6 +5,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {
     allTranslationsSelector,
     getAllTranslations,
+    removeTranslation,
     setCurrentTranslation
 } from "../../slices/translationsReducer";
 import _ from "lodash";
@@ -16,10 +17,11 @@ import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
+import {useTranslation} from "react-i18next";
 
 const Translations = () => {
-
     const dispatch = useDispatch();
+    const {t} = useTranslation();
     const columns = [
         {id: 'language', label: 'Language', minWidth: 100},
         {id: 'key', label: 'Key', minWidth: 100},
@@ -60,6 +62,13 @@ const Translations = () => {
                 navigate('/admin')
         }
     }
+    const onDelete = (data) => {
+        console.log('onDelete', data);
+        if (window.confirm(t('Are you sure'))) {
+            dispatch(removeTranslation(data.id))
+        }
+
+    }
 
 
     const renderBox = () => {
@@ -78,8 +87,9 @@ const Translations = () => {
                             color: '#4d73db',
                             cursor: 'pointer'
                         }}
-                        onClick={(e) => handleClick('create')}>+ Create</Typography>
-                        <ResponsiveTable columns={columns} rows={rows} onClick={rowClick}/></Paper>
+                                    onClick={(e) => handleClick('create')}>+ Create</Typography>
+                        <ResponsiveTable columns={columns} rows={rows} onClick={rowClick} actionHeaders={true}
+                                         action={'Delete'} actionClick={onDelete}/></Paper>
                 </Box>
             </Box>
         );

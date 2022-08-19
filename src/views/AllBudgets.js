@@ -1,5 +1,5 @@
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
-import React from 'react';
+import React, {useEffect} from 'react';
 import BudgetBox from "../components/BudgetBox";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "./Home";
@@ -7,10 +7,9 @@ import {makeStyles} from "@mui/styles";
 import Container from "@mui/material/Container";
 import {useDispatch, useSelector} from "react-redux";
 import {allBudgetSelector, fetchAllBudgets} from "../slices/allBudgetReducer";
-import {useEffect} from "react";
 import _ from "lodash";
 import {useNavigate} from "react-router-dom";
-import {downloadInExcel, MunicipalityName} from "../domain/functions";
+import {MunicipalityName} from "../domain/functions";
 import HorizontalLine from "../components/HorizontalLine";
 import {Breadcrumbs} from "@mui/material";
 import {useTranslation} from "react-i18next";
