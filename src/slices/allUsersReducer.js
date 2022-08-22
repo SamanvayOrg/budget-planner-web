@@ -52,7 +52,7 @@ export function fetchAdminUser() {
         const token = tokenSelector(getState())  || localStorage.getItem('authToken');;
         dispatch(setAdminUsers());
         let users = await getAdminUsers(token);
-      await  dispatch(setAdminUsers(users));
+       dispatch(setAdminUsers(users));
     }
 }
 

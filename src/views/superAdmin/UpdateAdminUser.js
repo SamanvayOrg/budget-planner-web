@@ -35,7 +35,6 @@ const UpdateAdminUser = () => {
 
     useEffect((e) => {
         dispatch(fetchAllMunicipalities());
-        dispatch(fetchAdminUser());
     }, [dispatch])
     let municipalityList = [];
     _.forEach(allMunicipalities, municipality => {
