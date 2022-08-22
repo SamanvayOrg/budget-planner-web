@@ -39,7 +39,7 @@ const updateSummary = (budget) => {
 	}
 };
 
-const fromContract = ({id, budgetYear, budgetLines}) => {
+const fromContract = ({id, budgetYear, budgetLines, budgetStatusAuditContract}) => {
 	const filterByKeyValue = (budgetLines, key, value) => {
 		return _.filter(budgetLines, line => line[key] === value);
 	};
@@ -82,7 +82,8 @@ const fromContract = ({id, budgetYear, budgetLines}) => {
 		id,
 		year: Number.parseInt(budgetYear.substring(0, 4)),
 		items: mapMajorHeadGroups(budgetLines),
-		summary: summary(budgetLines)
+		summary: summary(budgetLines),
+		budgetStatus: budgetStatusAuditContract.currentBudgetStatus
 	};
 };
 
