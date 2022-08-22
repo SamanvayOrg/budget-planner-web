@@ -78,7 +78,9 @@ const AllBudgets = () => {
                                       firstButtonAction={() => budgetToExcelDataMapper(budget, headers(year))}
                                       index={index} key={index}
                                       versionName={t("Budget for year") + '-' + t(budget.budgetYear)}
-                                      lastUpdated={"last updated 24 hours ago"}/>
+                                      lastUpdated={"last updated 24 hours ago"}
+                                      budget={budget}
+                />
             )
         })
         return _.reverse(budgetBox)

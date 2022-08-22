@@ -1,5 +1,5 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {getBudget, save, updateBudgetProperties} from '../api/api';
+import {changeBudgetStatus, getBudget, save, updateBudgetProperties} from '../api/api';
 import {tokenSelector} from './authReducer';
 import {fromContract, getBudgetView} from '../domain';
 import {updateFromView} from '../domain/updateFromView';
@@ -179,5 +179,12 @@ export function updateBudgetProps(data, id) {
         let result = await updateBudgetProperties(token, data, id);
         dispatch(setBudgetProps(result));
     }
+}
+export function updateBudgetStatus(id, data) {
+    console.log('data',data)
 
+    return async (dispatch, getState) => {
+        const token = tokenSelector(getState());
+       return  await changeBudgetStatus(token, id, data);
+    }
 }

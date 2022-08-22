@@ -6,6 +6,8 @@ import React, {useState} from "react";
 import {Modal} from "@mui/material";
 import {useStyles} from "./ModalWithButton";
 import DropDown from "./DropDown";
+import {updateBudgetStatus} from "../slices/budgetReducer";
+import {useDispatch} from "react-redux";
 
 const styleSheets = makeStyles(theme => ({
     box: {
@@ -82,19 +84,25 @@ const BudgetBox = ({
                        index,
                        firstButtonAction,
                        secondButtonAction,
+                       budget
                    }) => {
+    console.log('budget', budget)
+    const dispatch = useDispatch();
+    const budgetStatusInfo = budget.budgetStatusAuditContract;
     const {t} = useTranslation();
     const classes = styleSheets();
     const modalClass = useStyles();
-    const [budgetAllStatus, setBudgetAllStatus] = useState(['Draft', 'Approved by GBM', 'Approved by district']);
-    const [currentStatus, setCurrentStatus] = useState('Draft');
+    const [budgetAllStatus, setBudgetAllStatus] = useState(budgetStatusInfo.allowedNextBudgetStatuses);
+    const [currentStatus, setCurrentStatus] = useState(budgetStatusInfo.currentBudgetStatus);
     const [changedStatus, setChangedStatus] = useState(currentStatus);
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-    const onStateChange = () => {
+    const onStateChange = (e) => {
+        console.log('status',e.target.value);
         setCurrentStatus(changedStatus);
+        dispatch(updateBudgetStatus(budget.id, changedStatus));
         handleClose();
     }
 
