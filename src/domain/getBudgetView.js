@@ -66,7 +66,8 @@ const getBudgetView = (budget) => {
 	const majorHeadLines = ({majorHead, items, summary}, index) => {
 		return _.chain([])
 			.concat([headerLine(majorHead, 'Spreadsheet-Major-head', getChar(index, 'a'))])
-			.concat(_.map(items, (lineItem, index) => singleLine(lineItem, index)))
+			.concat(_.chain(items).filter( item => !item.voided)
+				.map( (lineItem, index) => singleLine(lineItem, index)).value())
 			.concat([getAddNewLine(majorHead)])
 			.concat([getSummary(majorHead + ' Total', summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
 			.value();
@@ -74,6 +75,7 @@ const getBudgetView = (budget) => {
 
 	const majorHeadGroupDetailLines = (majorHeadGroup) => {
 		return _.chain(majorHeadGroup.items)
+			.filter(majorHead => majorHead.items.find(item => !item.voided))
 			.map((budgetHead, index) => majorHeadLines(budgetHead, index))
 			.flatten()
 			.value();

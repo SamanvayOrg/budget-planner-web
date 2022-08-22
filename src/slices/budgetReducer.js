@@ -119,16 +119,8 @@ const budgetDashboardSlice = createSlice({
             }
             const matchingMajorHeadCopy = Object.assign({}, matchingMajorHead);
             let matchingItemIdx = matchingMajorHeadCopy.items.findIndex(item => item.code == detailCode);
-
-            const matchingItemCopy = Object.assign( {},
-                matchingMajorHead.items[matchingItemIdx]);
-            matchingItemCopy.voided = true;
-            console.log("matchingMajorHead.items[matchingItemIdx]", matchingMajorHead.items[matchingItemIdx]);
-            matchingMajorHead.items.splice(matchingItemIdx, 1);
+            matchingMajorHead.items[matchingItemIdx].voided = true;
             state.budgetView = getBudgetView(state.budget);
-            // const budget = updateFromView(payload, state.budget);
-            // state.budget = budget;
-            // state.budgetView = getBudgetView(budget);
             state.saved = 'Save the changes';
         },
         setBudgetProps: (state, {payload}) => {
