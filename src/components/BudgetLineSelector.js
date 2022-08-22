@@ -5,7 +5,7 @@ import {useStyles} from './SelectYears';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import {getDetailsForMajorHeadName} from '../domain/metadata';
+import {getDetailsForMajorHeadName, getDetailsForMajorHeadGroupName} from '../domain/metadata';
 import _ from 'lodash';
 import {FormGroup, InputLabel, TextField, Typography} from '@mui/material';
 import {useTranslation} from "react-i18next";
@@ -29,15 +29,21 @@ const style = {
 
 
 const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => {
-    const {majorHeadGroup} = getDetailsForMajorHeadName(metadata, _.get(context, 'majorHead')) || {minorHeads: []};
+    const allowMajorHeadSelection = _.get(context, 'allowMajorHeadSelection');
+    const currentMajorHeadText = _.get(context, 'majorHead') || '';
+    const currentMajorHeadGroupText = _.get(context, 'majorHeadGroup') || '';
+    const {majorHeadGroup} = getDetailsForMajorHeadGroupName(metadata, currentMajorHeadGroupText)
+                                || getDetailsForMajorHeadName(metadata, currentMajorHeadText)
+                                || {minorHeads: []};
     const allFunctionGroups = metadata.functionGroups;
     const allMajorHeadOption = majorHeadGroup.majorHeads;
+    const currentMajorHead = allMajorHeadOption.find(mh => mh.name === currentMajorHeadText);
     const [minorHead, setMinorHead] = useState('');
     const [detailedHead, setDetailedHead] = useState('');
     const [functionGroup, setFunctionGroup] = useState('');
     const [theFunction, setTheFunction] = useState('');
     const [name, setName] = useState('');
-    const [theMajorHead, setTheMajorHead] = useState('');
+    const [theMajorHead, setTheMajorHead] = useState(currentMajorHead);
     const {t} = useTranslation();
     const [translation, setTranslation] = useState('');
 
@@ -63,7 +69,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
         event.preventDefault();
     };
     useStyles();
-    const SelectView = ({list, onSelect, label, value}) => {
+    const SelectView = ({list, onSelect, label, value, isDisabled=false}) => {
         if (_.isEmpty(list)) {
             return undefined;
         }
@@ -75,6 +81,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
                     value={value}
                     label={label}
                     onChange={onSelect}
+                    disabled={isDisabled}
                 >
                     {list.map((item, index) => {
                         return (
@@ -118,7 +125,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
                 <FormGroup fullwidth="true">
                     <Typography variant={'h6'} style={{marginTop: 32, marginBottom: 16}}>Budget Head</Typography>
                     <SelectView list={allMajorHeadOption} onSelect={handleMajorHeadSelection} label={'Major Head'}
-                                value={theMajorHead}/>
+                                value={theMajorHead} isDisabled={!allowMajorHeadSelection}/>
                     <SelectView list={_.get(theMajorHead, 'minorHeads')} onSelect={handleMinorHeadSelection}
                                 label={'Minor Head'}
                                 value={minorHead}/>

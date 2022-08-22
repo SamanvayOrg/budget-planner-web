@@ -15,6 +15,17 @@ const getDetailsForMajorHeadName = (metadata, majorHeadName) => {
     return {majorHeadGroup, majorHead};
 }
 
+const getDetailsForMajorHeadGroupName = (metadata, majorHeadGroupName) => {
+    if (!majorHeadGroupName) return undefined;
+
+    const majorHeadGroup =  _.chain(metadata)
+        .get('majorHeadGroups')
+        .find(majorHeadGroup => majorHeadGroup.name === majorHeadGroupName)
+        .value();
+
+    return {majorHeadGroup};
+}
+
 export {
-    getDetailsForMajorHeadName
+    getDetailsForMajorHeadName, getDetailsForMajorHeadGroupName
 }

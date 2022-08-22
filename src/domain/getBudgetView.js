@@ -51,9 +51,10 @@ const getBudgetView = (budget) => {
 		{value: line.budgetedAmount,className: numberClass,context: {type: 'summary', key: 'budgetedAmount'},readOnly: true},
 	]);
 
-	const getAddNewLine = (majorHead, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
+	const getAddNewLine = (majorHead, majorHeadGroup, allowMajorHeadSelection, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
 		{value: null, className: nameClass, context: {type: 'addNewLine', key: 'sr'}, readOnly: true},
-		{value: 'Add a new entry',id:'addRowButton', className: "Spreadsheet-addNewLineBox", context: {type: 'addNewLine', key: 'addButton',majorHead:majorHead}, readOnly: true},
+		{value: 'Add a new entry',id:'addRowButton', className: "Spreadsheet-addNewLineBox", context: {type: 'addNewLine', key: 'addButton',
+				majorHead:majorHead, majorHeadGroup:majorHeadGroup, allowMajorHeadSelection:allowMajorHeadSelection}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'code'}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'yearMinus2Actuals'}, readOnly: true},
 		{value: null, className: numberClass, context: {type: 'addNewLine', key: 'yearMinus1Actuals'}, readOnly: true},
@@ -68,7 +69,7 @@ const getBudgetView = (budget) => {
 			.concat([headerLine(majorHead, 'Spreadsheet-Major-head', getChar(index, 'a'))])
 			.concat(_.chain(items).filter( item => !item.voided)
 				.map( (lineItem, index) => singleLine(lineItem, index)).value())
-			.concat([getAddNewLine(majorHead)])
+			.concat([getAddNewLine(majorHead, '', false)])
 			.concat([getSummary(majorHead + ' Total', summary, 'Spreadsheet-total-particulars', 'Spreadsheet-total-number')])
 			.value();
 	};
@@ -78,6 +79,7 @@ const getBudgetView = (budget) => {
 			.filter(majorHead => majorHead.items.find(item => !item.voided))
 			.map((budgetHead, index) => majorHeadLines(budgetHead, index))
 			.flatten()
+			.concat([getAddNewLine('', majorHeadGroup.majorHeadGroup, true)])
 			.value();
 	}
 
