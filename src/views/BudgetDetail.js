@@ -115,7 +115,7 @@ const BudgetDetail = () => {
         if (context.key === 'addButton') {
             return (handleOpen(context))
         } else if (context.key === 'deleteButton') {
-            if (window.confirm('are you sure')) {
+            if (window.confirm('Are you sure.?')) {
                 dispatch(deleteBudgetLine({detailCode, majorHead}));
             }
         }
