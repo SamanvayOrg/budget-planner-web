@@ -1,5 +1,5 @@
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
-import {adminMenus} from "../../config";
+import {superAdminMenus} from "../../config";
 import {Box, Paper, Typography} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import ResponsiveTable from "../../components/ResponsiveTable";
@@ -58,7 +58,7 @@ const SuperAdminMunicipalities = () => {
     return (
         <Box sx={{display: 'flex'}}>
             <SuperAdminAppBar/>
-            <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleClick}/>
+            <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleClick}/>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>
                 <Paper sx={{width: '100%', overflow: 'hidden', paddingTop: "40px"}}>
