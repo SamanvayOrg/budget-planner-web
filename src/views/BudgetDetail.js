@@ -111,11 +111,12 @@ const BudgetDetail = () => {
     const onActivate = (params) => {
         const context = budgetView[params.row][params.column].context;
         const detailCode = budgetView[params.row][params.column].context.detailCode;
+        const majorHead = budgetView[params.row][params.column].context.majorHead;
         if (context.key === 'addButton') {
             return (handleOpen(context))
         } else if (context.key === 'deleteButton') {
             if (window.confirm('are you sure')) {
-                dispatch(deleteBudgetLine(detailCode));
+                dispatch(deleteBudgetLine({detailCode, majorHead}));
             }
         }
 

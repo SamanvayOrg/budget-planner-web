@@ -101,8 +101,35 @@ const budgetDashboardSlice = createSlice({
             });
             state.budgetView = getBudgetView(state.budget);
         },
-        deleteBudgetLine: (state, {payload}) => {
+        deleteBudgetLine: (state, {
+                           payload: {
+                               detailCode,
+                               majorHead,
+                           }
+        }) => {
+            let matchingMajorHead = _.chain(state.budget)
+                .get('items')
+                .map(group => group.items)
+                .flatten()
+                .find(head => head.majorHead === majorHead)
+                .value();
 
+            if (_.isUndefined(matchingMajorHead)) {
+                console.log("couldn't find matching majorHead to delete from");
+            }
+            const matchingMajorHeadCopy = Object.assign({}, matchingMajorHead);
+            let matchingItemIdx = matchingMajorHeadCopy.items.findIndex(item => item.code == detailCode);
+
+            const matchingItemCopy = Object.assign( {},
+                matchingMajorHead.items[matchingItemIdx]);
+            matchingItemCopy.voided = true;
+            console.log("matchingMajorHead.items[matchingItemIdx]", matchingMajorHead.items[matchingItemIdx]);
+            matchingMajorHead.items.splice(matchingItemIdx, 1);
+            state.budgetView = getBudgetView(state.budget);
+            // const budget = updateFromView(payload, state.budget);
+            // state.budget = budget;
+            // state.budgetView = getBudgetView(budget);
+            state.saved = 'Save the changes';
         },
         setBudgetProps: (state, {payload}) => {
             state.population = payload.population;
