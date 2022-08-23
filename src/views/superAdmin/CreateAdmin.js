@@ -15,6 +15,7 @@ import _ from "lodash";
 import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
+import Text from "../../components/Text";
 
 const CreateAdmin = () => {
     const {t} = useTranslation();
@@ -22,6 +23,7 @@ const CreateAdmin = () => {
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [municipality, setMunicipality] = useState('');
+    const [status, setStatus] = useState('');
     const isAdmin = true;
     const dispatch = useDispatch();
     const {allMunicipalities} = useSelector(allMunicipalityDetailsSelector);
@@ -41,7 +43,7 @@ const CreateAdmin = () => {
     _.forEach(allMunicipalities, municipality => {
         municipalityList.push(municipality.name);
     })
-    const handleSave = () => {
+    const handleSave = async () => {
         let newUserOb = {};
         const selectedMunicipality = _.chain(allMunicipalities)
             .filter((e) => e.name === municipality)
@@ -54,7 +56,11 @@ const CreateAdmin = () => {
             "admin": isAdmin,
             "municipalityId": selectedMunicipality.id
         };
-        dispatch(createNewAdmin(newUserOb, selectedMunicipality.id));
+        const result = await dispatch(createNewAdmin(newUserOb, selectedMunicipality.id));
+        setStatus(result);
+        setTimeout(() => {
+            handleClick('Users')
+        }, 5000);
     }
     const handleClick = (data) => {
         switch (data) {
@@ -70,6 +76,14 @@ const CreateAdmin = () => {
     }
     const formValidation = () => {
         return !_.isEqual(name, '') && !_.isEqual(email, '') && !_.isEqual(municipality, '');
+    }
+    const showStatus = () => {
+        if (status === 200) {
+            return <Text value={t('User added')}/>
+        }
+        if (status === 409) {
+            return <Text style={{color: "red"}} value={t('User already present')}/>
+        }
     }
 
     return (
@@ -101,6 +115,7 @@ const CreateAdmin = () => {
                                   onSelect={(e) => setMunicipality(e.target.value)}/>
                         <ActionButton label={"Submit"} id={"smallActionButton"} disabled={!formValidation()}
                                       onClick={handleSave}/>
+                        {showStatus()}
                     </div>
                 </Paper>
             </Box></Box>
