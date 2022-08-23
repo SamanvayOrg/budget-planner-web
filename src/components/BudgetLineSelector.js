@@ -168,7 +168,7 @@ const BudgetLineSelector = ({metadata, onSelect, context, onCancel, budget}) => 
                         name,
                         translation
                     })} variant={'contained'}
-                                  disabled={!(detailedHead && theFunction && isAbleToAddNewLine())}
+                                  disabled={!(detailedHead && theFunction && translation && isAbleToAddNewLine())}
                                   style={{marginLeft: 32}} color={'primary'}
                     />
                 </Box>
