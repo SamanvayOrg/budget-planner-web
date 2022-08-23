@@ -23,6 +23,7 @@ import {fetchTranslations, saveTranslations} from "../slices/translationsReducer
 import BudgetPropertySelector from "../components/BudgetPropertySelector";
 import PriorityHighTwoToneIcon from '@mui/icons-material/PriorityHighTwoTone';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
+import {fetchState, stateSelector} from "../../slices/stateReducer";
 import _ from "lodash"
 
 const useStylesBudgetDetails = makeStyles(theme => ({
@@ -77,16 +78,17 @@ const BudgetDetail = () => {
     const {budgetView = [], budget, saved, population, openingBalance} = useSelector(budgetSelector);
 
     const {metadata} = useSelector(metadataSelector);
-
     let {year} = useParams();
     const dispatch = useDispatch();
     useEffect(() => {
+        dispatch(fetchState())
         dispatch(fetchBudget(year));
         dispatch(fetchMetadata());
         dispatch(fetchTranslations());
     }, [dispatch, year]);
     const [open, setOpen] = useState(false);
     const [popupContext, setPopupContext] = useState({});
+    const {stateDetails} = useSelector(stateSelector);
 
     const updateView = (state) => {
         dispatch(updateBudget(state));
@@ -167,7 +169,10 @@ const BudgetDetail = () => {
                             <BudgetLineSelector metadata={metadata} budget={budget} onSelect={(selectedItem) => {
                                 dispatch(addBudgetLine(selectedItem));
                                 dispatch(saveTranslations({
-                                    modelName: selectedItem.name, value: selectedItem.translation, language: "mr"
+                                    stateId: stateDetails.id,
+                                    key: selectedItem.name,
+                                    value: selectedItem.translation,
+                                    language: stateDetails.languages.filter(lang => lang.code !== 'en')[0].code
                                 }));
                                 handleClose();
                             }} context={popupContext} onCancel={handleClose}/>
