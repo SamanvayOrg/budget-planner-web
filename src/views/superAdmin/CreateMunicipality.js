@@ -1,5 +1,4 @@
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
-import {adminMenus} from "../../config";
 import {Box, Paper, TextField, Typography} from "@mui/material";
 import Toolbar from "@mui/material/Toolbar";
 import ActionButton from "../../components/ActionButton";
@@ -16,6 +15,7 @@ import SuperAdminAppBar from "../../components/SuperAdminAppBar";
 import {saveTranslations} from "../../slices/translationsReducer";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
+import {superAdminMenus} from "../../config";
 
 const CreateMunicipality = () => {
     const [name, setName] = useState('');
@@ -80,11 +80,11 @@ const CreateMunicipality = () => {
 
     return (<Box sx={{display: 'flex'}}>
         <SuperAdminAppBar/>
-        <HorizontalMenuDrawer menuList={adminMenus} drawerWidth={240} onClick={handleMenuClick}/>
+        <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleMenuClick}/>
         <Box component="main" sx={{flexGrow: 1, p: 3}}>
             <Toolbar/>
             <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
-                <Typography>Create new user</Typography>
+                <Typography>Create new municipality</Typography>
                 <br/>
                 <div style={{
                     display: 'flex',
