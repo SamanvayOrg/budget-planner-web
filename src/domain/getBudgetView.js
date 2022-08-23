@@ -118,7 +118,7 @@ const getBudgetView = (budget) => {
     const getAddNewLine = (majorHead, majorHeadGroup, allowMajorHeadSelection, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
         {value: null, className: nameClass, context: {type: 'addNewLine', key: 'sr'}, readOnly: true},
         {
-            value: 'Add a new entry', id: 'addRowButton', className: "Spreadsheet-addNewLineBox", context: {
+            value: majorHeadGroup ? 'Add a new Major Head entry' : 'Add a new Minor Head entry', id: 'addRowButton', className: "Spreadsheet-addNewLineBox", context: {
                 type: 'addNewLine', key: 'addButton',
                 majorHead: majorHead, majorHeadGroup: majorHeadGroup, allowMajorHeadSelection: allowMajorHeadSelection
             }, readOnly: true
