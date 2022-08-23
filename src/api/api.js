@@ -100,8 +100,10 @@ const getAllMunicipalities = async (token) => {
 }
 const createMunicipality = async (token, data) => {
     const headers = {'Authorization': `Bearer ${token}`};
-    const result = await axios.post(`api/municipality`, data, {headers});
-    return result.status === 200;
+    const result = await axios.post(`api/municipality`, data, {headers}).catch(function (error) {
+		return error.response
+	});
+	return result.status;
 }
 const getAdminUsers = async (token) => {
 	const headers = {'Authorization': `Bearer ${token}`};
@@ -111,8 +113,11 @@ const getAdminUsers = async (token) => {
 
 const createAdminFromSuperUser = async (token, municipalityId, data) => {
 	const headers = {'Authorization': `Bearer ${token}`};
-	const result = await axios.post(`api/municipality/${municipalityId}/adminUser`, data, {headers});
-	return result.status === 200;
+	const result = await axios.post(`api/municipality/${municipalityId}/adminUser`, data, {headers})
+		.catch(function (error) {
+			return error.response
+		});
+	return result.status;
 }
 
 /** API Used to do the translation */

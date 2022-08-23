@@ -43,7 +43,7 @@ export function saveUser(data) {
 export function createNewUser(data) {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState()) || localStorage.getItem('authToken');;
-       return  await createUser(token, data);
+        return await createUser(token, data);
     }
 }
 
@@ -52,14 +52,14 @@ export function fetchAdminUser() {
         const token = tokenSelector(getState())  || localStorage.getItem('authToken');;
         dispatch(setAdminUsers());
         let users = await getAdminUsers(token);
-       dispatch(setAdminUsers(users));
+        dispatch(setAdminUsers(users));
     }
 }
 
 export function createNewAdmin(data, municipalityId) {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState()) || localStorage.getItem('authToken');;
-        await createAdminFromSuperUser(token, municipalityId, data)
+        return await createAdminFromSuperUser(token, municipalityId, data);
     }
 }
 

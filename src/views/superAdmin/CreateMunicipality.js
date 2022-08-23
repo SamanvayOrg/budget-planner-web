@@ -16,6 +16,8 @@ import {saveTranslations} from "../../slices/translationsReducer";
 import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
 import {superAdminMenus} from "../../config";
+import Text from "../../components/Text";
+import {fetchState, stateSelector} from "../../slices/stateReducer";
 
 const CreateMunicipality = () => {
     const [name, setName] = useState('');
@@ -25,15 +27,17 @@ const CreateMunicipality = () => {
     const [state, setState] = useState('Maharashtra');
     const [cityClass, setCityClass] = useState('');
     const [translation, setTranslation] = useState('');
+    const [status, setStatus] = useState('');
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchCityClasses());
+        dispatch(fetchState())
     }, [dispatch]);
-
     let cityClassesList = [];
     _.forEach(cityClasses, cityClass => {
         cityClassesList.push(cityClass.name)
     })
+    const {stateDetails} = useSelector(stateSelector);
 
 
     const handleChange = (event, type) => {
@@ -44,7 +48,7 @@ const CreateMunicipality = () => {
         }
     }
 
-    const handleSave = () => {
+    const handleSave = async () => {
         let newUserOb = {};
         newUserOb = {
             "name": name,
@@ -52,14 +56,20 @@ const CreateMunicipality = () => {
             "state": state,
             "population": 5000
         };
-        dispatch(createNewMunicipality(newUserOb));
-        dispatch(saveTranslations({
-            modelName: name,
-            value: translation,
-            language: "mr"
-        }))
+        const translationSaveResult = await dispatch(saveTranslations({
+            stateId: stateDetails.id,
+                key: name,
+                value: translation,
+                language: stateDetails.languages.filter(lang => lang.code !== 'en')[0].code
+        }));
+        if (translationSaveResult.status === 200) {
+            const result = await dispatch(createNewMunicipality(newUserOb));
+            setStatus(result);
+        } else {
+            setStatus(translationSaveResult.status);
+        }
     }
-    const handleMenuClick = (data) => {
+    const handleClick = (data) => {
         switch (data) {
             case 'Users':
                 navigate('/superAdmin/users');
@@ -77,10 +87,24 @@ const CreateMunicipality = () => {
     const formValidation = () => {
         return !_.isEqual(name, '') && !_.isEqual(cityClass, '');
     }
+    const showStatus = () => {
+        if (status === 200) {
+            setTimeout(() => {
+                handleClick('Municipality')
+            }, 5000);
+            return <Text value={t('Municipality added')}/>
+        }
+        if (status === 409 || status === 400) {
+            return <Text style={{color: "red"}} value={t('Municipality already present')}/>
+        }
+        if (status == 500) {
+            return <Text style={{color: "red"}} value={t('Error during Municipality creation')}/>
+        }
+    }
 
     return (<Box sx={{display: 'flex'}}>
         <SuperAdminAppBar/>
-        <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleMenuClick}/>
+        <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleClick}/>
         <Box component="main" sx={{flexGrow: 1, p: 3}}>
             <Toolbar/>
             <Paper sx={{width: '100%', overflow: 'hidden', paddingLeft: '20px', paddingTop: '20px'}}>
@@ -105,6 +129,7 @@ const CreateMunicipality = () => {
                     <ActionButton label={t('Save')} id={"smallActionButton"}
                                   style={formValidation() ? {} : {background: "#b7e1e8"}}
                                   onClick={handleSave} disabled={!formValidation()}/>
+                    {showStatus()}
                 </div>
             </Paper>
         </Box></Box>)

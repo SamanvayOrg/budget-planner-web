@@ -70,10 +70,16 @@ const CreateUser = () => {
     }
     const showStatus = () => {
         if (status === 200) {
+            setTimeout(() => {
+                handleClick('Municipality')
+            }, 5000);
             return <Text value={t('User added')}/>
         }
         if (status === 409) {
             return <Text style={{color: "red"}} value={t('User already present')}/>
+        }
+        if (status == 500) {
+            return <Text style={{color: "red"}} value={t('Error during User creation')}/>
         }
     }
     return (
