@@ -23,7 +23,7 @@ import {fetchTranslations, saveTranslations} from "../slices/translationsReducer
 import BudgetPropertySelector from "../components/BudgetPropertySelector";
 import PriorityHighTwoToneIcon from '@mui/icons-material/PriorityHighTwoTone';
 import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
-import {fetchState, stateSelector} from "../../slices/stateReducer";
+import {fetchState, stateSelector} from "../slices/stateReducer";
 import _ from "lodash"
 
 const useStylesBudgetDetails = makeStyles(theme => ({
