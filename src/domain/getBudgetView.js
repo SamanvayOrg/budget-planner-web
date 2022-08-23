@@ -31,36 +31,36 @@ const getBudgetView = (budget) => {
             context: {id: line.id, type: 'detail', key: 'name'},
             readOnly: true
         },
-        {value: line.code, className: numberClass, context: {id: line.id, type: 'detail', key: 'code'}, readOnly: true},
+        {value: t(line.code), className: numberClass, context: {id: line.id, type: 'detail', key: 'code'}, readOnly: true},
         {
-            value: line.yearMinus2Actuals,
+            value: t(line.yearMinus2Actuals),
             className: numberClass,
             context: {id: line.id, type: 'detail', key: 'yearMinus2Actuals'},
             readOnly: true
         },
         {
-            value: line.yearMinus1Actuals,
+            value: t(line.yearMinus1Actuals),
             className: numberClass,
             context: {id: line.id, type: 'detail', key: 'yearMinus1Actuals'},
             readOnly: true
         },
         {
-            value: line.previousYearActuals,
+            value: t(line.previousYearActuals),
             className: numberClass,
             context: {id: line.id, type: 'detail', key: 'previousYearActuals'}
         },
         {
-            value: line.currentYear8MonthsActuals,
+            value: t(line.currentYear8MonthsActuals),
             className: numberClass,
             context: {id: line.id, type: 'detail', key: 'currentYear8MonthsActuals'}
         },
         {
-            value: line.currentYear4MonthsProbables,
+            value: t(line.currentYear4MonthsProbables),
             className: numberClass,
             context: {id: line.id, type: 'detail', key: 'currentYear4MonthsProbables'}
         },
         {
-            value: line.budgetedAmount,
+            value: t(line.budgetedAmount),
             className: numberClass,
             context: {id: line.id, type: 'detail', key: 'budgetedAmount'},
             readOnly: budget.budgetStatus === 'Approved by District' ? true : false
@@ -78,37 +78,37 @@ const getBudgetView = (budget) => {
         {value: name, className: nameClass, context: {type: 'summary', key: 'name'}, readOnly: true},
         {value: null, className: numberClass, context: {type: 'summary', key: 'code'}, readOnly: true},
         {
-            value: line.yearMinus2Actuals,
+            value: t(line.yearMinus2Actuals),
             className: numberClass,
             context: {type: 'summary', key: 'yearMinus2Actuals'},
             readOnly: true
         },
         {
-            value: line.yearMinus1Actuals,
+            value: t(line.yearMinus1Actuals),
             className: numberClass,
             context: {type: 'summary', key: 'yearMinus1Actuals'},
             readOnly: true
         },
         {
-            value: line.previousYearActuals,
+            value: t(line.previousYearActuals),
             className: numberClass,
             context: {type: 'summary', key: 'previousYearActuals'},
             readOnly: true
         },
         {
-            value: line.currentYear8MonthsActuals,
+            value: t(line.currentYear8MonthsActuals),
             className: numberClass,
             context: {type: 'summary', key: 'currentYear8MonthsActuals'},
             readOnly: true
         },
         {
-            value: line.currentYear4MonthsProbables,
+            value: t(line.currentYear4MonthsProbables),
             className: numberClass,
             context: {type: 'summary', key: 'currentYear4MonthsProbables'},
             readOnly: true
         },
         {
-            value: line.budgetedAmount,
+            value: (line.budgetedAmoutnt),
             className: numberClass,
             context: {type: 'summary', key: 'budgetedAmount'},
             readOnly: true
