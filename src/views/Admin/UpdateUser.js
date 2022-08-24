@@ -95,7 +95,7 @@ const UpdateUser = () => {
                         <TextField disabled={!editUser} sx={{maxWidth: 1 / 4}} variant="standard"
                                    label={"Name"} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
-                        <TextField disabled={!editUser} inputProps={{readOnly: !editUser}} sx={{maxWidth: 1 / 4}}
+                        <TextField disabled inputProps={{readOnly: !editUser}} sx={{maxWidth: 1 / 4}}
                                    variant="standard"
                                    label={"Email"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
