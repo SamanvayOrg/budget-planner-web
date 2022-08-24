@@ -13,12 +13,12 @@ const headers = (year) => (
         'Sr',
         t('Particulars'),
         t('Code Number'),
-        t(`${getBudgetYearString(year, 4)} Actuals`),
-        t(`${getBudgetYearString(year, 3)} Actuals`),
-        t(`${getBudgetYearString(year, 2)} Actuals`),
-        t(`${getBudgetYearString(year, 1)} Actuals for 8 months`),
-        t(`${getBudgetYearString(year, 1)} Probables for remaining 4 months`),
-        t(`${getBudgetYearString(year, 0)} Budgeted amount`),
+        `${getBudgetYearString(year, 4)} `+t(`Actuals`),
+        `${getBudgetYearString(year, 3)} `+t(`Actuals`),
+        `${getBudgetYearString(year, 2)} `+t(`Actuals`),
+        `${getBudgetYearString(year, 1)} `+t(`Actuals for 8 months`),
+        `${getBudgetYearString(year, 1)} `+t(`Probables for remaining 4 months`),
+        `${getBudgetYearString(year, 0)} `+t(`Budgeted amount`),
         t(`Actions`)
     ]);
 export {headers, getBudgetYearString}
