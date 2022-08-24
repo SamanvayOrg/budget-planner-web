@@ -58,9 +58,6 @@ const CreateAdmin = () => {
         };
         const result = await dispatch(createNewAdmin(newUserOb, selectedMunicipality.id));
         setStatus(result);
-        setTimeout(() => {
-            handleClick('Users')
-        }, 5000);
     }
 
     const handleClick = (data) => {
@@ -81,7 +78,7 @@ const CreateAdmin = () => {
     const showStatus = () => {
         if (status == 200) {
             setTimeout(() => {
-                handleClick('Municipality')
+                handleClick('Users')
             }, 5000);
             return <Text value={t('User added')}/>
         }

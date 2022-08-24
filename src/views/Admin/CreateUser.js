@@ -71,7 +71,7 @@ const CreateUser = () => {
     const showStatus = () => {
         if (status === 200) {
             setTimeout(() => {
-                handleClick('Municipality')
+                handleClick('Users')
             }, 5000);
             return <Text value={t('User added')}/>
         }
