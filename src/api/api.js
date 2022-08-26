@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import fileDownload from 'js-file-download';
 
 const getCurrentBudget = async (token) => {
 	const headers = {'Authorization': `Bearer ${token}`};
@@ -169,10 +169,24 @@ const deleteTranslation = async (token, id) => {
     return result.status;
 }
 const changeBudgetStatus = async (token, id, status) => {
-	console.log(id, status)
-    const headers = {'Authorization': `Bearer ${token}`};
+	const headers = {'Authorization': `Bearer ${token}`};
     const result = await axios.put(`/api/budget/${id}/status?budgetStatus=${status}`,null,{headers});
     return result.status;
+}
+const downloadBudgetReport = async (token, year, amountType, languageCode) => {
+	const headers = {'Authorization': `Bearer ${token}`, 'Content-Type': 'blob'};
+	const config = {method: 'GET', responseType: 'arraybuffer', headers};
+
+	await axios.get(`/api/report/budget?year=${year}&amountType=${amountType}&languageCode=${languageCode}`, config)
+	.then((res) => {
+		console.log('res', res)
+		const filename = res.headers["content-disposition"]
+			.split('=')[1];
+		fileDownload(res.data, filename);
+	})
+	.catch(function (error) {
+		return error.response
+	});
 }
 
 export {
@@ -180,5 +194,5 @@ export {
 	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser,
 	getAllMunicipalities, createMunicipality, getAdminUsers, createAdminFromSuperUser, addTranslations,
 	modifyTranslations, getAllTranslationsData, getStateDetails, updateBudgetProperties, deleteTranslation,
-	changeBudgetStatus
+	changeBudgetStatus, downloadBudgetReport
 };

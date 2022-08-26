@@ -6,7 +6,7 @@ import React, {useState} from "react";
 import {Modal} from "@mui/material";
 import {useStyles} from "./ModalWithButton";
 import DropDown from "./DropDown";
-import {updateBudgetStatus} from "../slices/budgetReducer";
+import {downloadBudgetExcel, updateBudgetStatus} from "../slices/budgetReducer";
 import {useDispatch} from "react-redux";
 
 const styleSheets = makeStyles(theme => ({
@@ -92,6 +92,8 @@ const BudgetBox = ({
     const {t} = useTranslation();
     const classes = styleSheets();
     const modalClass = useStyles();
+    const [reportType, setReportType] = useState(["ACTUALS", "BUDGETED", "ESTIMATES"]);
+    const [selectedReport, setSelectedReport] = useState("BUDGETED");
     const [budgetAllStatus, setBudgetAllStatus] = useState(budgetStatusInfo.allowedNextBudgetStatuses);
     const [currentStatus, setCurrentStatus] = useState(budgetStatusInfo.currentBudgetStatus);
     const [changedStatus, setChangedStatus] = useState(currentStatus);
@@ -103,6 +105,12 @@ const BudgetBox = ({
         console.log('status',e.target.value);
         setCurrentStatus(changedStatus);
         dispatch(updateBudgetStatus(budget.id, changedStatus));
+        handleClose();
+    }
+
+    const onReportDownloadStateChange = (e) => {
+        console.log('reportType',e.target.value);
+        dispatch(downloadBudgetExcel(budget.budgetYear.substring(0, 4), selectedReport));
         handleClose();
     }
 
@@ -131,9 +139,20 @@ const BudgetBox = ({
 
 			</span>
             <span className={classes.actionButtons}>
-				<ActionButton style={{marginLeft: '10px'}} key={index.key} onClick={firstButtonAction}
+				<ActionButton style={{marginLeft: '10px'}} key={index.key} onClick={handleOpen}
                               label={t("DOWNLOAD")}
                               id={"smallActionButton"}/>
+                <Modal open={open} onClose={handleClose} className={modalClass.modal}>
+                        <div className={classes.modalDiv}>
+                            <div className={classes.lastUpdateText}>
+                                <span>Select the type of report to be downloaded</span>
+                            </div>
+                            <DropDown list={reportType} value={selectedReport}
+                                      onSelect={(e) => setSelectedReport(e.target.value)}/>
+                            <ActionButton label={t("Save")} id={"downloadReportButton"} onClick={onReportDownloadStateChange}/>
+                            <span className={classes.cancelText} onClick={handleClose}>Cancel</span>
+                        </div>
+                </Modal>
 
 				<ActionButton style={{marginLeft: '10px'}} key={index} onClick={secondButtonAction}
                               label={t("EDIT BUDGET")}
