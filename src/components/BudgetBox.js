@@ -97,21 +97,24 @@ const BudgetBox = ({
     const [budgetAllStatus, setBudgetAllStatus] = useState(budgetStatusInfo.allowedNextBudgetStatuses);
     const [currentStatus, setCurrentStatus] = useState(budgetStatusInfo.currentBudgetStatus);
     const [changedStatus, setChangedStatus] = useState(currentStatus);
-    const [open, setOpen] = React.useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+    const [openBudgetStatus, setOpenBudgetStatus] = React.useState(false);
+    const handleOpenBudgetStatus = () => setOpenBudgetStatus(true);
+    const handleCloseBudgetStatus = () => setOpenBudgetStatus(false);
+    const [openBudgetDownload, setOpenBudgetDownload] = React.useState(false);
+    const handleOpenBudgetDownload = () => setOpenBudgetDownload(true);
+    const handleCloseBudgetDownload = () => setOpenBudgetDownload(false);
 
     const onStateChange = (e) => {
         console.log('status',e.target.value);
         setCurrentStatus(changedStatus);
         dispatch(updateBudgetStatus(budget.id, changedStatus));
-        handleClose();
+        handleCloseBudgetStatus();
     }
 
     const onReportDownloadStateChange = (e) => {
         console.log('reportType',e.target.value);
         dispatch(downloadBudgetExcel(budget.budgetYear.substring(0, 4), selectedReport));
-        handleClose();
+        handleCloseBudgetDownload();
     }
 
 
@@ -125,13 +128,13 @@ const BudgetBox = ({
                 {versionName}
 
                 <div>
-                <ActionButton label={t(currentStatus)} variant="outlined" onClick={handleOpen}/>
-                <Modal open={open} onClose={handleClose} className={modalClass.modal}>
+                <ActionButton label={t(currentStatus)} variant="outlined" onClick={handleOpenBudgetStatus}/>
+                <Modal open={openBudgetStatus} onClose={handleCloseBudgetStatus} className={modalClass.modal}>
                         <div className={classes.modalDiv}>
                             <DropDown list={budgetAllStatus} value={changedStatus}
                                       onSelect={(e) => setChangedStatus(e.target.value)}/>
                             <ActionButton label={t("Save")} id={"addNewBudgetButton"} onClick={onStateChange}/>
-                            <span className={classes.cancelText} onClick={handleClose}>Cancel</span>
+                            <span className={classes.cancelText} onClick={handleCloseBudgetStatus}>Cancel</span>
                         </div>
                     </Modal>
             </div>
@@ -139,10 +142,10 @@ const BudgetBox = ({
 
 			</span>
             <span className={classes.actionButtons}>
-				<ActionButton style={{marginLeft: '10px'}} key={index.key} onClick={handleOpen}
+				<ActionButton style={{marginLeft: '10px'}} key={index.key} onClick={handleOpenBudgetDownload}
                               label={t("DOWNLOAD")}
                               id={"smallActionButton"}/>
-                <Modal open={open} onClose={handleClose} className={modalClass.modal}>
+                <Modal open={openBudgetDownload} onClose={handleCloseBudgetDownload} className={modalClass.modal}>
                         <div className={classes.modalDiv}>
                             <div className={classes.lastUpdateText}>
                                 <span>Select the type of report to be downloaded</span>
@@ -150,7 +153,7 @@ const BudgetBox = ({
                             <DropDown list={reportType} value={selectedReport}
                                       onSelect={(e) => setSelectedReport(e.target.value)}/>
                             <ActionButton label={t("Save")} id={"downloadReportButton"} onClick={onReportDownloadStateChange}/>
-                            <span className={classes.cancelText} onClick={handleClose}>Cancel</span>
+                            <span className={classes.cancelText} onClick={handleCloseBudgetDownload}>Cancel</span>
                         </div>
                 </Modal>
 
