@@ -7,7 +7,7 @@ import {Box, Paper, TextField, Typography} from "@mui/material";
 import ActionButton from "../../components/ActionButton";
 import {useNavigate, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, fetchAdminUser, saveUser} from "../../slices/allUsersReducer";
+import {allUsersSelector, saveUser} from "../../slices/allUsersReducer";
 import _ from "lodash";
 import DropDown from "../../components/DropDown";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";

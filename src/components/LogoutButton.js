@@ -9,6 +9,7 @@ const LogoutButton = () => {
 	const dispatch = useDispatch();
 
 	const onPressLogout = () => {
+		localStorage.removeItem('authToken');
 		dispatch(logOut());
 		logout({returnTo: ""});
 	}
