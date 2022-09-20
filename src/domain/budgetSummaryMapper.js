@@ -50,9 +50,25 @@ const budgetSummaryData = (budgets, year) => {
     const getRevisedTotalSurplusOrDef = () => {
         return (getRevisedValue(prevYearBudget, 'Revenue Receipt') + getRevisedValue(prevYearBudget, 'Assets')) - (getRevisedValue(prevYearBudget, 'Expenses') + getRevisedValue(prevYearBudget, 'Liability'))
     }
+    const getPrevYearOpeningBalance = () => {
+        if (prevYearBudget) {
+            return prevYearBudget.openingBalance;
+        }
+    }
+    const getCurrentYearOpeningBalance = () => {
+        if (currentYearBudget) {
+            return currentYearBudget.openingBalance;
+
+        }
+    }
 
     const getData = () => {
         let dataLine = [];
+        dataLine.push({
+            name: 'Opening Balance',
+            revised: _.ceil(getPrevYearOpeningBalance() / 100000),
+            budgeted: _.ceil(getCurrentYearOpeningBalance() / 100000)
+        })
         dataLine.push({
             name: 'Revenue Income',
             revised: _.ceil(getRevisedValue(prevYearBudget, 'Revenue Receipt') / 100000),
