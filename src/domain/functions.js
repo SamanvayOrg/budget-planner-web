@@ -2,9 +2,10 @@ import {useEffect} from 'react';
 import {allMunicipalityDetailsSelector, fetchMunicipalityDetails} from '../slices/municipalityReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import * as xlsx from 'xlsx/xlsx.mjs';
+import _ from "lodash";
 
 
-const MunicipalityName = () => {
+export const MunicipalityName = () => {
     const dispatch = useDispatch();
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector)
     useEffect(() => {
@@ -14,7 +15,7 @@ const MunicipalityName = () => {
 }
 
 
-const downloadInExcel = (fileName, data, headers) => {
+export const downloadInExcel = (fileName, data, headers) => {
     //set dynamic column width
     function fitToColumn(headers) {
         // get maximum character of each column
@@ -30,4 +31,15 @@ const downloadInExcel = (fileName, data, headers) => {
 }
 
 
-export {MunicipalityName, downloadInExcel}
+export const currentYearBudget = (budgets, year) => {
+    return _.chain(budgets)
+        .filter((e) => e.budgetYear === year)
+        .first()
+        .value();
+}
+export const prevYearBudget = (budgets, year) => {
+    return _.chain(budgets)
+        .filter((e) => e.budgetYear === `${year.substring(0, 4) - 1}-${year.substring(7, 5) - 1}`)
+        .first()
+        .value();
+}
