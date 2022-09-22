@@ -162,52 +162,27 @@ export const revenueIncomeSummaryData = (budgets, year) => {
             amount: _.ceil(getValue(category) / 100000)
         })
     })
-    dataLines.push({
-        sr: '',
-        name: 'Total Revenue Income',
-        amount: _.ceil(totalRevenueIncome / 100000)
-    })
 
-    dataLines.push({
-        sr: 'B',
-        name: 'Revenue Expenditure',
-        unit: '(In lakhs)'
-    })
+    const pushDataInArray = (array, sr, col1, col2) => {
+        array.push({
+            sr: sr,
+            name: col1,
+            amount: col2
+        })
+    }
 
-    dataLines.push({
-        sr: '',
-        name: 'Admin Expenses',
-        unit: _.ceil(getValue('Administrative Expense') / 100000)
-    })
-
-    dataLines.push({
-        sr: '',
-        name: 'Establishment Expenses',
-        unit: _.ceil(getValue('Salary and allowances') / 100000)
-    })
-
-    dataLines.push({
-        sr: '',
-        name: 'Operations & Maintenance',
-        unit: _.ceil(getValue('Operations and Maintenance') + getValue('Water Supply (Public Health and Welfare)') / 100000)
-    })
-
-    dataLines.push({
-        sr: '',
-        name: 'Others',
-        unit: _.ceil(getValue('Others') + getValue('Social Welfare') / 100000)
-    })
-    dataLines.push({
-        sr: '',
-        name: 'Total Revenue Expenditure',
-        unit: _.ceil((getValue('Others') +
-            getValue('Social Welfare') +
-            getValue('Operations and Maintenance') +
-            getValue('Water Supply (Public Health and Welfare)') +
-            getValue('Salary and allowances') +
-            getValue('Administrative Expense')) / 100000)
-    })
-
+    pushDataInArray(dataLines, '', 'Total Revenue Income', _.ceil(totalRevenueIncome / 100000));
+    pushDataInArray(dataLines, 'B', 'Revenue Expenditure', '(In lakhs)');
+    pushDataInArray(dataLines, '', 'Admin Expenses', _.ceil(getValue('Administrative Expense') / 100000));
+    pushDataInArray(dataLines, '', 'Establishment Expenses', _.ceil(getValue('Salary and allowances') / 100000));
+    pushDataInArray(dataLines, '', 'Operations & Maintenance', _.ceil(getValue('Operations and Maintenance') + getValue('Water Supply (Public Health and Welfare)') / 100000));
+    pushDataInArray(dataLines, '', 'Others', _.ceil(getValue('Others') + getValue('Social Welfare') / 100000));
+    pushDataInArray(dataLines, '', 'Total Revenue Expenditure', _.ceil((getValue('Others') +
+        getValue('Social Welfare') +
+        getValue('Operations and Maintenance') +
+        getValue('Water Supply (Public Health and Welfare)') +
+        getValue('Salary and allowances') +
+        getValue('Administrative Expense')) / 100000));
 
     return {
         data: dataLines
