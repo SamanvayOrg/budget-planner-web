@@ -11,6 +11,7 @@ import ResponsiveBarGraph from "../components/ResponsiveBarGraph";
 import PerPersonRevenue from "../components/PerPersonRevenue";
 import React from "react";
 import {useTranslation} from "react-i18next";
+import SectorialDistributionDashboardReport from "../components/SectorialDistributionDashboardReport";
 
 const ReportsDashboard = ({styleSheet, allBudget, budgetYear}) => {
     const classes = styleSheet;
@@ -86,6 +87,16 @@ const ReportsDashboard = ({styleSheet, allBudget, budgetYear}) => {
                     headings={getRevenueIncomeSummaryData(allBudget, budgetYear).headers}
                     rows={getRevenueIncomeSummaryData(allBudget, budgetYear).data}
                     title={t(`Revenue Income Summary FY ${budgetYear} (in lakhs)`)}/>
+            </div>
+            <div className={classes.boxWithColumnDirection} style={{background: " #079CA3"}}>
+                <span style={{
+                    fontSize: 20,
+                    paddingTop: 5,
+                    color: "whitesmoke"
+                }}>{t(`Revenue Expenditure Sectoral Distribution FY ${budgetYear}`)}</span>
+                <div className={classes.box} style={{width: "100%"}}>
+                    <SectorialDistributionDashboardReport budgets={allBudget} year={budgetYear}/>
+                </div>
             </div>
         </div>
     );

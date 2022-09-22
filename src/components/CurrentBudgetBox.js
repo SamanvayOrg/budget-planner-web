@@ -20,9 +20,8 @@ const styleSheets = makeStyles(theme => ({
         background: " #FFFFFF",
         border: "1px solid #DEDEDE",
         borderRadius: "3px",
-        marginTop: "30px",
         gap: "2vw",
-        paddingTop: "15px",
+        paddingTop: "10px",
         paddingBottom: "15px",
         paddingRight: "10px",
         fontSize: "15px",
@@ -39,7 +38,19 @@ const styleSheets = makeStyles(theme => ({
         fontWeight: "700", fontSize: "19px"
     }, actionButtons: {
         display: "flex", justifyContent: "flex-end", fontSize: "11px", textTransform: "uppercase", color: "#616161",
-    },
+    }, boxWithColumnDirection: {
+        display: "flex",
+        flexDirection: "column",
+        boxSizing: "border-box",
+        width: "100%",
+        border: "1px solid #DEDEDE",
+        borderRadius: "3px",
+        marginTop: "30px",
+        gap: "1vw",
+        fontFamily: "Lato",
+        justifyContent: "center",
+        alignItems: "center",
+    }
 
 }))
 const CurrentBudgetBox = ({year}) => {
