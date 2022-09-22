@@ -29,7 +29,7 @@ export const budgetSummaryData = (budgets, year) => {
     }
 
 
-    const getHeadings = () => {
+    const getBudgetSummaryTableHeadings = () => {
         let headings = [];
         headings.push('');
         headings.push(`FY ${year.substring(0, 4) - 1} - ${year.substring(7, 5) - 1} (Revised Estimates)`);
@@ -55,7 +55,7 @@ export const budgetSummaryData = (budgets, year) => {
         }
     }
 
-    const getData = () => {
+    const getBudgetSummaryTableData = () => {
         let dataLine = [];
         dataLine.push({
             name: 'Opening Balance',
@@ -121,10 +121,9 @@ export const budgetSummaryData = (budgets, year) => {
     }
 
 
-
     return {
-        headings: getHeadings(),
-        data: getData(),
+        budgetSummaryTableHeadings: getBudgetSummaryTableHeadings(),
+        budgetSummaryTableData: getBudgetSummaryTableData(),
         pieChartData: piechartData(),
         barGraphData: getBarGraphData(),
         budgetedRevenueIncome: getBudgetedValue(currentYearBudget(budgets, year), 'Revenue Receipt'),
@@ -135,14 +134,84 @@ export const budgetSummaryData = (budgets, year) => {
     };
 }
 
-export const getRevenueIncomeByCategory = (budgets,year,category) => {
-    if (currentYearBudget(budgets, year)) {
-        return _.chain(currentYearBudget(budgets, year).budgetLines)
-            .filter((e) => e.category === category)
-            .sumBy((e) => e.budgetedAmount)
-            .value();
+export const revenueIncomeSummaryData = (budgets, year) => {
+
+
+    const getValue = (category) => {
+        if (currentYearBudget(budgets, year)) {
+            return _.chain(currentYearBudget(budgets, year).budgetLines)
+                .filter((e) => e.category === category)
+                .sumBy((e) => e.budgetedAmount)
+                .value();
+        }
     }
-    return '';
+
+    const dataLines = [];
+    const revenueIncomeCategories = ['Revenue Grants', 'Own Tax', 'Non Tax'];
+    dataLines.push({
+        sr: 'A',
+        name: 'Revenue Income',
+        unit: '(In lakhs)'
+    })
+    let totalRevenueIncome = 0;
+    _.forEach(revenueIncomeCategories, category => {
+        totalRevenueIncome += getValue(category);
+        dataLines.push({
+            sr: '',
+            name: category,
+            amount: _.ceil(getValue(category) / 100000)
+        })
+    })
+    dataLines.push({
+        sr: '',
+        name: 'Total Revenue Income',
+        amount: _.ceil(totalRevenueIncome / 100000)
+    })
+
+    dataLines.push({
+        sr: 'B',
+        name: 'Revenue Expenditure',
+        unit: '(In lakhs)'
+    })
+
+    dataLines.push({
+        sr: '',
+        name: 'Admin Expenses',
+        unit: _.ceil(getValue('Administrative Expense') / 100000)
+    })
+
+    dataLines.push({
+        sr: '',
+        name: 'Establishment Expenses',
+        unit: _.ceil(getValue('Salary and allowances') / 100000)
+    })
+
+    dataLines.push({
+        sr: '',
+        name: 'Operations & Maintenance',
+        unit: _.ceil(getValue('Operations and Maintenance') + getValue('Water Supply (Public Health and Welfare)') / 100000)
+    })
+
+    dataLines.push({
+        sr: '',
+        name: 'Others',
+        unit: _.ceil(getValue('Others') + getValue('Social Welfare') / 100000)
+    })
+    dataLines.push({
+        sr: '',
+        name: 'Total Revenue Expenditure',
+        unit: _.ceil((getValue('Others') +
+            getValue('Social Welfare') +
+            getValue('Operations and Maintenance') +
+            getValue('Water Supply (Public Health and Welfare)') +
+            getValue('Salary and allowances') +
+            getValue('Administrative Expense')) / 100000)
+    })
+
+
+    return {
+        data: dataLines
+    };
 }
 
 

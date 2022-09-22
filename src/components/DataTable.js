@@ -31,9 +31,10 @@ const DataTable = ({headings, rows, title}) => {
 						key={row.name}
 						sx={{'&:last-child td, &:last-child th': {border: 0}}}
 					>
-						<TableCell key={row.name.index}>{row.name}</TableCell>
-						<TableCell key={row.revised.index}>{row.revised}</TableCell>
-						<TableCell key={row.budgeted.index}>{row.budgeted}</TableCell>
+						{_.map(row,(item,index) =>(
+							<TableCell key={index}>{item}</TableCell>
+						))}
+
 					</TableRow>))}
 			</TableBody>
 		</Table>
