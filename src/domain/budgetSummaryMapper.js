@@ -92,8 +92,7 @@ export const budgetSummaryData = (budgets, year) => {
     const piechartData = () => {
         let pieData = [];
         pieData.push({
-            id: 'Revenue Budget',
-            value: _.ceil(getBudgetedValue(currentYearBudget(budgets, year), 'Expenses') / 100000)
+            id: 'Revenue Budget', value: _.ceil(getBudgetedValue(currentYearBudget(budgets, year), 'Expenses') / 100000)
         });
         pieData.push({
             id: 'Capital Budget',
@@ -134,9 +133,7 @@ export const budgetSummaryData = (budgets, year) => {
     };
 }
 
-export const revenueIncomeSummaryData = (budgets, year) => {
-
-
+export const revenueIncomeAndExpenditureSummaryData = (budgets, year) => {
     const getValue = (category) => {
         if (currentYearBudget(budgets, year)) {
             return _.chain(currentYearBudget(budgets, year).budgetLines)
@@ -145,29 +142,22 @@ export const revenueIncomeSummaryData = (budgets, year) => {
                 .value();
         }
     }
-
     const dataLines = [];
     const revenueIncomeCategories = ['Revenue Grants', 'Own Tax', 'Non Tax'];
     dataLines.push({
-        sr: 'A',
-        name: 'Revenue Income',
-        unit: '(In lakhs)'
+        sr: 'A', name: 'Revenue Income', unit: '(In lakhs)'
     })
     let totalRevenueIncome = 0;
     _.forEach(revenueIncomeCategories, category => {
         totalRevenueIncome += getValue(category);
         dataLines.push({
-            sr: '',
-            name: category,
-            amount: _.ceil(getValue(category) / 100000)
+            sr: '', name: category, amount: _.ceil(getValue(category) / 100000)
         })
     })
 
     const pushDataInArray = (array, sr, col1, col2) => {
         array.push({
-            sr: sr,
-            name: col1,
-            amount: col2
+            sr: sr, name: col1, amount: col2
         })
     }
 
@@ -177,16 +167,69 @@ export const revenueIncomeSummaryData = (budgets, year) => {
     pushDataInArray(dataLines, '', 'Establishment Expenses', _.ceil(getValue('Salary and allowances') / 100000));
     pushDataInArray(dataLines, '', 'Operations & Maintenance', _.ceil(getValue('Operations and Maintenance') + getValue('Water Supply (Public Health and Welfare)') / 100000));
     pushDataInArray(dataLines, '', 'Others', _.ceil(getValue('Others') + getValue('Social Welfare') / 100000));
-    pushDataInArray(dataLines, '', 'Total Revenue Expenditure', _.ceil((getValue('Others') +
-        getValue('Social Welfare') +
-        getValue('Operations and Maintenance') +
-        getValue('Water Supply (Public Health and Welfare)') +
-        getValue('Salary and allowances') +
-        getValue('Administrative Expense')) / 100000));
+    pushDataInArray(dataLines, '', 'Total Revenue Expenditure', _.ceil((getValue('Others') + getValue('Social Welfare') + getValue('Operations and Maintenance') + getValue('Water Supply (Public Health and Welfare)') + getValue('Salary and allowances') + getValue('Administrative Expense')) / 100000));
 
     return {
         data: dataLines
     };
+}
+
+export const getRevenueIncomeSummaryData = (budgets, year) => {
+    const getValueFromCategory = (category) => {
+        if (currentYearBudget(budgets, year)) {
+            return _.chain(currentYearBudget(budgets, year).budgetLines)
+                .filter((e) => e.category === category)
+                .sumBy((e) => e.budgetedAmount)
+                .value();
+        }
+    }
+    const getValueFromMajorHead = (majorHead) => {
+        console.log('budget', budgets)
+
+        if (currentYearBudget(budgets, year)) {
+            return _.chain(currentYearBudget(budgets, year).budgetLines)
+                .filter((e) => e.majorHead === majorHead)
+                .sumBy((e) => e.budgetedAmount)
+                .value();
+        }
+    }
+
+    let headers = ['', 'Revenue Income', '(In lakhs)']
+    let dataLines = [];
+    const pushDataInArray = (array, sr, col1, col2) => {
+        array.push({
+            sr: sr, name: col1, amount: col2
+        })
+    }
+    pushDataInArray(dataLines, 'A', 'Revenue Grants', _.ceil(getValueFromCategory('Revenue Grants') / 100000));
+    pushDataInArray(dataLines, 'B', 'Own Tax Income', '');
+    pushDataInArray(dataLines, '', 'Property Tax', _.ceil(getValueFromMajorHead('Consolidated Tax on Property') / 100000));
+    pushDataInArray(dataLines, '', 'Water Tax', '');
+    pushDataInArray(dataLines, '', 'Others(Sanitation tax, SWM, Advertisement tax, Cinema tax etc.)', '');
+    pushDataInArray(dataLines, 'C', 'Non Tax Income', '');
+    pushDataInArray(dataLines, '', 'Fees & User Charges', _.ceil(getValueFromMajorHead('Fees,User Charges & Fines') / 100000));
+    pushDataInArray(dataLines, '', 'Reserve Funds', '');
+    pushDataInArray(dataLines, '', 'Other Non-Tax Income (sales & interest)', '');
+    pushDataInArray(dataLines, '', 'Rental Income', _.ceil(getValueFromMajorHead('Rental Income from Municipal Properties') / 100000));
+    pushDataInArray(dataLines, '', 'Total Revenue Income', '');
+    const pieChartData = () => {
+        let pieData = [];
+        pieData.push({
+            id: 'Revenue Grants', value: _.ceil(getValueFromCategory('Revenue Grants') / 100000)
+        });
+        pieData.push({
+            id: 'Own-Tax Income', value: _.ceil(getValueFromCategory('Own Tax') / 100000)
+        });
+        pieData.push({
+            id: 'Non-Tax Income', value: _.ceil(getValueFromCategory('Non Tax') / 100000)
+        });
+        return pieData;
+    }
+
+    return {
+        headers, data: dataLines,
+        pieChartData: pieChartData()
+    }
 }
 
 
