@@ -1,6 +1,6 @@
 import DataTable from "../components/DataTable";
 import {
-    budgetSummaryData,
+    budgetSummaryData, capitalBudgetSummaryData,
     getRevenueIncomeSummaryData,
     revenueIncomeAndExpenditureSummaryData
 } from "../domain/budgetSummaryMapper";
@@ -48,7 +48,7 @@ const ReportsDashboard = ({styleSheet, allBudget, budgetYear}) => {
             </div>
             <div className={classes.box}>
                 <Paper style={{
-                    height: 400, width: '100%'
+                    height: 400, width: '85%'
                 }}>
                     <Paper style={{
                         height: 400, width: '100%'
@@ -98,6 +98,30 @@ const ReportsDashboard = ({styleSheet, allBudget, budgetYear}) => {
                     <SectorialDistributionDashboardReport budgets={allBudget} year={budgetYear}/>
                 </div>
             </div>
+            <div className={classes.boxWithColumnDirection} style={{background: " #079CA3"}}>
+                <span style={{
+                    fontSize: 20,
+                    paddingTop: 5,
+                    color: "whitesmoke"
+                }}>{t(`Capital Budget Summary ${budgetYear}`)}</span>
+                <div className={classes.box} style={{width: "100%"}}>
+                    <Paper style={{
+                        height: 426, width: '50%'
+                    }}>
+                        <ResponsiveBarGraph data={capitalBudgetSummaryData(allBudget, budgetYear).barGraphData}
+                                            indexBy={"name"}
+                                            keys={['Capital Income', 'Capital Expenditure']}/>
+                    </Paper>
+                    <Paper style={{
+                        height: 400, width: '50%'
+                    }}>
+                        <DataTable
+                            rows={capitalBudgetSummaryData(allBudget, budgetYear).tableRows}
+                            title={t(`Capital Budget Summary FY ${budgetYear} (in lakhs)`)}/>
+                    </Paper>
+                </div>
+            </div>
+
         </div>
     );
 }

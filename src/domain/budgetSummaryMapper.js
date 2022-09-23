@@ -233,4 +233,79 @@ export const getRevenueIncomeSummaryData = (budgets, year) => {
 }
 
 
+export const capitalBudgetSummaryData = (budgets, year) => {
+
+    const getData = (majorHeadName) => {
+        if (currentYearBudget(budgets, year)) {
+            return _.chain(budgets)
+                .filter((budget) => budget.budgetYear === year)
+                .map((budget) => budget.budgetLines)
+                .first()
+                .filter((line) => line.majorHeadGroup === majorHeadName)
+                .value();
+        }
+    }
+    const getBudgetedValue = (lines) => {
+        return _.chain(lines)
+            .sumBy((lines) => lines.budgetedAmount)
+            .value()
+    }
+
+    const getBarGraphData = () => {
+        let barData = [];
+        barData.push({
+            "name": 'Capital Income',
+            "Capital Income": _.ceil(getBudgetedValue(getData('Assets')) / 100000)
+        });
+        barData.push({
+            "name": 'Capital Expenditure',
+            "Capital Expenditure": _.ceil(getBudgetedValue(getData('Liability')) / 100000)
+        })
+        return barData;
+    }
+
+
+    let tableRows=[];
+    tableRows.push({
+        sr:'A',
+        name:'Capital Income (INR lakhs)',
+        data:''
+    });
+    tableRows.push({
+        sr:'',
+        name:'Central State Schemes & Grants',
+        data:5420
+    });
+    tableRows.push({
+        sr:'',
+        name:'Deposits',
+        data:134
+    });
+    tableRows.push({
+        sr:'',
+        name:'Recovery',
+        data:0
+    });
+    tableRows.push({
+        sr:'B',
+        name:'Capital Expenditure (INR lakhs)',
+        data:''
+    });
+    tableRows.push({
+        sr:'',
+        name:'Capital Projects',
+        data:5315
+    });
+    tableRows.push({
+        sr:'',
+        name:'Loan, Advance and Deposit Repayment',
+        data:805
+    });
+
+    return {
+        barGraphData: getBarGraphData(),
+        tableRows
+    }
+
+}
 
