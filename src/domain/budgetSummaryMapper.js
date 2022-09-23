@@ -57,36 +57,17 @@ export const budgetSummaryData = (budgets, year) => {
 
     const getBudgetSummaryTableData = () => {
         let dataLine = [];
-        dataLine.push({
-            name: 'Opening Balance',
-            revised: _.ceil(getPrevYearOpeningBalance() / 100000),
-            budgeted: _.ceil(getCurrentYearOpeningBalance() / 100000)
-        })
-        dataLine.push({
-            name: 'Revenue Income',
-            revised: _.ceil(getRevisedValue(prevYearBudget(budgets, year), 'Revenue Receipt') / 100000),
-            budgeted: _.ceil(getBudgetedValue(currentYearBudget(budgets, year), 'Revenue Receipt') / 100000)
-        });
-        dataLine.push({
-            name: 'Revenue Expenditure',
-            revised: _.ceil(getRevisedValue(prevYearBudget(budgets, year), 'Expenses') / 100000),
-            budgeted: _.ceil(getBudgetedValue(currentYearBudget(budgets, year), 'Expenses') / 100000)
-        });
-        dataLine.push({
-            name: 'Capital Income',
-            revised: _.ceil(getRevisedValue(prevYearBudget(budgets, year), 'Assets') / 100000),
-            budgeted: _.ceil(getBudgetedValue(currentYearBudget(budgets, year), 'Assets') / 100000)
-        });
-        dataLine.push({
-            name: 'Capital Expenditure',
-            revised: _.ceil(getRevisedValue(prevYearBudget(budgets, year), 'Liability') / 100000),
-            budgeted: _.ceil(getBudgetedValue(currentYearBudget(budgets, year), 'Liability') / 100000)
-        });
-        dataLine.push({
-            name: 'Total surplus/deficit',
-            revised: _.ceil(getRevisedTotalSurplusOrDef(prevYearBudget(budgets, year), 'Liability') / 100000),
-            budgeted: _.ceil(getBudgetedTotalSurplusOrDef(currentYearBudget(budgets, year), 'Liability') / 100000)
-        });
+        const pushInArray = (array, name, revised, budgeted) => {
+            array.push({
+                name: name, revised: _.ceil(revised / 100000), budgeted: _.ceil(budgeted / 100000)
+            })
+        }
+        pushInArray(dataLine, 'Opening Balance', getPrevYearOpeningBalance(), getCurrentYearOpeningBalance())
+        pushInArray(dataLine, 'Revenue Income', getRevisedValue(prevYearBudget(budgets, year), 'Revenue Receipt'), getBudgetedValue(currentYearBudget(budgets, year), 'Revenue Receipt'));
+        pushInArray(dataLine, 'Revenue Expenditure', getRevisedValue(prevYearBudget(budgets, year), 'Expenses'), getBudgetedValue(currentYearBudget(budgets, year), 'Expenses'));
+        pushInArray(dataLine, 'Capital Income', getRevisedValue(prevYearBudget(budgets, year), 'Assets'), getBudgetedValue(currentYearBudget(budgets, year), 'Assets'));
+        pushInArray(dataLine, 'Capital Expenditure', getRevisedValue(prevYearBudget(budgets, year), 'Liability'), getBudgetedValue(currentYearBudget(budgets, year), 'Liability'));
+        pushInArray(dataLine, 'Total surplus/deficit', getRevisedTotalSurplusOrDef(prevYearBudget(budgets, year), 'Liability'), getBudgetedTotalSurplusOrDef(currentYearBudget(budgets, year), 'Liability'));
         return dataLine;
     }
     const piechartData = () => {
@@ -118,7 +99,6 @@ export const budgetSummaryData = (budgets, year) => {
         }
         return 0;
     }
-
 
     return {
         budgetSummaryTableHeadings: getBudgetSummaryTableHeadings(),
@@ -208,104 +188,61 @@ export const getRevenueIncomeSummaryData = (budgets, year) => {
     pushDataInArray(dataLines, '', 'Others(Sanitation tax, SWM, Advertisement tax, Cinema tax etc.)', '');
     pushDataInArray(dataLines, 'C', 'Non Tax Income', '');
     pushDataInArray(dataLines, '', 'Fees & User Charges', _.ceil(getValueFromMajorHead('Fees,User Charges & Fines') / 100000));
-    pushDataInArray(dataLines, '', 'Reserve Funds', '');
-    pushDataInArray(dataLines, '', 'Other Non-Tax Income (sales & interest)', '');
+    pushDataInArray(dataLines, '', 'Reserve Funds', '');//Todo  add Reserves
+    pushDataInArray(dataLines, '', 'Other Non-Tax Income (sales & interest)', '');//todo Sales and Hire Charges and Income from Interest
     pushDataInArray(dataLines, '', 'Rental Income', _.ceil(getValueFromMajorHead('Rental Income from Municipal Properties') / 100000));
     pushDataInArray(dataLines, '', 'Total Revenue Income', '');
     const pieChartData = () => {
         let pieData = [];
-        pieData.push({
-            id: 'Revenue Grants', value: _.ceil(getValueFromCategory('Revenue Grants') / 100000)
-        });
-        pieData.push({
-            id: 'Own-Tax Income', value: _.ceil(getValueFromCategory('Own Tax') / 100000)
-        });
-        pieData.push({
-            id: 'Non-Tax Income', value: _.ceil(getValueFromCategory('Non Tax') / 100000)
-        });
+        pieData.push({id: 'Revenue Grants', value: _.ceil(getValueFromCategory('Revenue Grants') / 100000)});
+        pieData.push({id: 'Own-Tax Income', value: _.ceil(getValueFromCategory('Own Tax') / 100000)});
+        pieData.push({id: 'Non-Tax Income', value: _.ceil(getValueFromCategory('Non Tax') / 100000)});
         return pieData;
     }
 
     return {
-        headers, data: dataLines,
-        pieChartData: pieChartData()
+        headers, data: dataLines, pieChartData: pieChartData()
     }
 }
-
 
 export const capitalBudgetSummaryData = (budgets, year) => {
 
     const getData = (majorHeadName) => {
         if (currentYearBudget(budgets, year)) {
-            return _.chain(budgets)
-                .filter((budget) => budget.budgetYear === year)
-                .map((budget) => budget.budgetLines)
-                .first()
+            return _.chain(currentYearBudget(budgets, year).budgetLines)
                 .filter((line) => line.majorHeadGroup === majorHeadName)
+                .sumBy((line) => line.budgetedAmount)
                 .value();
         }
-    }
-    const getBudgetedValue = (lines) => {
-        return _.chain(lines)
-            .sumBy((lines) => lines.budgetedAmount)
-            .value()
     }
 
     const getBarGraphData = () => {
         let barData = [];
         barData.push({
-            "name": 'Capital Income',
-            "Capital Income": _.ceil(getBudgetedValue(getData('Assets')) / 100000)
+            "name": 'Capital Income', "Capital Income": _.ceil(getData('Assets') / 100000)
         });
         barData.push({
-            "name": 'Capital Expenditure',
-            "Capital Expenditure": _.ceil(getBudgetedValue(getData('Liability')) / 100000)
+            "name": 'Capital Expenditure', "Capital Expenditure": _.ceil(getData('Liability') / 100000)
         })
         return barData;
     }
 
-
-    let tableRows=[];
-    tableRows.push({
-        sr:'A',
-        name:'Capital Income (INR lakhs)',
-        data:''
-    });
-    tableRows.push({
-        sr:'',
-        name:'Central State Schemes & Grants',
-        data:5420
-    });
-    tableRows.push({
-        sr:'',
-        name:'Deposits',
-        data:134
-    });
-    tableRows.push({
-        sr:'',
-        name:'Recovery',
-        data:0
-    });
-    tableRows.push({
-        sr:'B',
-        name:'Capital Expenditure (INR lakhs)',
-        data:''
-    });
-    tableRows.push({
-        sr:'',
-        name:'Capital Projects',
-        data:5315
-    });
-    tableRows.push({
-        sr:'',
-        name:'Loan, Advance and Deposit Repayment',
-        data:805
-    });
+    let tableRows = [];
+    const pushDataInArray = (array, sr, name, data) => {
+        array.push({
+            sr: sr, name: name, data: data
+        });
+    }
+    pushDataInArray(tableRows, 'A', 'Capital Income (INR lakhs)', '');
+    pushDataInArray(tableRows, '', 'Central State Schemes & Grants', 5420);
+    pushDataInArray(tableRows, '', 'Deposits', 134);
+    pushDataInArray(tableRows, '', 'Recovery', 0);
+    pushDataInArray(tableRows, 'B', 'Capital Expenditure (INR lakhs)', '');
+    pushDataInArray(tableRows, '', 'Capital Projects', 5315);
+    pushDataInArray(tableRows, '', 'Loan, Advance and Deposit Repayment', 805);
 
     return {
-        barGraphData: getBarGraphData(),
-        tableRows
+        barGraphData: getBarGraphData(), tableRows
     }
-
 }
 

@@ -3,7 +3,6 @@ import {ReactComponent as AdminExpenseSvg} from "../assets/admin_expense.svg";
 import {ReactComponent as Earmarked} from "../assets/earmarked.svg";
 import {ReactComponent as Electricity} from "../assets/electricity.svg";
 import {ReactComponent as OtherAndM} from "../assets/other_o_and_m.svg";
-import {ReactComponent as PublicHeathWelfare} from "../assets/public_health_and_welfare.svg";
 import {ReactComponent as Road} from "../assets/road_and_construction.svg";
 import {ReactComponent as Salary} from "../assets/salary.svg";
 import {ReactComponent as SocialWelfare} from "../assets/social_welfare.svg";
@@ -33,15 +32,18 @@ const SectorialDistributionDashboardReport = ({budgets, year}) => {
             <DistributionItem amount={getValueFromCategory('Salary and allowances')}
                               name={'Salaries, Pensions & Allowances'}
                               percent={16} logo={<Salary/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')} name={'Electricity'}
+            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
+                              name={'Electricity'}//Todo (electricity Charges removed from admin)
                               percent={16} logo={<Electricity/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')} name={'Roads and Construction'}
+            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
+                              name={'Roads and Construction'}//Todo repairs and Maintenance of Assets Roads & Foot Paths
                               percent={16} logo={<Road/>}/>
             <DistributionItem amount={getValueFromCategory('Administrative Expense')}
                               name={'Public Health & Welfare'}
-                              subName={'(Water,Health and sanitation)'}
+                              subName={'(Water,Health and sanitation)'}//Todo Water Supply (Public Health and Welfare)
                               percent={16} logo={<WaterAndSanitation/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')} name={'Social Welfare'}
+            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
+                              name={'Social Welfare'}//Todo Social Welfare
                               percent={16} logo={<SocialWelfare/>}/>
             <DistributionItem amount={getValueFromCategory('Administrative Expense')}
                               name={'Earmarked'} subName={'(Women, Blind & Handicapped, Weaker section)'}
