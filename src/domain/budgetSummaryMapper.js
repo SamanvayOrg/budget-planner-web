@@ -173,6 +173,14 @@ export const getRevenueIncomeSummaryData = (budgets, year) => {
                 .value();
         }
     }
+    const getValueFromMinorHead = (minorHead) => {
+        if (currentYearBudget(budgets, year)) {
+            return _.chain(currentYearBudget(budgets, year).budgetLines)
+                .filter((e) => e.minorHead === minorHead)
+                .sumBy((e) => e.budgetedAmount)
+                .value();
+        }
+    }
 
     let headers = ['', 'Revenue Income', '(In lakhs)']
     let dataLines = [];
@@ -181,17 +189,48 @@ export const getRevenueIncomeSummaryData = (budgets, year) => {
             sr: sr, name: col1, amount: col2
         })
     }
+    const getTotalRevenueIncome = () => {
+        return getValueFromCategory('Revenue Grants') +
+            getValueFromMajorHead('Fees,User Charges & Fines') +
+            getValueFromMinorHead('Consolidated Tax on Property') +
+            getValueFromMinorHead('Advertisement Tax') +
+            getValueFromMinorHead('Tax on Performance & Shows') +
+            getValueFromMinorHead('Cess on Entry of Goods') +
+            getValueFromMinorHead('Toll / Entry tax') +
+            getValueFromMinorHead('Other Taxes') +
+            getValueFromCategory('Reserves') +
+            getValueFromCategory('Sales and Hire Charges') +
+            getValueFromCategory('Income from Interest') +
+            getValueFromMajorHead('Assigned Revenues & Compensations') +
+            getValueFromMajorHead('Other Income') +
+            getValueFromMajorHead('Deposits Forfeited/Non Refundable Deposits etc.') +
+            getValueFromMajorHead('Rental Income from Municipal Properties')
+    }
+
+
     pushDataInArray(dataLines, 'A', 'Revenue Grants', _.ceil(getValueFromCategory('Revenue Grants') / 100000));
     pushDataInArray(dataLines, 'B', 'Own Tax Income', '');
-    pushDataInArray(dataLines, '', 'Property Tax', _.ceil(getValueFromMajorHead('Consolidated Tax on Property') / 100000));
-    pushDataInArray(dataLines, '', 'Water Tax', '');
-    pushDataInArray(dataLines, '', 'Others(Sanitation tax, SWM, Advertisement tax, Cinema tax etc.)', '');
+    pushDataInArray(dataLines, '', 'Property Tax', _.ceil(getValueFromMinorHead('Consolidated Tax on Property') / 100000));
+    pushDataInArray(dataLines, '', 'Water Tax', '');//todo requirements not clear
+    pushDataInArray(dataLines, '', 'Others(Sanitation tax, SWM, Advertisement tax, Cinema tax etc.)',
+        _.ceil((getValueFromMinorHead('Advertisement Tax') +
+            getValueFromMinorHead('Tax on Performance & Shows') +
+            getValueFromMinorHead('Cess on Entry of Goods') +
+            getValueFromMinorHead('Toll / Entry tax') +
+            getValueFromMinorHead('Other Taxes')) / 100000));
     pushDataInArray(dataLines, 'C', 'Non Tax Income', '');
+
+
     pushDataInArray(dataLines, '', 'Fees & User Charges', _.ceil(getValueFromMajorHead('Fees,User Charges & Fines') / 100000));
     pushDataInArray(dataLines, '', 'Reserve Funds', _.ceil(getValueFromCategory('Reserves') / 100000));
-    pushDataInArray(dataLines, '', 'Other Non-Tax Income (sales & interest)', _.ceil((getValueFromCategory('Sales and Hire Charges') + getValueFromCategory('Income from Interest')) / 100000));
+    pushDataInArray(dataLines, '', 'Other Non-Tax Income (sales & interest)',
+        _.ceil((getValueFromCategory('Sales and Hire Charges') +
+            getValueFromCategory('Income from Interest') +
+            getValueFromMajorHead('Assigned Revenues & Compensations') +
+            getValueFromMajorHead('Other Income') +
+            getValueFromMajorHead('Deposits Forfeited/Non Refundable Deposits etc.')) / 100000));
     pushDataInArray(dataLines, '', 'Rental Income', _.ceil(getValueFromMajorHead('Rental Income from Municipal Properties') / 100000));
-    pushDataInArray(dataLines, '', 'Total Revenue Income', '');
+    pushDataInArray(dataLines, '', 'Total Revenue Income', _.ceil(getTotalRevenueIncome() / 100000));
 
     const pieChartData = () => {
         let pieData = [];
@@ -208,11 +247,30 @@ export const getRevenueIncomeSummaryData = (budgets, year) => {
 
 export const capitalBudgetSummaryData = (budgets, year) => {
 
-    const getData = (majorHeadName) => {
+    const getDataFromMajorHeadGroup = (majorHeadGroupName) => {
         if (currentYearBudget(budgets, year)) {
             return _.chain(currentYearBudget(budgets, year).budgetLines)
-                .filter((line) => line.majorHeadGroup === majorHeadName)
+                .filter((line) => line.majorHeadGroup === majorHeadGroupName)
                 .sumBy((line) => line.budgetedAmount)
+                .value();
+        }
+    }
+    const getValueFromCategory = (category) => {
+        if (currentYearBudget(budgets, year)) {
+            return _.chain(currentYearBudget(budgets, year).budgetLines)
+                .filter((e) => e.minorHeadCategory === category)
+                .sumBy((e) => e.budgetedAmount)
+                .value();
+        }
+    }
+
+    const getValueFromMajorHead = (majorHead) => {
+        console.log('budget', budgets)
+
+        if (currentYearBudget(budgets, year)) {
+            return _.chain(currentYearBudget(budgets, year).budgetLines)
+                .filter((e) => e.majorHead === majorHead)
+                .sumBy((e) => e.budgetedAmount)
                 .value();
         }
     }
@@ -220,10 +278,11 @@ export const capitalBudgetSummaryData = (budgets, year) => {
     const getBarGraphData = () => {
         let barData = [];
         barData.push({
-            "name": 'Capital Income', "Capital Income": _.ceil(getData('Assets') / 100000)
+            "name": 'Capital Income', "Capital Income": _.ceil(getDataFromMajorHeadGroup('Assets') / 100000)
         });
         barData.push({
-            "name": 'Capital Expenditure', "Capital Expenditure": _.ceil(getData('Liability') / 100000)
+            "name": 'Capital Expenditure',
+            "Capital Expenditure": _.ceil(getDataFromMajorHeadGroup('Liability') / 100000)
         })
         return barData;
     }
@@ -235,12 +294,12 @@ export const capitalBudgetSummaryData = (budgets, year) => {
         });
     }
     pushDataInArray(tableRows, 'A', 'Capital Income (INR lakhs)', '');
-    pushDataInArray(tableRows, '', 'Central State Schemes & Grants', 5420);
-    pushDataInArray(tableRows, '', 'Deposits', 134);
-    pushDataInArray(tableRows, '', 'Recovery', 0);
+    pushDataInArray(tableRows, '', 'Central State Schemes & Grants', _.ceil(getValueFromCategory('Central, State Schemes and Grants') / 100000));
+    pushDataInArray(tableRows, '', 'Deposits', _.ceil(getValueFromCategory('Loans, Advances and Deposits') / 100000));
+    pushDataInArray(tableRows, '', 'Recovery', _.ceil(getValueFromCategory('Recovery ') / 100000));
     pushDataInArray(tableRows, 'B', 'Capital Expenditure (INR lakhs)', '');
-    pushDataInArray(tableRows, '', 'Capital Projects', 5315);
-    pushDataInArray(tableRows, '', 'Loan, Advance and Deposit Repayment', 805);
+    pushDataInArray(tableRows, '', 'Capital Projects', _.ceil(getValueFromCategory('Capital Budgeted Expenses ') / 100000));
+    pushDataInArray(tableRows, '', 'Loan, Advance and Deposit Repayment', _.ceil(getValueFromMajorHead('Loans , Advances and Deposits')));
 
     return {
         barGraphData: getBarGraphData(), tableRows
