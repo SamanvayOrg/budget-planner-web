@@ -9,7 +9,7 @@ const DistributionItem = ({amount, name, percent, logo, subName}) => {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            width: 100,
+            width: 140,
             paddingLeft: "2px"
         }}>
             <Typography style={{color: "black", fontWeight: "bold", fontFamily: "Lato"}}>{t(amount)} </Typography>
