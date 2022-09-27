@@ -1,7 +1,6 @@
 import {currentYearBudget} from "../domain/functions";
 import {ReactComponent as AdminExpenseSvg} from "../assets/admin_expense.svg";
 import {ReactComponent as Earmarked} from "../assets/earmarked.svg";
-import {ReactComponent as Electricity} from "../assets/electricity.svg";
 import {ReactComponent as OtherAndM} from "../assets/other_o_and_m.svg";
 import {ReactComponent as Road} from "../assets/road_and_construction.svg";
 import {ReactComponent as Salary} from "../assets/salary.svg";
@@ -11,48 +10,53 @@ import _ from "lodash";
 import DistributionItem from "./DistributionItem";
 
 const SectorialDistributionDashboardReport = ({budgets, year}) => {
-    const getValueFromCategory = (category) => {
+
+    const getPercentage = (value) => {
+        return _.ceil((value / getTotal()) * 100, 2)
+    }
+
+    const getTotal = () => {
+        return getDataFromFunctionGroupCategory('Administrative Expense') + getDataFromFunctionGroupCategory('Building and Town Planning') + getDataFromFunctionGroupCategory('Roads') + getDataFromFunctionGroupCategory('Water Supply (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Sanitation (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Public Health ') + getDataFromFunctionGroupCategory('Social Welfare ') + getDataFromFunctionGroupCategory('Earmarked Funds')
+    }
+    const getDataFromFunctionGroupCategory = (category) => {
         if (currentYearBudget(budgets, year)) {
             const total = _.chain(currentYearBudget(budgets, year).budgetLines)
-                .filter((e) => e.category === category)
+                .filter((e) => e.functionGroupCategory === category)
                 .sumBy((e) => e.budgetedAmount)
                 .value()
-
-            return _.ceil(total / 100000);
+            return _.ceil(total / 100000)
         }
     }
-    const getPercentage = () => {
-
-    }
-
-    return (
-        <>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')} name={'Admin Expense'}
-                              percent={16} logo={<AdminExpenseSvg/>}/>
-            <DistributionItem amount={getValueFromCategory('Salary and allowances')}
-                              name={'Salaries, Pensions & Allowances'}
-                              percent={16} logo={<Salary/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
-                              name={'Electricity'}//Todo (electricity Charges removed from admin)
-                              percent={16} logo={<Electricity/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
-                              name={'Roads and Construction'}//Todo repairs and Maintenance of Assets Roads & Foot Paths
-                              percent={16} logo={<Road/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
-                              name={'Public Health & Welfare'}
-                              subName={'(Water,Health and sanitation)'}//Todo Water Supply (Public Health and Welfare)
-                              percent={16} logo={<WaterAndSanitation/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
-                              name={'Social Welfare'}//Todo Social Welfare
-                              percent={16} logo={<SocialWelfare/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
-                              name={'Earmarked'} subName={'(Women, Blind & Handicapped, Weaker section)'}
-                              percent={16} logo={<Earmarked/>}/>
-            <DistributionItem amount={getValueFromCategory('Administrative Expense')}
-                              name={'Other O&M'}
-                              subName={'(Other establishments + reserves)'}
-                              percent={16} logo={<OtherAndM/>}/>
-        </>
-    )
+    return (<>
+        <DistributionItem amount={getDataFromFunctionGroupCategory('Administrative Expense')} name={'Admin Expense'}
+                          percent={getPercentage(getDataFromFunctionGroupCategory('Administrative Expense'))}
+                          logo={<AdminExpenseSvg/>}/>
+        <DistributionItem amount={getDataFromFunctionGroupCategory('Salary and allowances')}
+                          name={'Salaries, Pensions & Allowances'}//todo this is not present in the function group category
+                          percent={getPercentage(getDataFromFunctionGroupCategory('Salary and allowances'))}
+                          logo={<Salary/>}/>
+        <DistributionItem amount={getDataFromFunctionGroupCategory('Roads')}
+                          name={'Roads and Construction'}
+                          percent={getPercentage(getDataFromFunctionGroupCategory('Roads'))} logo={<Road/>}/>
+        <DistributionItem
+            amount={getDataFromFunctionGroupCategory('Water Supply (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Sanitation (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Public Health ')}
+            name={'Water Supply, Public Health and Welfare'}
+            subName={'(Water,Health and sanitation)'}
+            percent={getPercentage(getDataFromFunctionGroupCategory('Water Supply (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Sanitation (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Public Health '))}
+            logo={<WaterAndSanitation/>}/>
+        <DistributionItem amount={getDataFromFunctionGroupCategory('Social Welfare')}
+                          name={'Social Welfare'}
+                          percent={getPercentage(getDataFromFunctionGroupCategory('Social Welfare'))}
+                          logo={<SocialWelfare/>}/>
+        <DistributionItem amount={getDataFromFunctionGroupCategory('Earmarked Funds')}
+                          name={'Earmarked'} subName={'(Women, Blind & Handicapped, Weaker section)'}
+                          percent={getPercentage(getDataFromFunctionGroupCategory('Earmarked Funds'))}
+                          logo={<Earmarked/>}/>
+        <DistributionItem amount={getDataFromFunctionGroupCategory('Building and Town Planning')}
+                          name={'Other O&M'}
+                          subName={'(Other establishments + reserves)'}
+                          percent={getPercentage(getDataFromFunctionGroupCategory('Building and Town Planning'))}
+                          logo={<OtherAndM/>}/>
+    </>)
 }
 export default SectorialDistributionDashboardReport;
