@@ -117,7 +117,7 @@ export const revenueIncomeAndExpenditureSummaryData = (budgets, year) => {
     const getValue = (category) => {
         if (currentYearBudget(budgets, year)) {
             return _.chain(currentYearBudget(budgets, year).budgetLines)
-                .filter((e) => e.category === category)
+                .filter((e) => e.minorHeadCategory === category)
                 .sumBy((e) => e.budgetedAmount)
                 .value();
         }
@@ -158,7 +158,7 @@ export const getRevenueIncomeSummaryData = (budgets, year) => {
     const getValueFromCategory = (category) => {
         if (currentYearBudget(budgets, year)) {
             return _.chain(currentYearBudget(budgets, year).budgetLines)
-                .filter((e) => e.category === category)
+                .filter((e) => e.minorHeadCategory === category)
                 .sumBy((e) => e.budgetedAmount)
                 .value();
         }
@@ -188,10 +188,11 @@ export const getRevenueIncomeSummaryData = (budgets, year) => {
     pushDataInArray(dataLines, '', 'Others(Sanitation tax, SWM, Advertisement tax, Cinema tax etc.)', '');
     pushDataInArray(dataLines, 'C', 'Non Tax Income', '');
     pushDataInArray(dataLines, '', 'Fees & User Charges', _.ceil(getValueFromMajorHead('Fees,User Charges & Fines') / 100000));
-    pushDataInArray(dataLines, '', 'Reserve Funds', '');//Todo  add Reserves
-    pushDataInArray(dataLines, '', 'Other Non-Tax Income (sales & interest)', '');//todo Sales and Hire Charges and Income from Interest
+    pushDataInArray(dataLines, '', 'Reserve Funds', _.ceil(getValueFromCategory('Reserves') / 100000));
+    pushDataInArray(dataLines, '', 'Other Non-Tax Income (sales & interest)', _.ceil((getValueFromCategory('Sales and Hire Charges') + getValueFromCategory('Income from Interest')) / 100000));
     pushDataInArray(dataLines, '', 'Rental Income', _.ceil(getValueFromMajorHead('Rental Income from Municipal Properties') / 100000));
     pushDataInArray(dataLines, '', 'Total Revenue Income', '');
+
     const pieChartData = () => {
         let pieData = [];
         pieData.push({id: 'Revenue Grants', value: _.ceil(getValueFromCategory('Revenue Grants') / 100000)});
