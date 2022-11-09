@@ -7,6 +7,7 @@ import {ReactComponent as MBSLogo} from '../assets/MBSLogo.svg';
 import Profile from "./Profile";
 import {useAuth0} from "@auth0/auth0-react";
 import NavBarNavigationBeforeAuth from "./NavBarNavigationBeforeAuth";
+import {useNavigate} from 'react-router-dom';
 
 
 const ResponsiveAppBar = () => {
@@ -16,13 +17,13 @@ const ResponsiveAppBar = () => {
 	if (isAuthenticated) {
 		endView = <Profile user={user} />
 	}
-
+	const navigate = useNavigate();
 
 	return (
 		<AppBar id="navBar" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<a href="/dashboard"><MBSLogo/></a>
+					<a onClick={() => navigate('/dashboard')}><MBSLogo/></a>
 					{endView}
 				</Toolbar>
 			</Container>
