@@ -90,13 +90,13 @@ const BudgetDetail = () => {
     const [popupContext, setPopupContext] = useState({});
     const {stateDetails} = useSelector(stateSelector);
 
-    const updateView = (state) => {
-        dispatch(updateBudget(state));
+    const updateView = (newBudgetView) => {
+        //Allow the spreadsheet to update itself first
+        setTimeout(() => dispatch(updateBudget(newBudgetView)), 0);
     }
     const save = () => {
         dispatch(saveBudget());
     }
-
 
     const handleOpen = (context) => {
         setPopupContext(context);
@@ -109,7 +109,6 @@ const BudgetDetail = () => {
         setOpen(false);
     }
 
-
     const onActivate = (params) => {
         const context = budgetView[params.row][params.column].context;
         const detailCode = budgetView[params.row][params.column].context.detailCode;
@@ -121,7 +120,6 @@ const BudgetDetail = () => {
                 dispatch(deleteBudgetLine({detailCode, majorHead}));
             }
         }
-
     }
     const [modal, setModal] = useState(false);
     const onClickProperties = (data) => {
