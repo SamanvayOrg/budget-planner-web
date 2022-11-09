@@ -57,10 +57,10 @@ const UpdateTranslation = () => {
     }
 
     const showStatus = () => {
-        if (status == 200) {
+        if (status === 200) {
             return <Text value={t('Translation modified')}/>
         }
-        if (status == 404) {
+        if (status === 404) {
             return <Text style={{color: "red"}} value={t('Translation not found')}/>
         }
     }

@@ -21,6 +21,7 @@ const ReportsDashboard = ({styleSheet, allBudget, budgetYear}) => {
 
             <div className={classes.box}>
                 <DataTable headings={budgetSummaryData(allBudget, budgetYear).budgetSummaryTableHeadings}
+                           highlight={true}
                            rows={budgetSummaryData(allBudget, budgetYear).budgetSummaryTableData}
                            title={t(`Budget Summary FY ${budgetYear} (in lakhs)`)}/>
                 <Paper style={{

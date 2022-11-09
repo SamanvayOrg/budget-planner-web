@@ -76,16 +76,16 @@ const CreateAdmin = () => {
         return !_.isEqual(name, '') && !_.isEqual(email, '') && !_.isEqual(municipality, '');
     }
     const showStatus = () => {
-        if (status == 200) {
+        if (status === 200) {
             setTimeout(() => {
                 handleClick('Users')
             }, 5000);
             return <Text value={t('User added')}/>
         }
-        if (status == 409) {
+        if (status === 409) {
             return <Text style={{color: "red"}} value={t('User already present')}/>
         }
-        if (status == 500) {
+        if (status === 500) {
             return <Text style={{color: "red"}} value={t('Error during User creation')}/>
         }
     }

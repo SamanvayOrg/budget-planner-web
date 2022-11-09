@@ -22,7 +22,7 @@ const UpdateAdminUser = () => {
     const {adminUsers} = useSelector(allUsersSelector);
     let {userId} = useParams();
     const selectedUser = _.chain(adminUsers)
-        .filter((e) => e.id == userId)
+        .filter((e) => e.id === userId)
         .first()
         .value()
 

@@ -24,7 +24,7 @@ const CreateMunicipality = () => {
     const {t} = useTranslation();
     const navigate = useNavigate();
     const {cityClasses} = useSelector(cityClassesSelector);
-    const [state, setState] = useState('Maharashtra');
+    const state = 'Maharashtra';
     const [cityClass, setCityClass] = useState('');
     const [translation, setTranslation] = useState('');
     const [status, setStatus] = useState('');
@@ -97,7 +97,7 @@ const CreateMunicipality = () => {
         if (status === 409 || status === 400) {
             return <Text style={{color: "red"}} value={t('Municipality already present')}/>
         }
-        if (status == 500) {
+        if (status === 500) {
             return <Text style={{color: "red"}} value={t('Error during Municipality creation')}/>
         }
     }

@@ -92,9 +92,9 @@ const BudgetBox = ({
     const {t} = useTranslation();
     const classes = styleSheets();
     const modalClass = useStyles();
-    const [reportType, setReportType] = useState(["ACTUALS", "BUDGETED", "ESTIMATES"]);
+    const reportTypes = ["ACTUALS", "BUDGETED", "ESTIMATES"];
     const [selectedReport, setSelectedReport] = useState("BUDGETED");
-    const [budgetAllStatus, setBudgetAllStatus] = useState(budgetStatusInfo.allowedNextBudgetStatuses);
+    const budgetAllStatuses = budgetStatusInfo.allowedNextBudgetStatuses;
     const [currentStatus, setCurrentStatus] = useState(budgetStatusInfo.currentBudgetStatus);
     const [changedStatus, setChangedStatus] = useState(currentStatus);
     const [openBudgetStatus, setOpenBudgetStatus] = React.useState(false);
@@ -112,7 +112,6 @@ const BudgetBox = ({
     }
 
     const onReportDownloadStateChange = (e) => {
-        console.log('reportType',e.target.value);
         dispatch(downloadBudgetExcel(budget.budgetYear.substring(0, 4), selectedReport));
         handleCloseBudgetDownload();
     }
@@ -131,7 +130,7 @@ const BudgetBox = ({
                 <ActionButton label={t(currentStatus)} variant="outlined" onClick={handleOpenBudgetStatus}/>
                 <Modal open={openBudgetStatus} onClose={handleCloseBudgetStatus} className={modalClass.modal}>
                         <div className={classes.modalDiv}>
-                            <DropDown list={budgetAllStatus} value={changedStatus}
+                            <DropDown list={budgetAllStatuses} value={changedStatus}
                                       onSelect={(e) => setChangedStatus(e.target.value)}/>
                             <ActionButton label={t("Save")} id={"addNewBudgetButton"} onClick={onStateChange}/>
                             <span className={classes.cancelText} onClick={handleCloseBudgetStatus}>Cancel</span>
@@ -150,7 +149,7 @@ const BudgetBox = ({
                             <div className={classes.lastUpdateText}>
                                 <span>Select the type of report to be downloaded</span>
                             </div>
-                            <DropDown list={reportType} value={selectedReport}
+                            <DropDown list={reportTypes} value={selectedReport}
                                       onSelect={(e) => setSelectedReport(e.target.value)}/>
                             <ActionButton label={t("Save")} id={"downloadReportButton"} onClick={onReportDownloadStateChange}/>
                             <span className={classes.cancelText} onClick={handleCloseBudgetDownload}>Cancel</span>

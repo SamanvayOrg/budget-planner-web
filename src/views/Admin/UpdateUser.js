@@ -17,7 +17,7 @@ const UpdateUser = () => {
     const {users} = useSelector(allUsersSelector);
     let {userId} = useParams();
     const selectedUser = _.chain(users)
-        .filter((e) => e.id == userId)
+        .filter((e) => e.id === userId)
         .first()
         .value()
 

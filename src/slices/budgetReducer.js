@@ -118,7 +118,7 @@ const budgetDashboardSlice = createSlice({
                 console.log("couldn't find matching majorHead to delete from");
             }
             const matchingMajorHeadCopy = Object.assign({}, matchingMajorHead);
-            let matchingItemIdx = matchingMajorHeadCopy.items.findIndex(item => item.code == detailCode);
+            let matchingItemIdx = matchingMajorHeadCopy.items.findIndex(item => item.code === detailCode);
             matchingMajorHead.items[matchingItemIdx].voided = true;
             state.budgetView = getBudgetView(state.budget);
             state.saved = 'Save the changes';

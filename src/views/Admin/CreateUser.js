@@ -78,7 +78,7 @@ const CreateUser = () => {
         if (status === 409) {
             return <Text style={{color: "red"}} value={t('User already present')}/>
         }
-        if (status == 500) {
+        if (status === 500) {
             return <Text style={{color: "red"}} value={t('Error during User creation')}/>
         }
     }

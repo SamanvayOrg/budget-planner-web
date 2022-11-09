@@ -8,8 +8,15 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import _ from "lodash";
 
+const boldText = {
+	fontWeight: 'bold',
+	color: 'black',
+	fontFamily: "Lato",
+}
 
-const DataTable = ({headings, rows, title}) => {
+
+const DataTable = ({headings, rows, title, highlight = false}) => {
+	console.log('highlight', highlight);
 	return (<TableContainer component={Paper}>
 		<Table sx={{minWidth: 450}} aria-label="simple table">
 			<TableHead>
@@ -17,7 +24,7 @@ const DataTable = ({headings, rows, title}) => {
 					fontSize: 20,
 					fontWeight: "700",
 					color: "#616161",
-					fontFamily: "Lato"
+					fontFamily: "Lato",
 				}}>{title}</TableCell></TableRow>
 				<TableRow>
 					{_.map(headings, (heading, index) => {
@@ -32,7 +39,7 @@ const DataTable = ({headings, rows, title}) => {
 						sx={{'&:last-child td, &:last-child th': {border: 0}}}
 					>
 						{_.map(row,(item,index) =>(
-							<TableCell key={index}>{item}</TableCell>
+							<TableCell key={index}  style={highlight? boldText: {}}>{item}</TableCell>
 						))}
 
 					</TableRow>))}
