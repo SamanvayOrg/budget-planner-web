@@ -6,7 +6,7 @@ import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate, useParams} from 'react-router-dom';
 import {
-    addBudgetLine, budgetSelector, deleteBudgetLine, fetchBudget, saveBudget, updateBudget, updateBudgetProps
+    addBudgetLine, budgetSelector, deleteBudgetLine, fetchBudget, saveBudget, updateBudget, updateBudgetProperties
 } from '../slices/budgetReducer';
 import Spreadsheet from 'react-spreadsheet';
 import {getBudgetYearString, headers} from '../domain/budgetHeaders';
@@ -123,7 +123,7 @@ const BudgetDetail = () => {
     }
     const [modal, setModal] = useState(false);
     const onClickProperties = (data) => {
-        dispatch(updateBudgetProps(data, budget.id));
+        dispatch(updateBudgetProperties(data, budget.id));
     };
     const propertiesStatus = () => {
         return _.isNull(population) || _.isEqual(openingBalance, 0) ? <PriorityHighTwoToneIcon color={"error"}/> :
