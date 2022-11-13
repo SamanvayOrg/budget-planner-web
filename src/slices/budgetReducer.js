@@ -173,16 +173,12 @@ export function updateBudgetProps(data, id) {
     }
 }
 export function updateBudgetStatus(id, data) {
-    console.log('data',data)
-
     return async (dispatch, getState) => {
         const token = tokenSelector(getState());
        return  await changeBudgetStatus(token, id, data);
     }
 }
 export function downloadBudgetExcel(year, reportType) {
-    console.log('reportType',reportType)
-
     return async (dispatch, getState) => {
         const token = tokenSelector(getState());
         return  await downloadBudgetReport(token, year, reportType, localStorage.getItem("language"));
