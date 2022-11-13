@@ -1,6 +1,7 @@
 import {Box, FormGroup, TextField} from "@mui/material";
 import React, {useState} from "react";
 import ActionButton from "./ActionButton";
+import CancelButton from './CancelButton';
 
 const style = {
     position: 'absolute',
@@ -41,9 +42,7 @@ const BudgetPropertySelector = ({onClose, onSelect, thePopulation, openingBal}) 
                     />
                 </FormGroup>
                 <Box style={{display: 'flex', justifyContent: 'flex-end', flexDirection: 'row'}}>
-                    <ActionButton label={'Cancel'} onClick={onClose}
-                                  style={{marginRight: 32}} color={'warning'}/>
-
+                    <CancelButton onClick={onClose} style={{marginRight: 32}} />
                     <ActionButton label={'Ok'} onClick={() => onSelect({population, openingBalance})} variant={'contained'}
                         // disabled={!(detailedHead && theFunction && isAbleToAddNewLine())}
                                   style={{marginLeft: 32}} color={'primary'}

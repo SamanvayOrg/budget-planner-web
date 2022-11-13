@@ -5,6 +5,7 @@ import {fromContract, getBudgetView} from '../domain';
 import {updateFromView} from '../domain/updateFromView';
 import {toContract} from '../domain/budgetContractMapper';
 import _ from 'lodash';
+import validateBudget from '../domain/validateBudget';
 
 export const initialState = {
     budget: {},
@@ -13,7 +14,10 @@ export const initialState = {
     openingBalance: null,
     loading: false,
     error: false,
-    saved: '✓ saved'
+    saveWithWarning: false,
+    showValidationResults: false,
+    saved: '✓ saved',
+    validationResults: []
 };
 
 const budgetDashboardSlice = createSlice({
@@ -36,9 +40,19 @@ const budgetDashboardSlice = createSlice({
             state.population = payload.population;
             state.openingBalance = payload.openingBalance;
             state.closingBalance = payload.closingBalance;
+            state.validationResults = [];
         },
         setBudgetView: (state, {payload}) => {
             state.budgetView = payload;
+        },
+        setValidationResults: (state, {payload}) => {
+            state.validationResults = payload;
+            if (state.validationResults.length > 0 && !state.saveWithWarning) {
+                state.showValidationResults = true;
+            }
+        },
+        cancelShowValidationResults: (state) => {
+          state.showValidationResults = false;
         },
         updateBudget: (state, {payload}) => {
             const budget = updateFromView(payload, state.budget);
@@ -48,6 +62,11 @@ const budgetDashboardSlice = createSlice({
         },
         saveBudgetStatus: (state, {payload}) => {
             state.saved = payload ? '✓ saved' : 'saving...';
+            state.saveWithWarning = false;
+        },
+        allowSaveWithWarning: (state) => {
+            state.saveWithWarning = true;
+            state.showValidationResults = false;
         },
         addBudgetLine: (state, {
             payload: {
@@ -138,21 +157,33 @@ export const {
     updateBudget,
     addBudgetLine,
     saveBudgetStatus,
+    allowSaveWithWarning,
     deleteBudgetLine,
-    setBudgetProps
+    setBudgetProps,
+    setValidationResults,
+    cancelShowValidationResults
 } = budgetDashboardSlice.actions;
 
 export const budgetSelector = state => state.budget;
 export default budgetDashboardSlice.reducer;
 
-export function saveBudget() {
+export function saveBudget(saveWithWarning = false) {
     return async (dispatch, getState) => {
+        if (saveWithWarning) {
+            dispatch(allowSaveWithWarning());
+        }
         const state = getState();
-        const token = tokenSelector(state);
         const budget = budgetSelector(state).budget;
-        dispatch(saveBudgetStatus(false));
-        const data = await save(token, toContract(budget));
-        dispatch(saveBudgetStatus(data));
+
+        const validationResults = validateBudget(budget);
+        dispatch(setValidationResults(validationResults));
+
+        if (validationResults.length === 0 || saveWithWarning) {
+            dispatch(saveBudgetStatus(false));
+            const token = tokenSelector(state);
+            const data = await save(token, toContract(budget));
+            dispatch(saveBudgetStatus(data));
+        }
     };
 }
 
