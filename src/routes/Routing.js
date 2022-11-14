@@ -29,36 +29,40 @@ const Routing = () => {
     useEffect(() => {
         dispatch(fetchCurrentUser())
     }, [dispatch])
-    const roleCheck = (role) => {
-        return _.includes(authToken.permissions, role);
+    const roleCheck = (role) => _.includes(authToken.permissions, role);
+    const isSuperAdmin = () => roleCheck('superAdmin');
+    const isAdmin = () => roleCheck('admin');
+
+    const RestrictedPage = ({path, allow, children}) => {
+        return <Route path={path} element={allow? {...children}: <AccessDenied/>}/>;
     }
 
     return (<HashRouter>
         <Routes>
             <Route path="/" element={<Home/>}/>
-            <Route path="/dashboard" element={!roleCheck('superAdmin') ? <Dashboard/> : <AdminUsers/>}/>
-            <Route path="/budget/:year" element={!roleCheck('superAdmin') ? <BudgetDetail/> : <AccessDenied/>}/>
-            <Route path="/allBudgets" element={!roleCheck('superAdmin') ? <AllBudgets/> : <AccessDenied/>}/>
-            <Route path="/admin/users" element={roleCheck('admin') ? <Users/> : <AccessDenied/>}/>
-            <Route path="/admin/user/create" element={roleCheck('admin') ? <CreateUserBox/> : <AccessDenied/>}/>
-            <Route path="/admin/user/update/:userId" element={roleCheck('admin') ? <UpdateUser/> : <AccessDenied/>}/>
-            <Route path="/admin/municipality" element={roleCheck('admin') ? <Municipality/> : <AccessDenied/>}/>
+            <Route path="/dashboard" element={isSuperAdmin() ? <AdminUsers/> : <Dashboard/>}/>
+            <Route path="/budget/:year" element={isSuperAdmin() ? <AccessDenied/> : <BudgetDetail/>}/>
+            <Route path="/allBudgets" element={isSuperAdmin() ? <AccessDenied/> : <AllBudgets/>}/>
+            <Route path="/admin/users" element={isAdmin() ? <Users/> : <AccessDenied/>}/>
+            <Route path="/admin/user/create" element={isAdmin() ? <CreateUserBox/> : <AccessDenied/>}/>
+            <Route path="/admin/user/update/:userId" element={isAdmin() ? <UpdateUser/> : <AccessDenied/>}/>
+            <Route path="/admin/municipality" element={isAdmin() ? <Municipality/> : <AccessDenied/>}/>
             <Route path="/admin/municipality/update/:municipalityId"
-                   element={roleCheck('admin') ? <UpdateMunicipality/> : <AccessDenied/>}/>
-            <Route path="/admin/translations" element={roleCheck('admin') ? <Translations/> : <AccessDenied/>}/>
+                   element={isAdmin() ? <UpdateMunicipality/> : <AccessDenied/>}/>
+            <Route path="/admin/translations" element={isAdmin() ? <Translations/> : <AccessDenied/>}/>
             <Route path="/admin/translation/create"
-                   element={roleCheck('admin') ? <CreateTranslation/> : <AccessDenied/>}/>
+                   element={isAdmin() ? <CreateTranslation/> : <AccessDenied/>}/>
             <Route path="/admin/translation/update/:translationId"
-                   element={roleCheck('admin') ? <UpdateTranslation/> : <AccessDenied/>}/>
-            <Route path="/superAdmin" element={roleCheck('superAdmin') ? <AdminUsers/> : <AccessDenied/>}/>
-            <Route path="/superAdmin/users" element={roleCheck('superAdmin') ? <AdminUsers/> : <AccessDenied/>}/>
-            <Route path="/superAdmin/user/create" element={roleCheck('superAdmin') ? <CreateAdmin/> : <AccessDenied/>}/>
+                   element={isAdmin() ? <UpdateTranslation/> : <AccessDenied/>}/>
+            <Route path="/superAdmin" element={isSuperAdmin() ? <AdminUsers/> : <AccessDenied/>}/>
+            <Route path="/superAdmin/users" element={isSuperAdmin() ? <AdminUsers/> : <AccessDenied/>}/>
+            <Route path="/superAdmin/user/create" element={isSuperAdmin() ? <CreateAdmin/> : <AccessDenied/>}/>
             <Route path="/superAdmin/user/update/:userId"
-                   element={roleCheck('superAdmin') ? <UpdateAdminUser/> : <AccessDenied/>}/>
-            <Route path="/superAdmin/municipalities" element={roleCheck('superAdmin') ? <SuperAdminMunicipalities/> :
+                   element={isSuperAdmin() ? <UpdateAdminUser/> : <AccessDenied/>}/>
+            <Route path="/superAdmin/municipalities" element={isSuperAdmin() ? <SuperAdminMunicipalities/> :
                 <AccessDenied/>}/>
             <Route path="/superAdmin/municipality/create"
-                   element={roleCheck('superAdmin') ? <CreateMunicipality/> : <AccessDenied/>}/>
+                   element={isSuperAdmin() ? <CreateMunicipality/> : <AccessDenied/>}/>
         </Routes>
     </HashRouter>)
 };
