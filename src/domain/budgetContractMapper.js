@@ -35,7 +35,8 @@ const updateSummary = (budget) => {
 			let majorHead = majorHeadGroup.items[j]
 			majorHead.summary = summary(majorHead.items);
 		}
-		majorHeadGroup.summary = summary(_.map(majorHeadGroup.items, ({summary}) => summary))
+		majorHeadGroup.summary = summary(_.map(majorHeadGroup.items, ({summary}) => summary));
+		budget.summary = summary(getDetailLines(budget));
 	}
 };
 

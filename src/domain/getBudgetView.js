@@ -6,6 +6,8 @@ const getBudgetView = (budget) => {
         return String.fromCharCode(startingChar.charCodeAt(0) + order);
     };
 
+    const isReadOnly = budget.budgetStatus !== 'Draft';
+
     const headerLine = (value, headerClass, index) => ([
         {
             value: index,
@@ -47,28 +49,31 @@ const getBudgetView = (budget) => {
         {
             value: t(line.previousYearActuals),
             className: numberClass,
-            context: {id: line.id, type: 'detail', key: 'previousYearActuals'}
+            context: {id: line.id, type: 'detail', key: 'previousYearActuals'},
+            readOnly: isReadOnly
         },
         {
             value: t(line.currentYear8MonthsActuals),
             className: numberClass,
-            context: {id: line.id, type: 'detail', key: 'currentYear8MonthsActuals'}
+            context: {id: line.id, type: 'detail', key: 'currentYear8MonthsActuals'},
+            readOnly: isReadOnly
         },
         {
             value: t(line.currentYear4MonthsProbables),
             className: numberClass,
-            context: {id: line.id, type: 'detail', key: 'currentYear4MonthsProbables'}
+            context: {id: line.id, type: 'detail', key: 'currentYear4MonthsProbables'},
+            readOnly: isReadOnly
         },
         {
             value: t(line.budgetedAmount),
             className: numberClass,
             context: {id: line.id, type: 'detail', key: 'budgetedAmount'},
-            readOnly: budget.budgetStatus === 'Approved by District' ? true : false
+            readOnly: isReadOnly
         },
         {
             value: "delete",
             className: line.eligibleForDeletion ? "Spreadsheet-deleteButton" : "Spreadsheet-deleteButton disable",
-            context: {type: 'header', key: 'deleteButton', detailCode: line.code, majorHead: line.majorHead}
+            context: {type: 'header', key: 'deleteButton', detailCode: line.code, majorHead: line.majorHead},
         },
 
     ]);
@@ -108,7 +113,7 @@ const getBudgetView = (budget) => {
             readOnly: true
         },
         {
-            value: (line.budgetedAmoutnt),
+            value: (line.budgetedAmount),
             className: numberClass,
             context: {type: 'summary', key: 'budgetedAmount'},
             readOnly: true
