@@ -14,7 +14,7 @@ import {
     submitBudget,
     updateBudget,
     updateBudgetProperties,
-    cancelShowValidationResults
+    hideValidationResults
 } from '../slices/budgetReducer';
 import Spreadsheet from 'react-spreadsheet';
 import {getBudgetYearString, headers} from '../domain/budgetHeaders';
@@ -110,7 +110,8 @@ const BudgetDetail = () => {
 
 
     const roleCheck = (role) => _.includes(authToken.permissions, role);
-    const canEdit = !roleCheck('admin') && budget.budgetStatus === 'Draft';
+    // const canEdit = roleCheck('admin') && budget.budgetStatus === 'Draft'; //Wrong line
+    const canEdit = !roleCheck('admin') && budget.budgetStatus === 'Draft'; //Right line
 
     const updateView = (newBudgetView) => {
         //Allow the spreadsheet to update itself first
@@ -120,7 +121,7 @@ const BudgetDetail = () => {
         dispatch(saveBudget(submitWithWarning));
     };
     const submit = (submitWithWarning = false) => {
-        dispatch(submitBudget());
+        dispatch(submitBudget(submitWithWarning));
     };
     const submitWithWarning = () => submit(true);
     const submitWithoutWarning = () => submit(false);
@@ -213,8 +214,8 @@ const BudgetDetail = () => {
                 <div>
                     <BudgetSaveError validationResults={validationResults}
                                      open={showValidationResults}
-                                     onContinue={submitWithoutWarning}
-                                     onClose={() => dispatch(cancelShowValidationResults())}/>
+                                     onContinue={submitWithWarning}
+                                     onClose={() => dispatch(hideValidationResults())}/>
                 </div>
                 <div>
                     <Modal open={budgetPropertySelectionModal} onClose={handleClose} className={modalClass.modal}>

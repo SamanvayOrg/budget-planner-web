@@ -4,5 +4,6 @@
   "REVENUE_INCOME_LESS_THAN_REVENUE_EXPENDITURE": "Revenue Income is lesser than Revenue Expenditure",
   "CAPITAL_INCOME_LESS_THAN_CAPITAL_EXPENDITURE": "Capital Income is lesser than Capital Expenditure",
   "budgetSummaryHeading": "Budget Summary FY {{budgetYear}} (in lakhs)",
-  "keyBudgetHighlights": "Key Budget Highlights FY {{budgetYear}} (in lakhs)"
+  "keyBudgetHighlights": "Key Budget Highlights FY {{budgetYear}} (in lakhs)",
+  "Continue to Submit": "Continue to Submit"
 }

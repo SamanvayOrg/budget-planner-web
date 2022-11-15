@@ -8,6 +8,7 @@ import {t} from 'i18next';
 
 
 const BudgetSaveError = ({validationResults = [], open, onClose, onContinue}) => {
+    console.log('validationResults', validationResults);
     return (
         <Dialog open={open} onClose={onClose}>
             <DialogTitle>Issues were found in your submission</DialogTitle>
@@ -24,7 +25,7 @@ const BudgetSaveError = ({validationResults = [], open, onClose, onContinue}) =>
             </DialogContent>
             <DialogActions>
                 <CancelButton label={'Back to Budget'} onClick={onClose}/>
-                <ActionButton label={'Continue to Save'} onClick={onContinue}/>
+                <ActionButton label={t('Continue to Submit')} onClick={onContinue}/>
             </DialogActions>
         </Dialog>
     );

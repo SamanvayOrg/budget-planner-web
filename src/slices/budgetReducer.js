@@ -46,7 +46,6 @@ const budgetDashboardSlice = createSlice({
             state.population = payload.population;
             state.openingBalance = payload.openingBalance;
             state.closingBalance = payload.closingBalance;
-            state.validationResults = [];
         },
         setBudgetView: (state, {payload}) => {
             state.budgetView = payload;
@@ -57,7 +56,8 @@ const budgetDashboardSlice = createSlice({
                 state.showValidationResults = true;
             }
         },
-        cancelShowValidationResults: (state) => {
+        hideValidationResults: (state) => {
+            console.log('hiding validation results');
             state.showValidationResults = false;
         },
         updateBudget: (state, {payload}) => {
@@ -166,7 +166,7 @@ export const {
     deleteBudgetLine,
     setBudgetProps,
     setValidationResults,
-    cancelShowValidationResults
+    hideValidationResults
 } = budgetDashboardSlice.actions;
 
 export const budgetSelector = state => state.budget;
@@ -186,7 +186,9 @@ export function submitBudget(submitWithWarning = false) {
 
         if (validationResults.length === 0 || submitWithWarning) {
             await dispatch(updateBudgetStatus(budget.id, 'Submitted to GB'));
+            dispatch(hideValidationResults());
         }
+        dispatch(fetchBudget(budget.year));
     };
 }
 
