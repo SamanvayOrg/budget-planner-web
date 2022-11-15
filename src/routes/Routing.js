@@ -33,10 +33,6 @@ const Routing = () => {
     const isSuperAdmin = () => roleCheck('superAdmin');
     const isAdmin = () => roleCheck('admin');
 
-    const RestrictedPage = ({path, allow, children}) => {
-        return <Route path={path} element={allow? {...children}: <AccessDenied/>}/>;
-    }
-
     return (<HashRouter>
         <Routes>
             <Route path="/" element={<Home/>}/>

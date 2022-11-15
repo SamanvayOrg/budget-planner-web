@@ -9,6 +9,7 @@ import _ from "lodash"
 import {useNavigate} from "react-router-dom";
 import {fetchMunicipalityDetails} from "../slices/municipalityReducer";
 import ReportsDashboard from "../views/ReportsDashboard";
+import {t} from 'i18next';
 
 const styleSheets = makeStyles(theme => ({
     box: {
@@ -18,8 +19,6 @@ const styleSheets = makeStyles(theme => ({
         boxSizing: "border-box",
         width: "100%",
         background: " #FFFFFF",
-        border: "1px solid #DEDEDE",
-        borderRadius: "3px",
         gap: "2vw",
         paddingTop: "10px",
         paddingBottom: "15px",
@@ -30,10 +29,8 @@ const styleSheets = makeStyles(theme => ({
     }, innerBox: {
         display: "flex",
         justifyContent: "flex-start'",
-        gap: "0.5vw",
         color: "#212121",
         fontSize: "19px",
-        marginLeft: "1%",
     }, text: {
         fontWeight: "700", fontSize: "19px"
     }, actionButtons: {
@@ -90,7 +87,7 @@ const CurrentBudgetBox = ({year}) => {
                     </div>
                 </div>
                 <div className={classes.actionButtons}>
-                    <ActionButton label={"Open budget"} id={"addNewBudgetButton"} onClick={goToBudget}/>
+                    <ActionButton label={t("Open Budget")} variant={'contained'} onClick={goToBudget} size={"large"}/>
                 </div>
             </Box>
             <ReportsDashboard styleSheet={classes} allBudget={allBudget} budgetYear={budgetYear}/>

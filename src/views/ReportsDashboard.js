@@ -18,17 +18,17 @@ const ReportsDashboard = ({styleSheet, allBudget, budgetYear}) => {
     const {t} = useTranslation();
     return (
         <div>
-
             <div className={classes.box}>
                 <DataTable headings={budgetSummaryData(allBudget, budgetYear).budgetSummaryTableHeadings}
+                           style={{background: 'red'}}
                            highlight={true}
                            rows={budgetSummaryData(allBudget, budgetYear).budgetSummaryTableData}
-                           title={t(`Budget Summary FY ${budgetYear} (in lakhs)`)}/>
+                           title={t('budgetSummaryHeading', {budgetYear})}/>
                 <Paper style={{
                     height: 440, width: '70%', paddingBottom: 20, paddingTop: 15, color: '#616161'
                 }}><ResponsivePieChart
                     data={budgetSummaryData(allBudget, budgetYear).pieChartData}
-                    title={t(`Key Budget Highlights FY ${budgetYear} (in lakhs)`)}
+                    title={t('keyBudgetHighlights', {budgetYear})}
                 /></Paper>
                 <Paper style={{
                     height: 440,

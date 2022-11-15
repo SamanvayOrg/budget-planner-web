@@ -7,28 +7,38 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import _ from "lodash";
-
-const boldText = {
-	fontWeight: 'bold',
-	color: 'black',
-	fontFamily: "Lato",
-}
-
+import {darken} from '@mui/material';
+import { useTheme } from '@mui/material/styles'
 
 const DataTable = ({headings, rows, title, highlight = false}) => {
-	console.log('highlight', highlight);
+	const theme = useTheme();
+	let darkBackground = {
+		color: '#ffffff',
+		background: darken(theme.palette.primary.main, 0.2)
+	};
+	const subHeadingStyle = {
+		color: "#616161",
+		fontSize: 16,
+	};
+	const makeDark = (style) => ({
+		...style,
+		...darkBackground
+	});
+	const makeDarkConditionally = (style) => highlight ? makeDark(style) : style;
+
+	const headingStyle = {
+		color: "#616161",
+		fontSize: 20,
+		fontWeight: "700",
+	};
+
 	return (<TableContainer component={Paper}>
 		<Table sx={{minWidth: 450}} aria-label="simple table">
 			<TableHead>
-				<TableRow><TableCell align="center" colSpan={3} style={{
-					fontSize: 20,
-					fontWeight: "700",
-					color: "#616161",
-					fontFamily: "Lato",
-				}}>{title}</TableCell></TableRow>
+				<TableRow><TableCell align="center" colSpan={3} style={makeDark(headingStyle)}>{title}</TableCell></TableRow>
 				<TableRow>
 					{_.map(headings, (heading, index) => {
-						return <TableCell key={index}>{heading}</TableCell>
+						return <TableCell key={index} style={makeDarkConditionally(subHeadingStyle)}>{heading}</TableCell>
 					})}
 				</TableRow>
 			</TableHead>
@@ -39,7 +49,7 @@ const DataTable = ({headings, rows, title, highlight = false}) => {
 						sx={{'&:last-child td, &:last-child th': {border: 0}}}
 					>
 						{_.map(row,(item,index) =>(
-							<TableCell key={index}  style={highlight? boldText: {}}>{item}</TableCell>
+							<TableCell key={index} style={makeDarkConditionally({})}>{item}</TableCell>
 						))}
 
 					</TableRow>))}

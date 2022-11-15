@@ -1,5 +1,11 @@
 import {createSlice} from '@reduxjs/toolkit';
-import {changeBudgetStatus, downloadBudgetReport, getBudget, save, updateBudgetProperties as backendUpdateBudgetProperties} from '../api/api';
+import {
+    changeBudgetStatus,
+    downloadBudgetReport,
+    getBudget,
+    save,
+    updateBudgetProperties as backendUpdateBudgetProperties
+} from '../api/api';
 import {tokenSelector} from './authReducer';
 import {fromContract, getBudgetView} from '../domain';
 import {updateFromView} from '../domain/updateFromView';
@@ -14,7 +20,7 @@ export const initialState = {
     openingBalance: null,
     loading: false,
     error: false,
-    saveWithWarning: false,
+    submitWithWarning: false,
     showValidationResults: false,
     saved: '✓ saved',
     validationResults: []
@@ -47,12 +53,12 @@ const budgetDashboardSlice = createSlice({
         },
         setValidationResults: (state, {payload}) => {
             state.validationResults = payload;
-            if (state.validationResults.length > 0 && !state.saveWithWarning) {
+            if (state.validationResults.length > 0 && !state.submitWithWarning) {
                 state.showValidationResults = true;
             }
         },
         cancelShowValidationResults: (state) => {
-          state.showValidationResults = false;
+            state.showValidationResults = false;
         },
         updateBudget: (state, {payload}) => {
             const budget = updateFromView(payload, state.budget);
@@ -62,10 +68,9 @@ const budgetDashboardSlice = createSlice({
         },
         saveBudgetStatus: (state, {payload}) => {
             state.saved = payload ? '✓ saved' : 'saving...';
-            state.saveWithWarning = false;
         },
-        allowSaveWithWarning: (state) => {
-            state.saveWithWarning = true;
+        allowSubmitWithWarning: (state) => {
+            state.submitWithWarning = true;
             state.showValidationResults = false;
         },
         addBudgetLine: (state, {
@@ -105,8 +110,8 @@ const budgetDashboardSlice = createSlice({
                         detailedHeadCode: 0
                     },
                     items: []
-                }
-                matchingMajorHeadGroup[0].items.push(matchingMajorHead)
+                };
+                matchingMajorHeadGroup[0].items.push(matchingMajorHead);
             }
 
             matchingMajorHead.items.push({
@@ -121,10 +126,10 @@ const budgetDashboardSlice = createSlice({
             state.budgetView = getBudgetView(state.budget);
         },
         deleteBudgetLine: (state, {
-                           payload: {
-                               detailCode,
-                               majorHead,
-                           }
+            payload: {
+                detailCode,
+                majorHead,
+            }
         }) => {
             let matchingMajorHead = _.chain(state.budget)
                 .get('items')
@@ -134,7 +139,7 @@ const budgetDashboardSlice = createSlice({
                 .value();
 
             if (_.isUndefined(matchingMajorHead)) {
-                console.log("couldn't find matching majorHead to delete from");
+                console.log('couldn\'t find matching majorHead to delete from');
             }
             const matchingMajorHeadCopy = Object.assign({}, matchingMajorHead);
             let matchingItemIdx = matchingMajorHeadCopy.items.findIndex(item => item.code === detailCode);
@@ -157,7 +162,7 @@ export const {
     updateBudget,
     addBudgetLine,
     saveBudgetStatus,
-    allowSaveWithWarning,
+    allowSubmitWithWarning,
     deleteBudgetLine,
     setBudgetProps,
     setValidationResults,
@@ -167,23 +172,33 @@ export const {
 export const budgetSelector = state => state.budget;
 export default budgetDashboardSlice.reducer;
 
-export function saveBudget(saveWithWarning = false) {
+export function submitBudget(submitWithWarning = false) {
     return async (dispatch, getState) => {
-        if (saveWithWarning) {
-            dispatch(allowSaveWithWarning());
+        if (submitWithWarning) {
+            dispatch(allowSubmitWithWarning());
         }
+        await dispatch(saveBudget());
+
         const state = getState();
         const budget = budgetSelector(state).budget;
-
         const validationResults = validateBudget(budget);
         dispatch(setValidationResults(validationResults));
 
-        if (validationResults.length === 0 || saveWithWarning) {
-            dispatch(saveBudgetStatus(false));
-            const token = tokenSelector(state);
-            const data = await save(token, toContract(budget));
-            dispatch(saveBudgetStatus(data));
+        if (validationResults.length === 0 || submitWithWarning) {
+            await dispatch(updateBudgetStatus(budget.id, 'Submitted to GB'));
         }
+    };
+}
+
+export function saveBudget() {
+    return async (dispatch, getState) => {
+        const state = getState();
+        const budget = budgetSelector(state).budget;
+
+        dispatch(saveBudgetStatus(false));
+        const token = tokenSelector(state);
+        const data = await save(token, toContract(budget));
+        dispatch(saveBudgetStatus(data));
     };
 }
 
@@ -201,18 +216,19 @@ export function updateBudgetProperties(data, id) {
         const token = tokenSelector(getState());
         let result = await backendUpdateBudgetProperties(token, data, id);
         dispatch(setBudgetProps(result));
-    }
+    };
 }
 
 export function updateBudgetStatus(id, data) {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState());
-       return  await changeBudgetStatus(token, id, data);
-    }
+        return await changeBudgetStatus(token, id, data);
+    };
 }
+
 export function downloadBudgetExcel(year, reportType) {
     return async (dispatch, getState) => {
         const token = tokenSelector(getState());
-        return  await downloadBudgetReport(token, year, reportType, localStorage.getItem("language"));
-    }
+        return await downloadBudgetReport(token, year, reportType, localStorage.getItem('language'));
+    };
 }

@@ -19,5 +19,16 @@
   "Save the changes": "बदल जतन करा",
   "✓ saved": "बदल जतन केले",
   "saving...": "बदल जतन करत आहे...",
-  "Submit":"सबमिट करा"
+  "Submit":"सबमिट करा",
+  "Cancel": "रद्द करा",
+  "Change Status": "स्थिती बदला",
+  "Draft": "मसुदा",
+  "Submitted to GB": "GB ला सबमिट केले",
+  "Approved by GBM": "GBM द्वारे मंजूर",
+  "Approved by District": "जिल्ह्याने मान्यता दिली",
+  "Save": "जतन करा",
+  "Download": "डाउनलोड करा",
+  "Open Budget": "बजेट उघडा करा",
+  "budgetSummaryHeading": "बजेट सारांश आर्थिक वर्ष {{budgetYear}} (लाखांमध्ये)",
+  "keyBudgetHighlights": "मुख्य बजेट हायलाइट्स {{budgetYear}} (लाखांमध्ये)"
 }

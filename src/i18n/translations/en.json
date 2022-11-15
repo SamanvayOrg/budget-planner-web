@@ -2,5 +2,7 @@
   "Welcome to React": "Welcome to React and react-i18next NEW",
   "BUDGET_LOWER_THAN_PREVIOUS_YEAR": "Total budget amount is lesser than previous year's estimated amounts",
   "REVENUE_INCOME_LESS_THAN_REVENUE_EXPENDITURE": "Revenue Income is lesser than Revenue Expenditure",
-  "CAPITAL_INCOME_LESS_THAN_CAPITAL_EXPENDITURE": "Capital Income is lesser than Capital Expenditure"
+  "CAPITAL_INCOME_LESS_THAN_CAPITAL_EXPENDITURE": "Capital Income is lesser than Capital Expenditure",
+  "budgetSummaryHeading": "Budget Summary FY {{budgetYear}} (in lakhs)",
+  "keyBudgetHighlights": "Key Budget Highlights FY {{budgetYear}} (in lakhs)"
 }

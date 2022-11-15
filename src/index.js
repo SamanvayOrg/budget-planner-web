@@ -10,8 +10,6 @@ import "./i18n";
 
 const config = getConfig();
 
-
-
 const providerConfig = {
 	domain: config.domain,
 	clientId: config.clientId,

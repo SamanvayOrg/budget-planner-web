@@ -7,7 +7,6 @@
 #navBar {
     background: #FFFFFF1A;
     height: 64px;
-    background-color: #FFFFFF1A;
 }
 
 #settingOnNavBar {
@@ -22,7 +21,6 @@
     justify-content: flex-end;
     width: 49px;
     height: 24px;
-    font-family: 'Lato';
     font-style: normal;
     font-weight: 700;
     font-size: 13px;
@@ -37,7 +35,6 @@
     justify-content: flex-end;
     width: 49px;
     height: 24px;
-    font-family: 'Lato';
     font-style: normal;
     font-weight: 700;
     font-size: 13px;

@@ -42,7 +42,6 @@ const useStyles = makeStyles(theme => ({
 		color: "#212121",
 		paddingBottom: "20px"
 	},
-
 }));
 
 

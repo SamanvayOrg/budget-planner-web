@@ -38,10 +38,9 @@ const useStyles = makeStyles(theme => ({
         textTransform: "uppercase",
         marginBottom: "1%"
     }, welcomeText: {
-        fontWeight: "400", fontSize: "21px", lineHeight: "25px",
+        fontWeight: "400", fontSize: "21px", lineHeight: "64px"
     }, mmbsName: {
         fontStyle: "italic", fontSize: "21px", lineHeight: "25px", color: "black",
-
     }
 
 }))

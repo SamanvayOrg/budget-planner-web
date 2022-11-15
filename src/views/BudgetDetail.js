@@ -11,6 +11,7 @@ import {
     deleteBudgetLine,
     fetchBudget,
     saveBudget,
+    submitBudget,
     updateBudget,
     updateBudgetProperties,
     cancelShowValidationResults
@@ -33,9 +34,9 @@ import DoneOutlinedIcon from '@mui/icons-material/DoneOutlined';
 import {fetchState, stateSelector} from '../slices/stateReducer';
 import _ from 'lodash';
 import BudgetSaveError from '../components/BudgetSaveError';
+import {currentUserSelector} from '../slices/currentUserReducer';
 
 const useStylesBudgetDetails = makeStyles(theme => ({
-
     top: {
         display: 'flex',
         flexDirection: 'row',
@@ -50,10 +51,10 @@ const useStylesBudgetDetails = makeStyles(theme => ({
         display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'
     }, topCenter: {
         display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'end',
-
-
     }, topRight: {
         display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+    }, buttonItem: {
+        marginRight: '5px',
     }, mainContainer: {
         display: 'flex',
         flexDirection: 'column',
@@ -105,16 +106,24 @@ const BudgetDetail = () => {
     const [budgetLineCreateModal, setBudgetLineCreateModal] = useState(false);
     const [popupContext, setPopupContext] = useState({});
     const {stateDetails} = useSelector(stateSelector);
+    const {authToken} = useSelector(currentUserSelector);
+
+
+    const roleCheck = (role) => _.includes(authToken.permissions, role);
+    const canEdit = !roleCheck('admin') && budget.budgetStatus === 'Draft';
 
     const updateView = (newBudgetView) => {
         //Allow the spreadsheet to update itself first
         setTimeout(() => dispatch(updateBudget(newBudgetView)), 0);
     };
-    const save = (saveWithWarning = false) => {
-        dispatch(saveBudget(saveWithWarning));
+    const save = () => {
+        dispatch(saveBudget(submitWithWarning));
     };
-    const saveWithoutWarning = () => save(false);
-    const saveWithWarning = () => save(true);
+    const submit = (submitWithWarning = false) => {
+        dispatch(submitBudget());
+    };
+    const submitWithWarning = () => submit(true);
+    const submitWithoutWarning = () => submit(false);
 
     const handleOpen = (context) => {
         setPopupContext(context);
@@ -164,7 +173,15 @@ const BudgetDetail = () => {
                 <div className={classes.topRight}>
                     {propertiesStatus()}
                     <ActionButton label={'Add Properties'} onClick={() => setBudgetPropertySelectionModal(true)}/>
-                    <ActionButton onClick={saveWithoutWarning} label={t(saved)} id={'dynamicWidthButton'}/>
+                    {canEdit && (
+                        <>
+                            <ActionButton style={{marginLeft: '10px'}} variant={'contained'} size={'large'}
+                                          onClick={save}
+                                          label={t(saved)}/>
+                            <ActionButton style={{marginLeft: '10px'}} variant={'contained'} size={'large'}
+                                          onClick={submitWithoutWarning} label={t('Submit')}/>
+                        </>
+                    )}
                 </div>
             </div>
             <div className={classes.mainContainer}>
@@ -196,7 +213,8 @@ const BudgetDetail = () => {
                 <div>
                     <BudgetSaveError validationResults={validationResults}
                                      open={showValidationResults}
-                                     onContinue={saveWithWarning} onClose={() => dispatch(cancelShowValidationResults())}/>
+                                     onContinue={submitWithoutWarning}
+                                     onClose={() => dispatch(cancelShowValidationResults())}/>
                 </div>
                 <div>
                     <Modal open={budgetPropertySelectionModal} onClose={handleClose} className={modalClass.modal}>

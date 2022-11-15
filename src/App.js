@@ -1,12 +1,28 @@
 import React from 'react';
-import Routing from "./routes/Routing";
-import './App.css'
+import Routing from './routes/Routing';
+import StyledEngineProvider from '@mui/material/StyledEngineProvider';
+import './App.css';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 
+const theme = createTheme({
+    typography: {
+        fontFamily: ['Lato', 'sans-serif'],
+    },
+    palette: {
+        primary: {
+            main: '#00A3BA',
+        }
+    },
+});
 
 const App = () => {
-	return (
-		<Routing/>
-	)
+    return (
+        <ThemeProvider theme={theme}>
+            <StyledEngineProvider injectFirst>
+                <Routing/>
+            </StyledEngineProvider>
+        </ThemeProvider>
+    );
 };
 
 export default App;
