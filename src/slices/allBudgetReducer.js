@@ -3,7 +3,7 @@ import {getAllBudgets} from '../api/api';
 import {tokenSelector} from "./authReducer";
 
 export const initialState = {
-	allBudget:{},
+	allBudgets:{},
 	loading: true,
 	error: false
 }
@@ -13,7 +13,7 @@ const allBudgetSlice = createSlice({
 	initialState,
 	reducers: {
 		setAllBudgets: (state, {payload}) => {
-			state.allBudget = payload
+			state.allBudgets = payload
 			state.error = false
 			state.loading = false
 		},

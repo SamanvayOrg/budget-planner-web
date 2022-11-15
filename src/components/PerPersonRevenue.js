@@ -11,7 +11,7 @@ const styleSheets = makeStyles(theme => ({
 		flexDirection: "row"
 	}
 }))
-const PerPersonRevenue = ({allBudget, budgetYear, municipalityPopulation}) => {
+const PerPersonRevenue = ({allBudgets, budgetYear, municipalityPopulation}) => {
 
 	const classes = styleSheets();
 
@@ -23,12 +23,12 @@ const PerPersonRevenue = ({allBudget, budgetYear, municipalityPopulation}) => {
 			<div>
 				<Typography color="primary">
 								<span
-									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).budgetedRevenueIncome / municipalityPopulation)}/
+									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueIncome / municipalityPopulation)}/
 						person`}
 				</Typography>
 				<Typography color="primary">
 								<span
-									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure / municipalityPopulation)}/
+									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure / municipalityPopulation)}/
 						person`}
 				</Typography>
 			</div>

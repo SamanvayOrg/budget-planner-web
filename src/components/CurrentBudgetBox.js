@@ -21,7 +21,7 @@ const styleSheets = makeStyles(theme => ({
         background: " #FFFFFF",
         gap: "2vw",
         paddingTop: "10px",
-        paddingBottom: "15px",
+        paddingBottom: "30px",
         fontSize: "15px",
         fontWeight: "400",
         fontFamily: "Lato",
@@ -48,7 +48,7 @@ const styleSheets = makeStyles(theme => ({
 
 }))
 const CurrentBudgetBox = ({year}) => {
-    const {allBudget} = useSelector(allBudgetSelector);
+    const {allBudgets} = useSelector(allBudgetSelector);
     const dispatch = useDispatch();
     const classes = styleSheets();
     const [budgetYear, setBudgetYear] = useState(year);
@@ -80,14 +80,14 @@ const CurrentBudgetBox = ({year}) => {
             <Box className={classes.box}>
                 <div className={classes.innerBox}>
                     <div className={classes.text}>
-                        <DropDown list={getBudgetYears(allBudget)} value={budgetYear} onSelect={handleChange}/>
+                        <DropDown list={getBudgetYears(allBudgets)} value={budgetYear} onSelect={handleChange}/>
                     </div>
                 </div>
                 <div className={classes.actionButtons}>
                     <ActionButton label={t("Open Budget")} variant={'contained'} onClick={goToBudget} size={"large"}/>
                 </div>
             </Box>
-            <ReportsDashboard styleSheet={classes} allBudget={allBudget} budgetYear={budgetYear}/>
+            <ReportsDashboard styleSheet={classes} allBudgets={allBudgets} budgetYear={budgetYear}/>
         </>
     );
 };

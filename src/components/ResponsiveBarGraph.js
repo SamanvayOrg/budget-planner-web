@@ -1,7 +1,7 @@
 import {ResponsiveBar} from '@nivo/bar'
 
 
-const ResponsiveBarGraph = ({data, bottomLegend, leftLegend, indexBy, keys}) => {
+const ResponsiveBarGraph = ({data, bottomLegend, leftLegend, indexBy, keys, groupMode = 'stacked'}) => {
 	return <ResponsiveBar
 		data={data}
 		keys={keys}
@@ -38,6 +38,7 @@ const ResponsiveBarGraph = ({data, bottomLegend, leftLegend, indexBy, keys}) => 
 			legendPosition: 'middle',
 			legendOffset: -40
 		}}
+		groupMode={groupMode}
 		enableGridY={false}
 		labelSkipWidth={3}
 		labelTextColor={{

@@ -11,15 +11,15 @@ const styleSheets = makeStyles(theme => ({
 		flexDirection: "row"
 	}
 }))
-const PerPersonExpenditure = ({allBudget, budgetYear, municipalityPopulation}) => {
+const PerPersonExpenditure = ({allBudgets, budgetYear, municipalityPopulation}) => {
 	const classes = styleSheets();
 	const getBudgetCount = () => {
 		return {
-			totalBudget: _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000))]),
-			revenueBudget: _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)),
-			capitalBudget: _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000)),
-			revenuePercentage: _.ceil((_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000))])) * 100),
-			capitalPercentage: _.floor((_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure, 100000))])) * 100)
+			totalBudget: _.sum([_.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedCapitalExpenditure, 100000))]),
+			revenueBudget: _.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure, 100000)),
+			capitalBudget: _.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedCapitalExpenditure, 100000)),
+			revenuePercentage: _.ceil((_.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedCapitalExpenditure, 100000))])) * 100),
+			capitalPercentage: _.floor((_.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedCapitalExpenditure, 100000)) / _.sum([_.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure, 100000)), _.ceil(_.divide(budgetSummaryData(allBudgets, budgetYear).budgetedCapitalExpenditure, 100000))])) * 100)
 		}
 	}
 	return (<><Typography style={{paddingBottom: 10, color: "#333333"}}>
@@ -36,12 +36,12 @@ const PerPersonExpenditure = ({allBudget, budgetYear, municipalityPopulation}) =
 			<div>
 				<Typography color="primary">
 								<span
-									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).budgetedRevenueExpenditure / municipalityPopulation)}/
+									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure / municipalityPopulation)}/
 						person`}
 				</Typography>
 				<Typography color="primary">
 								<span
-									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudget, budgetYear).budgetedCapitalExpenditure / municipalityPopulation)}/
+									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedCapitalExpenditure / municipalityPopulation)}/
 						person`}
 				</Typography>
 			</div>

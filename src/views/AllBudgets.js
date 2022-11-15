@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
 
 const AllBudgets = () => {
     const dispatch = useDispatch();
-    const {allBudget} = useSelector(allBudgetSelector);
+    const {allBudgets} = useSelector(allBudgetSelector);
     let navigate = useNavigate();
     const {t} = useTranslation();
 
@@ -67,9 +67,9 @@ const AllBudgets = () => {
         dispatch(fetchAllBudgets());
     }, [dispatch]);
 
-    function renderBox(allBudget) {
+    function renderBox(allBudgets) {
         let budgetBox = [];
-        _.forEach(_.sortBy(allBudget,['budgetYear']), (budget, index) => {
+        _.forEach(_.sortBy(allBudgets,['budgetYear']), (budget, index) => {
             let year = budget.budgetYear.substring(0, 4)
             const goToBudget = () => {
                 navigate(`/budget/${year}`);
@@ -101,7 +101,7 @@ const AllBudgets = () => {
                 </div>
                 <HorizontalLine/>
                 <Container maxWidth="xl">
-                    {renderBox(allBudget)}
+                    {renderBox(allBudgets)}
                 </Container>
 
             </div>
