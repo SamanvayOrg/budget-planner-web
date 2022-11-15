@@ -1,18 +1,18 @@
-import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
-import {superAdminMenus} from "../../config";
-import {Box, Paper, Typography} from "@mui/material";
-import Toolbar from "@mui/material/Toolbar";
-import ResponsiveTable from "../../components/ResponsiveTable";
-import * as React from "react";
-import {useEffect} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
-import _ from "lodash";
-import {useNavigate} from "react-router-dom";
-import SuperAdminAppBar from "../../components/SuperAdminAppBar";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
-import Home from "../Home";
-import {fetchTranslations} from "../../slices/translationsReducer";
+import HorizontalMenuDrawer from '../../components/HorizontalMenuDrawer';
+import {superAdminMenus} from '../../config';
+import {Box, Paper, Typography} from '@mui/material';
+import Toolbar from '@mui/material/Toolbar';
+import ResponsiveTable from '../../components/ResponsiveTable';
+import * as React from 'react';
+import {useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from '../../slices/municipalityReducer';
+import _ from 'lodash';
+import {useNavigate} from 'react-router-dom';
+import SuperAdminAppBar from '../../components/SuperAdminAppBar';
+import {withAuthenticationRequired} from '@auth0/auth0-react';
+import Home from '../Home';
+import {fetchTranslations} from '../../slices/translationsReducer';
 
 const SuperAdminMunicipalities = () => {
     const {allMunicipalities} = useSelector(allMunicipalityDetailsSelector);
@@ -31,11 +31,11 @@ const SuperAdminMunicipalities = () => {
 
     let rows = [];
     if (!_.isEmpty(allMunicipalities)) {
-        rows = allMunicipalities
+        rows = allMunicipalities;
     }
     const rowClick = (data) => {
         // handleClick('updateMunicipality', data.id)
-    }
+    };
     const handleClick = (param, id) => {
         switch (param) {
             case 'Users':
@@ -50,10 +50,13 @@ const SuperAdminMunicipalities = () => {
             case 'create':
                 navigate('/superAdmin/municipality/create');
                 break;
+            case 'Usage':
+                navigate('/superAdmin/usage');
+                break;
             default:
-                navigate('/superAdmin')
+                navigate('/superAdmin');
         }
-    }
+    };
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -61,7 +64,7 @@ const SuperAdminMunicipalities = () => {
             <HorizontalMenuDrawer menuList={superAdminMenus} drawerWidth={240} onClick={handleClick}/>
             <Box component="main" sx={{flexGrow: 1, p: 3}}>
                 <Toolbar/>
-                <Paper sx={{width: '100%', overflow: 'hidden', paddingTop: "40px"}}>
+                <Paper sx={{width: '100%', overflow: 'hidden', paddingTop: '40px'}}>
                     <Typography sx={{
                         display: 'flex',
                         justifyContent: 'flex-end',
@@ -72,8 +75,8 @@ const SuperAdminMunicipalities = () => {
                     <ResponsiveTable columns={columns} rows={rows} onClick={rowClick}/></Paper>
             </Box>
         </Box>
-    )
-}
+    );
+};
 export default withAuthenticationRequired(SuperAdminMunicipalities, {
     onRedirecting: () => <Home/>,
 });

@@ -62,6 +62,9 @@ const AdminUsers = () => {
             case 'create':
                 navigate('/superAdmin/user/create');
                 break;
+            case 'Usage':
+                navigate('/superAdmin/usage');
+                break;
             default:
                 navigate('/superAdmin')
         }

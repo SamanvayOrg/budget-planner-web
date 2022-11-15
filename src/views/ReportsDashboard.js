@@ -17,7 +17,6 @@ import Box from '@mui/material/Box';
 import BigBoldHeading from '../components/BigBoldHeading';
 import * as PropTypes from 'prop-types';
 import BudgetTrends from '../components/BudgetTrends';
-import HorizontalLine from '../components/HorizontalLine';
 import NotableCapitalHeads from '../components/NotableCapitalHeads';
 
 BudgetTrends.propTypes = {budgets: PropTypes.any};

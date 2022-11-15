@@ -21,6 +21,7 @@ import AccessDenied from "../components/AccessDenied";
 import {useDispatch, useSelector} from "react-redux";
 import _ from "lodash";
 import {currentUserSelector, fetchCurrentUser} from "../slices/currentUserReducer";
+import Usage from '../views/superAdmin/Usage';
 
 const Routing = () => {
     const {authToken} = useSelector(currentUserSelector);
@@ -51,6 +52,7 @@ const Routing = () => {
             <Route path="/admin/translation/update/:translationId"
                    element={isAdmin() ? <UpdateTranslation/> : <AccessDenied/>}/>
             <Route path="/superAdmin" element={isSuperAdmin() ? <AdminUsers/> : <AccessDenied/>}/>
+            <Route path="/superAdmin/usage" element={isSuperAdmin() ? <Usage/> : <AccessDenied/>}/>
             <Route path="/superAdmin/users" element={isSuperAdmin() ? <AdminUsers/> : <AccessDenied/>}/>
             <Route path="/superAdmin/user/create" element={isSuperAdmin() ? <CreateAdmin/> : <AccessDenied/>}/>
             <Route path="/superAdmin/user/update/:userId"

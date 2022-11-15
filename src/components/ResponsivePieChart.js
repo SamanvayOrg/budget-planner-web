@@ -3,10 +3,11 @@ import {ResponsivePie} from '@nivo/pie'
 import Typography from "@mui/material/Typography";
 
 
-const ResponsivePieChart = ({data, title}) => {
+const ResponsivePieChart = ({data, title, ...props}) => {
 	return (<>
 		<Typography align={"center"} style={{fontSize: 20, fontWeight: 700, fontFamily: "Lato"}}>{title}</Typography>
 		<ResponsivePie
+			{...props}
 			data={data}
 			margin={{top: 40, right: 80, bottom: 80, left: 80}}
 			innerRadius={0.7}

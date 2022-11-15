@@ -1,9 +1,6 @@
 import React from 'react';
-import ResponsiveBarGraph from './ResponsiveBarGraph';
-import {getMajorCapitalItems, summaryData} from '../domain/budgetSummaryMapper';
+import {getMajorCapitalItems} from '../domain/budgetSummaryMapper';
 import Box from '@mui/material/Box';
-import BigBoldHeading from './BigBoldHeading';
-import Paper from '@mui/material/Paper';
 import DataTable from './DataTable';
 
 const NotableCapitalHeads = ({budgets, budgetYear}) => {

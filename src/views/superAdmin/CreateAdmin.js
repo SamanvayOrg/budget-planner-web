@@ -68,6 +68,9 @@ const CreateAdmin = () => {
             case 'Municipality':
                 navigate('/superAdmin/municipalities');
                 break;
+            case 'Usage':
+                navigate('/superAdmin/usage');
+                break;
             default:
                 navigate('/superAdmin')
         }

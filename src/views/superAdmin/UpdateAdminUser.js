@@ -1,20 +1,20 @@
-import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
-import {superAdminMenus} from "../../config";
-import Toolbar from "@mui/material/Toolbar";
-import * as React from "react";
-import {useEffect, useState} from "react";
-import {Box, Paper, TextField, Typography} from "@mui/material";
-import ActionButton from "../../components/ActionButton";
-import {useNavigate, useParams} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, saveUser} from "../../slices/allUsersReducer";
-import _ from "lodash";
-import DropDown from "../../components/DropDown";
-import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
-import {useTranslation} from "react-i18next";
-import SuperAdminAppBar from "../../components/SuperAdminAppBar";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
-import Home from "../Home";
+import HorizontalMenuDrawer from '../../components/HorizontalMenuDrawer';
+import {superAdminMenus} from '../../config';
+import Toolbar from '@mui/material/Toolbar';
+import * as React from 'react';
+import {useEffect, useState} from 'react';
+import {Box, Paper, TextField, Typography} from '@mui/material';
+import ActionButton from '../../components/ActionButton';
+import {useNavigate, useParams} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {allUsersSelector, saveUser} from '../../slices/allUsersReducer';
+import _ from 'lodash';
+import DropDown from '../../components/DropDown';
+import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from '../../slices/municipalityReducer';
+import {useTranslation} from 'react-i18next';
+import SuperAdminAppBar from '../../components/SuperAdminAppBar';
+import {withAuthenticationRequired} from '@auth0/auth0-react';
+import Home from '../Home';
 
 
 const UpdateAdminUser = () => {
@@ -24,7 +24,7 @@ const UpdateAdminUser = () => {
     const selectedUser = _.chain(adminUsers)
         .filter((e) => e.id === userId)
         .first()
-        .value()
+        .value();
 
     const [name, setName] = useState(selectedUser.name);
     const [email, setEmail] = useState(selectedUser.email);
@@ -35,16 +35,16 @@ const UpdateAdminUser = () => {
 
     useEffect((e) => {
         dispatch(fetchAllMunicipalities());
-    }, [dispatch])
+    }, [dispatch]);
     let municipalityList = [];
     _.forEach(allMunicipalities, municipality => {
         municipalityList.push(municipality.name);
-    })
+    });
 
     const currentMunicipality = _.chain(allMunicipalities)
         .filter((municipality) => municipality.id === selectedUser.municipalityId)
         .first()
-        .value()
+        .value();
     const [municipality, setMunicipality] = useState(currentMunicipality.name);
 
 
@@ -54,7 +54,7 @@ const UpdateAdminUser = () => {
         } else if (type === 'email') {
             setEmail(event.target.value);
         }
-    }
+    };
     const handleClick = (data) => {
         switch (data) {
             case 'Users':
@@ -63,23 +63,26 @@ const UpdateAdminUser = () => {
             case 'Municipality':
                 navigate('/superAdmin/municipalities');
                 break;
+            case 'Usage':
+                navigate('/superAdmin/usage');
+                break;
             default:
-                navigate('/superAdmin')
+                navigate('/superAdmin');
         }
-    }
+    };
     const handleSave = () => {
         let newUserOb = {};
         newUserOb = {
-            "id": selectedUser.id,
+            'id': selectedUser.id,
             name,
             email,
-            "municipalityId": municipality,
-            "admin": selectedUser.admin
+            'municipalityId': municipality,
+            'admin': selectedUser.admin
         };
         setEditUser(false);
         dispatch(saveUser(newUserOb));
 
-    }
+    };
 
     return (
         <Box sx={{display: 'flex'}}>
@@ -111,27 +114,27 @@ const UpdateAdminUser = () => {
                         gap: '20px'
                     }}>
                         <TextField disabled={!editUser} sx={{maxWidth: 1 / 4}} variant="standard"
-                                   label={"name"} defaultValue={name}
+                                   label={'name'} defaultValue={name}
                                    onChange={(e) => handleChange(e, 'name')}/>
                         <TextField disabled sx={{maxWidth: 1 / 4}}
                                    variant="standard"
-                                   label={"Email"} defaultValue={email}
+                                   label={'Email'} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
                         <DropDown
                             disabled inputProps={{readOnly: !editUser}}
                             value={municipality} sx={{maxWidth: 1 / 4}}
-                            label={t("Municipality")} list={municipalityList}
+                            label={t('Municipality')} list={municipalityList}
                             onSelect={(e) => setMunicipality(e.target.value)}/>
                         <ActionButton disabled={!editUser}
-                                      style={editUser ? {} : {background: "#b7e1e8"}} label={"Submit"}
-                                      id={"smallActionButton"}
+                                      style={editUser ? {} : {background: '#b7e1e8'}} label={'Submit'}
+                                      id={'smallActionButton'}
                                       onClick={handleSave}/>
                     </div>
                 </Paper>
             </Box>
         </Box>
-    )
-}
+    );
+};
 export default withAuthenticationRequired(UpdateAdminUser, {
     onRedirecting: () => <Home/>,
 });
