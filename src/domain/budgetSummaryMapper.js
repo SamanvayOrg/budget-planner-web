@@ -164,8 +164,6 @@ export const getRevenueIncomeSummaryData = (budgets, year) => {
         }
     }
     const getValueFromMajorHead = (majorHead) => {
-        console.log('budget', budgets)
-
         if (currentYearBudget(budgets, year)) {
             return _.chain(currentYearBudget(budgets, year).budgetLines)
                 .filter((e) => e.majorHead === majorHead)
@@ -265,8 +263,6 @@ export const capitalBudgetSummaryData = (budgets, year) => {
     }
 
     const getValueFromMajorHead = (majorHead) => {
-        console.log('budget', budgets)
-
         if (currentYearBudget(budgets, year)) {
             return _.chain(currentYearBudget(budgets, year).budgetLines)
                 .filter((e) => e.majorHead === majorHead)

@@ -179,7 +179,6 @@ const downloadBudgetReport = async (token, year, amountType, languageCode) => {
 
 	await axios.get(`/api/report/budget?year=${year}&amountType=${amountType}&languageCode=${languageCode}`, config)
 	.then((res) => {
-		console.log('res', res)
 		const filename = res.headers["content-disposition"]
 			.split('=')[1];
 		fileDownload(res.data, filename);

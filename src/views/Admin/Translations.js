@@ -63,7 +63,6 @@ const Translations = () => {
         }
     }
     const onDelete = (data) => {
-        console.log('onDelete', data);
         if (window.confirm(t('Are you sure.?'))) {
             dispatch(removeTranslation(data.id))
         }

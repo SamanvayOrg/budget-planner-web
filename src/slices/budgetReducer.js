@@ -57,7 +57,6 @@ const budgetDashboardSlice = createSlice({
             }
         },
         hideValidationResults: (state) => {
-            console.log('hiding validation results');
             state.showValidationResults = false;
         },
         updateBudget: (state, {payload}) => {
