@@ -12,7 +12,7 @@ const allBudgetSlice = createSlice({
 	name: 'allBudgets',
 	initialState,
 	reducers: {
-		setBudget: (state, {payload}) => {
+		setAllBudgets: (state, {payload}) => {
 			state.allBudget = payload
 			state.error = false
 			state.loading = false
@@ -25,7 +25,7 @@ const allBudgetSlice = createSlice({
 });
 
 export const {
-	setBudget,
+	setAllBudgets,
 	budgetLoading
 } = allBudgetSlice.actions
 
@@ -35,8 +35,8 @@ export default allBudgetSlice.reducer;
 export function fetchAllBudgets() {
 	return async (dispatch, getState) => {
 		const token = tokenSelector(getState());
-		dispatch(setBudget());
-		let budget = await getAllBudgets(token);
-		dispatch(setBudget(budget));
+		dispatch(setAllBudgets());
+		let budgets = await getAllBudgets(token);
+		dispatch(setAllBudgets(budgets));
 	}
 }
