@@ -12,12 +12,13 @@ import ResponsiveBarGraph from '../components/ResponsiveBarGraph';
 import PerPersonRevenue from '../components/PerPersonRevenue';
 import React from 'react';
 import {useTranslation} from 'react-i18next';
-import SectorialDistributionDashboardReport from '../components/SectorialDistributionDashboardReport';
+import SectoralDistributionDashboardReport from '../components/SectoralDistributionDashboardReport';
 import Box from '@mui/material/Box';
 import BigBoldHeading from '../components/BigBoldHeading';
 import * as PropTypes from 'prop-types';
 import BudgetTrends from '../components/BudgetTrends';
 import HorizontalLine from '../components/HorizontalLine';
+import NotableCapitalHeads from '../components/NotableCapitalHeads';
 
 BudgetTrends.propTypes = {budgets: PropTypes.any};
 const ReportsDashboard = ({styleSheet, allBudgets, budgetYear}) => {
@@ -101,11 +102,11 @@ const ReportsDashboard = ({styleSheet, allBudgets, budgetYear}) => {
             <BigBoldHeading label={t(`Revenue Expenditure Sectoral Distribution FY ${budgetYear}`)}/>
             <Box className={classes.boxWithColumnDirection}>
                 <div className={classes.box} style={{width: '100%'}}>
-                    <SectorialDistributionDashboardReport budgets={allBudgets} year={budgetYear}/>
+                    <SectoralDistributionDashboardReport budgets={allBudgets} year={budgetYear}/>
                 </div>
             </Box>
 
-            <BigBoldHeading label={t(`Capital Budget Summary ${budgetYear}`)}/>
+            <BigBoldHeading label={t(`Capital Budget Summary FY ${budgetYear}`)}/>
             <Box className={classes.boxWithColumnDirection}>
                 <Box className={classes.box} style={{width: '100%'}}>
                     <Paper style={{
@@ -125,12 +126,13 @@ const ReportsDashboard = ({styleSheet, allBudgets, budgetYear}) => {
 
                 </Box>
             </Box>
-
+            <BigBoldHeading label={t(`Notable Capital Income and Expenditure FY ${budgetYear}`)}/>
+            <Box style={{width: '100%'}}>
+                <NotableCapitalHeads budgets={allBudgets} budgetYear={budgetYear}/>
+            </Box>
             <BigBoldHeading label={t(`Trends`)}/>
-            <Box className={classes.box}>
-                <Box style={{height: 400, width: '100%'}}>
-                    <BudgetTrends budgets={allBudgets}/>
-                </Box>
+            <Box style={{width: '100%'}}>
+                <BudgetTrends budgets={allBudgets}/>
             </Box>
         </Box>
     )

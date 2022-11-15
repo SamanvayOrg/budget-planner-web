@@ -9,7 +9,7 @@ import {ReactComponent as WaterAndSanitation} from "../assets/water_and_sanitati
 import _ from "lodash";
 import DistributionItem from "./DistributionItem";
 
-const SectorialDistributionDashboardReport = ({budgets, year}) => {
+const SectoralDistributionDashboardReport = ({budgets, year}) => {
 
     const getPercentage = (value) => {
         return _.ceil((value / getTotal()) * 100, 2)
@@ -59,4 +59,4 @@ const SectorialDistributionDashboardReport = ({budgets, year}) => {
                           logo={<OtherAndM/>}/>
     </>)
 }
-export default SectorialDistributionDashboardReport;
+export default SectoralDistributionDashboardReport;

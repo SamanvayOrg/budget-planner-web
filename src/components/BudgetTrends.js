@@ -8,13 +8,13 @@ import Paper from '@mui/material/Paper';
 const BudgetTrends = ({budgets}) => {
     const data = summaryData(budgets);
     return (
-        <Box sx={{width: 1, flexDirection: 'row', display: 'flex', paddingBottom: '144px'}}>
-            <Paper sx={{height: '440px', width: 0.5, paddingBottom: '72px'}}>
+        <Box sx={{width: 1, flexDirection: 'row', display: 'flex', marginBottom: '24px', marginTop: '16px'}}>
+            <Paper sx={{height: '440px', width: 0.5, paddingBottom: '120px'}}>
                 <BigBoldHeading label={'Revenue Trends (in lakhs)'} lightBackground/>
                 <ResponsiveBarGraph data={data} keys={['Revenue Income', 'Revenue Expenditure']} indexBy={'budgetYear'}
                                     groupMode={'grouped'}/>
             </Paper>
-            <Paper sx={{height: '440px', width: 0.5, marginLeft: '20px', paddingBottom: '72px'}}>
+            <Paper sx={{height: '440px', width: 0.5, marginLeft: '20px', paddingBottom: '120px'}}>
                 <BigBoldHeading label={'Capital Trends (in lakhs)'} lightBackground/>
                 <ResponsiveBarGraph data={data} keys={['Capital Income', 'Capital Expenditure']} indexBy={'budgetYear'}
                                     groupMode={'grouped'}/>

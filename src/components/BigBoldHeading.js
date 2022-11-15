@@ -6,7 +6,6 @@ import {t} from 'i18next';
 
 const BigBoldHeading = ({label, width = 1, lightBackground}) => {
     const theme = useTheme();
-
     return (
         <>
             <Box sx={{
