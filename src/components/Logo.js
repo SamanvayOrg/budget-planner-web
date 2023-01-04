@@ -1,4 +1,4 @@
-import mbs from "../assets/MBSLogoSmall.svg";
+import mbs from "../assets/MBSLogo.png";
 import "../styles/style.css";
 
 
