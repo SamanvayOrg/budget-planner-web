@@ -3,12 +3,12 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import "../styles/style.css";
-import {ReactComponent as MBSLogo} from '../assets/MBSLogo.svg';
 import Profile from "./Profile";
 import {useAuth0} from "@auth0/auth0-react";
 import NavBarNavigationBeforeAuth from "./NavBarNavigationBeforeAuth";
 import {useNavigate} from 'react-router-dom';
 import Button from '@mui/material/Button';
+import Logo from './Logo';
 
 
 const ResponsiveAppBar = () => {
@@ -24,7 +24,7 @@ const ResponsiveAppBar = () => {
 		<AppBar id="navBar" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<Button onClick={() => navigate('/dashboard')}><MBSLogo/></Button>
+					<Button onClick={() => navigate('/dashboard')}><Logo/></Button>
 					{endView}
 				</Toolbar>
 			</Container>

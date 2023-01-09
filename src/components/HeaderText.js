@@ -16,7 +16,7 @@ const HeaderText = () => {
 			textDecoration: 'none',
 		}}
 	>
-		Municipality budget system
+		City Budgets
 	</Typography>)
 		;
 }

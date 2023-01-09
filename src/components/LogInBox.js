@@ -53,7 +53,7 @@ const LogInBox = () => {
 		<div className={classes.container}>
 			<div className={classes.box}>
 				<span className={classes.mbsName} >
-					{t('Municipality budgeting system')}
+					{t('City Budgets')}
 				</span>
 
 				<div className={classes.signInName}>
