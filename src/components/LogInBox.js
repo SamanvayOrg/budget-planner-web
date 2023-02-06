@@ -11,15 +11,15 @@ const useStyles = makeStyles(theme => ({
     root: {
         width: "100%"
     }, container: {
-        display: "flex", flexDirection: "row",
-
+        display: "flex",
+        flexDirection: "row",
     }, img: {
         flex: "auto", width: "50%", display: "flex", justifyContent: "flex-end"
     }, box: {
         width: "50%",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-end",
         alignItems: "center",
         flex: "auto",
         boxSizing: "border-box",
@@ -47,6 +47,7 @@ const useStyles = makeStyles(theme => ({
         display: "flex",
         justifyContent: "center",
         alignItems: "flex-end",
+        bottom: 0
     }
 }));
 
