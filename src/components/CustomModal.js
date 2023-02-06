@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import {Modal} from '@mui/material';
 import ActionButton from './ActionButton';
 import {makeStyles} from '@mui/styles';
+import {useTranslation} from "react-i18next";
 
 const useStyles = makeStyles(theme => ({
     modal: {
@@ -53,9 +54,11 @@ const CustomModal = ({
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const {t} = useTranslation();
+
     return (<div>
-        {isButton ? <ActionButton label={buttonLabel} id={buttonId} onClick={handleOpen}/> :
-            <div onClick={handleOpen}>{buttonLabel}
+        {isButton ? <ActionButton label={t(buttonLabel)} id={buttonId} onClick={handleOpen}/> :
+            <div onClick={handleOpen}>{t(buttonLabel)}
             </div>}
         <Modal
             open={open}
@@ -71,7 +74,7 @@ const CustomModal = ({
                 {dropDown}
                 {actionButton}
                 {cancelButton}
-                <span className={classes.cancelText} onClick={handleClose}>Close</span>
+                <span className={classes.cancelText} onClick={handleClose}>{t("Close")}</span>
             </Box>
         </Modal>
     </div>);

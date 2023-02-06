@@ -3,6 +3,7 @@ import SelectYears from "./SelectYears";
 import ActionButton from "./ActionButton";
 import CustomModal from "./CustomModal";
 import {style} from "./EmptyBudgetBox";
+import {useTranslation} from "react-i18next";
 
 
 const useStyles = makeStyles(theme => ({
@@ -32,14 +33,15 @@ const useStyles = makeStyles(theme => ({
 
 const LoginPageHelpAndSupportText = () => {
     const classes = useStyles();
+    const {t} = useTranslation();
     return (
         <div className={classes.supportText}>
             If you are unable to sign in, contact your administrator
             <br/><span className={classes.helpAndSupport}>
 			<CustomModal
                 isButton={false}
-                buttonLabel={"Help and support"}
-                modalText={"Please drop a mail at: citybudgets.support@cept.ac.in"}
+                buttonLabel={t("Help & support")}
+                modalText={t("Please drop a mail at: citybudgets.support@cept.ac.in")}
                 style={style}
             /></span>
         </div>
