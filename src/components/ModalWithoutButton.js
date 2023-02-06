@@ -2,7 +2,7 @@ import * as React from "react";
 import ActionButton from "./ActionButton";
 import {Modal} from "@mui/material";
 import Box from "@mui/material/Box";
-import {useStyles} from "./ModalWithButton";
+import {useStyles} from "./CustomModal";
 import {style} from "./EmptyBudgetBox";
 
 

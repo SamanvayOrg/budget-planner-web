@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato');
+
 .navBarLogo {
     width: 150px;
 }
@@ -28,7 +29,8 @@
     letter-spacing: 0.4px;
     color: #212121;
 }
-#helpSupport{
+
+#helpSupport {
     flex: .1;
     display: flex;
     justify-content: flex-end;
@@ -41,14 +43,17 @@
     text-align: right;
     letter-spacing: 0.4px;
     color: #212121;
+    cursor: pointer;
 }
-#navBarRightNavigation{
+
+#navBarRightNavigation {
     flex: 1;
     display: flex;
     justify-content: flex-end;
     color: #616161;
 }
-#loginBox{
+
+#loginBox {
     box-sizing: border-box;
     position: absolute;
     width: 1244px;
@@ -62,27 +67,31 @@
     flex-direction: row;
 }
 
-#arrowImg{
+#arrowImg {
     position: absolute;
     width: 60%;
     height: 90%;
     border-radius: 0px 3px 3px 0px;
 }
-#box1{
+
+#box1 {
     width: 50%;
     height: 100%;
     text-align: right;
 }
-#box2{
+
+#box2 {
     width: 50%;
 
     height: 100%;
 }
-#logButton{
+
+#logButton {
     background: #00A3BA;
     color: #FFFFFF;
 }
-#addNewBudgetButton{
+
+#addNewBudgetButton {
     background: #00A3BA;
     color: #FFFFFF;
     height: 48px;
@@ -90,7 +99,8 @@
     font-size: 12px;
 
 }
-#smallActionButton{
+
+#smallActionButton {
     width: 130px;
     height: 48px;
     background: #00A3BA;
@@ -98,7 +108,8 @@
     border-radius: 3px;
     color: #FFFFFF;
 }
-#dynamicWidthButton{
+
+#dynamicWidthButton {
     width: fit-content;
     min-width: 130px;
     height: 48px;
@@ -108,10 +119,12 @@
     color: #FFFFFF;
     font-size: 13px;
 }
-#helpText{
+
+#helpText {
     position: relative;
 }
-#abc{
+
+#abc {
     display: flex;
     justify-content: flex-start;
 }

@@ -23,7 +23,7 @@ import HorizontalLine from '../components/HorizontalLine';
 import {KeyboardBackspace} from '@mui/icons-material';
 import ActionButton from '../components/ActionButton';
 import {Modal} from '@mui/material';
-import {useStyles} from '../components/ModalWithButton';
+import {useStyles} from '../components/CustomModal';
 import {fetchMetadata, metadataSelector} from '../slices/metadataReducer';
 import BudgetLineSelector from '../components/BudgetLineSelector';
 import {useTranslation} from 'react-i18next';

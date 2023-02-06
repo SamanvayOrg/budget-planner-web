@@ -4,7 +4,7 @@ import ActionButton from './ActionButton';
 import {useTranslation} from 'react-i18next';
 import React, {useState} from 'react';
 import {Modal} from '@mui/material';
-import {useStyles} from './ModalWithButton';
+import {useStyles} from './CustomModal';
 import DropDown from './DropDown';
 import {downloadBudgetExcel, updateBudgetStatus} from '../slices/budgetReducer';
 import {useDispatch, useSelector} from 'react-redux';
