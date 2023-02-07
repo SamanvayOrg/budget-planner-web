@@ -1,9 +1,9 @@
 import {Box, Paper, TextField, Typography} from "@mui/material";
 import ActionButton from "../../components/ActionButton";
 import * as React from "react";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, saveUser} from "../../slices/allUsersReducer";
+import {allUsersSelector, fetchUsers, saveUser} from "../../slices/allUsersReducer";
 import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
@@ -14,16 +14,15 @@ import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "../Home";
 
 const UpdateUser = () => {
+    const dispatch = useDispatch();
     const {users} = useSelector(allUsersSelector);
     let {userId} = useParams();
     const selectedUser = _.chain(users)
-        .filter((e) => e.id === userId)
+        .filter((e) => e.id == userId)
         .first()
         .value()
-
     const [name, setName] = useState(selectedUser.name);
     const [email, setEmail] = useState(selectedUser.email);
-    const dispatch = useDispatch();
     const [editUser, setEditUser] = useState(false);
 
     const handleChange = (event, type) => {
