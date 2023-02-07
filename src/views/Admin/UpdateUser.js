@@ -1,9 +1,9 @@
 import {Box, Paper, TextField, Typography} from "@mui/material";
 import ActionButton from "../../components/ActionButton";
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {allUsersSelector, fetchUsers, saveUser} from "../../slices/allUsersReducer";
+import {allUsersSelector, saveUser} from "../../slices/allUsersReducer";
 import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
