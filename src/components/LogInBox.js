@@ -73,10 +73,7 @@ const LogInBox = () => {
                 </div>
             </div>
             <img alt={'login'} src={loginBoxMainImage} className={classes.img}/>
-
         </div>
-
-
     );
 }
 export default LogInBox;
