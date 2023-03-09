@@ -26,6 +26,8 @@ const summary = (lines) => addAllValuesFor(lines, [
 	'yearMinus2Actuals',
 	'functionCode',
 	'detailedHeadCode',
+	'eightMonthsActuals',
+	'fourMonthsProbables'
 ]);
 
 const updateSummary = (budget) => {

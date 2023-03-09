@@ -23,7 +23,7 @@ export const budgetSummaryData = (budgets, year) => {
                 .filter((e) => e.majorHeadGroup === itemName)
                 .first()
                 .value();
-            revenue = ceil(revenueIncome.summary.currentYear4MonthsProbables + revenueIncome.summary.currentYear8MonthsActuals);
+            revenue = ceil(revenueIncome.summary.eightMonthsActuals + revenueIncome.summary.fourMonthsProbables);
         }
         return revenue;
     };
