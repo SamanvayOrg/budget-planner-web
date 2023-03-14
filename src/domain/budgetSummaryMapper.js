@@ -1,4 +1,4 @@
-import {ceil, map, chain, isEqual, forEach} from 'lodash';
+import {ceil, chain, forEach, isEqual, map} from 'lodash';
 import {fromContract} from './budgetContractMapper';
 import {currentYearBudget, prevYearBudget} from './functions';
 
@@ -11,7 +11,7 @@ export const budgetSummaryData = (budgets, year) => {
                 .filter((e) => e.majorHeadGroup === itemName)
                 .first()
                 .value();
-            revenue = revenueIncome.summary.budgetedAmount;
+            revenue = !!revenueIncome ? revenueIncome.summary.budgetedAmount : 0;
         }
         return revenue;
     };
@@ -23,7 +23,7 @@ export const budgetSummaryData = (budgets, year) => {
                 .filter((e) => e.majorHeadGroup === itemName)
                 .first()
                 .value();
-            revenue = ceil(revenueIncome.summary.eightMonthsActuals + revenueIncome.summary.fourMonthsProbables);
+            revenue = !!revenueIncome ? ceil(revenueIncome.summary.eightMonthsActuals + revenueIncome.summary.fourMonthsProbables) : 0;
         }
         return revenue;
     };
