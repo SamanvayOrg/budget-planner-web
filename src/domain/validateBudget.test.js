@@ -19,13 +19,13 @@ describe('validateBudget', () => {
                     }
                 },
                 {
-                    "majorHeadGroup": "Assets",
+                    "majorHeadGroup": "Assets (Capital Expenditure)",
                     "summary": {
                         "budgetedAmount": 100,
                     }
                 },
                 {
-                    "majorHeadGroup": "Liability",
+                    "majorHeadGroup": "Liability (Capital Income)",
                     "summary": {
                         "budgetedAmount": 100,
                     }

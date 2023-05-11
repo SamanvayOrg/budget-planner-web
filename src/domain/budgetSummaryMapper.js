@@ -38,10 +38,10 @@ export const budgetSummaryData = (budgets, year) => {
     };
 
     const getBudgetedTotalSurplusOrDef = () => {
-        return (getBudgetedValue(currentYearBudget(budgets, year), 'Revenue Receipt') + getBudgetedValue(currentYearBudget(budgets, year), 'Assets')) - (getBudgetedValue(currentYearBudget(budgets, year), 'Expenses') + getBudgetedValue(currentYearBudget(budgets, year), 'Liability'));
+        return (getBudgetedValue(currentYearBudget(budgets, year), 'Revenue Receipt') + getBudgetedValue(currentYearBudget(budgets, year), "Assets (Capital Expenditure)")) - (getBudgetedValue(currentYearBudget(budgets, year), 'Expenses') + getBudgetedValue(currentYearBudget(budgets, year), "Liability (Capital Income)"));
     };
     const getRevisedTotalSurplusOrDef = () => {
-        return (getRevisedValue(prevYearBudget(budgets, year), 'Revenue Receipt') + getRevisedValue(prevYearBudget(budgets, year), 'Assets')) - (getRevisedValue(prevYearBudget(budgets, year), 'Expenses') + getRevisedValue(prevYearBudget(budgets, year), 'Liability'));
+        return (getRevisedValue(prevYearBudget(budgets, year), 'Revenue Receipt') + getRevisedValue(prevYearBudget(budgets, year), "Assets (Capital Expenditure)")) - (getRevisedValue(prevYearBudget(budgets, year), 'Expenses') + getRevisedValue(prevYearBudget(budgets, year), "Liability (Capital Income)"));
     };
     const getPrevYearOpeningBalance = () => {
         if (prevYearBudget(budgets, year)) {
@@ -65,9 +65,9 @@ export const budgetSummaryData = (budgets, year) => {
         pushInArray(dataLine, 'Opening Balance', getPrevYearOpeningBalance(), getCurrentYearOpeningBalance());
         pushInArray(dataLine, 'Revenue Income', getRevisedValue(prevYearBudget(budgets, year), 'Revenue Receipt'), getBudgetedValue(currentYearBudget(budgets, year), 'Revenue Receipt'));
         pushInArray(dataLine, 'Revenue Expenditure', getRevisedValue(prevYearBudget(budgets, year), 'Expenses'), getBudgetedValue(currentYearBudget(budgets, year), 'Expenses'));
-        pushInArray(dataLine, 'Capital Income', getRevisedValue(prevYearBudget(budgets, year), 'Assets'), getBudgetedValue(currentYearBudget(budgets, year), 'Assets'));
-        pushInArray(dataLine, 'Capital Expenditure', getRevisedValue(prevYearBudget(budgets, year), 'Liability'), getBudgetedValue(currentYearBudget(budgets, year), 'Liability'));
-        pushInArray(dataLine, 'Total surplus/deficit', getRevisedTotalSurplusOrDef(prevYearBudget(budgets, year), 'Liability'), getBudgetedTotalSurplusOrDef(currentYearBudget(budgets, year), 'Liability'));
+        pushInArray(dataLine, 'Capital Income', getRevisedValue(prevYearBudget(budgets, year), "Assets (Capital Expenditure)"), getBudgetedValue(currentYearBudget(budgets, year), "Assets (Capital Expenditure)"));
+        pushInArray(dataLine, 'Capital Expenditure', getRevisedValue(prevYearBudget(budgets, year), "Liability (Capital Income)"), getBudgetedValue(currentYearBudget(budgets, year), "Liability (Capital Income)"));
+        pushInArray(dataLine, 'Total surplus/deficit', getRevisedTotalSurplusOrDef(prevYearBudget(budgets, year), "Liability (Capital Income)"), getBudgetedTotalSurplusOrDef(currentYearBudget(budgets, year), "Liability (Capital Income)"));
         return dataLine;
     };
     const piechartData = () => {
@@ -77,7 +77,7 @@ export const budgetSummaryData = (budgets, year) => {
         });
         pieData.push({
             id: 'Capital Budget',
-            value: ceil(getBudgetedValue(currentYearBudget(budgets, year), 'Liability') / 100000)
+            value: ceil(getBudgetedValue(currentYearBudget(budgets, year), "Liability (Capital Income)") / 100000)
         });
         return pieData;
     };
@@ -107,7 +107,7 @@ export const budgetSummaryData = (budgets, year) => {
         barGraphData: getBarGraphData(),
         budgetedRevenueIncome: getBudgetedValue(currentYearBudget(budgets, year), 'Revenue Receipt'),
         budgetedRevenueExpenditure: getBudgetedValue(currentYearBudget(budgets, year), 'Expenses'),
-        budgetedCapitalExpenditure: getBudgetedValue(currentYearBudget(budgets, year), 'Liability'),
+        budgetedCapitalExpenditure: getBudgetedValue(currentYearBudget(budgets, year), "Liability (Capital Income)"),
         population: getPopulation()
 
     };
@@ -252,8 +252,8 @@ export const summaryData = (budgets) => {
         budgetYear: budget.budgetYear,
         'Revenue Income': getSum(budget, 'Revenue Receipt'),
         'Revenue Expenditure': getSum(budget, 'Expenses'),
-        'Capital Income': getSum(budget, 'Assets'),
-        'Capital Expenditure': getSum(budget, 'Liability')
+        'Capital Income': getSum(budget, "Assets (Capital Expenditure)"),
+        'Capital Expenditure': getSum(budget, "Liability (Capital Income)")
     }));
 };
 
@@ -271,8 +271,8 @@ export const getMajorCapitalItems = (budgets, year) => {
         .take(n)
         .value();
     return {
-        capitalIncome: topNItems('Assets', 10),
-        capitalExpenditure: topNItems('Liability', 8)
+        capitalIncome: topNItems("Assets (Capital Expenditure)", 10),
+        capitalExpenditure: topNItems("Liability (Capital Income)", 8)
     }
 }
 
@@ -306,11 +306,11 @@ export const capitalBudgetSummaryData = (budgets, year) => {
     const getBarGraphData = () => {
         let barData = [];
         barData.push({
-            'name': 'Capital Income', 'Capital Income': ceil(getDataFromMajorHeadGroup('Assets') / 100000)
+            'name': 'Capital Income', 'Capital Income': ceil(getDataFromMajorHeadGroup("Assets (Capital Expenditure)") / 100000)
         });
         barData.push({
             'name': 'Capital Expenditure',
-            'Capital Expenditure': ceil(getDataFromMajorHeadGroup('Liability') / 100000)
+            'Capital Expenditure': ceil(getDataFromMajorHeadGroup("Liability (Capital Income)") / 100000)
         });
         return barData;
     };

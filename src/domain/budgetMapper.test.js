@@ -98,7 +98,7 @@ describe("Stuff", () => {
                 "yearMinus2ActualAmount": null,
                 "yearMinus3ActualAmount": null,
                 "displayOrder": 7.00,
-                "majorHeadGroup": "Liability",
+                "majorHeadGroup": "Liability (Capital Income)",
                 "majorHeadGroupDisplayOrder": 3.00,
                 "majorHead": "Grants, Contributions for Specific Purpose (Earmarked Funds)",
                 "minorHead": "Government of Maharashtra (Urban Develonment Department)"
@@ -112,7 +112,7 @@ describe("Stuff", () => {
                 "yearMinus2ActualAmount": null,
                 "yearMinus3ActualAmount": null,
                 "displayOrder": 8.00,
-                "majorHeadGroup": "Assets",
+                "majorHeadGroup": "Assets (Capital Expenditure)",
                 "majorHeadGroupDisplayOrder": 4.00,
                 "majorHead": "Accumulated Depreciation",
                 "minorHead": "Other Fixed Assets"
@@ -126,7 +126,7 @@ describe("Stuff", () => {
                 "yearMinus2ActualAmount": 50,
                 "yearMinus3ActualAmount": 60,
                 "displayOrder": 9.00,
-                "majorHeadGroup": "Liability",
+                "majorHeadGroup": "Liability (Capital Income)",
                 "majorHeadGroupDisplayOrder": 3.00,
                 "majorHead": "Grants, Contributions for Specific Purpose (Earmarked Funds)",
                 "minorHead": "Government of Maharashtra (Other Diaa(tagnsive mats)"

@@ -4580,7 +4580,7 @@ export default {
             ]
         },
         {
-            "name": "Liability",
+            "name": "Liability (Capital Income)",
             "code": "3",
             "majorHeads": [
                 {
@@ -5764,7 +5764,7 @@ export default {
             ]
         },
         {
-            "name": "Assets",
+            "name": "Assets (Capital Expenditure)",
             "code": "4",
             "majorHeads": [
                 {
