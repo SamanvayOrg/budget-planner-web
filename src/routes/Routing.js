@@ -51,7 +51,7 @@ const Routing = () => {
                    element={isAdmin() ? <CreateTranslation/> : <AccessDenied/>}/>
             <Route path="/admin/translation/update/:translationId"
                    element={isAdmin() ? <UpdateTranslation/> : <AccessDenied/>}/>
-            <Route path="/superAdmin" element={isSuperAdmin() ? <AdminUsers/> : <AccessDenied/>}/>
+            <Route path="/superAdmin" element={isSuperAdmin() ? <SuperAdminMunicipalities/> : <AccessDenied/>}/>
             <Route path="/superAdmin/usage" element={isSuperAdmin() ? <Usage/> : <AccessDenied/>}/>
             <Route path="/superAdmin/users" element={isSuperAdmin() ? <AdminUsers/> : <AccessDenied/>}/>
             <Route path="/superAdmin/user/create" element={isSuperAdmin() ? <CreateAdmin/> : <AccessDenied/>}/>

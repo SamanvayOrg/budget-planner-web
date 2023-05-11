@@ -18,5 +18,5 @@ export function getConfig() {
 }
 
 export const languages = [{value: 'en', title: 'English'}, {value: 'mr', title: 'Marathi'},]
-export const  adminMenus = ['Users', 'Municipality', 'Translations'];
-export const superAdminMenus = ['Users', 'Municipality', 'Usage'];
+export const adminMenus = ['Users', 'Municipality', 'Translations'];
+export const superAdminMenus = ['Municipality', 'Users', 'Usage'];
