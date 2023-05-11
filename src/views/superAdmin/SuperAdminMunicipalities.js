@@ -34,7 +34,7 @@ const SuperAdminMunicipalities = () => {
         rows = allMunicipalities;
     }
     const rowClick = (data) => {
-        // handleClick('updateMunicipality', data.id)
+        handleClick('updateMunicipality', data.id)
     };
     const handleClick = (param, id) => {
         switch (param) {

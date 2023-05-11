@@ -22,6 +22,7 @@ import {useDispatch, useSelector} from "react-redux";
 import _ from "lodash";
 import {currentUserSelector, fetchCurrentUser} from "../slices/currentUserReducer";
 import Usage from '../views/superAdmin/Usage';
+import SuperAdminUpdateMunicipality from "../views/superAdmin/SuperAdminUpdateMunicipality";
 
 const Routing = () => {
     const {authToken} = useSelector(currentUserSelector);
@@ -61,6 +62,8 @@ const Routing = () => {
                 <AccessDenied/>}/>
             <Route path="/superAdmin/municipality/create"
                    element={isSuperAdmin() ? <CreateMunicipality/> : <AccessDenied/>}/>
+            <Route path="/superAdmin/municipality/update/:id"
+                   element={isSuperAdmin() ? <SuperAdminUpdateMunicipality/> : <AccessDenied/>}/>
         </Routes>
     </HashRouter>)
 };
