@@ -9,8 +9,10 @@ jobs:
     steps:
       - checkout
       - node/install-packages
-      - run:
-          command: npm run test
+      - run: npm install --legacy-peer-deps
+      - run: npm run test
+    
+
 
   build:
     executor:
