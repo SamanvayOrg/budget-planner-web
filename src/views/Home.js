@@ -6,6 +6,7 @@ import {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {authSelector, setToken} from "../slices/authReducer";
 import Spinner from "../components/Spinner";
+import {fetchAllBudgets} from "../slices/allBudgetReducer";
 
 
 const Home = () => {
@@ -33,6 +34,7 @@ const Home = () => {
     if (!authDetailsAvailable && isAuthenticated) {
         renderInScreen = <Spinner/>;
     } else if (authDetailsAvailable && isAuthenticated) {
+        dispatch(fetchAllBudgets());
         return <Navigate to='/dashboard'/>
     }
 

@@ -6,7 +6,12 @@ import {withAuthenticationRequired} from "@auth0/auth0-react";
 import Home from "./Home";
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {budgetDashboardSelector, createNewBudget, fetchCurrentBudget} from "../slices/budgetDashboardReducer";
+import {
+    budgetDashboardSelector,
+    createNewBudget,
+    fetchCurrentBudget,
+    fetchLatestBudget
+} from "../slices/budgetDashboardReducer";
 import CurrentBudgetBox from "../components/CurrentBudgetBox";
 import Spinner from "../components/Spinner";
 import {MunicipalityName} from "../domain/functions";
@@ -16,6 +21,7 @@ import {currentUserSelector, fetchCurrentUser} from "../slices/currentUserReduce
 import {authSelector} from "../slices/authReducer";
 import _ from "lodash";
 import {useNavigate} from "react-router-dom";
+import {allBudgetSelector, fetchAllBudgets} from "../slices/allBudgetReducer";
 
 
 const useStyles = makeStyles(theme => ({
@@ -47,18 +53,21 @@ const useStyles = makeStyles(theme => ({
 
 const Dashboard = () => {
     const classes = useStyles();
-    const {loading, currentBudget: {budgetYear}} = useSelector(budgetDashboardSelector);
+    const {loading, currentBudget: {budgetYear}, latestBudget} = useSelector(budgetDashboardSelector);
     const {user} = useSelector(currentUserSelector);
     const {tokenData} = useSelector(authSelector);
     const dispatch = useDispatch();
     const {t} = useTranslation();
     const navigate = useNavigate();
+    const {allBudgets} = useSelector(allBudgetSelector);
 
 
     useEffect(() => {
         dispatch(fetchCurrentBudget());
+        dispatch(fetchLatestBudget())
         dispatch(fetchTranslations());
         dispatch(fetchCurrentUser());
+        dispatch(fetchAllBudgets());
         if (tokenData && _.includes(tokenData.permissions, 'superAdmin')) {
             navigate('/superAdmin')
         }
@@ -69,13 +78,19 @@ const Dashboard = () => {
     }
 
     const renderBox = () => {
+        const getLatestBudgetYear = () => {
+            if (budgetYear) {
+                return budgetYear
+            }
+            return latestBudget.budgetYear;
+        }
         if (loading) {
             return <Spinner/>;
         }
-        if (budgetYear) {
-            return <CurrentBudgetBox year={budgetYear}/>;
+        if (budgetYear || !_.isEmpty(latestBudget)) {
+            return <CurrentBudgetBox year={getLatestBudgetYear} currentBudgetYear={budgetYear}/>;
         }
-        return <EmptyBudgetBox addNewBudget={(year) => dispatch(createNewBudget(year))}/>;
+        return <EmptyBudgetBox addNewBudget={(year) => dispatch(createNewBudget(year))} allBudgets={allBudgets}/>;
     }
 
     return (

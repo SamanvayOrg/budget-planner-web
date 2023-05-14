@@ -10,6 +10,10 @@ import {useNavigate} from "react-router-dom";
 import {fetchMunicipalityDetails} from "../slices/municipalityReducer";
 import ReportsDashboard from "../views/ReportsDashboard";
 import {t} from 'i18next';
+import SelectYears from "./SelectYears";
+import CustomModal from "./CustomModal";
+import {style} from "./EmptyBudgetBox";
+import {createNewBudget} from "../slices/budgetDashboardReducer";
 
 const styleSheets = makeStyles(theme => ({
     box: {
@@ -44,15 +48,22 @@ const styleSheets = makeStyles(theme => ({
         fontFamily: "Lato",
         justifyContent: "center",
         alignItems: "center",
+    },
+    newBudgetSection: {
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+        fontSize: "19px",
     }
-
 }))
-const CurrentBudgetBox = ({year}) => {
+const CurrentBudgetBox = ({year, currentBudgetYear}) => {
     const {allBudgets} = useSelector(allBudgetSelector);
     const dispatch = useDispatch();
     const classes = styleSheets();
     const [budgetYear, setBudgetYear] = useState(year);
     let navigate = useNavigate();
+    const [selectedYear, setSelectedYear] = useState();
 
     useEffect(() => {
         dispatch(fetchAllBudgets());
@@ -74,6 +85,12 @@ const CurrentBudgetBox = ({year}) => {
         const year = budgetYear.substring(0, 4)
         navigate(`/budget/${year}`);
     };
+    const addBudget = () => {
+        if (selectedYear) {
+            dispatch(createNewBudget(selectedYear.substring(0, 4)))
+            navigate(`/budget/${selectedYear.substring(0, 4)}`);
+        }
+    }
 
     return (
         <>
@@ -83,6 +100,22 @@ const CurrentBudgetBox = ({year}) => {
                         <DropDown list={getBudgetYears(allBudgets)} value={budgetYear} onSelect={handleChange}/>
                     </div>
                 </div>
+                {!!!currentBudgetYear &&
+                    (<div className={classes.newBudgetSection}>
+                        <>This municipality doesnt have budget for current year Click
+                        </>
+                        <>
+                            <CustomModal
+                                buttonLabel={"Add budget"}
+                                modalText={"Create a new budget"}
+                                style={style}
+                                dropDown={<SelectYears onChange={setSelectedYear}/>}
+                                actionButton={<ActionButton label={"CREATE A NEW BUDGET"} variant={'contained'}
+                                                            size={"large"} onClick={addBudget}/>}
+                            />
+                        </>
+                    </div>)
+                }
                 <div className={classes.actionButtons}>
                     <ActionButton label={t("Open Budget")} variant={'contained'} onClick={goToBudget} size={"large"}/>
                 </div>

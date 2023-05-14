@@ -193,11 +193,18 @@ const downloadBudgetReport = async (token, year, amountType, languageCode) => {
 		return error.response
 	});
 }
+const getLatestBudget = async (token) => {
+	const headers = {'Authorization': `Bearer ${token}`};
+	const result = await axios.get("/api/budget/latest", {
+		headers
+	});
+	return result.data;
+}
 
 export {
 	getCurrentBudget, getBudget, createBudget, getAllBudgets, getMunicipalityDetails, save, getMetadata,
 	getTranslations, getUsers, updateUser, getCurrentUser, getCityClasses, updateMunicipality, createUser,
 	getAllMunicipalities, createMunicipality, getAdminUsers, createAdminFromSuperUser, addTranslations,
 	modifyTranslations, getAllTranslationsData, getStateDetails, updateBudgetProperties, deleteTranslation,
-	changeBudgetStatus, downloadBudgetReport, getReports
+	changeBudgetStatus, downloadBudgetReport, getReports, getLatestBudget
 };
