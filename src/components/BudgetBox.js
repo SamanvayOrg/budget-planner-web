@@ -153,7 +153,7 @@ const BudgetBox = ({
                     </div>
                     <DropDown list={reportTypes} value={selectedReport}
                               onSelect={(e) => setSelectedReport(e.target.value)}/>
-                    <ActionButton label={t('Save')}
+                    <ActionButton label={t('Download')}
                                   onClick={onReportDownloadStateChange}/>
                     <span className={classes.cancelText} onClick={handleCloseBudgetDownload}>Cancel</span>
                 </div>
