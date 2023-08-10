@@ -65,10 +65,16 @@ const fromContract = ({id, budgetYear, budgetLines, budgetStatusAuditContract}) 
 		summary: summary(linesInMajorHeadGroup)
 	});
 
-	const mapMajorHeads = (linesInMajorHeadGroup) => {
-		const majorHeads = _.chain(linesInMajorHeadGroup).map(({majorHead}) => majorHead).uniq().value();
-		return _.map(majorHeads, majorHead => mapMajorHead(filterByKeyValue(linesInMajorHeadGroup, 'majorHead', majorHead), majorHead))
-	};
+    const mapMajorHeads = (linesInMajorHeadGroup) => {
+        const majorHeads = _.chain(linesInMajorHeadGroup).map(({majorHead, majorHeadDisplayOrder}) => ({
+                majorHead,
+                majorHeadDisplayOrder
+            })).uniqBy('majorHead')
+            .sortBy(['majorHeadDisplayOrder'])
+            .map(({majorHead}) => majorHead)
+            .value();
+        return _.map(majorHeads, majorHead => mapMajorHead(filterByKeyValue(linesInMajorHeadGroup, 'majorHead', majorHead), majorHead))
+    };
 
 	const mapMajorHead = (linesInMajorHead, majorHead) => ({
 		majorHead,
