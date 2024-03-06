@@ -64,7 +64,6 @@ const useStylesBudgetDetails = makeStyles(theme => ({
         fontStyle: 'normal',
         color: '#616161',
         fontWeight: '700',
-        // position: 'absolute'
     }, title: {
         fontSize: '21px', fontStyle: 'italic', marginBottom: '10px', color: '#212121', marginLeft: '5px'
     }, budgetView: {

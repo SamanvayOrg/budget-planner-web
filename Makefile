@@ -11,5 +11,5 @@ build-app:
 build-and-zip: build-app zip-only
 
 start:
-	npm install && npm start
+	npm start
 
