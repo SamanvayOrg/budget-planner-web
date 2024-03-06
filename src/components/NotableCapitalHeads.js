@@ -11,14 +11,14 @@ const NotableCapitalHeads = ({budgets, budgetYear}) => {
                 <DataTable
                     title={'Capital Income'}
                     headings={['Rank', 'Head', 'Amount (in lakhs)']}
-                    rows={majorCapitalItems.capitalIncome.map((item, index) => [index + 1, item.name, item.budgetedAmount])}
+                    rows={majorCapitalItems.capitalIncome.map((item, index) => [index + 1, item.name, item.budgetedAmount / 100000])}
                 />
             </Box>
             <Box sx={{width: 0.5, marginLeft: '20px'}}>
                 <DataTable
                     title={'Capital Expenditure'}
                     headings={['Rank', 'Head', 'Amount (in lakhs)']}
-                    rows={majorCapitalItems.capitalExpenditure.map((item, index) => [index + 1, item.name, item.budgetedAmount])}
+                    rows={majorCapitalItems.capitalExpenditure.map((item, index) => [index + 1, item.name, item.budgetedAmount / 100000])}
                 />
             </Box>
         </Box>

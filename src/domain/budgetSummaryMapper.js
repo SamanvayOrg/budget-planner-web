@@ -145,8 +145,8 @@ export const revenueIncomeAndExpenditureSummaryData = (budgets, year) => {
     pushDataInArray(dataLines, 'B', 'Revenue Expenditure', '(In lakhs)');
     pushDataInArray(dataLines, '', 'Admin Expenses', ceil(getValue('Administrative Expense') / 100000));
     pushDataInArray(dataLines, '', 'Establishment Expenses', ceil(getValue('Salary and allowances') / 100000));
-    pushDataInArray(dataLines, '', 'Operations & Maintenance', ceil(getValue('Operations and Maintenance') + getValue('Water Supply (Public Health and Welfare)') / 100000));
-    pushDataInArray(dataLines, '', 'Others', ceil(getValue('Others') + getValue('Social Welfare') / 100000));
+    pushDataInArray(dataLines, '', 'Operations & Maintenance', ceil((getValue('Operations and Maintenance') + getValue('Water Supply (Public Health and Welfare)')) / 100000));
+    pushDataInArray(dataLines, '', 'Others', ceil((getValue('Others') + getValue('Social Welfare')) / 100000));
     pushDataInArray(dataLines, '', 'Total Revenue Expenditure', ceil((getValue('Others') + getValue('Social Welfare') + getValue('Operations and Maintenance') + getValue('Water Supply (Public Health and Welfare)') + getValue('Salary and allowances') + getValue('Administrative Expense')) / 100000));
 
     return {
@@ -327,7 +327,7 @@ export const capitalBudgetSummaryData = (budgets, year) => {
     pushDataInArray(tableRows, '', 'Recovery', ceil(getValueFromCategory('Recovery ') / 100000));
     pushDataInArray(tableRows, 'B', 'Capital Expenditure (INR lakhs)', '');
     pushDataInArray(tableRows, '', 'Capital Projects', ceil(getValueFromCategory('Capital Budgeted Expenses ') / 100000));
-    pushDataInArray(tableRows, '', 'Loan, Advance and Deposit Repayment', ceil(getValueFromMajorHead('Loans , Advances and Deposits')));
+    pushDataInArray(tableRows, '', 'Loan, Advance and Deposit Repayment', ceil(getValueFromMajorHead('Loans , Advances and Deposits') / 100000));
 
     return {
         barGraphData: getBarGraphData(), tableRows
