@@ -31,10 +31,10 @@ root.render(
                 <App/>
                 <Typography style={{
                     width: "100%",
-                    position: "fixed",
-                    bottom: "10px",
+                    bottom: "0px",
                     textAlign: "center",
-                }}><a style={{textDecoration: "None", color: "#919191", fontStyle: "italic"}}
+                    background: "#FFFFFF"
+                }}><a style={{textDecoration: "None", color: "#9177FF", fontStyle: "italic"}}
                       href={"https://www.samanvayfoundation.org/"}>Powered by Samanvay Foundation</a></Typography>
             </Suspense>
         </Auth0Provider>
