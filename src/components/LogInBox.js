@@ -5,6 +5,7 @@ import cwasLogo from '../assets/cwas_logo.png';
 import LoginButton from "./LoginButton";
 import LoginPageHelpAndSupportText from "./LoginPageHelpAndSupportText";
 import {useTranslation} from "react-i18next";
+import Logo from './Logo';
 
 
 const useStyles = makeStyles(theme => ({
@@ -59,10 +60,10 @@ const LogInBox = () => {
 
         <div className={classes.container}>
             <div className={classes.box}>
-				<span className={classes.mbsName}>
-					{t('City Budgets')}
-				</span>
-
+                <Logo className="loginBoxLogo" />
+                <span className={classes.mbsName}>
+                  {t('City Budgets')}
+                </span>
                 <div className={classes.signInName}>
                     {t('Sign in to your account')}
                 </div>
