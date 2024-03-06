@@ -271,8 +271,8 @@ export const getMajorCapitalItems = (budgets, year) => {
         .take(n)
         .value();
     return {
-        capitalIncome: topNItems("Assets (Capital Expenditure)", 10),
-        capitalExpenditure: topNItems("Liability (Capital Income)", 8)
+        capitalExpenditure: topNItems("Assets (Capital Expenditure)", 10),
+        capitalIncome: topNItems("Liability (Capital Income)", 8)
     }
 }
 
