@@ -34,7 +34,7 @@ root.render(
                     bottom: "10px",
                     textAlign: "center",
                     background: "#FFFFFF"
-                }}><a style={{textDecoration: "None", color: "#9177FF", fontStyle: "italic"}}
+                }}><a style={{textDecoration: "None", color: "#919191", fontStyle: "italic"}}
                       href={"https://www.samanvayfoundation.org/"}>Powered by Samanvay Foundation</a></Typography>
             </Suspense>
         </Auth0Provider>
