@@ -31,7 +31,7 @@ root.render(
                 <App/>
                 <Typography style={{
                     width: "100%",
-                    bottom: "0px",
+                    bottom: "10px",
                     textAlign: "center",
                     background: "#FFFFFF"
                 }}><a style={{textDecoration: "None", color: "#9177FF", fontStyle: "italic"}}

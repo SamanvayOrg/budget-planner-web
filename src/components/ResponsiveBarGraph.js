@@ -63,7 +63,7 @@ const ResponsiveBarGraph = ({title, data, bottomLegend, leftLegend, indexBy, key
                         justify: false,
                         translateX: 0,
                         translateY: 55,
-                        itemsSpacing: 15,
+                        itemsSpacing: 55,
                         itemWidth: 100,
                         itemHeight: 0,
                         itemDirection: 'left-to-right',
