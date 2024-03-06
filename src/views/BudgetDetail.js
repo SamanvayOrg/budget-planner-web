@@ -64,7 +64,7 @@ const useStylesBudgetDetails = makeStyles(theme => ({
         fontStyle: 'normal',
         color: '#616161',
         fontWeight: '700',
-        position: 'absolute'
+        // position: 'absolute'
     }, title: {
         fontSize: '21px', fontStyle: 'italic', marginBottom: '10px', color: '#212121', marginLeft: '5px'
     }, budgetView: {
@@ -78,6 +78,12 @@ const useStylesBudgetDetails = makeStyles(theme => ({
         cursor: 'pointer'
     }
 }));
+
+function debouncedOnChange(updateView) {
+    return _.debounce((newView) => {
+        updateView(newView);
+    }, 200, {'leading': false, 'trailing': true});
+}
 
 const BudgetDetail = () => {
     const navigate = useNavigate();
@@ -159,78 +165,76 @@ const BudgetDetail = () => {
     };
 
     return (<>
-        <ResponsiveAppBar/>
-        <div>
-            <div className={classes.top}>
-                <div className={classes.topLeft}>
-                <span className={classes.title}><KeyboardBackspace
-                    onClick={() => navigate('/dashboard')}
-                    className={classes.backArrow}/> <MunicipalityName/> {getBudgetYearString(year, 0)}
-                </span>
-                </div>
-                <div className={classes.topCenter}>
-                    <em>{t('All values are in INR')}</em>
-                </div>
-                <div className={classes.topRight}>
-                    {propertiesStatus()}
-                    <ActionButton label={'Add Properties'} onClick={() => setBudgetPropertySelectionModal(true)}/>
-                    {canEdit && (
+          <ResponsiveAppBar/>
+          <div>
+              <div className={classes.top}>
+                  <div className={classes.topLeft}>
+                    <span className={classes.title}><KeyboardBackspace
+                      onClick={() => navigate('/dashboard')}
+                      className={classes.backArrow}/> <MunicipalityName/> {getBudgetYearString(year, 0)}
+                    </span>
+                  </div>
+                  <div className={classes.topCenter}>
+                      <em>{t('All values are in INR')}</em>
+                  </div>
+                  <div className={classes.topRight}>
+                      {propertiesStatus()}
+                      <ActionButton label={'Add Properties'} onClick={() => setBudgetPropertySelectionModal(true)}/>
+                      {canEdit && (
                         <>
                             <ActionButton style={{marginLeft: '10px'}} variant={'contained'} size={'large'}
                                           onClick={save}
                                           label={t(saved)}/>
                             <ActionButton style={{marginLeft: '10px'}} variant={'contained'} size={'large'}
-                                          onClick={submitWithoutWarning} label={t('Submit')}/>
+                                          onClick={submitWithoutWarning}
+                                          label={t('Submit')}/>
                         </>
-                    )}
-                </div>
-            </div>
-            <div className={classes.mainContainer}>
-                <HorizontalLine/>
-                <div className={classes.budgetView}>
-                    <Spreadsheet data={budgetView} columnLabels={headers(year)}
-                                 onChange={(newView) => {
-                                     updateView(newView);
-
-                                 }}
-                                 onActivate={onActivate}
-                                 onModeChange={() => {
-                                 }}/>
-                </div>
-                <div>
-                    <Modal open={budgetLineCreateModal} onClose={handleClose} className={modalClass.modal}>
-                        <BudgetLineSelector metadata={metadata} budget={budget} onSelect={(selectedItem) => {
-                            dispatch(addBudgetLine(selectedItem));
-                            dispatch(saveTranslations({
-                                stateId: stateDetails.id,
-                                key: selectedItem.name,
-                                value: selectedItem.translation,
-                                language: stateDetails.languages.filter(lang => lang.code !== 'en')[0].code
-                            }));
-                            handleClose();
-                        }} context={popupContext} onCancel={handleClose}/>
-                    </Modal>
-                </div>
-                <div>
-                    <BudgetSaveError validationResults={validationResults}
-                                     open={showValidationResults}
-                                     onContinue={submitWithWarning}
-                                     onClose={() => dispatch(hideValidationResults())}/>
-                </div>
-                <div>
-                    <Modal open={budgetPropertySelectionModal} onClose={handleClose} className={modalClass.modal}>
-                        <>
-                            <BudgetPropertySelector onClose={handleClose} thePopulation={population}
-                                                    openingBal={openingBalance}
-                                                    onSelect={(data) => {
-                                                        onClickProperties(data);
-                                                        handleClose();
-                                                    }}/>
-                        </>
-                    </Modal>
-                </div>
-            </div>
-        </div>
+                      )}
+                  </div>
+              </div>
+              <div className={classes.mainContainer}>
+                  <HorizontalLine/>
+                  <div className={classes.budgetView}>
+                      <Spreadsheet data={budgetView} columnLabels={headers(year)}
+                                   onChange={debouncedOnChange(updateView)}
+                                   onActivate={onActivate}
+                                   onModeChange={() => {
+                                   }}/>
+                  </div>
+                  <div>
+                      <Modal open={budgetLineCreateModal} onClose={handleClose} className={modalClass.modal}>
+                          <BudgetLineSelector metadata={metadata} budget={budget} onSelect={(selectedItem) => {
+                              dispatch(addBudgetLine(selectedItem));
+                              dispatch(saveTranslations({
+                                  stateId: stateDetails.id,
+                                  key: selectedItem.name,
+                                  value: selectedItem.translation,
+                                  language: stateDetails.languages.filter(lang => lang.code !== 'en')[0].code
+                              }));
+                              handleClose();
+                          }} context={popupContext} onCancel={handleClose}/>
+                      </Modal>
+                  </div>
+                  <div>
+                      <BudgetSaveError validationResults={validationResults}
+                                       open={showValidationResults}
+                                       onContinue={submitWithWarning}
+                                       onClose={() => dispatch(hideValidationResults())}/>
+                  </div>
+                  <div>
+                      <Modal open={budgetPropertySelectionModal} onClose={handleClose} className={modalClass.modal}>
+                          <>
+                              <BudgetPropertySelector onClose={handleClose} thePopulation={population}
+                                                      openingBal={openingBalance}
+                                                      onSelect={(data) => {
+                                                          onClickProperties(data);
+                                                          handleClose();
+                                                      }}/>
+                          </>
+                      </Modal>
+                  </div>
+              </div>
+          </div>
     </>);
 };
 
