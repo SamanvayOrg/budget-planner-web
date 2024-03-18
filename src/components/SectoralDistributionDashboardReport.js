@@ -27,13 +27,24 @@ const SectoralDistributionDashboardReport = ({budgets, year}) => {
             return _.ceil(total / 100000)
         }
     }
+
+    const getDataFromMinorHeadCategory = (category) => {
+        if (currentYearBudget(budgets, year)) {
+             const total = _.chain(currentYearBudget(budgets, year).budgetLines)
+              .filter((e) => e.minorHeadCategory === category)
+              .sumBy((e) => e.budgetedAmount)
+              .value();
+            return _.ceil(total / 100000)
+        }
+    }
+
     return (<>
         <DistributionItem amount={getDataFromFunctionGroupCategory('Administrative Expense')} name={'Admin Expense'}
                           percent={getPercentage(getDataFromFunctionGroupCategory('Administrative Expense'))}
                           logo={<AdminExpenseSvg/>}/>
-        <DistributionItem amount={getDataFromFunctionGroupCategory('Salary and allowances')}
-                          name={'Salaries, Pensions & Allowances'}//todo this is not present in the function group category
-                          percent={getPercentage(getDataFromFunctionGroupCategory('Salary and allowances'))}
+        <DistributionItem amount={getDataFromMinorHeadCategory('Salary and allowances')}
+                          name={'Salaries, Pensions & Allowances'}
+                          percent={getPercentage(getDataFromMinorHeadCategory('Salary and allowances'))}
                           logo={<Salary/>}/>
         <DistributionItem amount={getDataFromFunctionGroupCategory('Roads')}
                           name={'Roads and Construction'}
