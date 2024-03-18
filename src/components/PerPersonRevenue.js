@@ -23,12 +23,12 @@ const PerPersonRevenue = ({allBudgets, budgetYear, municipalityPopulation}) => {
 			<div>
 				<Typography color="primary">
 								<span
-									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueIncome / municipalityPopulation)}/
+									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure / municipalityPopulation)}/
 						person`}
 				</Typography>
 				<Typography color="primary">
 								<span
-									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure / municipalityPopulation)}/
+									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedCapitalExpenditure / municipalityPopulation)}/
 						person`}
 				</Typography>
 			</div>
