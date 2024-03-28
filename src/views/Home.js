@@ -24,9 +24,7 @@ const Home = () => {
     }
 
     useEffect(() => {
-        if (isAuthenticated) {
-            dispatch(initAuth());
-        }
+        dispatch(initAuth());
         // eslint-disable-next-line
     }, [dispatch, isAuthenticated]);
 
