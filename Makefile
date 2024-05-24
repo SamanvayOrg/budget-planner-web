@@ -14,7 +14,7 @@ clean:
 	rm -rf node_modules
 
 deps:
-	yarn install
+	npm install --legacy-peer-deps
 
 start:
 	npm start
