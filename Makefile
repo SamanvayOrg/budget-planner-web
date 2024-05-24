@@ -10,6 +10,13 @@ build-app:
 
 build-and-zip: build-app zip-only
 
+clean:
+	rm -rf node_modules
+
+deps:
+	yarn install
+
 start:
 	npm start
+
 

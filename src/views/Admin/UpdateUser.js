@@ -1,4 +1,4 @@
-import {Box, Paper, TextField, Typography} from "@mui/material";
+import {Box, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
 import ActionButton from "../../components/ActionButton";
 import * as React from "react";
 import {useState} from "react";
@@ -23,6 +23,7 @@ const UpdateUser = () => {
         .value()
     const [name, setName] = useState(selectedUser.name);
     const [email, setEmail] = useState(selectedUser.email);
+    const [isAdmin, setIsAdmin] = useState(selectedUser.admin);
     const [editUser, setEditUser] = useState(false);
 
     const handleChange = (event, type) => {
@@ -30,6 +31,10 @@ const UpdateUser = () => {
             setName(event.target.value);
         } else if (type === 'email') {
             setEmail(event.target.value);
+        } else if (type === 'admin') {
+            if (event.target.value === 'on') {
+                setIsAdmin(true)
+            }
         }
     }
     const handleSave = () => {
@@ -38,8 +43,8 @@ const UpdateUser = () => {
             "id": selectedUser.id,
             name,
             email,
-            "municipalityId": selectedUser.municipalityId,
-            "admin": selectedUser.admin
+            "admin": isAdmin,
+            "municipalityId": selectedUser.municipalityId
         };
         setEditUser(false);
         dispatch(saveUser(newUserOb));
@@ -98,6 +103,9 @@ const UpdateUser = () => {
                                    variant="standard"
                                    label={"Email"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
+                        <FormControlLabel disabled={!editUser}
+                                          control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>}
+                                          label="Make this user an administrator"/>
                         <ActionButton disabled={!editUser}
                                       style={editUser ? {} : {background: "#b7e1e8"}} label={"Submit"}
                                       id={"smallActionButton"}
