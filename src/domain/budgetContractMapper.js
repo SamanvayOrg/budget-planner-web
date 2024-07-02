@@ -82,10 +82,13 @@ const fromContract = ({id, budgetYear, budgetLines, budgetStatusAuditContract}) 
 		summary: summary(linesInMajorHead)
 	});
 
-	const mapLineItem = (linesInMajorHead) => _.map(linesInMajorHead, line => ({
-		...line,
-		name: line.name || line.minorHead + ' - ' + line.name,
-	}));
+	const mapLineItem = (linesInMajorHead) => _.chain(linesInMajorHead)
+		.map(line => ({
+			...line,
+			name: line.name || line.minorHead + ' - ' + line.name,
+		}))
+		.sortBy('name')
+		.value();
 
 	return {
 		id,
