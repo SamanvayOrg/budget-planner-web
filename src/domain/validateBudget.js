@@ -35,7 +35,7 @@ const capitalIncomeShouldBeGreaterThanCapitalExpenditure = (budget) => {
     const capitalExpenditure = find(budget.items, item => item.majorHeadGroup === "Assets (Capital Expenditure)").summary;
     const capitalIncome = find(budget.items, item => item.majorHeadGroup === "Liability (Capital Income)").summary;
 
-    return assert( capitalIncome.budgetedAmount > capitalExpenditure.budgetedAmount ,
+    return assert( capitalExpenditure.budgetedAmount > capitalIncome.budgetedAmount ,
         errorMessages.CAPITAL_INCOME_LESS_THAN_CAPITAL_EXPENDITURE);
 };
 

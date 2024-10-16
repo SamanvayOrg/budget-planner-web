@@ -50,7 +50,7 @@ describe('validateBudget', () => {
         };
         const validationErrors = validateBudget(budget);
         expect(validationErrors.length).toBeGreaterThan(0);
-        expect(validationErrors).toContain("Current year's budget is less than previous year's budget");
+        expect(validationErrors).toContain("BUDGET_LOWER_THAN_PREVIOUS_YEAR");
     });
 
     it ('should validate that Revenue income > Revenue expenditure', () => {
@@ -68,12 +68,60 @@ describe('validateBudget', () => {
                     "summary": {
                         "budgetedAmount": 200,
                     }
+                },
+                {
+                    "majorHeadGroup": "Assets (Capital Expenditure)",
+                    "summary": {
+                        "budgetedAmount": 100,
+                    }
+                },
+                {
+                    "majorHeadGroup": "Liability (Capital Income)",
+                    "summary": {
+                        "budgetedAmount": 100,
+                    }
                 }
             ]
         };
 
         const validationErrors = validateBudget(budget);
         expect(validationErrors.length).toBeGreaterThan(0);
-        expect(validationErrors).toContain("Revenue Expenditure is greater than revenue Income");
+        expect(validationErrors).toContain("REVENUE_INCOME_LESS_THAN_REVENUE_EXPENDITURE");
+    });
+
+    it ('should validate that capitalIncome > CapitalExpenditure', () => {
+        budget = {
+            ...budget,
+            "items": [
+                {
+                    "majorHeadGroup": "Revenue Receipt",
+                    "summary": {
+                        "budgetedAmount": 200,
+                    }
+                },
+                {
+                    "majorHeadGroup": "Expenses",
+                    "summary": {
+                        "budgetedAmount": 100,
+                    }
+                },
+                {
+                    "majorHeadGroup": "Assets (Capital Expenditure)",
+                    "summary": {
+                        "budgetedAmount": 100,
+                    }
+                },
+                {
+                    "majorHeadGroup": "Liability (Capital Income)",
+                    "summary": {
+                        "budgetedAmount": 99,
+                    }
+                }
+            ]
+        };
+
+        const validationErrors = validateBudget(budget);
+        expect(validationErrors.length).toBeGreaterThan(0);
+        expect(validationErrors).toContain("CAPITAL_INCOME_LESS_THAN_CAPITAL_EXPENDITURE");
     });
 })
