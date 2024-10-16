@@ -26,7 +26,7 @@ const BudgetPropertySelector = ({onClose, onSelect, thePopulation, openingBal}) 
     return (
         <Box sx={style}>
             <Box sx={{minWidth: 50}}>
-                <FormGroup fullwidth="true">
+                <FormGroup fullwidth="true"  style={{margin: 5, display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
                     <TextField
                         id="outlined-required"
                         label="Population"
