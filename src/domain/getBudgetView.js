@@ -23,9 +23,20 @@ const getBudgetView = (budget) => {
         {value: null, context: {type: 'header', key: 'currentYear8MonthsActuals'}},
         {value: null, context: {type: 'header', key: 'currentYear4MonthsProbables'}},
         {value: null, context: {type: 'header', key: 'budgetedAmount'}},
+        {value: t('Totals'), className: headerClass, context: {type: 'header', key: 'totals'}},
     ]);
 
-    const singleLine = (line, index, indexClass = 'Spreadsheet-particulars-index', nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
+    const singleLine = (line, index, indexClass = 'Spreadsheet-particulars-index', nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => {
+        const total = _.sum([
+            _.toNumber(line.yearMinus2Actuals) || 0,
+            _.toNumber(line.yearMinus1Actuals) || 0,
+            _.toNumber(line.previousYearActuals) || 0,
+            _.toNumber(line.currentYear8MonthsActuals) || 0,
+            _.toNumber(line.currentYear4MonthsProbables) || 0,
+            _.toNumber(line.budgetedAmount) || 0
+        ]);
+        
+        return [
         {value: t(index + 1), className: indexClass, context: {id: line.id, type: 'detail', key: 'sr'}, readOnly: true},
         {
             value: t(line.name),
@@ -71,6 +82,12 @@ const getBudgetView = (budget) => {
             readOnly: isReadOnly
         },
         {
+            value: t(total),
+            className: numberClass,
+            context: {id: line.id, type: 'detail', key: 'totals'},
+            readOnly: true
+        },
+        {
             value: "delete",
             className: line.eligibleForDeletion ? "Spreadsheet-deleteButton" : "Spreadsheet-deleteButton disable",
             context: {type: 'header', key: 'deleteButton', detailCode: line.code, majorHead: line.majorHead},
@@ -78,7 +95,18 @@ const getBudgetView = (budget) => {
 
     ]);
 
-    const getSummary = (name, line, nameClass, numberClass) => ([
+
+    const getSummary = (name, line, nameClass, numberClass) => {
+        const total = _.sum([
+            _.toNumber(line.yearMinus2Actuals) || 0,
+            _.toNumber(line.yearMinus1Actuals) || 0,
+            _.toNumber(line.previousYearActuals) || 0,
+            _.toNumber(line.currentYear8MonthsActuals) || 0,
+            _.toNumber(line.currentYear4MonthsProbables) || 0,
+            _.toNumber(line.budgetedAmount) || 0
+        ]);
+        
+        return [
         {value: null, className: nameClass, context: {type: 'summary', key: 'sr'}, readOnly: true},
         {value: name, className: nameClass, context: {type: 'summary', key: 'name'}, readOnly: true},
         {value: null, className: numberClass, context: {type: 'summary', key: 'code'}, readOnly: true},
@@ -118,7 +146,13 @@ const getBudgetView = (budget) => {
             context: {type: 'summary', key: 'budgetedAmount'},
             readOnly: true
         },
-    ]);
+        {
+            value: null,
+            className: numberClass,
+            context: {type: 'addNewLine', key: 'totals'},
+            readOnly: true
+        }
+    ];
 
     const getAddNewLine = (majorHead, majorHeadGroup, allowMajorHeadSelection, nameClass = 'Spreadsheet-particulars', numberClass = 'Spreadsheet-number') => ([
         {value: null, className: nameClass, context: {type: 'addNewLine', key: 'sr'}, readOnly: true},
@@ -148,6 +182,12 @@ const getBudgetView = (budget) => {
             value: null,
             className: numberClass,
             context: {type: 'addNewLine', key: 'currentYear4MonthsProbables'},
+            readOnly: true
+        },
+        {
+            value: null,
+            className: numberClass,
+            context: {type: 'addNewLine', key: 'totals'},
             readOnly: true
         },
     ]);
