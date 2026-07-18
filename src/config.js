@@ -17,6 +17,14 @@ export function getConfig() {
   };
 }
 
-export const languages = [{value: 'en', title: 'English'}, {value: 'mr', title: 'Marathi'},]
+// src/config.js
+export const languages = [
+  { value: 'en', title: 'English' },
+  { value: 'mr', title: 'मराठी' },
+  { value: 'hi', title: 'हिन्दी' },
+  { value: 'ta', title: 'தமிழ்' },
+];
+
+
 export const adminMenus = ['Users', 'Municipality', 'Translations'];
 export const superAdminMenus = ['Municipality', 'Users', 'Usage'];
