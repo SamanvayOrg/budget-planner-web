@@ -132,3 +132,25 @@
     display: flex;
     justify-content: flex-start;
 }
+
+/* Added a hover effect and spacing */
+.navLink {
+    color: #1976d2; /* MUI Primary color */
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 0rem ;
+    transition: color 0.3s ease;
+  }
+  
+  .navLink:hover {
+    color: #1565c0; /* Darker shade on hover */
+  }
+  
+  /* Optional: center or align the Typography container */
+  .navTypography {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* or flex-start/flex-end as needed */
+  }
+  
