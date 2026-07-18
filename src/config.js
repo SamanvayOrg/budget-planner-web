@@ -17,6 +17,16 @@ export function getConfig() {
   };
 }
 
-export const languages = [{value: 'en', title: 'English'}, {value: 'mr', title: 'Marathi'},]
+export const languages = [
+  { value: 'en', title: 'English' },
+  { value: 'mr', title: 'Marathi' },
+  { value: 'hi', title: 'Hindi' },
+  { value: 'gu', title: 'Gujarati' },
+  { value: 'ta', title: 'Tamil' },
+  { value: 'bn', title: 'Bengali' },
+  { value: 'kn', title: 'Kannada' },
+  { value: 'te', title: 'Telugu' }
+];
+
 export const adminMenus = ['Users', 'Municipality', 'Translations'];
 export const superAdminMenus = ['Municipality', 'Users', 'Usage'];
