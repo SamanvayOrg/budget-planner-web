@@ -24,7 +24,7 @@ const ResponsiveAppBar = () => {
 		<AppBar id="navBar" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
-					<Button onClick={() => navigate('/dashboard')}><Logo/></Button>
+					<Button onClick={() => navigate('/')}><Logo/></Button>
 					{endView}
 				</Toolbar>
 			</Container>
