@@ -17,6 +17,10 @@ export function getConfig() {
   };
 }
 
+// How long the "budget created" confirmation stays on screen before the app moves on to
+// the new budget. Long enough to read, short enough not to feel like a stall.
+export const CREATED_MESSAGE_MS = 1500;
+
 export const languages = [{value: 'en', title: 'English'}, {value: 'mr', title: 'Marathi'},]
 export const adminMenus = ['Users', 'Municipality', 'Translations'];
 export const superAdminMenus = ['Municipality', 'Users', 'Usage'];

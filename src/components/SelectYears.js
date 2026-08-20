@@ -14,61 +14,39 @@ const useStyles = makeStyles(theme => ({
 }))
 
 
-const SelectYears = ({onChange}) => {
+// The financial year whose budget is currently being PREPARED — the FY after the one we
+// are in, because a ULB draws up next year's budget during the current one. Must stay in
+// step with the server's Year#currentYearFor; the server re-validates on submit and is the
+// source of truth, so a mismatch surfaces as a clear error rather than a wrong budget.
+// (moment().month() is 0-indexed, hence the +1 to compare against calendar months.)
+const getCurrentFinancialYearStart = (now = moment()) => {
+	return now.month() + 1 <= 3 ? now.year() : now.year() + 1;
+};
+
+const getTwoDigitYear = (year) => year.toString().substring(2);
+const getYearString = (year) => year + '-' + getTwoDigitYear(year + 1);
+
+// New budgets can only be created for the current financial year — there is exactly one
+// valid choice, so this no longer needs to be a picker, just a confirmation of what will
+// be created.
+const SelectYears = ({onChange = () => {}}) => {
 	const classes = useStyles();
+	const currentFinancialYear = getYearString(getCurrentFinancialYearStart());
 
-	const [budgetYear, setBudgetYear] = React.useState('');
-
-	const handleChange = (event) => {
-		setBudgetYear(event.target.value);
-		onChange(event.target.value);
-	};
-	const getYears = () => {
-		let currentYear = moment().year();
-		let nextYear = moment().add(1, 'year').year();
-		let nextToNextYear = moment().add(2, 'year').year();
-		let yearMinus1 = moment().subtract(1, 'year').year();
-		let yearMinus2 = moment().subtract(2, 'year').year();
-		let yearMinus3 = moment().subtract(3, 'year').year();
-		let yearMinus4 = moment().subtract(4, 'year').year();
-		let yearMinus5 = moment().subtract(5, 'year').year();
-
-		const getTowDigitYear = (year) => {
-			return year.toString().substring(2);
-		}
-		const getYearString = (year, nextYear) => {
-			return year + '-' + getTowDigitYear(nextYear);
-
-		}
-
-		return (
-			[
-				{value: getYearString(nextYear, nextToNextYear)},
-				{value: getYearString(currentYear, nextYear)},
-				{value: getYearString(yearMinus1, currentYear)},
-				{value: getYearString(yearMinus2, yearMinus1)},
-				{value: getYearString(yearMinus3, yearMinus2)},
-				{value: getYearString(yearMinus4, yearMinus3)},
-				{value: getYearString(yearMinus5, yearMinus4)},
-			]
-		)
-
-	}
-
+	// Reports the year once per mount. The modal that renders this unmounts its children
+	// on close (MUI Modal defaults to keepMounted={false}), so "once per mount" is also
+	// "once per time the dialog is opened" — which is what the parent needs.
+	// Deps must stay empty: both callers pass a fresh inline arrow every render, so adding
+	// onChange here would re-fire the effect on every render.
+	React.useEffect(() => {
+		onChange(currentFinancialYear);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (<Box sx={{minWidth: 100}}>
 		<FormControl fullWidth>
-
-			<Select className={classes.drop}
-			        value={budgetYear}
-			        onChange={handleChange}
-			>
-
-				{getYears()?.map(option => {
-					return (<MenuItem key={option.value} value={option.value}>
-						{option.value}
-					</MenuItem>);
-				})}
+			<Select className={classes.drop} value={currentFinancialYear} disabled>
+				<MenuItem value={currentFinancialYear}>{currentFinancialYear}</MenuItem>
 			</Select>
 		</FormControl>
 		<ActionButton/>
@@ -77,4 +55,4 @@ const SelectYears = ({onChange}) => {
 
 };
 export default SelectYears;
-export {useStyles};
+export {useStyles, getCurrentFinancialYearStart, getYearString};

@@ -1,4 +1,4 @@
-import {Box, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
+import {Box, Paper, TextField, Typography} from "@mui/material";
 import ActionButton from "../../components/ActionButton";
 import * as React from "react";
 import {useState} from "react";
@@ -10,7 +10,7 @@ import {adminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate, useParams} from "react-router-dom";
 import _ from "lodash";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../../auth/requireAuth";
 import Home from "../Home";
 
 const UpdateUser = () => {
@@ -23,7 +23,9 @@ const UpdateUser = () => {
         .value()
     const [name, setName] = useState(selectedUser.name);
     const [email, setEmail] = useState(selectedUser.email);
-    const [isAdmin, setIsAdmin] = useState(selectedUser.admin);
+    // Read-only here: a Chief Officer cannot change a user's privilege level, so this is
+    // carried through the save unchanged rather than being editable.
+    const isAdmin = selectedUser.admin;
     const [editUser, setEditUser] = useState(false);
 
     const handleChange = (event, type) => {
@@ -31,10 +33,6 @@ const UpdateUser = () => {
             setName(event.target.value);
         } else if (type === 'email') {
             setEmail(event.target.value);
-        } else if (type === 'admin') {
-            if (event.target.value === 'on') {
-                setIsAdmin(true)
-            }
         }
     }
     const handleSave = () => {
@@ -43,6 +41,9 @@ const UpdateUser = () => {
             "id": selectedUser.id,
             name,
             email,
+            // Sent unchanged: a Chief Officer may edit an accountant's details but not
+            // their privilege level. The server rejects any promotion attempt regardless
+            // (UserController#updateUser).
             "admin": isAdmin,
             "municipalityId": selectedUser.municipalityId
         };
@@ -103,9 +104,6 @@ const UpdateUser = () => {
                                    variant="standard"
                                    label={"Email"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
-                        <FormControlLabel disabled={!editUser}
-                                          control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>}
-                                          label="Make this user an administrator"/>
                         <ActionButton disabled={!editUser}
                                       style={editUser ? {} : {background: "#b7e1e8"}} label={"Submit"}
                                       id={"smallActionButton"}
@@ -116,6 +114,6 @@ const UpdateUser = () => {
         </Box>
     )
 }
-export default withAuthenticationRequired(UpdateUser, {
+export default requireAuth(UpdateUser, {
     onRedirecting: () => <Home/>,
 });

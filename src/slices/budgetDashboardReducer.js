@@ -52,7 +52,7 @@ export default budgetDashboardSlice.reducer;
 
 export function fetchCurrentBudget() {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState())
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken')
         dispatch(dashboardLoading());
         try {
             let budget = await getCurrentBudget(token);
@@ -66,21 +66,30 @@ export function fetchCurrentBudget() {
 
 export function createNewBudget(year) {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState())
-        dispatch(dashboardLoading());
-        await createBudget(token, year);
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken')
+        // Deliberately does NOT dispatch dashboardLoading(): that sets the dashboard-wide
+        // `loading` flag, and Dashboard#renderBox returns a full-page <Spinner/> while it
+        // is true — which unmounts the very box (and modal) that owns this operation's
+        // "Creating…" state and error message, so neither could ever be seen. The create
+        // flow's loading state is owned locally by the button that started it.
         try {
+            const budget = await createBudget(token, year);
             dispatch(newBudgetCreated(year));
+            return budget;
         } catch (e) {
             console.log(e);
-            dispatch(budgetLoadingFailure())
+            dispatch(budgetLoadingFailure());
+            // Re-throw so the caller (the "create budget" button) can show a specific
+            // error message and avoid navigating to a budget that was never created —
+            // silently swallowing this here was the "create fails with no feedback" bug.
+            throw e;
         }
     }
 }
 
 export const fetchLatestBudget = () => {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState());
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         try {
             let budget = await getLatestBudget(token);
             dispatch(setLatestBudget(budget))

@@ -1,4 +1,4 @@
-import {Box, FormControlLabel, Paper, Switch, TextField, Typography} from "@mui/material";
+import {Box, Paper, TextField, Typography} from "@mui/material";
 import ActionButton from "../../components/ActionButton";
 import * as React from "react";
 import {useState} from "react";
@@ -10,7 +10,7 @@ import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../../auth/requireAuth";
 import Home from "../Home";
 import Text from "../../components/Text";
 import {useTranslation} from "react-i18next";
@@ -19,7 +19,6 @@ import _ from "lodash";
 const CreateUser = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [isAdmin, setIsAdmin] = useState(false);
     const dispatch = useDispatch();
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector)
     const [status, setStatus] = useState('');
@@ -30,10 +29,6 @@ const CreateUser = () => {
             setName(event.target.value);
         } else if (type === 'email') {
             setEmail(event.target.value);
-        } else if (type === 'admin') {
-            if (event.target.value === 'on') {
-                setIsAdmin(true)
-            }
         }
     }
 
@@ -42,7 +37,9 @@ const CreateUser = () => {
         newUserOb = {
             name,
             "email": email,
-            "admin": isAdmin,
+            // A Chief Officer creates accountants only; promoting anyone to Admin is a
+            // Super Admin action. The server enforces this too (UserController#createUser).
+            "admin": false,
             "municipalityId": currentMunicipality.id
         };
         const result = await dispatch(createNewUser(newUserOb));
@@ -102,8 +99,6 @@ const CreateUser = () => {
                                    onChange={(e) => handleChange(e, 'name')}/>
                         <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"Email"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
-                        <FormControlLabel control={<Switch onChange={(e) => (handleChange(e, 'admin'))}/>}
-                                          label="Make this user an administrator"/>
                         <ActionButton
                             disabled={_.isEqual(name, '') || _.isEqual(email, '')}
                             style={!(_.isEqual(name, '') || _.isEqual(email, '')) ? {} : {background: "#b7e1e8"}}
@@ -114,6 +109,6 @@ const CreateUser = () => {
             </Box></Box>
     )
 }
-export default withAuthenticationRequired(CreateUser, {
+export default requireAuth(CreateUser, {
     onRedirecting: () => <Home/>,
 });
