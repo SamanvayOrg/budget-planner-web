@@ -1,6 +1,6 @@
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
 import {makeStyles} from '@mui/styles';
-import {withAuthenticationRequired} from '@auth0/auth0-react';
+import requireAuth from "../auth/requireAuth";
 import Home from './Home';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -237,6 +237,6 @@ const BudgetDetail = () => {
     </>);
 };
 
-export default withAuthenticationRequired(BudgetDetail, {
+export default requireAuth(BudgetDetail, {
     onRedirecting: () => <Home/>,
 });

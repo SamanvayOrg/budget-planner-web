@@ -9,7 +9,7 @@ import NavBarMenu from "./NavBarMenu";
 import LangSelector from "./LangSelector";
 
 
-const Profile = ({user, isSuperUser}) => {
+const Profile = ({user = {}, isSuperUser}) => {
     const settings = ['Profile', <LogoutButton/>];
 
 

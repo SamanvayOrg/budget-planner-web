@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {allTranslationsSelector, updateTranslations} from "../../slices/translationsReducer";
 import {useTranslation} from "react-i18next";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../../auth/requireAuth";
 import Home from "../Home";
 import _ from "lodash";
 import Text from "../../components/Text";
@@ -112,6 +112,6 @@ const UpdateTranslation = () => {
         </Box>
     </Box>)
 }
-export default withAuthenticationRequired(UpdateTranslation, {
+export default requireAuth(UpdateTranslation, {
     onRedirecting: () => <Home/>,
 });

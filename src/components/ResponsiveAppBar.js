@@ -4,7 +4,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import "../styles/style.css";
 import Profile from "./Profile";
-import {useAuth0} from "@auth0/auth0-react";
+import useAuthUser from "../auth/useAuthUser";
 import NavBarNavigationBeforeAuth from "./NavBarNavigationBeforeAuth";
 import {useNavigate} from 'react-router-dom';
 import Button from '@mui/material/Button';
@@ -12,7 +12,7 @@ import Logo from './Logo';
 
 
 const ResponsiveAppBar = () => {
-	const {user, isAuthenticated} = useAuth0();
+	const {user, isAuthenticated} = useAuthUser();
 
 	let endView = <NavBarNavigationBeforeAuth/>;
 	if (isAuthenticated) {

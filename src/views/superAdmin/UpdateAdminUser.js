@@ -13,7 +13,7 @@ import DropDown from '../../components/DropDown';
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from '../../slices/municipalityReducer';
 import {useTranslation} from 'react-i18next';
 import SuperAdminAppBar from '../../components/SuperAdminAppBar';
-import {withAuthenticationRequired} from '@auth0/auth0-react';
+import requireAuth from "../../auth/requireAuth";
 import Home from '../Home';
 
 
@@ -135,6 +135,6 @@ const UpdateAdminUser = () => {
         </Box>
     );
 };
-export default withAuthenticationRequired(UpdateAdminUser, {
+export default requireAuth(UpdateAdminUser, {
     onRedirecting: () => <Home/>,
 });

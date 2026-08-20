@@ -2,7 +2,7 @@ import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import {makeStyles} from "@mui/styles";
 import Container from "@mui/material/Container";
 import EmptyBudgetBox from "../components/EmptyBudgetBox";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../auth/requireAuth";
 import Home from "./Home";
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from "react-redux";
@@ -111,6 +111,6 @@ const Dashboard = () => {
         </div>
     )
 };
-export default withAuthenticationRequired(Dashboard, {
+export default requireAuth(Dashboard, {
     onRedirecting: () => <Home/>,
 });

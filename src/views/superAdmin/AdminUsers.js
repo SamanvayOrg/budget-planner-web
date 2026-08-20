@@ -10,7 +10,7 @@ import {allUsersSelector, fetchAdminUser} from "../../slices/allUsersReducer";
 import _ from "lodash";
 import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slices/municipalityReducer";
 import SuperAdminAppBar from "../../components/SuperAdminAppBar";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../../auth/requireAuth";
 import Home from "../Home";
 
 const AdminUsers = () => {
@@ -93,6 +93,6 @@ const AdminUsers = () => {
 
     )
 }
-export default withAuthenticationRequired(AdminUsers, {
+export default requireAuth(AdminUsers, {
     onRedirecting: () => <Home/>,
 });
