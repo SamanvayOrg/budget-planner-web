@@ -1,4 +1,14 @@
-import {Box, Paper, TextField, Typography} from "@mui/material";
+import {
+    Box,
+    FormControl,
+    FormControlLabel,
+    FormLabel,
+    Paper,
+    Radio,
+    RadioGroup,
+    TextField,
+    Typography
+} from "@mui/material";
 import ActionButton from "../../components/ActionButton";
 import * as React from "react";
 import {useState} from "react";
@@ -16,9 +26,18 @@ import Text from "../../components/Text";
 import {useTranslation} from "react-i18next";
 import _ from "lodash";
 
+// The roles a Municipality Admin may assign. Admin is deliberately absent — creating
+// another Admin is a Super Admin action, enforced by the server in UserController.
+// These names must match the Auth0 role names the server resolves (UserService).
+const ASSIGNABLE_ROLES = [
+    {value: 'RegularUser', label: 'Accountant', description: 'Can enter and edit budgets'},
+    {value: 'Read-only', label: 'Read-only', description: 'Can view budgets only'},
+];
+
 const CreateUser = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [role, setRole] = useState('RegularUser');
     const dispatch = useDispatch();
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector)
     const [status, setStatus] = useState('');
@@ -37,8 +56,10 @@ const CreateUser = () => {
         newUserOb = {
             name,
             "email": email,
-            // A Chief Officer creates accountants only; promoting anyone to Admin is a
-            // Super Admin action. The server enforces this too (UserController#createUser).
+            // Only the non-admin roles are offered here; creating another Admin is a Super
+            // Admin action. The server enforces this too (UserController#createUser), and
+            // derives the admin flag from the role rather than trusting this one.
+            "role": role,
             "admin": false,
             "municipalityId": currentMunicipality.id
         };
@@ -99,6 +120,16 @@ const CreateUser = () => {
                                    onChange={(e) => handleChange(e, 'name')}/>
                         <TextField sx={{maxWidth: 1 / 4}} variant="standard" label={"Email"} defaultValue={email}
                                    onChange={(e) => handleChange(e, 'email')}/>
+                        <FormControl sx={{maxWidth: 1 / 2}}>
+                            <FormLabel id="role-label">{t('Role')}</FormLabel>
+                            <RadioGroup aria-labelledby="role-label" name="role" value={role}
+                                        onChange={(e) => setRole(e.target.value)}>
+                                {ASSIGNABLE_ROLES.map((r) => (
+                                    <FormControlLabel key={r.value} value={r.value} control={<Radio/>}
+                                                      label={`${t(r.label)} — ${t(r.description)}`}/>
+                                ))}
+                            </RadioGroup>
+                        </FormControl>
                         <ActionButton
                             disabled={_.isEqual(name, '') || _.isEqual(email, '')}
                             style={!(_.isEqual(name, '') || _.isEqual(email, '')) ? {} : {background: "#b7e1e8"}}

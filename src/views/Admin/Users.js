@@ -22,14 +22,23 @@ const Users = () => {
     const columns = [
         {id: 'name', label: 'Name', minWidth: 170},
         {id: 'email', label: 'Email Id', minWidth: 100},
+        {id: 'roleLabel', label: 'Role', minWidth: 100},
     ];
     let rows = [];
+
+    // The API returns the Auth0 role name. Show the term the municipality actually uses
+    // rather than the internal name — "RegularUser" means nothing to a Chief Officer.
+    const roleLabels = {
+        'Admin': 'Administrator',
+        'RegularUser': 'Accountant',
+        'Read-only': 'Read-only',
+    };
 
     useEffect((e) => {
         dispatch(fetchUsers());
     }, [dispatch])
     if (!_.isEmpty(users)) {
-        rows = users
+        rows = users.map((user) => ({...user, roleLabel: roleLabels[user.role] || user.role || '—'}))
     }
     let navigate = useNavigate();
     const handleClick = (param, id) => {
