@@ -60,6 +60,10 @@ const LocalLogin = () => {
                 ))}
             </ul>
             <p style={{fontSize: 13, color: "#666"}}>Password for all seeded accounts: <code>local1234</code></p>
+            <p style={{fontSize: 13, color: "#666"}}>
+                A user created inside the app can also sign in here — use their <strong>email address</strong> as
+                the username, with the same password. Their real password lives in Auth0 and is not known locally.
+            </p>
             <form onSubmit={submit} style={{display: "flex", flexDirection: "column", gap: 10}}>
                 <input
                     placeholder="username"
