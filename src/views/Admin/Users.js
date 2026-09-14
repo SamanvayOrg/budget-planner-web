@@ -7,7 +7,7 @@ import _ from "lodash";
 import {Box, Paper, Typography} from "@mui/material";
 import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
-import {adminMenus} from "../../config";
+import {adminMenus, roleLabelFor} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
 import requireAuth from "../../auth/requireAuth";
@@ -26,19 +26,11 @@ const Users = () => {
     ];
     let rows = [];
 
-    // The API returns the Auth0 role name. Show the term the municipality actually uses
-    // rather than the internal name — "RegularUser" means nothing to a Chief Officer.
-    const roleLabels = {
-        'Admin': 'Administrator',
-        'RegularUser': 'Accountant',
-        'Read-only': 'Read-only',
-    };
-
     useEffect((e) => {
         dispatch(fetchUsers());
     }, [dispatch])
     if (!_.isEmpty(users)) {
-        rows = users.map((user) => ({...user, roleLabel: roleLabels[user.role] || user.role || '—'}))
+        rows = users.map((user) => ({...user, roleLabel: roleLabelFor(user.role)}))
     }
     let navigate = useNavigate();
     const handleClick = (param, id) => {
