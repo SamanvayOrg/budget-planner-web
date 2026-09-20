@@ -1,7 +1,7 @@
 import ResponsiveAppBar from "../components/ResponsiveAppBar";
 import React, {useEffect} from 'react';
 import BudgetBox from "../components/BudgetBox";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../auth/requireAuth";
 import Home from "./Home";
 import {makeStyles} from "@mui/styles";
 import Container from "@mui/material/Container";
@@ -110,6 +110,6 @@ const AllBudgets = () => {
     )
 
 }
-export default withAuthenticationRequired(AllBudgets, {
+export default requireAuth(AllBudgets, {
     onRedirecting: () => <Home/>,
 });

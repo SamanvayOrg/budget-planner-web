@@ -5,6 +5,7 @@ import SelectYears from "./SelectYears";
 import ActionButton from "./ActionButton";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {CREATED_MESSAGE_MS} from "../config";
 
 const styleSheets = makeStyles(theme => ({
     box: {
@@ -51,13 +52,33 @@ const EmptyBudgetBox = ({addNewBudget}) => {
     const classes = styleSheets();
 
     const [selectedYear, setSelectedYear] = useState();
+    const [isCreatingBudget, setIsCreatingBudget] = useState(false);
+    const [createBudgetError, setCreateBudgetError] = useState('');
+    const [createBudgetSuccess, setCreateBudgetSuccess] = useState('');
     let navigate = useNavigate();
 
 
-    const addBudget = () => {
-        if (selectedYear) {
-            addNewBudget(selectedYear.substring(0, 4));
-            navigate(`/budget/${selectedYear.substring(0, 4)}`);
+    const addBudget = async () => {
+        if (!selectedYear) {
+            return;
+        }
+        const targetYear = selectedYear.substring(0, 4);
+        setIsCreatingBudget(true);
+        setCreateBudgetError('');
+        setCreateBudgetSuccess('');
+        try {
+            // Await before navigating — see CurrentBudgetBox.addBudget for why this
+            // matters: firing-and-forgetting sent users to a budget page before the
+            // budget existed.
+            await addNewBudget(targetYear);
+            setIsCreatingBudget(false);
+            setCreateBudgetSuccess(`Budget for ${selectedYear} created successfully.`);
+            setTimeout(() => navigate(`/budget/${targetYear}`), CREATED_MESSAGE_MS);
+        } catch (e) {
+            setIsCreatingBudget(false);
+            setCreateBudgetError(
+                e?.response?.data?.message || 'Could not create the budget. Please try again.'
+            );
         }
     }
 
@@ -73,8 +94,25 @@ const EmptyBudgetBox = ({addNewBudget}) => {
             buttonId={"addNewBudgetButton"}
             modalText={"Create a new budget"}
             style={style}
-            dropDown={<SelectYears onChange={setSelectedYear}/>}
-            actionButton={<ActionButton label={"CREATE A NEW BUDGET"} id={"addNewBudgetButton"} onClick={addBudget}/>}
+            dropDown={<SelectYears onChange={(year) => {
+                setSelectedYear(year);
+                // Also clears a leftover error from a previous failed attempt — see
+                // CurrentBudgetBox for why mounting is the right moment to do this.
+                setCreateBudgetError('');
+            }}/>}
+            actionButton={
+                <>
+                    <ActionButton label={isCreatingBudget ? "Creating…" : "CREATE A NEW BUDGET"}
+                                  id={"addNewBudgetButton"} onClick={addBudget}
+                                  disabled={isCreatingBudget || !!createBudgetSuccess}/>
+                    {createBudgetSuccess &&
+                        <Box role="status" sx={{color: 'success.main', fontSize: '13px', mt: 1}}>
+                            {createBudgetSuccess}
+                        </Box>}
+                    {createBudgetError &&
+                        <Box role="alert" sx={{color: 'error.main', fontSize: '13px', mt: 1}}>{createBudgetError}</Box>}
+                </>
+            }
         />
     </Box>)
 }

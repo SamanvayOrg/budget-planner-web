@@ -205,7 +205,7 @@ export function saveBudget() {
 
 export function fetchBudget(year) {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState());
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         dispatch(budgetLoading());
         let budget = await getBudget(token, year);
         dispatch(setBudget(budget));
@@ -214,7 +214,7 @@ export function fetchBudget(year) {
 
 export function updateBudgetProperties(data, id) {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState());
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         let result = await backendUpdateBudgetProperties(token, data, id);
         dispatch(setBudgetProps(result));
     };
@@ -222,14 +222,14 @@ export function updateBudgetProperties(data, id) {
 
 export function updateBudgetStatus(id, data) {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState());
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         return await changeBudgetStatus(token, id, data);
     };
 }
 
 export function downloadBudgetExcel(year, reportType) {
     return async (dispatch, getState) => {
-        const token = tokenSelector(getState());
+        const token = tokenSelector(getState()) || localStorage.getItem('authToken');
         return await downloadBudgetReport(token, year, reportType, localStorage.getItem('language'));
     };
 }

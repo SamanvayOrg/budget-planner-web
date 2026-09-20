@@ -2,6 +2,8 @@ import {HashRouter, Route, Routes} from "react-router-dom";
 import Dashboard from "../views/Dashboard";
 import React, {useEffect} from "react";
 import Home from "../views/Home";
+import LocalLogin from "../views/LocalLogin";
+import localAuthEnabled from "../auth/localAuthEnabled";
 import BudgetDetail from "../views/BudgetDetail";
 import AllBudgets from "../views/AllBudgets";
 import Users from "../views/Admin/Users";
@@ -37,6 +39,8 @@ const Routing = () => {
     return (<HashRouter>
         <Routes>
             <Route path="/" element={<Home/>}/>
+            {localAuthEnabled &&
+                <Route path="/local-login" element={<LocalLogin/>}/>}
             <Route path="/dashboard" element={isSuperAdmin() ? <AdminUsers/> : <Dashboard/>}/>
             <Route path="/budget/:year" element={isSuperAdmin() ? <AccessDenied/> : <BudgetDetail/>}/>
             <Route path="/allBudgets" element={isSuperAdmin() ? <AccessDenied/> : <AllBudgets/>}/>

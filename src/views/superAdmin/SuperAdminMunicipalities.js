@@ -10,7 +10,7 @@ import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from '../../slic
 import _ from 'lodash';
 import {useNavigate} from 'react-router-dom';
 import SuperAdminAppBar from '../../components/SuperAdminAppBar';
-import {withAuthenticationRequired} from '@auth0/auth0-react';
+import requireAuth from "../../auth/requireAuth";
 import Home from '../Home';
 import {fetchTranslations} from '../../slices/translationsReducer';
 
@@ -77,6 +77,6 @@ const SuperAdminMunicipalities = () => {
         </Box>
     );
 };
-export default withAuthenticationRequired(SuperAdminMunicipalities, {
+export default requireAuth(SuperAdminMunicipalities, {
     onRedirecting: () => <Home/>,
 });

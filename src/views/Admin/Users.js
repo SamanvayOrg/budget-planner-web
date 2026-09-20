@@ -7,10 +7,10 @@ import _ from "lodash";
 import {Box, Paper, Typography} from "@mui/material";
 import ResponsiveAppBar from "../../components/ResponsiveAppBar";
 import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
-import {adminMenus} from "../../config";
+import {adminMenus, roleLabelFor} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../../auth/requireAuth";
 import Home from "../Home";
 
 const Users = () => {
@@ -22,6 +22,7 @@ const Users = () => {
     const columns = [
         {id: 'name', label: 'Name', minWidth: 170},
         {id: 'email', label: 'Email Id', minWidth: 100},
+        {id: 'roleLabel', label: 'Role', minWidth: 100},
     ];
     let rows = [];
 
@@ -29,7 +30,7 @@ const Users = () => {
         dispatch(fetchUsers());
     }, [dispatch])
     if (!_.isEmpty(users)) {
-        rows = users
+        rows = users.map((user) => ({...user, roleLabel: roleLabelFor(user.role)}))
     }
     let navigate = useNavigate();
     const handleClick = (param, id) => {
@@ -81,6 +82,6 @@ const Users = () => {
 
     return renderBox();
 }
-export default withAuthenticationRequired(Users, {
+export default requireAuth(Users, {
     onRedirecting: () => <Home/>,
 });

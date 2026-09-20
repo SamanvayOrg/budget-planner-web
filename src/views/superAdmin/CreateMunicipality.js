@@ -13,7 +13,7 @@ import {createNewMunicipality} from '../../slices/municipalityReducer';
 import {useNavigate} from 'react-router-dom';
 import SuperAdminAppBar from '../../components/SuperAdminAppBar';
 import {saveTranslations} from '../../slices/translationsReducer';
-import {withAuthenticationRequired} from '@auth0/auth0-react';
+import requireAuth from "../../auth/requireAuth";
 import Home from '../Home';
 import {superAdminMenus} from '../../config';
 import Text from '../../components/Text';
@@ -137,6 +137,6 @@ const CreateMunicipality = () => {
             </Paper>
         </Box></Box>);
 };
-export default withAuthenticationRequired(CreateMunicipality, {
+export default requireAuth(CreateMunicipality, {
     onRedirecting: () => <Home/>,
 });

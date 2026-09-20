@@ -14,6 +14,7 @@ import SelectYears from "./SelectYears";
 import CustomModal from "./CustomModal";
 import {style} from "./EmptyBudgetBox";
 import {createNewBudget} from "../slices/budgetDashboardReducer";
+import {CREATED_MESSAGE_MS} from "../config";
 
 const styleSheets = makeStyles(theme => ({
     box: {
@@ -64,6 +65,9 @@ const CurrentBudgetBox = ({year, currentBudgetYear}) => {
     const [budgetYear, setBudgetYear] = useState(year);
     let navigate = useNavigate();
     const [selectedYear, setSelectedYear] = useState();
+    const [isCreatingBudget, setIsCreatingBudget] = useState(false);
+    const [createBudgetError, setCreateBudgetError] = useState('');
+    const [createBudgetSuccess, setCreateBudgetSuccess] = useState('');
 
     useEffect(() => {
         dispatch(fetchAllBudgets());
@@ -85,10 +89,30 @@ const CurrentBudgetBox = ({year, currentBudgetYear}) => {
         const year = budgetYear.substring(0, 4)
         navigate(`/budget/${year}`);
     };
-    const addBudget = () => {
-        if (selectedYear) {
-            dispatch(createNewBudget(selectedYear.substring(0, 4)))
-            navigate(`/budget/${selectedYear.substring(0, 4)}`);
+    const addBudget = async () => {
+        if (!selectedYear) {
+            return;
+        }
+        const targetYear = selectedYear.substring(0, 4);
+        setIsCreatingBudget(true);
+        setCreateBudgetError('');
+        setCreateBudgetSuccess('');
+        try {
+            // Awaiting here (rather than firing-and-forgetting) is what makes this
+            // reliable: navigating before the create request resolves used to send
+            // the user to a budget page before the budget existed, which looked to
+            // them like the create had silently failed.
+            await dispatch(createNewBudget(targetYear));
+            setIsCreatingBudget(false);
+            setCreateBudgetSuccess(`Budget for ${selectedYear} created successfully.`);
+            // Confirm first, then move on — navigating instantly would replace the screen
+            // before the user could register that anything succeeded.
+            setTimeout(() => navigate(`/budget/${targetYear}`), CREATED_MESSAGE_MS);
+        } catch (e) {
+            setIsCreatingBudget(false);
+            setCreateBudgetError(
+                e?.response?.data?.message || 'Could not create the budget. Please try again.'
+            );
         }
     }
 
@@ -109,9 +133,29 @@ const CurrentBudgetBox = ({year, currentBudgetYear}) => {
                                 buttonLabel={"Add budget"}
                                 modalText={"Create a new budget"}
                                 style={style}
-                                dropDown={<SelectYears onChange={setSelectedYear}/>}
-                                actionButton={<ActionButton label={"CREATE A NEW BUDGET"} variant={'contained'}
-                                                            size={"large"} onClick={addBudget}/>}
+                                dropDown={<SelectYears onChange={(year) => {
+                                    setSelectedYear(year);
+                                    // SelectYears reports its year on mount, and the modal
+                                    // remounts its children each time it opens — so this
+                                    // also clears any error left over from a previous
+                                    // failed attempt rather than showing it again on open.
+                                    setCreateBudgetError('');
+                                }}/>}
+                                actionButton={
+                                    <>
+                                        <ActionButton label={isCreatingBudget ? "Creating…" : "CREATE A NEW BUDGET"}
+                                                      variant={'contained'} size={"large"} onClick={addBudget}
+                                                      disabled={isCreatingBudget || !!createBudgetSuccess}/>
+                                        {createBudgetSuccess &&
+                                            <Box role="status" sx={{color: 'success.main', fontSize: '13px', mt: 1}}>
+                                                {createBudgetSuccess}
+                                            </Box>}
+                                        {createBudgetError &&
+                                            <Box role="alert" sx={{color: 'error.main', fontSize: '13px', mt: 1}}>
+                                                {createBudgetError}
+                                            </Box>}
+                                    </>
+                                }
                             />
                         </>
                     </div>)

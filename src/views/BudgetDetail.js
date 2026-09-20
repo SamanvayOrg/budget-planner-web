@@ -1,6 +1,6 @@
 import ResponsiveAppBar from '../components/ResponsiveAppBar';
 import {makeStyles} from '@mui/styles';
-import {withAuthenticationRequired} from '@auth0/auth0-react';
+import requireAuth from "../auth/requireAuth";
 import Home from './Home';
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
@@ -115,8 +115,21 @@ const BudgetDetail = () => {
 
 
     const roleCheck = (role) => _.includes(authToken.permissions, role);
-    // const canEdit = roleCheck('admin') && budget.budgetStatus === 'Draft'; //Wrong line
-    const canEdit = !roleCheck('admin') && budget.budgetStatus === 'Draft'; //Right line
+    // Whether this person may change anything at all. Until the Read-only role became
+    // assignable every signed-in user had 'write', so nothing needed to ask — which is why
+    // a read-only user was handed an editable grid with Save and Submit on it and only
+    // found out the server refused them when they pressed one.
+    const canWrite = roleCheck('write');
+    // Editing a budget is the accountant's job, not the Chief Officer's: an admin reviews
+    // and approves rather than entering figures, and only a Draft is still open to change.
+    const canEdit = canWrite && !roleCheck('admin') && budget.budgetStatus === 'Draft';
+
+    // react-spreadsheet takes readOnly per cell, so without this the grid still accepts
+    // typing even with the buttons gone — changes that look accepted and are then silently
+    // discarded, which is worse than not offering them.
+    const viewForUser = canWrite
+        ? budgetView
+        : (budgetView || []).map((row) => (row || []).map((cell) => ({...cell, readOnly: true})));
 
     const updateView = (newBudgetView) => {
         //Allow the spreadsheet to update itself first
@@ -178,7 +191,9 @@ const BudgetDetail = () => {
                   </div>
                   <div className={classes.topRight}>
                       {propertiesStatus()}
-                      <ActionButton label={'Add Properties'} onClick={() => setBudgetPropertySelectionModal(true)}/>
+                      {canWrite && (
+                        <ActionButton label={'Add Properties'} onClick={() => setBudgetPropertySelectionModal(true)}/>
+                      )}
                       {canEdit && (
                         <>
                             <ActionButton style={{marginLeft: '10px'}} variant={'contained'} size={'large'}
@@ -194,9 +209,11 @@ const BudgetDetail = () => {
               <div className={classes.mainContainer}>
                   <HorizontalLine/>
                   <div className={classes.budgetView}>
-                      <Spreadsheet data={budgetView} columnLabels={headers(year)}
-                                   onChange={debouncedOnChange(updateView)}
-                                   onActivate={onActivate}
+                      <Spreadsheet data={viewForUser} columnLabels={headers(year)}
+                                   onChange={canWrite ? debouncedOnChange(updateView) : () => {
+                                   }}
+                                   onActivate={canWrite ? onActivate : () => {
+                                   }}
                                    onModeChange={() => {
                                    }}/>
                   </div>
@@ -237,6 +254,6 @@ const BudgetDetail = () => {
     </>);
 };
 
-export default withAuthenticationRequired(BudgetDetail, {
+export default requireAuth(BudgetDetail, {
     onRedirecting: () => <Home/>,
 });

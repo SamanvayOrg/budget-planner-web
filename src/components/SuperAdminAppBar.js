@@ -3,11 +3,11 @@ import Container from "@mui/material/Container";
 import Toolbar from "@mui/material/Toolbar";
 import * as React from "react";
 import Profile from "./Profile";
-import {useAuth0} from "@auth0/auth0-react";
+import useAuthUser from "../auth/useAuthUser";
 import Logo from './Logo';
 
 const SuperAdminAppBar = () => {
-    const {user} = useAuth0();
+    const {user} = useAuthUser();
     return (
         <AppBar id="navBar" sx={{zIndex: (theme) => theme.zIndex.drawer + 1}}>
             <Container maxWidth="xl">

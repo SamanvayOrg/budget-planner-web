@@ -10,7 +10,7 @@ import ActionButton from "../../components/ActionButton";
 import {useDispatch, useSelector} from "react-redux";
 import {saveTranslations} from "../../slices/translationsReducer";
 import {useTranslation} from "react-i18next";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../../auth/requireAuth";
 import Home from "../Home";
 import {fetchState, stateSelector} from "../../slices/stateReducer";
 import _ from "lodash";
@@ -95,6 +95,6 @@ const CreateTranslation = () => {
         </Box>
     </Box>)
 }
-export default withAuthenticationRequired(CreateTranslation, {
+export default requireAuth(CreateTranslation, {
     onRedirecting: () => <Home/>,
 });

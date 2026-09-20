@@ -13,7 +13,7 @@ import {allMunicipalityDetailsSelector, fetchAllMunicipalities} from "../../slic
 import DropDown from "../../components/DropDown";
 import _ from "lodash";
 import SuperAdminAppBar from "../../components/SuperAdminAppBar";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../../auth/requireAuth";
 import Home from "../Home";
 import Text from "../../components/Text";
 
@@ -128,6 +128,6 @@ const CreateAdmin = () => {
             </Box></Box>
     )
 }
-export default withAuthenticationRequired(CreateAdmin, {
+export default requireAuth(CreateAdmin, {
     onRedirecting: () => <Home/>,
 });

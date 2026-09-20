@@ -15,7 +15,7 @@ import HorizontalMenuDrawer from "../../components/HorizontalMenuDrawer";
 import {adminMenus} from "../../config";
 import Toolbar from "@mui/material/Toolbar";
 import {useNavigate} from "react-router-dom";
-import {withAuthenticationRequired} from "@auth0/auth0-react";
+import requireAuth from "../../auth/requireAuth";
 import Home from "../Home";
 import {useTranslation} from "react-i18next";
 
@@ -97,6 +97,6 @@ const Translations = () => {
 
     return renderBox();
 }
-export default withAuthenticationRequired(Translations, {
+export default requireAuth(Translations, {
     onRedirecting: () => <Home/>,
 });

@@ -36,7 +36,7 @@ export default metadataSlice.reducer;
 
 export function fetchMetadata() {
 	return async (dispatch, getState) => {
-		const token = tokenSelector(getState());
+		const token = tokenSelector(getState()) || localStorage.getItem('authToken');
 		dispatch(loading());
 		let data = await getMetadata(token);
 		dispatch(setMetadata(data));

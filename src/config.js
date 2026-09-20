@@ -17,6 +17,21 @@ export function getConfig() {
   };
 }
 
+// How long the "budget created" confirmation stays on screen before the app moves on to
+// the new budget. Long enough to read, short enough not to feel like a stall.
+export const CREATED_MESSAGE_MS = 1500;
+
 export const languages = [{value: 'en', title: 'English'}, {value: 'mr', title: 'Marathi'},]
+// The Auth0 role names the API returns, mapped to the words a municipality actually uses.
+// "RegularUser" means nothing to a Chief Officer. Kept here so the user list and a user's
+// own profile always describe the same role the same way.
+export const ROLE_LABELS = {
+    'Admin': 'Administrator',
+    'RegularUser': 'Accountant',
+    'Read-only': 'Read-only',
+};
+
+export const roleLabelFor = (role) => ROLE_LABELS[role] || role || '—';
+
 export const adminMenus = ['Users', 'Municipality', 'Translations'];
 export const superAdminMenus = ['Municipality', 'Users', 'Usage'];
