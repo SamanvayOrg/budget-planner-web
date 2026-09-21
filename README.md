@@ -1,5 +1,69 @@
-# budget-planner-web
-=======
+# Budget Planner Web Application
+
+A comprehensive web application for municipal budget planning and management. This project helps cities and municipalities to plan, track, and analyze their budgets effectively.
+
+## Tech Stack
+
+- **Frontend Framework**: React.js with Create React App
+- **State Management**: Redux
+- **UI Components**: Material-UI
+- **Visualization**: React-based charts and graphs
+- **Internationalization**: i18n support
+- **Development Tools**: Storybook for component development
+
+## Prerequisites
+
+- Node.js (version specified in .nvmrc)
+- npm (Node Package Manager)
+
+## Quick Start
+
+1. Clone the repository
+2. Install dependencies:
+   ```bash
+   npm install --legacy-peer-deps
+   ```
+   or use the make command:
+   ```bash
+   make deps
+   ```
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+   or use the make command:
+   ```bash
+   make start
+   ```
+
+## Project Structure
+
+- `/src/api` - API integration and services
+- `/src/assets` - Static assets and images
+- `/src/components` - Reusable React components
+- `/src/domain` - Business logic and data models
+- `/src/i18n` - Internationalization setup
+- `/src/routes` - Application routing
+- `/src/slices` - Redux state management
+- `/src/views` - Page components and layouts
+
+## Available Make Commands
+
+- `make deps` - Install project dependencies
+- `make start` - Start development server
+- `make build-app` - Build the application
+- `make build-and-zip` - Build and create deployment package
+- `make clean` - Clean up node_modules
+
+## Features
+
+- Budget planning and management
+- Data visualization with charts and graphs
+- Multi-language support
+- User role management
+- Budget analysis and reporting
+- Interactive dashboards
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
