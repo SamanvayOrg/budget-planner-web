@@ -115,18 +115,11 @@ const BudgetDetail = () => {
 
 
     const roleCheck = (role) => _.includes(authToken.permissions, role);
-    // Whether this person may change anything at all. Until the Read-only role became
-    // assignable every signed-in user had 'write', so nothing needed to ask — which is why
-    // a read-only user was handed an editable grid with Save and Submit on it and only
-    // found out the server refused them when they pressed one.
     const canWrite = roleCheck('write');
-    // Editing a budget is the accountant's job, not the Chief Officer's: an admin reviews
-    // and approves rather than entering figures, and only a Draft is still open to change.
+    // Editing is the accountant's job (admins review), and only a Draft is open to change.
     const canEdit = canWrite && !roleCheck('admin') && budget.budgetStatus === 'Draft';
 
-    // react-spreadsheet takes readOnly per cell, so without this the grid still accepts
-    // typing even with the buttons gone — changes that look accepted and are then silently
-    // discarded, which is worse than not offering them.
+    // react-spreadsheet takes readOnly per cell; without it the grid still accepts typing.
     const viewForUser = canWrite
         ? budgetView
         : (budgetView || []).map((row) => (row || []).map((cell) => ({...cell, readOnly: true})));

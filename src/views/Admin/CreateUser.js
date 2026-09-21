@@ -26,9 +26,7 @@ import Text from "../../components/Text";
 import {useTranslation} from "react-i18next";
 import _ from "lodash";
 
-// The roles a Municipality Admin may assign. Admin is deliberately absent — creating
-// another Admin is a Super Admin action, enforced by the server in UserController.
-// These names must match the Auth0 role names the server resolves (UserService).
+// Roles a Municipality Admin may assign; values must match the server's Auth0 role names.
 const ASSIGNABLE_ROLES = [
     {value: 'RegularUser', label: 'Accountant', description: 'Can enter and edit budgets'},
     {value: 'Read-only', label: 'Read-only', description: 'Can view budgets only'},
@@ -56,9 +54,6 @@ const CreateUser = () => {
         newUserOb = {
             name,
             "email": email,
-            // Only the non-admin roles are offered here; creating another Admin is a Super
-            // Admin action. The server enforces this too (UserController#createUser), and
-            // derives the admin flag from the role rather than trusting this one.
             "role": role,
             "admin": false,
             "municipalityId": currentMunicipality.id

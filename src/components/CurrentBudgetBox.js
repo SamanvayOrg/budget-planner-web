@@ -98,10 +98,7 @@ const CurrentBudgetBox = ({year, currentBudgetYear}) => {
         setCreateBudgetError('');
         setCreateBudgetSuccess('');
         try {
-            // Awaiting here (rather than firing-and-forgetting) is what makes this
-            // reliable: navigating before the create request resolves used to send
-            // the user to a budget page before the budget existed, which looked to
-            // them like the create had silently failed.
+            // Await so the budget exists before we navigate to it.
             await dispatch(createNewBudget(targetYear));
             setIsCreatingBudget(false);
             setCreateBudgetSuccess(`Budget for ${selectedYear} created successfully.`);

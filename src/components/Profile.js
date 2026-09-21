@@ -17,9 +17,7 @@ import {roleLabelFor} from "../config";
 
 
 const Profile = ({user = {}, isSuperUser}) => {
-    // Read the signed-in user from our own API rather than from the Auth0 profile: Auth0
-    // knows nothing about municipality roles, so under real Auth0 the `user` prop has no
-    // role on it at all. This is the same source NavBarMenu uses for its admin check.
+    // Role comes from our API, not the Auth0 profile, which has no notion of municipality roles.
     const {user: currentUser} = useSelector(currentUserSelector);
     const {t} = useTranslation();
     const settings = ['Profile', <LogoutButton/>];
