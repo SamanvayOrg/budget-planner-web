@@ -1,8 +1,7 @@
 import {Typography} from "@mui/material";
 import ManIcon from "@mui/icons-material/Man";
 import {makeStyles} from "@mui/styles";
-import _ from "lodash";
-import {budgetSummaryData} from "../domain/budgetSummaryMapper";
+import {budgetSummaryData, perPersonAmount} from "../domain/budgetSummaryMapper";
 
 
 const styleSheets = makeStyles(theme => ({
@@ -14,6 +13,7 @@ const styleSheets = makeStyles(theme => ({
 const PerPersonRevenue = ({allBudgets, budgetYear, municipalityPopulation}) => {
 
 	const classes = styleSheets();
+	const summary = budgetSummaryData(allBudgets, budgetYear);
 
 	return (<>
 		<div className={classes.boxWithIcon}>
@@ -23,13 +23,11 @@ const PerPersonRevenue = ({allBudgets, budgetYear, municipalityPopulation}) => {
 			<div>
 				<Typography color="primary">
 								<span
-									style={{color: "#333333"}}>Revenue Budget </span> {`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedRevenueExpenditure / municipalityPopulation)}/
-						person`}
+									style={{color: "#333333"}}>Revenue Budget </span> {perPersonAmount(summary.budgetedRevenueExpenditure, municipalityPopulation)}
 				</Typography>
 				<Typography color="primary">
 								<span
-									style={{color: "#333333"}}>Capital Budget </span>{`Rs.${_.ceil(budgetSummaryData(allBudgets, budgetYear).budgetedCapitalExpenditure / municipalityPopulation)}/
-						person`}
+									style={{color: "#333333"}}>Capital Budget </span>{perPersonAmount(summary.budgetedCapitalExpenditure, municipalityPopulation)}
 				</Typography>
 			</div>
 		</div>

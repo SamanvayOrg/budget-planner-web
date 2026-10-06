@@ -5,13 +5,16 @@ import * as xlsx from 'xlsx/xlsx.mjs';
 import _ from "lodash";
 
 
+export const municipalityDisplayName = (municipality) =>
+    municipality ? [municipality.name, municipality.cityClass].filter(Boolean).join(' ') : '';
+
 export const MunicipalityName = () => {
     const dispatch = useDispatch();
     const {currentMunicipality} = useSelector(allMunicipalityDetailsSelector)
     useEffect(() => {
         dispatch(fetchMunicipalityDetails());
     }, [dispatch]);
-    return currentMunicipality ? currentMunicipality.name + ' ' + currentMunicipality.cityClass + ' ' : ''
+    return currentMunicipality ? municipalityDisplayName(currentMunicipality) + ' ' : ''
 }
 
 

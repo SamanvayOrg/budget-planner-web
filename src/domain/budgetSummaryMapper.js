@@ -1,4 +1,4 @@
-import {ceil, chain, forEach, isEqual, map} from 'lodash';
+import {ceil, chain, floor, forEach, isEqual, map} from 'lodash';
 import {fromContract} from './budgetContractMapper';
 import {currentYearBudget, prevYearBudget} from './functions';
 
@@ -112,6 +112,25 @@ export const budgetSummaryData = (budgets, year) => {
 
     };
 };
+
+// Figures in lakhs. Shares are ceil/floor so the two add up to 100; a budget with no
+// figures yet is 0 of 0, which must read as 0%, not NaN%.
+export const budgetedShares = ({budgetedRevenueExpenditure, budgetedCapitalExpenditure}) => {
+    const revenueBudget = ceil((budgetedRevenueExpenditure || 0) / 100000);
+    const capitalBudget = ceil((budgetedCapitalExpenditure || 0) / 100000);
+    const totalBudget = revenueBudget + capitalBudget;
+    return {
+        revenueBudget,
+        capitalBudget,
+        totalBudget,
+        revenuePercentage: totalBudget ? ceil(revenueBudget / totalBudget * 100) : 0,
+        capitalPercentage: totalBudget ? floor(capitalBudget / totalBudget * 100) : 0
+    };
+};
+
+// Population comes from the budget's "Add Properties"; until it is set there is nothing to divide by.
+export const perPersonAmount = (amount, population) =>
+    population > 0 ? `Rs.${ceil((amount || 0) / population)}/person` : '— (population not set)';
 
 export const revenueIncomeAndExpenditureSummaryData = (budgets, year) => {
     const getValue = (category) => {

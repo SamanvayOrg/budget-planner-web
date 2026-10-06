@@ -52,6 +52,11 @@
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "^xlsx/xlsx\\.mjs$": "xlsx"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
