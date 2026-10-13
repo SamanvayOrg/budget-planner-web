@@ -59,7 +59,7 @@ export const budgetSummaryData = (budgets, year) => {
         let dataLine = [];
         const pushInArray = (array, name, revised, budgeted) => {
             array.push({
-                name: name, revised: ceil(revised / 100000), budgeted: ceil(budgeted / 100000)
+                name: name, revised: ceil((revised || 0) / 100000), budgeted: ceil((budgeted || 0) / 100000)
             });
         };
         pushInArray(dataLine, 'Opening Balance', getPrevYearOpeningBalance(), getCurrentYearOpeningBalance());
@@ -127,6 +127,9 @@ export const budgetedShares = ({budgetedRevenueExpenditure, budgetedCapitalExpen
         capitalPercentage: totalBudget ? floor(capitalBudget / totalBudget * 100) : 0
     };
 };
+
+// A share of nothing is 0%, not NaN%: a new budget has no figures to divide by.
+export const percentageOf = (value, total) => total ? ceil((value || 0) / total * 100, 2) : 0;
 
 // Population comes from the budget's "Add Properties"; until it is set there is nothing to divide by.
 export const perPersonAmount = (amount, population) =>
@@ -345,7 +348,7 @@ export const capitalBudgetSummaryData = (budgets, year) => {
     pushDataInArray(tableRows, '', 'Deposits', ceil(getValueFromCategory('Loans, Advances and Deposits') / 100000));
     pushDataInArray(tableRows, '', 'Recovery', ceil(getValueFromCategory('Recovery ') / 100000));
     pushDataInArray(tableRows, 'B', 'Capital Expenditure (INR lakhs)', '');
-    pushDataInArray(tableRows, '', 'Capital Projects', ceil(getValueFromCategory('Capital Budgeted Expenses ') / 100000));
+    pushDataInArray(tableRows, '', 'Capital Projects', ceil(getValueFromCategory('Capital Budgeted Expenses') / 100000));
     pushDataInArray(tableRows, '', 'Loan, Advance and Deposit Repayment', ceil(getValueFromMajorHead('Loans , Advances and Deposits') / 100000));
 
     return {

@@ -1,4 +1,6 @@
-import {budgetedShares, perPersonAmount} from './budgetSummaryMapper';
+import {
+    budgetedShares, budgetSummaryData, capitalBudgetSummaryData, percentageOf, perPersonAmount
+} from './budgetSummaryMapper';
 import {municipalityDisplayName} from './functions';
 
 describe('budgetedShares', () => {
@@ -52,5 +54,44 @@ describe('municipalityDisplayName', () => {
     it('is empty until the municipality has loaded', () => {
         expect(municipalityDisplayName(undefined)).toBe('');
         expect(municipalityDisplayName({})).toBe('');
+    });
+});
+
+describe('percentageOf', () => {
+    it('is 0 rather than NaN when the total is zero', () => {
+        expect(percentageOf(0, 0)).toBe(0);
+        expect(percentageOf(undefined, 0)).toBe(0);
+    });
+
+    it('rounds a share up to two decimals', () => {
+        expect(percentageOf(1, 3)).toBe(33.34);
+        expect(percentageOf(50, 200)).toBe(25);
+    });
+});
+
+describe('budgetSummaryData', () => {
+    // A municipality's first budget has no previous year to read an opening balance from.
+    it('shows 0 rather than NaN for a previous year that has no budget', () => {
+        const firstBudget = {
+            budgetYear: '2027-28', budgetLines: [], openingBalance: 0, population: 0,
+            budgetStatusAuditContract: {currentBudgetStatus: 'Draft'}
+        };
+        const rows = budgetSummaryData([firstBudget], '2027-28').budgetSummaryTableData;
+        rows.forEach(row => {
+            expect(row.revised).not.toBeNaN();
+            expect(row.budgeted).not.toBeNaN();
+        });
+        expect(rows.find(row => row.name === 'Opening Balance')).toEqual({name: 'Opening Balance', revised: 0, budgeted: 0});
+    });
+});
+
+describe('capitalBudgetSummaryData', () => {
+    it('reports capital projects from the Capital Budgeted Expenses category', () => {
+        const budget = {
+            budgetYear: '2027-28',
+            budgetLines: [{minorHeadCategory: 'Capital Budgeted Expenses', budgetedAmount: 500000}]
+        };
+        const rows = capitalBudgetSummaryData([budget], '2027-28').tableRows;
+        expect(rows.find(row => row.name === 'Capital Projects').data).toBe(5);
     });
 });

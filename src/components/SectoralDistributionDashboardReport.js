@@ -8,15 +8,14 @@ import {ReactComponent as SocialWelfare} from "../assets/social_welfare.svg";
 import {ReactComponent as WaterAndSanitation} from "../assets/water_and_sanitation.svg";
 import _ from "lodash";
 import DistributionItem from "./DistributionItem";
+import {percentageOf} from "../domain/budgetSummaryMapper";
 
 const SectoralDistributionDashboardReport = ({budgets, year}) => {
 
-    const getPercentage = (value) => {
-        return _.ceil((value / getTotal()) * 100, 2)
-    }
+    const getPercentage = (value) => percentageOf(value, getTotal());
 
     const getTotal = () => {
-        return getDataFromFunctionGroupCategory('Administrative Expense') + getDataFromFunctionGroupCategory('Building and Town Planning') + getDataFromFunctionGroupCategory('Roads') + getDataFromFunctionGroupCategory('Water Supply (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Sanitation (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Public Health ') + getDataFromFunctionGroupCategory('Social Welfare ') + getDataFromFunctionGroupCategory('Earmarked Funds')
+        return getDataFromFunctionGroupCategory('Administrative Expense') + getDataFromFunctionGroupCategory('Building and Town Planning') + getDataFromFunctionGroupCategory('Roads') + getDataFromFunctionGroupCategory('Water Supply (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Sanitation (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Public Health ') + getDataFromFunctionGroupCategory('Social Welfare') + getDataFromFunctionGroupCategory('Earmarked Funds')
     }
     const getDataFromFunctionGroupCategory = (category) => {
         if (currentYearBudget(budgets, year)) {
@@ -26,6 +25,7 @@ const SectoralDistributionDashboardReport = ({budgets, year}) => {
                 .value()
             return _.ceil(total / 100000)
         }
+        return 0;
     }
 
     const getDataFromMinorHeadCategory = (category) => {
@@ -36,6 +36,7 @@ const SectoralDistributionDashboardReport = ({budgets, year}) => {
               .value();
             return _.ceil(total / 100000)
         }
+        return 0;
     }
 
     return (<>
