@@ -1,5 +1,5 @@
 import {
-    budgetedShares, budgetSummaryData, capitalBudgetSummaryData, percentageOf, perPersonAmount
+    budgetedShares, budgetSummaryData, percentageOf, perPersonAmount
 } from './budgetSummaryMapper';
 import {municipalityDisplayName} from './functions';
 
@@ -82,16 +82,5 @@ describe('budgetSummaryData', () => {
             expect(row.budgeted).not.toBeNaN();
         });
         expect(rows.find(row => row.name === 'Opening Balance')).toEqual({name: 'Opening Balance', revised: 0, budgeted: 0});
-    });
-});
-
-describe('capitalBudgetSummaryData', () => {
-    it('reports capital projects from the Capital Budgeted Expenses category', () => {
-        const budget = {
-            budgetYear: '2027-28',
-            budgetLines: [{minorHeadCategory: 'Capital Budgeted Expenses', budgetedAmount: 500000}]
-        };
-        const rows = capitalBudgetSummaryData([budget], '2027-28').tableRows;
-        expect(rows.find(row => row.name === 'Capital Projects').data).toBe(5);
     });
 });

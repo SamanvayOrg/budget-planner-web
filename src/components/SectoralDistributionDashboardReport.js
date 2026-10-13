@@ -15,7 +15,7 @@ const SectoralDistributionDashboardReport = ({budgets, year}) => {
     const getPercentage = (value) => percentageOf(value, getTotal());
 
     const getTotal = () => {
-        return getDataFromFunctionGroupCategory('Administrative Expense') + getDataFromFunctionGroupCategory('Building and Town Planning') + getDataFromFunctionGroupCategory('Roads') + getDataFromFunctionGroupCategory('Water Supply (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Sanitation (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Public Health ') + getDataFromFunctionGroupCategory('Social Welfare') + getDataFromFunctionGroupCategory('Earmarked Funds')
+        return getDataFromFunctionGroupCategory('Administrative Expense') + getDataFromFunctionGroupCategory('Building and Town Planning') + getDataFromFunctionGroupCategory('Roads') + getDataFromFunctionGroupCategory('Water Supply (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Sanitation (Public Health and Welfare)') + getDataFromFunctionGroupCategory('Public Health ') + getDataFromFunctionGroupCategory('Social Welfare ') + getDataFromFunctionGroupCategory('Earmarked Funds')
     }
     const getDataFromFunctionGroupCategory = (category) => {
         if (currentYearBudget(budgets, year)) {

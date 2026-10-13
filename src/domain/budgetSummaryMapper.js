@@ -348,7 +348,7 @@ export const capitalBudgetSummaryData = (budgets, year) => {
     pushDataInArray(tableRows, '', 'Deposits', ceil(getValueFromCategory('Loans, Advances and Deposits') / 100000));
     pushDataInArray(tableRows, '', 'Recovery', ceil(getValueFromCategory('Recovery ') / 100000));
     pushDataInArray(tableRows, 'B', 'Capital Expenditure (INR lakhs)', '');
-    pushDataInArray(tableRows, '', 'Capital Projects', ceil(getValueFromCategory('Capital Budgeted Expenses') / 100000));
+    pushDataInArray(tableRows, '', 'Capital Projects', ceil(getValueFromCategory('Capital Budgeted Expenses ') / 100000));
     pushDataInArray(tableRows, '', 'Loan, Advance and Deposit Repayment', ceil(getValueFromMajorHead('Loans , Advances and Deposits') / 100000));
 
     return {
