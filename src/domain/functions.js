@@ -5,8 +5,15 @@ import * as xlsx from 'xlsx/xlsx.mjs';
 import _ from "lodash";
 
 
-export const municipalityDisplayName = (municipality) =>
-    municipality ? [municipality.name, municipality.cityClass].filter(Boolean).join(' ') : '';
+// Newer municipalities carry their class in the name ("Satara Municipal Council"), older ones
+// do not ("Sinnar"), so the class is appended only when the name does not already end with it.
+export const municipalityDisplayName = (municipality) => {
+    if (!municipality) return '';
+    const name = _.trim(municipality.name);
+    const cityClass = _.trim(municipality.cityClass);
+    const nameHasClass = cityClass && _.endsWith(_.toLower(name), _.toLower(cityClass));
+    return nameHasClass ? name : [name, cityClass].filter(Boolean).join(' ');
+};
 
 export const MunicipalityName = () => {
     const dispatch = useDispatch();

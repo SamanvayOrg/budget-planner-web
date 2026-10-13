@@ -39,6 +39,16 @@ describe('municipalityDisplayName', () => {
         expect(municipalityDisplayName({name: 'Khopoli', cityClass: 'Municipal Council'})).toBe('Khopoli Municipal Council');
     });
 
+    it('does not repeat a class the name already ends with', () => {
+        expect(municipalityDisplayName({name: 'Satara Municipal Council', cityClass: 'Municipal council'}))
+            .toBe('Satara Municipal Council');
+    });
+
+    it('still appends the class to a name that lacks it, ignoring stray spaces', () => {
+        expect(municipalityDisplayName({name: 'Vita ', cityClass: 'Municipal council'})).toBe('Vita Municipal council');
+        expect(municipalityDisplayName({name: 'CWAS', cityClass: 'Municipal corporation'})).toBe('CWAS Municipal corporation');
+    });
+
     it('is empty until the municipality has loaded', () => {
         expect(municipalityDisplayName(undefined)).toBe('');
         expect(municipalityDisplayName({})).toBe('');
